@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/creative-director-review.schema.json",
+  "title": "Calinium Creative Director review state",
+  "type": "object",
+  "required": ["version", "creativeBriefStatus", "storeStrategyStatus", "decisions", "factCorrections"],
+  "properties": {
+    "version": {"type": "string", "const": "1.0"},
+    "creativeBriefStatus": {"type": "string", "enum": ["pending", "approved", "revision_requested"]},
+    "storeStrategyStatus": {"type": "string", "enum": ["pending", "approved", "revision_requested"]},
+    "decisions": {"type": "array", "items": {"type": "object", "required": ["path", "status", "merchantComment"], "properties": {"path": {"type": "string"}, "status": {"type": "string", "enum": ["approved", "rejected", "revision_requested", "pending"]}, "merchantComment": {"type": "string"}}, "additionalProperties": false}},
+    "factCorrections": {"type": "array", "items": {"type": "object", "required": ["path", "value", "merchantComment"], "properties": {"path": {"type": "string"}, "value": {}, "merchantComment": {"type": "string"}}, "additionalProperties": false}}
+  },
+  "additionalProperties": false
+}

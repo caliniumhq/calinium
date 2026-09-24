@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-founder-qa-evidence-recovery-request.schema.json",
+  "title": "Calinium merchant-flow founder QA evidence recovery request",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "organization_id", "project_id", "flow_id", "shop_domain", "expected_flow_sequence", "expected_flow_checksum", "evaluation", "review", "corrupted_artifact", "idempotency_key"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-flow-founder-qa-evidence-recovery-request-v1"},
+    "organization_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "flow_id": {"type": "string", "minLength": 1},
+    "shop_domain": {"type": "string", "minLength": 1},
+    "expected_flow_sequence": {"type": "integer", "minimum": 0},
+    "expected_flow_checksum": {"$ref": "#/$defs/checksum"},
+    "evaluation": {"$ref": "#/$defs/evidenceBinding"},
+    "review": {
+      "type": "object",
+      "required": ["id", "checksum"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "checksum": {"$ref": "#/$defs/checksum"}
+      },
+      "additionalProperties": false
+    },
+    "corrupted_artifact": {
+      "type": "object",
+      "required": ["reference", "storage_sha256"],
+      "properties": {
+        "reference": {"type": "string", "pattern": "^output/merchant-flow-storefront-renders/.+/d2-7-human-review(?:-[A-Za-z0-9._-]+)?\\.json$"},
+        "storage_sha256": {"$ref": "#/$defs/checksum"}
+      },
+      "additionalProperties": false
+    },
+    "idempotency_key": {"type": "string", "minLength": 8, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{7,199}$"}
+  },
+  "$defs": {
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "evidenceBinding": {
+      "type": "object",
+      "required": ["id", "checksum", "reference"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "checksum": {"$ref": "#/$defs/checksum"},
+        "reference": {"type": "string", "pattern": "^output/merchant-flow-storefront-renders/.+/d2-7-evaluation\\.json$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-design-finding.schema.json",
+  "title": "Calinium Subjective Design Finding",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "finding_id", "evaluation_request_id", "policy_revision", "dimension", "importance", "confidence", "diagnosis", "scope", "evidence", "context_relation", "recommendation_category", "responsibility", "objective_relation", "human_review_status"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "design-finding-v1"},
+    "finding_id": {"type": "string", "pattern": "^design-finding-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string"},
+    "policy_revision": {"type": "string", "const": "storefront-design-evaluation-policy-v1"},
+    "dimension": {"type": "string"},
+    "importance": {"type": "string", "enum": ["high", "medium", "low", "note"]},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "diagnosis": {"type": "string", "minLength": 1, "maxLength": 1200},
+    "scope": {"type": "object", "required": ["profile_ids", "route_ids", "viewport_ids"], "properties": {"profile_ids": {"type": "array", "items": {"type": "string"}}, "route_ids": {"type": "array", "items": {"type": "string"}}, "viewport_ids": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "evidence": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["cell_id", "screenshot_sha256", "region"], "properties": {"cell_id": {"type": "string"}, "screenshot_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "region": {"type": ["string", "null"]}}, "additionalProperties": false}},
+    "context_relation": {"type": "object", "required": ["architecture_intent", "design_dna", "merchant_intent"], "properties": {"architecture_intent": {"type": "string"}, "design_dna": {"type": "string"}, "merchant_intent": {"type": "string"}}, "additionalProperties": false},
+    "recommendation_category": {"type": "string"},
+    "responsibility": {"type": "string", "enum": ["architecture_level", "design_token_level", "composition_level", "merchant_content_level", "data_quality_level", "uncertain"]},
+    "objective_relation": {"type": "object", "required": ["mode", "objective_finding_ids"], "properties": {"mode": {"type": "string", "enum": ["separate", "design_impact_of_objective"]}, "objective_finding_ids": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "human_review_status": {"type": "string", "enum": ["unreviewed", "accepted", "needs_fix", "false_positive", "preference_only", "merchant_content_issue", "deferred"]}
+  },
+  "additionalProperties": false
+}

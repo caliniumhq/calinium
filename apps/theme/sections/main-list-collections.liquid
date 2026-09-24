@@ -1,0 +1,124 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+{{ 'section-list-collections.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign list_collections_classes = 'co-main-list-collections co-color-scheme-' | append: section.settings.color_scheme
+  assign list_collections_classes = list_collections_classes | append: ' co-main-list-collections--mobile-columns-' | append: section.settings.mobile_columns
+  assign list_collections_classes = list_collections_classes | append: ' co-main-list-collections--desktop-columns-' | append: section.settings.desktop_columns
+  assign list_collections_heading_id = 'CollectionsHeading-' | append: section.id
+%}
+
+<section class="{{ list_collections_classes }}" aria-labelledby="{{ list_collections_heading_id }}">
+  <div class="co-main-list-collections__inner co-page-width">
+    <h1 id="{{ list_collections_heading_id }}" class="co-main-list-collections__heading">{{ 'collections_list.title' | t }}</h1>
+
+    {% paginate collections by 24 %}
+      {% if collections.size > 0 %}
+        <ul class="co-main-list-collections__grid" role="list">
+          {% for collection in collections %}
+            <li>
+              {% render 'collection-card',
+                collection: collection,
+                show_product_count: section.settings.show_product_count,
+                image_ratio: section.settings.image_ratio,
+                image_loading: 'lazy',
+                image_sizes: '(min-width: 48rem) 25vw, 50vw',
+                image_widths: '165, 360, 535, 750, 1000'
+              %}
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% render 'pagination', paginate: paginate %}
+      {% else %}
+        <div class="co-main-list-collections__empty" role="status">
+          <p>{{ 'collections_list.empty' | t }}</p>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_list_collections.name",
+  "tag": "section",
+  "class": "co-section-main-list-collections",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["list-collections"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "t:sections.main_list_collections.settings.show_product_count.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "t:sections.main_list_collections.settings.mobile_columns.label",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.main_list_collections.settings.mobile_columns.options.one"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.main_list_collections.settings.mobile_columns.options.two"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "t:sections.main_list_collections.settings.desktop_columns.label",
+      "default": "3",
+      "options": [
+        {
+          "value": "2",
+          "label": "t:sections.main_list_collections.settings.desktop_columns.options.two"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.main_list_collections.settings.desktop_columns.options.three"
+        },
+        {
+          "value": "4",
+          "label": "t:sections.main_list_collections.settings.desktop_columns.options.four"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.main_list_collections.settings.image_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.main_list_collections.settings.image_ratio.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main_list_collections.settings.image_ratio.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.main_list_collections.settings.image_ratio.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main_list_collections.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,158 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign contact_form_classes = 'co-contact-form co-color-scheme-' | append: section.settings.color_scheme
+  assign contact_form_heading = section.settings.heading | default: page.title
+  assign contact_form_heading_id = 'ContactHeading-' | append: section.id
+  assign contact_form_id = 'ContactForm-' | append: section.id
+  assign contact_form_required_note_id = 'ContactRequiredNote-' | append: section.id
+  assign contact_form_errors_id = 'ContactErrors-' | append: section.id
+  assign contact_form_email_id = 'ContactEmail-' | append: section.id
+  assign contact_form_email_error_id = 'ContactEmailError-' | append: section.id
+  assign contact_form_message_id = 'ContactMessage-' | append: section.id
+  assign contact_form_message_error_id = 'ContactMessageError-' | append: section.id
+  assign contact_form_submit_label = 'contact.submit' | t
+
+  if contact_form_heading == blank
+    assign contact_form_heading = 'contact.heading' | t
+  endif
+%}
+
+<section class="{{ contact_form_classes }}" aria-labelledby="{{ contact_form_heading_id }}">
+  <div class="co-contact-form__inner">
+    <header class="co-contact-form__header">
+      <h1 id="{{ contact_form_heading_id }}" class="co-contact-form__heading">{{ contact_form_heading }}</h1>
+
+      {% if section.settings.text != blank %}
+        <div class="co-contact-form__text">{{ section.settings.text }}</div>
+      {% endif %}
+    </header>
+
+    {% form 'contact', id: contact_form_id, class: 'co-contact-form__form' %}
+      {% liquid
+        assign contact_form_email_describedby = contact_form_required_note_id
+        assign contact_form_message_describedby = contact_form_required_note_id
+
+        if form.errors contains 'email'
+          assign contact_form_email_describedby = contact_form_email_describedby | append: ' ' | append: contact_form_email_error_id
+        endif
+
+        if form.errors contains 'body'
+          assign contact_form_message_describedby = contact_form_message_describedby | append: ' ' | append: contact_form_message_error_id
+        endif
+      %}
+
+      {% if form.posted_successfully? %}
+        <p class="co-contact-form__status" role="status">{{ 'contact.success' | t }}</p>
+      {% endif %}
+
+      {% if form.errors %}
+        <div id="{{ contact_form_errors_id }}" class="co-contact-form__errors" role="alert">
+          <p>{{ 'contact.error_summary' | t }}</p>
+          {{ form.errors | default_errors }}
+        </div>
+      {% endif %}
+
+      <p id="{{ contact_form_required_note_id }}" class="co-contact-form__required-note"><span class="co-contact-form__required-marker" aria-hidden="true">*</span> {{ 'contact.required_fields' | t }}</p>
+
+      <div class="co-contact-form__field">
+        <label for="ContactName-{{ section.id }}">{{ 'contact.fields.name' | t }}</label>
+        <input
+          id="ContactName-{{ section.id }}"
+          type="text"
+          name="contact[name]"
+          value="{{ form.name | escape }}"
+          autocomplete="name"
+        >
+      </div>
+
+      <div class="co-contact-form__field">
+        <label for="{{ contact_form_email_id }}">{{ 'contact.fields.email' | t }} <span class="co-contact-form__required-marker" aria-hidden="true">*</span></label>
+        <input
+          id="{{ contact_form_email_id }}"
+          type="email"
+          name="contact[email]"
+          value="{{ form.email | escape }}"
+          autocomplete="email"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-describedby="{{ contact_form_email_describedby }}"
+          {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+          required
+        >
+        {% if form.errors contains 'email' %}
+          <p id="{{ contact_form_email_error_id }}" class="co-contact-form__field-error"><span class="co-visually-hidden">{{ 'contact.fields.email' | t }}: </span>{{ form.errors.messages['email'] | escape }}</p>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_phone %}
+        <div class="co-contact-form__field">
+          <label for="ContactPhone-{{ section.id }}">{{ 'contact.fields.phone' | t }}</label>
+          <input
+            id="ContactPhone-{{ section.id }}"
+            type="tel"
+            name="contact[phone]"
+            value="{{ form.phone | escape }}"
+            autocomplete="tel"
+          >
+        </div>
+      {% endif %}
+
+      <div class="co-contact-form__field co-contact-form__field--message">
+        <label for="{{ contact_form_message_id }}">{{ 'contact.fields.message' | t }} <span class="co-contact-form__required-marker" aria-hidden="true">*</span></label>
+        <textarea
+          id="{{ contact_form_message_id }}"
+          name="contact[body]"
+          aria-describedby="{{ contact_form_message_describedby }}"
+          {% if form.errors contains 'body' %}aria-invalid="true"{% endif %}
+          required
+        >{{ form.body | escape }}</textarea>
+        {% if form.errors contains 'body' %}
+          <p id="{{ contact_form_message_error_id }}" class="co-contact-form__field-error"><span class="co-visually-hidden">{{ 'contact.fields.message' | t }}: </span>{{ form.errors.messages['body'] | escape }}</p>
+        {% endif %}
+      </div>
+
+      <div class="co-contact-form__actions">
+        {% render 'button', label: contact_form_submit_label, type: 'submit', variant: 'primary' %}
+      </div>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.contact_form.name",
+  "tag": "section",
+  "class": "co-section-contact-form",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.contact_form.settings.heading.label",
+      "info": "t:sections.contact_form.settings.heading.info"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.contact_form.settings.text.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "t:sections.contact_form.settings.show_phone.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.contact_form.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

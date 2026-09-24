@@ -1,0 +1,21 @@
+{% liquid
+  assign timeline_eyebrow = eyebrow | default: blank
+  assign timeline_heading = heading | default: blank
+  assign timeline_text = text | default: blank
+  assign timeline_icon = icon | default: blank
+  assign timeline_icon_size = icon_size | default: 24
+  assign timeline_class = 'co-primitive-timeline-item'
+
+  if class != blank
+    assign timeline_class = timeline_class | append: ' ' | append: class
+  endif
+%}
+
+{% if timeline_eyebrow != blank or timeline_heading != blank or timeline_text != blank or timeline_icon != blank %}
+  <article class="{{ timeline_class | escape }}">
+    {% if timeline_icon != blank %}<span class="co-primitive-timeline-item__icon">{% render 'icon', icon: timeline_icon, size: timeline_icon_size, decorative: decorative, label: icon_label %}</span>{% endif %}
+    {% if timeline_eyebrow != blank %}<p class="co-primitive-timeline-item__eyebrow">{{ timeline_eyebrow | escape }}</p>{% endif %}
+    {% if timeline_heading != blank %}<h3 class="co-primitive-timeline-item__heading">{{ timeline_heading }}</h3>{% endif %}
+    {% if timeline_text != blank %}{% render 'rich-text', content: timeline_text, class: 'co-primitive-timeline-item__text' %}{% endif %}
+  </article>
+{% endif %}

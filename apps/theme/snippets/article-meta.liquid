@@ -1,0 +1,55 @@
+{% liquid
+  assign article_meta_article = article
+  assign article_meta_show_author = false
+  assign article_meta_show_date = true
+  assign article_meta_show_tags = false
+  assign article_meta_classes = 'co-article-meta'
+
+  if show_author
+    assign article_meta_show_author = true
+  endif
+
+  if show_date == false
+    assign article_meta_show_date = false
+  endif
+
+  if show_tags
+    assign article_meta_show_tags = true
+  endif
+
+  if context != blank
+    assign article_meta_classes = article_meta_classes | append: ' co-article-meta--' | append: context
+  endif
+
+  if class != blank
+    assign article_meta_classes = article_meta_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if article_meta_article != blank %}
+  <div class="{{ article_meta_classes | escape }}">
+    {% if article_meta_show_author or article_meta_show_date %}
+      <p class="co-article-meta__details">
+        {% if article_meta_show_author and article_meta_article.author != blank %}
+          <span class="co-article-meta__author">
+            <span class="co-visually-hidden">{{ 'articles.author' | t }}: </span>{{ article_meta_article.author | escape }}
+          </span>
+        {% endif %}
+
+        {% if article_meta_show_date and article_meta_article.published_at != blank %}
+          <time class="co-article-meta__date" datetime="{{ article_meta_article.published_at | date: '%Y-%m-%d' }}">
+            <span class="co-visually-hidden">{{ 'articles.published' | t }}: </span>{{ article_meta_article.published_at | date: format: 'short' }}
+          </time>
+        {% endif %}
+      </p>
+    {% endif %}
+
+    {% if article_meta_show_tags and article_meta_article.tags.size > 0 %}
+      <ul class="co-article-meta__tags" role="list" aria-label="{{ 'articles.tags' | t }}">
+        {% for tag in article_meta_article.tags %}
+          <li>{{ tag | link_to_tag: tag }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endif %}

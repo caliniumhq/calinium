@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-analysis-first-telemetry-event.schema.json",
+  "title": "Calinium analysis-first safe telemetry event",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "event_id", "event_name", "occurred_at", "subject", "journey_stage", "dimensions", "redaction"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "analysis-first-merchant-telemetry-v1"},
+    "event_id": {"type": "string", "pattern": "^analysis-first-event-[a-f0-9]{20}$"},
+    "event_name": {"enum": ["analysis_first_journey_viewed", "store_analysis_started", "visual_briefing_ready", "direction_recommendation_shown", "direction_choice_required", "direction_selected", "recommendation_reason_opened", "build_preview_selected", "build_started", "build_resumed", "preview_ready", "compare_selected", "request_changes_selected", "design_approved", "advanced_mode_opened", "journey_failure_shown"]},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "subject": {"type": "object", "required": ["project_id", "capability_revision"], "properties": {"project_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,120}$"}, "capability_revision": {"const": "analysis-first-merchant-experience-capability-v1"}}, "additionalProperties": false},
+    "journey_stage": {"enum": ["analyzing_store", "building_storefront", "review_preview"]},
+    "dimensions": {"type": "object", "required": ["visible_merchant_question_count", "direction_choice_required", "merchant_action_count", "retry_count", "advanced_mode_used", "founder_intervention_count"], "properties": {"visible_merchant_question_count": {"type": "integer", "minimum": 0}, "direction_choice_required": {"type": "boolean"}, "merchant_action_count": {"type": "integer", "minimum": 0}, "retry_count": {"type": "integer", "minimum": 0}, "advanced_mode_used": {"type": "boolean"}, "founder_intervention_count": {"type": "integer", "minimum": 0}}, "additionalProperties": false},
+    "redaction": {"type": "object", "required": ["raw_conversation_included", "customer_data_included", "screenshots_included", "provider_payload_included", "internal_scores_included", "secrets_included", "stack_traces_included"], "properties": {"raw_conversation_included": {"const": false}, "customer_data_included": {"const": false}, "screenshots_included": {"const": false}, "provider_payload_included": {"const": false}, "internal_scores_included": {"const": false}, "secrets_included": {"const": false}, "stack_traces_included": {"const": false}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

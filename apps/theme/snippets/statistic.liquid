@@ -1,0 +1,23 @@
+{% liquid
+  assign statistic_value = value | default: blank
+  assign statistic_label = label | default: blank
+  assign statistic_description = description | default: blank
+  assign statistic_icon = icon | default: blank
+  assign statistic_icon_size = icon_size | default: 24
+  assign statistic_class = 'co-primitive-statistic'
+
+  if class != blank
+    assign statistic_class = statistic_class | append: ' ' | append: class
+  endif
+%}
+
+{% if statistic_value != blank or statistic_label != blank or statistic_description != blank %}
+  <dl class="{{ statistic_class | escape }}">
+    <div class="co-primitive-statistic__group">
+      {% if statistic_icon != blank %}<span class="co-primitive-statistic__icon">{% render 'icon', icon: statistic_icon, size: statistic_icon_size, decorative: decorative, label: icon_label %}</span>{% endif %}
+      {% if statistic_value != blank %}<dd class="co-primitive-statistic__value">{{ statistic_value }}</dd>{% endif %}
+      {% if statistic_label != blank %}<dt class="co-primitive-statistic__label">{{ statistic_label }}</dt>{% endif %}
+      {% if statistic_description != blank %}<dd class="co-primitive-statistic__description">{{ statistic_description }}</dd>{% endif %}
+    </div>
+  </dl>
+{% endif %}

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-resource-confirmation-eligibility.schema.json",
+  "title": "Calinium resource confirmation eligibility",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policy_version", "derivation_revision", "input_checksum", "classified_at", "items", "summary", "revision_id", "checksum"],
+  "properties": {
+    "policy_version": {"const": "resource-confirmation-eligibility-v1"},
+    "derivation_revision": {"const": "resource-confirmation-derivation-v1"},
+    "input_checksum": {"$ref": "#/$defs/checksum"},
+    "classified_at": {"type": "string", "format": "date-time"},
+    "revision_id": {"type": "string", "pattern": "^rce_[a-f0-9]{32}$"},
+    "checksum": {"$ref": "#/$defs/checksum"},
+    "items": {"type": "array", "items": {"$ref": "#/$defs/item"}},
+    "summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["total", "counts", "merchant_action_count", "omitted_section_ids", "omitted_field_refs"],
+      "properties": {
+        "total": {"type": "integer", "minimum": 0},
+        "counts": {
+          "type": "object", "additionalProperties": false,
+          "required": ["auto_verifiable", "merchant_confirmation_required", "optional_omittable", "critical_confirmation_required", "unresolved_review_required"],
+          "properties": {
+            "auto_verifiable": {"type": "integer", "minimum": 0},
+            "merchant_confirmation_required": {"type": "integer", "minimum": 0},
+            "optional_omittable": {"type": "integer", "minimum": 0},
+            "critical_confirmation_required": {"type": "integer", "minimum": 0},
+            "unresolved_review_required": {"type": "integer", "minimum": 0}
+          }
+        },
+        "merchant_action_count": {"type": "integer", "minimum": 0},
+        "omitted_section_ids": {"$ref": "#/$defs/stringArray"},
+        "omitted_field_refs": {"$ref": "#/$defs/stringArray"}
+      }
+    }
+  },
+  "$defs": {
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "stringArray": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "provenance": {
+      "type": ["object", "null"], "additionalProperties": false,
+      "required": ["source_type", "source_identity", "source_revision", "extracted_value", "derivation_revision", "confidence", "verified_at", "checksum"],
+      "properties": {
+        "source_type": {"type": "string", "minLength": 1},
+        "source_identity": {"type": "string", "minLength": 1},
+        "source_revision": {"type": "string", "minLength": 1},
+        "extracted_value": {},
+        "derivation_revision": {"type": "string", "minLength": 1},
+        "confidence": {"const": 1},
+        "verified_at": {"type": "string", "format": "date-time"},
+        "checksum": {"$ref": "#/$defs/checksum"}
+      }
+    },
+    "item": {
+      "type": "object", "additionalProperties": false,
+      "required": ["item_id", "confirmation_id", "category", "requested_claim", "source_section", "nature", "expected_source", "classification", "policy_state", "current_confirmation_state", "current_blocking_reason", "shopify_evidence_status", "omission_technically_possible", "omission_scope", "omission_target", "dependent_modules", "authoritative_provenance", "merchant_state_copy", "classified_at", "checksum"],
+      "properties": {
+        "item_id": {"type": "string", "pattern": "^rci_[a-f0-9]{24}$"},
+        "confirmation_id": {"type": "string", "minLength": 1},
+        "category": {"type": "string", "minLength": 1},
+        "requested_claim": {"type": "string", "minLength": 1},
+        "source_section": {"type": ["string", "null"]},
+        "nature": {"enum": ["factual", "editorial", "commercial", "legal", "operational", "optional", "unresolved"]},
+        "expected_source": {"type": "string", "minLength": 1},
+        "classification": {"enum": ["auto_verifiable", "merchant_confirmation_required", "optional_omittable", "critical_confirmation_required", "unresolved_review_required"]},
+        "policy_state": {"enum": ["verified_automatically", "awaiting_confirmation", "omitted_by_policy", "unresolved_review_required"]},
+        "current_confirmation_state": {"enum": ["not_confirmed", "merchant_confirmed"]},
+        "current_blocking_reason": {"type": ["string", "null"]},
+        "shopify_evidence_status": {"enum": ["supported", "contradicted", "not_available", "not_applicable"]},
+        "omission_technically_possible": {"type": "boolean"},
+        "omission_scope": {"enum": ["module", "field", null]},
+        "omission_target": {"type": ["string", "null"]},
+        "dependent_modules": {"$ref": "#/$defs/stringArray"},
+        "authoritative_provenance": {"$ref": "#/$defs/provenance"},
+        "merchant_state_copy": {"enum": ["Verified from your store", "Needs your confirmation", "Optional — not included", "Required before continuing"]},
+        "classified_at": {"type": "string", "format": "date-time"},
+        "checksum": {"$ref": "#/$defs/checksum"}
+      }
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-preview-binding.schema.json",
+  "title": "Calinium Merchant Flow Preview Binding",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "binding_revision", "binding_id", "binding_checksum", "status", "organization_id", "project_id", "connection_id", "canonical_shop", "flow", "artifact", "render", "target", "provenance", "preview_reference", "recovery", "created_at", "verified_at"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-flow-preview-binding-v1"},
+    "binding_revision": {"const": "merchant-flow-preview-binding-v1"},
+    "binding_id": {"type": "string", "pattern": "^merchant-flow-preview-binding-[a-f0-9]{20}$"},
+    "binding_checksum": {"$ref": "#/$defs/checksum"},
+    "status": {"const": "target_verified"},
+    "organization_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "connection_id": {"type": "string", "minLength": 1},
+    "canonical_shop": {"$ref": "#/$defs/shop"},
+    "flow": {
+      "type": "object",
+      "required": ["flow_id", "sequence", "checksum"],
+      "properties": {
+        "flow_id": {"type": "string", "minLength": 1},
+        "sequence": {"type": "integer", "minimum": 0},
+        "checksum": {"$ref": "#/$defs/checksum"}
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["artifact_id", "checksum"],
+      "properties": {
+        "artifact_id": {"type": "string", "pattern": "^theme-artifact-[a-f0-9]{20}$"},
+        "checksum": {"$ref": "#/$defs/checksum"}
+      },
+      "additionalProperties": false
+    },
+    "render": {
+      "type": "object",
+      "required": ["request_id", "request_checksum", "evidence_id", "evidence_checksum", "render_revision", "result_ids", "checksum", "source_theme_unchanged"],
+      "properties": {
+        "request_id": {"type": "string", "pattern": "^merchant-render-request-[a-f0-9]{20}$"},
+        "request_checksum": {"$ref": "#/$defs/checksum"},
+        "evidence_id": {"type": "string", "pattern": "^merchant-render-manifest-[a-f0-9]{20}$"},
+        "evidence_checksum": {"$ref": "#/$defs/checksum"},
+        "render_revision": {"const": "merchant-flow-storefront-render-v1"},
+        "result_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^merchant-render-[a-f0-9]{20}$"}},
+        "checksum": {"$ref": "#/$defs/checksum"},
+        "source_theme_unchanged": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["shop_domain", "theme_id", "main_theme_id_at_verification", "main_theme_excluded", "theme_role", "runtime_mode", "configuration_revision"],
+      "properties": {
+        "shop_domain": {"$ref": "#/$defs/shop"},
+        "theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+        "main_theme_id_at_verification": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+        "main_theme_excluded": {"const": true},
+        "theme_role": {"const": "development"},
+        "runtime_mode": {"const": "shopify_development_proxy"},
+        "configuration_revision": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_revision", "runtime_configuration_revision", "render_target_configuration_revision"],
+      "properties": {
+        "source_revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "runtime_configuration_revision": {"type": "string", "minLength": 1},
+        "render_target_configuration_revision": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "preview_reference": {
+      "type": "object",
+      "required": ["kind", "url", "lifecycle", "issued_from"],
+      "properties": {
+        "kind": {"const": "shopify_theme_preview_url"},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "lifecycle": {"const": "stable_while_target_exists"},
+        "issued_from": {"const": "verified_render_runtime"}
+      },
+      "additionalProperties": false
+    },
+    "recovery": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["kind", "reason", "resolver_revision"],
+          "properties": {
+            "kind": {"const": "legacy_read_only"},
+            "reason": {"const": "legacy_flow_missing_preview_binding"},
+            "resolver_revision": {"const": "merchant-flow-preview-binding-resolver-v1"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "verified_at": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "shop": {"type": "string", "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.myshopify\\.com$"}
+  },
+  "additionalProperties": false
+}

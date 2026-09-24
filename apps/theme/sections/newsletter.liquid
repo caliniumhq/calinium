@@ -1,0 +1,78 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'section-newsletter.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign newsletter_heading = section.settings.heading
+  assign newsletter_form_id = 'NewsletterForm-' | append: section.id
+  assign newsletter_email_id = 'NewsletterEmail-' | append: section.id
+  assign newsletter_errors_id = 'NewsletterErrors-' | append: section.id
+  assign newsletter_heading_id = 'NewsletterHeading-' | append: section.id
+  assign newsletter_submit_label = section.settings.button_label
+  assign newsletter_placeholder = section.settings.email_placeholder
+  assign newsletter_success_message = section.settings.success_message
+  assign newsletter_classes = 'co-newsletter co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign newsletter_classes = newsletter_classes | append: ' co-newsletter--align-' | append: section.settings.content_alignment
+
+  if newsletter_heading == blank
+    assign newsletter_heading = 'newsletter.heading' | t
+  endif
+  if newsletter_submit_label == blank
+    assign newsletter_submit_label = 'newsletter.submit' | t
+  endif
+  if newsletter_placeholder == blank
+    assign newsletter_placeholder = 'newsletter.email_placeholder' | t
+  endif
+  if newsletter_success_message == blank
+    assign newsletter_success_message = 'newsletter.success' | t
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ newsletter_classes }}" aria-labelledby="{{ newsletter_heading_id }}" {{ section.shopify_attributes }}>
+  {% if section.settings.background_image != blank %}
+    <div class="co-newsletter__background" aria-hidden="true">{% render 'responsive-image', image: section.settings.background_image, alt: '', loading: 'lazy', sizes: '100vw', widths: '375, 550, 750, 1000, 1500, 2000', class: 'co-newsletter__background-image' %}</div>
+  {% endif %}
+  <div class="co-newsletter__inner co-page-width">
+    <div class="co-newsletter__content">
+      {% if section.settings.eyebrow != blank %}<p class="co-newsletter__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      <h2 id="{{ newsletter_heading_id }}" class="co-newsletter__heading">{{ newsletter_heading }}</h2>
+      {% if section.settings.text != blank %}<div class="co-newsletter__text">{{ section.settings.text }}</div>{% endif %}
+      {% form 'customer', id: newsletter_form_id, class: 'co-newsletter__form' %}
+        {% if form.posted_successfully? %}<p class="co-newsletter__status" role="status">{{ newsletter_success_message }}</p>{% endif %}
+        {% if form.errors %}<div id="{{ newsletter_errors_id }}" class="co-newsletter__errors" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="co-newsletter__field">
+          <label class="co-visually-hidden" for="{{ newsletter_email_id }}">{{ 'newsletter.email_label' | t }}</label>
+          <input id="{{ newsletter_email_id }}" class="co-newsletter__input" type="email" name="contact[email]" value="{% if form.email %}{{ form.email | escape }}{% endif %}" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="{{ newsletter_placeholder | escape }}" {% if form.errors %}aria-invalid="true" aria-describedby="{{ newsletter_errors_id }}"{% endif %} required>
+        </div>
+        {% render 'button', label: newsletter_submit_label, type: 'submit', variant: 'primary' %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.newsletter.name",
+  "tag": "section",
+  "class": "co-section-newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "t:sections.shared.settings.eyebrow.label" },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.newsletter.settings.heading.label", "info": "t:sections.newsletter.settings.heading.info" },
+    { "type": "richtext", "id": "text", "label": "t:sections.newsletter.settings.text.label" },
+    { "type": "text", "id": "email_placeholder", "label": "t:sections.shared.settings.email_placeholder.label" },
+    { "type": "text", "id": "button_label", "label": "t:sections.shared.settings.button_label.label" },
+    { "type": "text", "id": "success_message", "label": "t:sections.shared.settings.success_message.label" },
+    { "type": "select", "id": "content_alignment", "label": "t:sections.newsletter.settings.content_alignment.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.newsletter.settings.content_alignment.options.left" }, { "value": "center", "label": "t:sections.newsletter.settings.content_alignment.options.center" }] },
+    { "type": "image_picker", "id": "background_image", "label": "t:sections.shared.settings.background_image.label" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.newsletter.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [{ "name": "t:sections.newsletter.presets.default" }]
+}
+{% endschema %}

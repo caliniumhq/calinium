@@ -1,0 +1,16 @@
+{% liquid
+  assign sort_results = results
+  assign sort_select_id = id | default: 'SortBy'
+  assign sort_by = sort_results.sort_by | default: sort_results.default_sort_by
+%}
+
+{% if sort_results.sort_options.size > 0 %}
+  <div class="co-sort-select">
+    <label class="co-sort-select__label" for="{{ sort_select_id | escape }}">{{ 'collections.sort_by' | t }}</label>
+    <select id="{{ sort_select_id | escape }}" class="co-sort-select__select" name="sort_by" data-sort-select>
+      {% for option in sort_results.sort_options %}
+        <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name | escape }}</option>
+      {% endfor %}
+    </select>
+  </div>
+{% endif %}

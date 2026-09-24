@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-release-manifest.schema.json",
+  "title": "Calinium release candidate manifest",
+  "description": "Immutable release-candidate record for a verified, unpublished/development-theme deployment. It never represents a live-theme publication.",
+  "type": "object",
+  "required": ["version", "manager_version", "release_id", "deployment_id", "review_session", "approval_manifest", "preview_verification", "release_timestamp", "release_status", "released_files", "released_theme", "release_notes", "checksums", "validation", "traceability"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "manager_version": {"type": "string", "const": "1.0.0"},
+    "release_id": {"type": "string", "pattern": "^release-[a-z0-9-]+$"},
+    "deployment_id": {"type": "string", "pattern": "^deployment-[a-z0-9-]+$"},
+    "review_session": {"$ref": "#/$defs/reference"},
+    "approval_manifest": {"$ref": "#/$defs/reference"},
+    "preview_verification": {"$ref": "#/$defs/reference"},
+    "release_timestamp": {"type": "string", "minLength": 1},
+    "release_status": {"type": "string", "enum": ["release_candidate", "release_failed"]},
+    "released_files": {"type": "array", "minItems": 1, "items": {"$ref": "calinium-deployment-package.schema.json#/$defs/file"}},
+    "released_theme": {"$ref": "#/$defs/theme"},
+    "release_notes": {"type": "string", "minLength": 1},
+    "checksums": {"$ref": "#/$defs/checksums"},
+    "validation": {"$ref": "calinium-review-session.schema.json#/$defs/status"},
+    "traceability": {"$ref": "calinium-review-session.schema.json#/$defs/traceability"}
+  },
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "required": ["path", "checksum"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+      "additionalProperties": false
+    },
+    "theme": {
+      "type": "object",
+      "required": ["store", "theme_id", "theme_name", "role"],
+      "properties": {
+        "store": {"type": "string", "minLength": 1},
+        "theme_id": {"type": ["string", "integer"]},
+        "theme_name": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "enum": ["unpublished", "development"]}
+      },
+      "additionalProperties": false
+    },
+    "checksums": {
+      "type": "object",
+      "required": ["deployment_package", "preview_verification", "configuration"],
+      "properties": {
+        "deployment_package": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "preview_verification": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "configuration": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

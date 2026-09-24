@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.com/schemas/public-production-readiness.schema.json",
+  "title": "Calinium Public Production Readiness",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "status", "issues", "database", "artifact_storage", "privacy_webhooks", "theme_delivery", "founder_decisions"],
+  "properties": {
+    "contract_version": { "const": "calinium-public-production-readiness-v1" },
+    "status": { "enum": ["READY", "NOT_READY"] },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "field", "category"],
+        "properties": {
+          "code": { "type": "string", "minLength": 1 },
+          "field": { "type": "string", "minLength": 1 },
+          "category": { "enum": ["missing", "invalid", "staging_inheritance"] }
+        }
+      }
+    },
+    "database": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementation_status", "provider_status", "configured", "runtime_capability", "provider", "acceptance_revision", "clean_bootstrap_verified", "migrations_verified", "backup_verified", "restore_verified", "isolation_verified"],
+      "properties": {
+        "implementation_status": { "const": "DATABASE_IMPLEMENTATION_READY" },
+        "provider_status": { "enum": ["DATABASE_PROVIDER_NOT_CONFIGURED", "DATABASE_CONFIGURED_NOT_ACCEPTED", "DATABASE_ACCEPTED"] },
+        "configured": { "type": "boolean" },
+        "runtime_capability": { "type": "boolean" },
+        "provider": { "type": ["string", "null"], "enum": ["fly_mpg", "neon", "supabase", null] },
+        "acceptance_revision": { "type": ["string", "null"] },
+        "clean_bootstrap_verified": { "type": "boolean" },
+        "migrations_verified": { "type": "boolean" },
+        "backup_verified": { "type": "boolean" },
+        "restore_verified": { "type": "boolean" },
+        "isolation_verified": { "type": "boolean" }
+      }
+    },
+    "artifact_storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementation_status", "provider_status", "configured", "runtime_capability", "acceptance_revision", "health_verified", "restore_verified", "lifecycle_verified"],
+      "properties": {
+        "implementation_status": { "const": "IMPLEMENTATION_READY" },
+        "provider_status": { "enum": ["PROVIDER_NOT_CONFIGURED", "CONFIGURED_UNVERIFIED", "READY"] },
+        "configured": { "type": "boolean" },
+        "runtime_capability": { "type": "boolean" },
+        "acceptance_revision": { "type": ["string", "null"] },
+        "health_verified": { "type": "boolean" },
+        "restore_verified": { "type": "boolean" },
+        "lifecycle_verified": { "type": "boolean" }
+      }
+    },
+    "privacy_webhooks": {
+      "type": "object",
+      "required": ["required_topics", "configured"],
+      "properties": {
+        "required_topics": {
+          "type": "array",
+          "const": ["customers/data_request", "customers/redact", "shop/redact"]
+        },
+        "configured": { "type": "boolean" }
+      }
+    },
+    "theme_delivery": {
+      "type": "object",
+      "required": ["status", "validated"],
+      "properties": {
+        "status": { "const": "CLARIFICATION_REQUIRED" },
+        "validated": { "const": false }
+      }
+    },
+    "founder_decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "subject"],
+        "properties": {
+          "code": { "const": "FOUNDER_DECISION_REQUIRED" },
+          "subject": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

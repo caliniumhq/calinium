@@ -1,0 +1,409 @@
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "status_updated": "Status updated",
+    "open_main_navigation": "Open main navigation",
+    "close_main_navigation": "Close main navigation",
+    "submenu": "Submenu for {{ title }}"
+  },
+  "general": {
+    "continue_shopping": "Continue shopping",
+    "close": "Close",
+    "loading": "Loading",
+    "error": "Something went wrong. Please try again."
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "choose_options": "Choose options",
+      "sold_out": "Sold out",
+      "sale": "Sale",
+      "unavailable": "Unavailable",
+      "price": "Price",
+      "compare_at_price": "Regular price",
+      "from": "From",
+      "unit_price": "Unit price",
+      "variant": "Variant",
+      "quantity": "Quantity",
+      "decrease_quantity": "Decrease quantity",
+      "increase_quantity": "Increase quantity",
+      "sku": "SKU",
+      "barcode": "Barcode",
+      "in_stock": "In stock",
+      "low_stock": "Low stock",
+      "rating_label": "{{ rating }} out of {{ scale }} stars",
+      "review_count": {
+        "one": "{{ count }} review",
+        "other": "{{ count }} reviews"
+      },
+      "add_to_cart_loading": "Adding to cart",
+      "added_to_cart": "Added to cart.",
+      "add_to_cart_error": "Unable to add this item to cart. Please try again.",
+      "view_cart": "View cart",
+      "media_gallery": "Product media",
+      "media_thumbnail": "View media {{ position }} of {{ total }}",
+      "swatch_count": "{{ count }} available swatches"
+    }
+  },
+  "collections": {
+    "view_collection": "View collection",
+    "featured_empty": "This collection has no products yet.",
+    "products": "Products",
+    "product_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "filter_and_sort": "Filter and sort",
+    "filters": "Filters",
+    "sort_by": "Sort by",
+    "apply_filters": "Apply filters",
+    "active_filters": "Active filters",
+    "clear_all": "Clear all",
+    "remove_filter": "Remove {{ filter }} filter",
+    "load_more": "Load more products",
+    "loading_more": "Loading more products.",
+    "loaded_more": "{{ count }} more products loaded.",
+    "load_more_error": "More products could not be loaded. Use the pagination links to continue browsing.",
+    "minimum_price": "Minimum price",
+    "maximum_price": "Maximum price",
+    "any_price": "Any price",
+    "empty": "No products match your selection."
+  },
+  "cart": {
+    "title": "Cart",
+    "checkout": "Checkout",
+    "empty": "Your cart is empty.",
+    "drawer_title": "Your cart",
+    "close_drawer": "Close cart",
+    "view_cart": "View cart",
+    "summary": "Order summary",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "item_price": "Item price",
+    "line_total": "Line total",
+    "remove": "Remove",
+    "remove_item": "Remove {{ title }} from cart",
+    "update": "Update cart",
+    "updated": "Cart updated.",
+    "removed": "Item removed from cart.",
+    "update_error": "We couldn’t update your cart. Please try again.",
+    "refresh_error": "Your cart changed, but we couldn’t refresh it. Please use the cart page.",
+    "order_note": "Add an order note",
+    "note_label": "Order note",
+    "taxes_included_shipping_at_checkout": "Taxes are included. Shipping is calculated at checkout.",
+    "taxes_included": "Taxes are included.",
+    "taxes_shipping_at_checkout": "Taxes and shipping are calculated at checkout.",
+    "taxes_at_checkout": "Taxes are calculated at checkout.",
+    "secure_checkout": "Secure checkout",
+    "payment_methods": "Available payment methods",
+    "free_shipping_remaining": "{{ amount }} away from free shipping.",
+    "free_shipping_qualified": "Your order qualifies for free shipping.",
+    "recommendations": "Recommended for you",
+    "recommendations_loading": "Loading recommendations.",
+    "empty_recommendations": "Continue exploring"
+  },
+  "search": {
+    "title": "Search",
+    "submit": "Search",
+    "input_label": "Search the store",
+    "input_placeholder": "Search",
+    "guidance": "Enter a search term to find products, articles, and pages.",
+    "result_count": {
+      "one": "{{ count }} result for “{{ terms }}”",
+      "other": "{{ count }} results for “{{ terms }}”"
+    },
+    "no_results": "No results found",
+    "no_results_for_terms": "No results found for “{{ terms }}”",
+    "no_results_guidance": "Try checking your spelling or using a different search term.",
+    "browse_collections": "Browse all products",
+    "article": "Article",
+    "page": "Page",
+    "products": "Products",
+    "content": "Content",
+    "loading_results": "Loading search suggestions.",
+    "predictive_result_count": {
+      "one": "{{ count }} search suggestion available.",
+      "other": "{{ count }} search suggestions available."
+    },
+    "no_suggestions": "No search suggestions found.",
+    "predictive_error": "Search suggestions are unavailable. You can still submit your search.",
+    "view_all": "Search for “{{ terms }}”"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{ number }}"
+  },
+  "announcement_bar": {
+    "label": "Announcement"
+  },
+  "navigation": {
+    "main": "Main navigation"
+  },
+  "header": {
+    "search": "Search",
+    "account": "Account",
+    "expand_menu": "Show {{ title }} links",
+    "cart_count": {
+      "one": "Cart, {{ count }} item",
+      "other": "Cart, {{ count }} items"
+    }
+  },
+  "footer": {
+    "navigation": "Footer navigation",
+    "policy_navigation": "Store policies",
+    "localization": "Country and language",
+    "back_to_top": "Back to top",
+    "all_rights_reserved": "All rights reserved."
+  },
+  "newsletter": {
+    "heading": "Newsletter",
+    "email_label": "Email address",
+    "email_placeholder": "Email address",
+    "submit": "Subscribe",
+    "success": "Thank you for subscribing."
+  },
+  "localization": {
+    "country_region": "Country/region",
+    "language": "Language",
+    "update": "Update preferences"
+  },
+  "date_formats": {
+    "short": "%b %d, %Y"
+  },
+  "pages": {
+    "title": "Page"
+  },
+  "contact": {
+    "heading": "Contact",
+    "required_fields": "Fields marked with an asterisk are required.",
+    "success": "Thank you for contacting us. We’ll respond as soon as we can.",
+    "error_summary": "Please review the highlighted fields.",
+    "submit": "Send message",
+    "fields": {
+      "name": "Name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "message": "Message",
+      "email_error": "Please enter a valid email address."
+    }
+  },
+  "blogs": {
+    "empty": "There are no articles to show yet."
+  },
+  "articles": {
+    "author": "Author",
+    "published": "Published",
+    "tags": "Tags",
+    "required_fields": "Fields marked with an asterisk are required.",
+    "comments": {
+      "one": "{{ count }} comment",
+      "other": "{{ count }} comments"
+    },
+    "comments_heading": "Comments",
+    "leave_comment": "Leave a comment",
+    "comment_success": "Thank you for your comment.",
+    "comment_success_moderated": "Thank you for your comment. It will appear after approval.",
+    "comment_error_summary": "Please review the highlighted fields.",
+    "comment_submit": "Post comment",
+    "comment_name": "Name",
+    "comment_email": "Email address",
+    "comment_body": "Comment",
+    "previous_article": "Previous article",
+    "next_article": "Next article",
+    "article_navigation": "Article navigation",
+    "share": "Share",
+    "share_via_email": "Share by email",
+    "share_on_facebook": "Share on Facebook",
+    "share_on_x": "Share on X"
+  },
+  "collections_list": {
+    "title": "Collections",
+    "empty": "There are no collections to show yet.",
+    "product_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    }
+  },
+  "not_found": {
+    "title": "Page not found",
+    "text": "The page you’re looking for could not be found.",
+    "search_label": "Search the store",
+    "search_placeholder": "Search",
+    "search_submit": "Search",
+    "home": "Return home",
+    "collections": "Browse collections"
+  },
+  "sections": {
+    "hero_slideshow": {
+      "carousel_label": "Hero slideshow",
+      "slide_label": "Slide {{ current }} of {{ total }}",
+      "previous": "Previous slide",
+      "next": "Next slide",
+      "pagination_label": "Hero slideshow navigation",
+      "go_to_slide": "Go to slide {{ number }}",
+      "pause": "Pause slideshow",
+      "resume": "Resume slideshow",
+      "placeholder_text": "Add a slide image or content to configure this hero slideshow."
+    },
+    "featured_collection": {
+      "placeholder_title": "Featured collection",
+      "placeholder_text": "Select a collection to show its products."
+    },
+    "featured_product": {
+      "placeholder_title": "Featured product",
+      "placeholder_text": "Select a product to build this product feature."
+    },
+    "collection_list": {
+      "select_collection": "Select a collection",
+      "placeholder_text": "Add collection blocks to build this list."
+    },
+    "testimonials": {
+      "carousel_label": "Testimonials",
+      "rating_label": "{{ rating }} out of 5 stars",
+      "read_more": "Read more",
+      "previous": "Previous testimonial",
+      "next": "Next testimonial",
+      "pause": "Pause rotation",
+      "resume": "Resume rotation",
+      "pagination_label": "Testimonial navigation",
+      "go_to": "Go to testimonial {{ number }}",
+      "placeholder_text": "Add testimonials to share customer feedback."
+    },
+    "logo_list": {
+      "pause": "Pause logo marquee",
+      "resume": "Resume logo marquee",
+      "placeholder_text": "Add logo blocks to build this list."
+    },
+    "multicolumn": {
+      "placeholder_text": "Add columns to build this section."
+    },
+    "promotion_cards": {
+      "placeholder_text": "Add promotion cards to build this section."
+    },
+    "video": {
+      "play": "Play video",
+      "default_title": "Video"
+    },
+    "social_gallery": {
+      "placeholder_text": "Add images to build this editorial gallery."
+    },
+    "faq": {
+      "placeholder_text": "Add questions and answers to build this FAQ."
+    },
+    "featured_blog": {
+      "view_all": "View all articles",
+      "placeholder_text": "Select a blog to show recent articles."
+    },
+    "before_after": {
+      "control_label": "Before and after image comparison",
+      "control_description": "Use the slider to reveal more of the after image."
+    },
+    "comparison_table": {
+      "placeholder_text": "Add columns and feature rows to build this comparison."
+    },
+    "marquee": {
+      "pause": "Pause marquee",
+      "resume": "Resume marquee"
+    },
+    "countdown": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds",
+      "complete": "This countdown has ended.",
+      "invalid_date": "Enter a valid end date and time in the section settings."
+    },
+    "full_screen_hero": {
+      "play": "Play video",
+      "pause": "Pause video"
+    },
+    "video_hero": {
+      "play": "Play video",
+      "pause": "Pause video"
+    },
+    "lookbook": {
+      "empty": "Add image blocks to build this lookbook."
+    },
+    "image_mosaic": {
+      "empty": "Add image blocks to build this mosaic."
+    },
+    "editorial_grid": {
+      "empty": "Add story blocks to build this editorial grid."
+    },
+    "product_carousel": {
+      "controls_label": "Product carousel controls",
+      "previous": "Previous products",
+      "next": "Next products",
+      "pagination_label": "Product carousel pages",
+      "go_to": "Go to product {{ number }}",
+      "empty": "Select a collection with products to build this carousel."
+    },
+    "collection_carousel": {
+      "controls_label": "Collection carousel controls",
+      "previous": "Previous collections",
+      "next": "Next collections",
+      "pagination_label": "Collection carousel pages",
+      "go_to": "Go to collection {{ number }}",
+      "view_all_collections": "View all collections",
+      "empty": "Add collection blocks to build this carousel."
+    },
+    "collection_tabs": {
+      "fallback_label": "Featured collection links",
+      "tabs_label": "Featured collections",
+      "empty_collection": "{{ collection }} has no products to show.",
+      "select_collection": "Select a collection for this tab.",
+      "empty": "Add collection tabs to feature products."
+    },
+    "featured_categories": {
+      "empty": "Add category blocks to create this navigation."
+    },
+    "shop_the_look": {
+      "markers_label": "Products in this look",
+      "marker_label": "Product {{ number }}: {{ product }}",
+      "products_label": "Products in this look",
+      "select_product": "Select a product for this marker."
+    },
+    "product_comparison": {
+      "table_label": "Product comparison details",
+      "select_product": "Select a product",
+      "included": "Included",
+      "not_included": "Not included",
+      "not_available": "Not available",
+      "empty": "Add at least two product columns to compare products."
+    },
+    "product_highlights": {
+      "empty": "Select a product to show its highlights."
+    },
+    "product_bundle_showcase": {
+      "subtotal_label": "Available items subtotal",
+      "empty": "Add bundle products to build this showcase."
+    },
+    "recently_viewed_products": {
+      "loading": "Loading recently viewed products",
+      "preview": "Recently viewed products will appear for returning visitors.",
+      "empty": "No available recently viewed products were found."
+    },
+    "product_recommendations": {
+      "loading": "Loading product recommendations",
+      "preview": "Product recommendations will appear when available.",
+      "empty": "No product recommendations are available."
+    },
+    "cross_sell_products": {
+      "empty": "Add products to build this curated cross-sell."
+    },
+    "complementary_products": {
+      "loading": "Loading complementary products",
+      "empty": "No complementary products are available."
+    },
+    "brand_timeline": { "controls_label": "Timeline controls", "previous": "Previous timeline item", "next": "Next timeline item", "empty": "Add timeline items to share the brand journey." },
+    "materials": { "empty": "Add material blocks to build this section." },
+    "manufacturing_process": { "empty": "Add process steps to build this section." },
+    "sustainability": { "empty": "Add verified initiative, metric, or certification blocks." },
+    "brand_values": { "empty": "Add value blocks to build this section." },
+    "team": { "email": "Email", "empty": "Add team member blocks to introduce people." },
+    "awards_certifications": { "empty": "Add verified award or certification blocks." },
+    "behind_the_scenes": { "controls_label": "Behind-the-scenes gallery controls", "previous": "Previous gallery item", "next": "Next gallery item", "empty": "Add gallery items to show real behind-the-scenes media." }
+  }
+}

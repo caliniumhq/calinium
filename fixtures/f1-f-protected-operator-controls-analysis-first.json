@@ -1,0 +1,58 @@
+{
+  "fixture_revision": "f1-f-protected-operator-controls-fixture-v1",
+  "source_baseline": "2000000000000000000000000000000000000003",
+  "project": {
+    "id": "prj_f1f_fixture",
+    "shop_domain": "f1f-fixture.myshopify.com"
+  },
+  "flow": {
+    "flow_id": "merchant-flow-f1f-fixture",
+    "state": "preview_ready",
+    "sequence": 27,
+    "preview_ready": true
+  },
+  "recovery_required": {
+    "analysis_first_merchant_experience_enabled": true,
+    "operator_diagnostics_available": true,
+    "recovery_record_count": 0,
+    "merchant_stage": "Review your preview",
+    "preview_provenance_recovery": {
+      "available": true,
+      "request": {
+        "contract_version": "merchant-flow-preview-provenance-recovery-v1",
+        "flow_id": "merchant-flow-f1f-fixture",
+        "expected_flow_sequence": 27,
+        "expected_flow_checksum": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    }
+  },
+  "normal_merchant": {
+    "analysis_first_merchant_experience_enabled": true,
+    "operator_diagnostics_available": false,
+    "merchant_stage": "Review your preview",
+    "operator_surface": "absent"
+  },
+  "post_recovery": {
+    "analysis_first_merchant_experience_enabled": true,
+    "operator_diagnostics_available": true,
+    "recovery_record_count": 1,
+    "merchant_stage": "Review your preview",
+    "preview_link_available": true,
+    "preview_provenance_recovery": {
+      "available": false,
+      "request": null
+    }
+  },
+  "invariants": {
+    "merchant_stage_count": 3,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "operator_component_mount_maximum": 1,
+    "automatic_operator_actions": 0,
+    "source_default_enabled": false,
+    "shopify_calls": 0,
+    "provider_calls": 0
+  }
+}

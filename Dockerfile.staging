@@ -1,0 +1,42 @@
+FROM node:22.15.0-bookworm-slim
+
+ARG CALINIUM_BUILD_SOURCE_REVISION=0000000000000000000000000000000000000000
+ENV NODE_ENV=production
+ENV CALINIUM_BUILD_SOURCE_REVISION=${CALINIUM_BUILD_SOURCE_REVISION}
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+ENV HOME=/home/node
+ENV CALINIUM_SHOPIFY_CLI=/app/node_modules/.bin/shopify
+ENV CALINIUM_SHOPIFY_CLI_EXPECTED_VERSION=4.6.0
+ENV CALINIUM_SHOPIFY_CLI_RUNTIME_REVISION=shopify-cli-runtime-v1
+ENV CALINIUM_SHOPIFY_CLI_RUNTIME_STATE_REVISION=shopify-cli-runtime-state-v1
+ENV CALINIUM_SHOPIFY_CLI_RUNTIME_STATE_ROOT=/app/output/.calinium-example-staging/shopify-cli-runtime-state
+ENV CALINIUM_SHOPIFY_CLI_AUTOUPGRADE_POLICY=disabled
+WORKDIR /app
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates gosu zip unzip \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY --chown=node:node . .
+RUN npm ci --include=dev
+RUN node /app/scripts/apply-shopify-cli-storefront-password-no-persist-patch.js \
+  && node /app/scripts/apply-shopify-cli-storefront-password-no-persist-patch.js --verify
+RUN npx playwright install --with-deps chromium \
+  && chmod -R a+rX /ms-playwright
+RUN npm ci --include=dev --prefix apps/dashboard \
+  && npm run build --prefix apps/dashboard \
+  && npm prune --omit=dev --prefix apps/dashboard
+RUN mkdir -p /app/output /home/node \
+  && chown -R node:node /home/node /app/output
+RUN gosu node:node env HOME=/home/node CI=1 NO_COLOR=1 FORCE_COLOR=0 \
+  node /app/scripts/attest-shopify-cli-build.js
+RUN node /app/scripts/attest-shopify-cli-build.js --harden
+RUN gosu node:node node /app/scripts/apply-shopify-cli-storefront-password-no-persist-patch.js --verify
+RUN gosu node:node env HOME=/home/node CI=1 NO_COLOR=1 FORCE_COLOR=0 \
+  node /app/scripts/attest-shopify-cli-build.js --verify-immutable
+RUN gosu node:node env HOME=/home/node CI=1 NO_COLOR=1 FORCE_COLOR=0 \
+  node /app/scripts/test-e5r-l-shopify-cli-runtime-state-image.js
+RUN gosu node:node env HOME=/home/node CI=1 NO_COLOR=1 FORCE_COLOR=0 \
+  node /app/scripts/test-e5r-n-shopify-storefront-password-image.js
+
+ENTRYPOINT ["/bin/sh", "/app/scripts/start-staging.sh"]

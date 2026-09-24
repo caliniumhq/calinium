@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-d2-7-terminal-recovery.schema.json",
+  "title": "Calinium Merchant Flow D2.7 Terminal Recovery",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "recovery_id", "checksum", "authorized_at", "flow", "job", "operator", "source", "lineage", "render", "d1", "d2_7_parent", "safety"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-flow-d2-7-terminal-recovery-v1"},
+    "recovery_id": {"type": "string", "pattern": "^merchant-flow-d2-7-terminal-recovery-[a-f0-9]{20}$"},
+    "checksum": {"$ref": "#/$defs/checksum"},
+    "authorized_at": {"type": "string", "format": "date-time"},
+    "flow": {
+      "type": "object", "required": ["flow_id", "project_id", "organization_id", "expected_sequence", "expected_checksum", "artifact_id", "artifact_checksum"],
+      "properties": {"flow_id": {"type": "string", "minLength": 1}, "project_id": {"type": "string", "minLength": 1}, "organization_id": {"type": "string", "minLength": 1}, "expected_sequence": {"type": "integer", "minimum": 0}, "expected_checksum": {"$ref": "#/$defs/checksum"}, "artifact_id": {"type": "string", "minLength": 1}, "artifact_checksum": {"$ref": "#/$defs/checksum"}}, "additionalProperties": false
+    },
+    "job": {
+      "type": "object", "required": ["job_id", "source_status", "source_attempt", "target_attempt", "resume_operation_id"],
+      "properties": {"job_id": {"type": "string", "minLength": 1}, "source_status": {"const": "terminal"}, "source_attempt": {"type": "integer", "minimum": 1}, "target_attempt": {"type": "integer", "minimum": 2}, "resume_operation_id": {"type": "string", "minLength": 1}}, "additionalProperties": false
+    },
+    "operator": {"type": "object", "required": ["actor_user_id", "idempotency_key"], "properties": {"actor_user_id": {"type": "string", "minLength": 1}, "idempotency_key": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "source": {
+      "type": "object", "required": ["failure_id", "failure_checksum", "recorded_stage", "recorded_category", "diagnosed_category", "previous_source_revision", "current_source_revision"],
+      "properties": {"failure_id": {"type": "string", "minLength": 1}, "failure_checksum": {"$ref": "#/$defs/checksum"}, "recorded_stage": {"enum": ["provider_initialization", "semantic_validation", "unknown"]}, "recorded_category": {"enum": ["d2_7_provider_client_initialization_failed", "d2_7_semantic_validation_failed", "d2_7_unknown_provider_failure"]}, "diagnosed_category": {"enum": ["D2_7_PROVIDER_CLIENT_INITIALIZATION_FAILED", "D2_7_SEMANTIC_VALIDATION_SOURCE_REMEDIATED"]}, "previous_source_revision": {"$ref": "#/$defs/sourceRevision"}, "current_source_revision": {"$ref": "#/$defs/sourceRevision"}}, "additionalProperties": false
+    },
+    "lineage": {
+      "type": "object", "required": ["resolution_id", "resolution_checksum", "candidate_set_checksum", "selected_candidate_id", "binding_resume_operation_id"],
+      "properties": {"resolution_id": {"type": "string", "minLength": 1}, "resolution_checksum": {"$ref": "#/$defs/checksum"}, "candidate_set_checksum": {"$ref": "#/$defs/checksum"}, "selected_candidate_id": {"type": "string", "minLength": 1}, "binding_resume_operation_id": {"type": "string", "minLength": 1}}, "additionalProperties": false
+    },
+    "render": {"type": "object", "required": ["request_id", "request_checksum", "render_checksum", "render_result_ids"], "properties": {"request_id": {"type": "string", "minLength": 1}, "request_checksum": {"$ref": "#/$defs/checksum"}, "render_checksum": {"$ref": "#/$defs/checksum"}, "render_result_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}, "additionalProperties": false},
+    "d1": {"type": "object", "required": ["evidence_id", "evidence_checksum", "policy_revision"], "properties": {"evidence_id": {"type": "string", "minLength": 1}, "evidence_checksum": {"$ref": "#/$defs/checksum"}, "policy_revision": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "d2_7_parent": {"type": "object", "required": ["request_id", "request_checksum"], "properties": {"request_id": {"type": "string", "minLength": 1}, "request_checksum": {"$ref": "#/$defs/checksum"}}, "additionalProperties": false},
+    "safety": {
+      "type": "object", "required": ["historical_attempt_mutated", "render_execution_allowed_before_provider", "d1_execution_allowed_before_provider", "automatic_retry_allowed", "automatic_repair_allowed", "shopify_write_allowed"],
+      "properties": {"historical_attempt_mutated": {"const": false}, "render_execution_allowed_before_provider": {"const": false}, "d1_execution_allowed_before_provider": {"const": false}, "automatic_retry_allowed": {"const": false}, "automatic_repair_allowed": {"const": false}, "shopify_write_allowed": {"const": false}}, "additionalProperties": false
+    }
+  },
+  "$defs": {"checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "sourceRevision": {"type": "string", "pattern": "^[a-f0-9]{40}$"}},
+  "additionalProperties": false
+}

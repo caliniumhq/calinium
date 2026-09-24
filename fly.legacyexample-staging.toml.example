@@ -1,0 +1,55 @@
+# Synthetic historical-runtime example retained for regression documentation.
+# It is not a deployment target and must never be deployed unchanged.
+app = "calinium-legacy-staging"
+primary_region = "cdg"
+kill_signal = "SIGTERM"
+kill_timeout = 300
+
+[build]
+  dockerfile = "Dockerfile.legacyexample-staging"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+  CALINIUM_SERVER_HOST = "0.0.0.0"
+  CALINIUM_ENVIRONMENT = "staging"
+  CALINIUM_APPLICATION_URL = "https://calinium-legacy-staging.fly.dev"
+  CALINIUM_SHOPIFY_CLIENT_ID = "00000000000000000000000000000002"
+  CALINIUM_SHOPIFY_OAUTH_REDIRECT_URI = "https://calinium-legacy-staging.fly.dev/api/shopify/oauth/callback"
+  CALINIUM_SHOPIFY_ADMIN_API_VERSION = "2026-07"
+  CALINIUM_SHOPIFY_WEBHOOK_API_VERSION = "2026-07"
+  CALINIUM_SHOPIFY_MANAGED_INSTALLATION = "true"
+  CALINIUM_SHOPIFY_TOKEN_ENCRYPTION_KEY_ID = "legacyexample-staging-v1"
+  CALINIUM_EMBEDDED_APP = "true"
+  CALINIUM_ALLOWED_SHOP_DOMAINS = "calinium-legacyexample.myshopify.com"
+  CALINIUM_STAGING_SHOP_DOMAIN = "calinium-legacy-admin-example.myshopify.com"
+  CALINIUM_STAGING_CANONICAL_SHOP_DOMAIN = "calinium-legacyexample.myshopify.com"
+  CALINIUM_STORAGE_DRIVER = "sqlite"
+  CALINIUM_PERSISTENT_ROOT = "/app/output"
+  CALINIUM_SQLITE_PATH = "/app/output/.legacyexample-staging/dashboard.sqlite"
+  CALINIUM_ASSET_STORAGE_PATH = "/app/output/.legacyexample-staging/assets"
+  CALINIUM_PAYMENT_PROVIDER = "staging_validation_no_charge"
+  CALINIUM_STAGING_BILLING_BYPASS_ENABLED = "true"
+  CALINIUM_SHOPIFY_BILLING_TEST_MODE = "false"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = false
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    grace_period = "30s"
+    interval = "15s"
+    method = "GET"
+    path = "/api/ready"
+    timeout = "5s"
+
+[[mounts]]
+  source = "calinium_legacyexample_data"
+  destination = "/app/output"
+
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "2048mb"

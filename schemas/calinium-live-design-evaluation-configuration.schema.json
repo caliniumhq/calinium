@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-live-design-evaluation-configuration.schema.json",
+  "title": "Calinium Live Design Evaluation Configuration",
+  "type": "object",
+  "required": ["schema_version", "configuration_version", "configuration_id", "configuration_revision", "provider", "api", "model", "credentials", "calibration", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "configuration_version": {"type": "string", "const": "1.0.0"},
+    "configuration_id": {"type": "string", "const": "calinium_openai_live_design_evaluation"},
+    "configuration_revision": {"type": "string", "minLength": 1},
+    "provider": {"type": "object", "required": ["interface_version", "provider_id", "provider_version", "provider_kind"], "properties": {"interface_version": {"type": "string", "const": "storefront-design-provider-v1"}, "provider_id": {"type": "string", "minLength": 1}, "provider_version": {"type": "string", "minLength": 1}, "provider_kind": {"type": "string", "const": "live_multimodal"}}, "additionalProperties": false},
+    "api": {"type": "object", "required": ["endpoint", "api_family", "timeout_ms", "max_attempts", "maximum_retry_delay_ms", "retry_statuses"], "properties": {"endpoint": {"type": "string", "const": "https://api.openai.com/v1/responses"}, "api_family": {"type": "string", "const": "responses"}, "timeout_ms": {"type": "integer", "minimum": 1000, "maximum": 600000}, "max_attempts": {"type": "integer", "minimum": 1, "maximum": 3}, "maximum_retry_delay_ms": {"type": "integer", "minimum": 0, "maximum": 30000}, "retry_statuses": {"type": "array", "items": {"type": "integer", "enum": [429, 500, 502, 503, 504]} }}, "additionalProperties": false},
+    "model": {"type": "object", "required": ["id", "configuration_revision", "reasoning_effort", "image_detail", "max_output_tokens", "store"], "properties": {"id": {"type": "string", "minLength": 1}, "configuration_revision": {"type": "string", "minLength": 1}, "reasoning_effort": {"type": "string", "enum": ["none", "low", "medium", "high", "xhigh", "max"]}, "image_detail": {"type": "string", "enum": ["low", "high", "original"]}, "max_output_tokens": {"type": "integer", "minimum": 1000, "maximum": 128000}, "store": {"type": "boolean", "const": false}}, "additionalProperties": false},
+    "credentials": {"type": "object", "required": ["api_key_environment_variable", "organization_environment_variable", "project_environment_variable"], "properties": {"api_key_environment_variable": {"type": "string", "const": "OPENAI_API_KEY"}, "organization_environment_variable": {"type": "string", "const": "OPENAI_ORG_ID"}, "project_environment_variable": {"type": "string", "const": "OPENAI_PROJECT_ID"}}, "additionalProperties": false},
+    "calibration": {"type": "object", "required": ["repeat_runs", "comparison_fixture_revision", "comparison_key", "human_calibration_reference"], "properties": {"repeat_runs": {"type": "integer", "minimum": 3, "maximum": 3}, "comparison_fixture_revision": {"type": "string"}, "comparison_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "human_calibration_reference": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "safety": {"type": "object", "required": ["fixture_fallback_allowed", "automatic_repair_allowed", "automatic_mutation_allowed", "shopify_write_allowed"], "properties": {"fixture_fallback_allowed": {"type": "boolean", "const": false}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "automatic_mutation_allowed": {"type": "boolean", "const": false}, "shopify_write_allowed": {"type": "boolean", "const": false}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

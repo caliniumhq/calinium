@@ -1,0 +1,299 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign collection_carousel_heading_id = 'CollectionCarouselHeading-' | append: section.id
+  assign collection_carousel_classes = 'co-collection-carousel co-commerce-section co-commerce-section--align-' | append: section.settings.text_alignment
+  assign collection_carousel_classes = collection_carousel_classes | append: ' co-color-scheme-' | append: section.settings.color_scheme
+  assign collection_carousel_view_all_label = section.settings.view_all_label | default: 'sections.collection_carousel.view_all_collections' | t
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ collection_carousel_classes }}{% unless section.settings.enable_swipe_mobile %} co-commerce-carousel--mobile-grid{% endunless %}" style="--co-commerce-desktop-columns: {{ section.settings.columns_desktop }};" {% if section.settings.heading != blank %}aria-labelledby="{{ collection_carousel_heading_id }}"{% endif %} data-co-section-behavior data-co-carousel {{ section.shopify_attributes }}>
+  <div class="co-page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.description, id: collection_carousel_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-commerce-section__header' %}
+    {% if section.blocks.size > 0 %}
+      <ul class="co-commerce-carousel__track" role="list" data-carousel-track>
+        {% for block in section.blocks %}
+          {% assign collection_item = block.settings.collection %}
+          <li class="co-commerce-carousel__slide co-collection-carousel__slide" data-carousel-slide {{ block.shopify_attributes }}>
+            {% if collection_item != blank %}
+              {% render 'collection-card', collection: collection_item, image: block.settings.image, title: block.settings.title, description: block.settings.description, link_label: block.settings.link_label, heading_level: 'h3', show_product_count: section.settings.show_product_count, image_ratio: section.settings.image_ratio, text_position: section.settings.text_position, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 25vw, 78vw', image_widths: '165, 360, 535, 750, 1000' %}
+            {% elsif request.design_mode %}
+              <div class="co-commerce-section__placeholder">{{ 'collection-1' | placeholder_svg_tag }}</div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% if section.blocks.size > 1 and section.settings.enable_arrows %}
+        <div class="co-commerce-carousel__controls" aria-label="{{ 'sections.collection_carousel.controls_label' | t | escape }}">
+          <button class="co-button co-button--secondary co-button--medium" type="button" data-action="carousel-prev" aria-label="{{ 'sections.collection_carousel.previous' | t | escape }}">{% render 'icon', icon: 'arrow-left', size: 18, decorative: true %}</button>
+          <button class="co-button co-button--secondary co-button--medium" type="button" data-action="carousel-next" aria-label="{{ 'sections.collection_carousel.next' | t | escape }}">{% render 'icon', icon: 'arrow-right', size: 18, decorative: true %}</button>
+        </div>
+      {% endif %}
+      {% if section.blocks.size > 1 and section.settings.enable_pagination %}
+        <div class="co-commerce-carousel__pagination" aria-label="{{ 'sections.collection_carousel.pagination_label' | t | escape }}">
+          {% for block in section.blocks %}<button class="co-button co-button--secondary co-button--small" type="button" data-carousel-dot="{{ forloop.index0 }}" aria-label="{{ 'sections.collection_carousel.go_to' | t: number: forloop.index | escape }}"{% if forloop.first %} aria-current="true"{% endif %}><span aria-hidden="true">•</span></button>{% endfor %}
+        </div>
+      {% endif %}
+      {% if section.settings.show_view_all %}<div class="co-commerce-section__actions">{% render 'button', label: collection_carousel_view_all_label, url: routes.collections_url, variant: 'text', icon: 'arrow-right', icon_position: 'end' %}</div>{% endif %}
+    {% elsif request.design_mode %}
+      <p class="co-commerce-section__empty">{{ 'sections.collection_carousel.empty' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.collection_carousel.name",
+  "tag": "section",
+  "class": "co-section-collection-carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.shared.settings.eyebrow.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.shared.settings.heading.label",
+      "default": "Shop collections"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.shared.settings.description.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.shared.settings.heading_size.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.shared.options.small"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.shared.options.standard"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.shared.options.large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shared.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shared.options.center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.collection_carousel.settings.columns_desktop.label",
+      "default": "4",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.shared.settings.image_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.shared.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.shared.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.shared.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "t:sections.shared.settings.text_position.label",
+      "default": "below",
+      "options": [
+        {
+          "value": "below",
+          "label": "t:sections.shared.options.below"
+        },
+        {
+          "value": "overlay",
+          "label": "t:sections.shared.options.overlay"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "t:sections.shared.settings.show_product_count.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_swipe_mobile",
+      "label": "t:sections.collection_carousel.settings.enable_swipe_mobile.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_arrows",
+      "label": "t:sections.collection_carousel.settings.enable_arrows.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_pagination",
+      "label": "t:sections.collection_carousel.settings.enable_pagination.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "t:sections.shared.settings.show_view_all.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "t:sections.shared.settings.view_all_label.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.shared.settings.desktop_top_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.shared.settings.desktop_bottom_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "t:sections.shared.settings.mobile_top_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "t:sections.shared.settings.mobile_bottom_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "t:sections.collection_carousel.blocks.collection_name",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.shared.settings.collection.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.shared.settings.custom_image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.shared.settings.custom_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:sections.shared.settings.description.label"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "t:sections.shared.settings.link_label.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.collection_carousel.preset",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

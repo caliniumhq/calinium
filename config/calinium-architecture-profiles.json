@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "registry_version": "1.1.0",
+  "registry_id": "calinium_architecture_profiles",
+  "default_profile_id": "profile.current_calinium.v1",
+  "profiles": [
+    {
+      "id": "profile.current_calinium.v1",
+      "profile_schema_version": "1.0",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Current Calinium",
+      "description": "The legacy/current Calinium One storefront architecture, registered without changing any presenter, runtime behavior, or merchant-visible output.",
+      "family_selections": {
+        "header_navigation": "family.header_navigation.current_calinium.v1",
+        "product_card": "family.product_card.current_calinium.v1",
+        "collection_merchandising": "family.collection_merchandising.current_calinium.v1",
+        "product_detail": "family.product_detail.current_calinium.v1",
+        "cart": "family.cart.current_calinium.v1",
+        "responsive_behavior": "family.responsive_behavior.current_calinium.v1"
+      },
+      "capability_requirements": ["cart", "commerce_merchandising", "header_navigation", "motion_accessibility", "product_cards", "responsive_media", "search_filters", "spacing_layout"],
+      "compatibility": {
+        "target_theme": {"id": "calinium-one", "version": "1.0"},
+        "compiler_versions": ["1.0.0"],
+        "preset_ids": ["atelier", "maison", "gallery", "ritual", "essential", "signal"],
+        "design_dna_engine_versions": ["design-dna-v1"]
+      },
+      "eligibility": {"required_signals": [], "default_eligible": true, "merchant_question_required": false},
+      "fallback_behavior": {"when_profile_unspecified": "select_this_profile", "when_signals_insufficient": "select_this_profile", "on_invalid_explicit_profile": "fail_closed"}
+    },
+    {
+      "id": "profile.editorial_discovery.v1",
+      "profile_schema_version": "1.0",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Editorial Discovery",
+      "description": "A controlled image-led, story-rich storefront proof with editorial discovery presenters and the existing shared Calinium cart.",
+      "family_selections": {
+        "header_navigation": "family.header_navigation.editorial_discovery.v1",
+        "product_card": "family.product_card.editorial_discovery.v1",
+        "collection_merchandising": "family.collection_merchandising.editorial_discovery.v1",
+        "product_detail": "family.product_detail.editorial_discovery.v1",
+        "cart": "family.cart.current_calinium.v1",
+        "responsive_behavior": "family.responsive_behavior.editorial_discovery.v1"
+      },
+      "capability_requirements": ["cart", "commerce_merchandising", "header_navigation", "motion_accessibility", "product_cards", "responsive_media", "search_filters", "spacing_layout"],
+      "compatibility": {
+        "target_theme": {"id": "calinium-one", "version": "1.0"},
+        "compiler_versions": ["1.0.0"],
+        "preset_ids": ["atelier", "maison", "gallery", "ritual", "essential", "signal"],
+        "design_dna_engine_versions": ["design-dna-v1"]
+      },
+      "eligibility": {"required_signals": [], "default_eligible": false, "merchant_question_required": false},
+      "fallback_behavior": {"when_profile_unspecified": "preserve_registry_default", "when_signals_insufficient": "fail_closed", "on_invalid_explicit_profile": "fail_closed"}
+    }
+  ]
+}

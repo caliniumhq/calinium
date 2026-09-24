@@ -1,0 +1,33 @@
+{
+  "fixture_revision": "architecture-material-question-fixture-v1",
+  "conversation_revision": "conversation-e2-controlled-v1",
+  "merchant_context": {
+    "project_id": "project-e2-controlled",
+    "store_id": "store-e2-controlled",
+    "merchant_id": "merchant-e2-controlled"
+  },
+  "question_created_at": "2026-08-17T08:00:00.000Z",
+  "answer_created_at": "2026-08-17T08:01:00.000Z",
+  "natural_answers": {
+    "image_led": [
+      "I want it to feel very visual.",
+      "More like a gallery with strong photography.",
+      "Make discovery editorial and story-led."
+    ],
+    "information_led": [
+      "I care more about easy shopping and navigation.",
+      "Keep it straightforward for customers.",
+      "Make products quick to find and compare."
+    ],
+    "unresolved": [
+      "I am not sure yet.",
+      "A bit of everything.",
+      "Whatever you think."
+    ]
+  },
+  "controlled_flows": {
+    "direct_current": "commerce_dense_store",
+    "direct_editorial": "image_led_editorial_store",
+    "ambiguous": "ambiguous_store"
+  }
+}

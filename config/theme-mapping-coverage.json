@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "catalog_version": 1,
+  "compatible_compiler_versions": [
+    "1.0.0"
+  ],
+  "catalog_id": "theme_mapping_coverage",
+  "compiler_decisions_total": 13,
+  "fully_mapped": 5,
+  "partially_mapped": 7,
+  "unsupported": 1,
+  "global_settings_audited": 25,
+  "section_settings_audited": 1364,
+  "classified_settings": 1389,
+  "coverage_percentage": 92.3,
+  "source": {
+    "file": "config/strategy-setting-mapping.json"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-project-shopify-resource-approval.schema.json",
+  "title": "Calinium project Shopify resource approval",
+  "type": "object",
+  "required": ["version", "id", "project_id", "connection_id", "resource_id", "approval_status", "source_revision", "merchant_note", "approved_by_user_id", "approved_at", "rejected_at", "revoked_at", "updated_at", "created_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^sra_[a-z0-9-]+$"},
+    "project_id": {"type": "string", "pattern": "^prj_[a-z0-9-]+$"},
+    "connection_id": {"type": "string", "pattern": "^shc_[a-z0-9-]+$"},
+    "resource_id": {"type": "string", "pattern": "^shr_[a-z0-9-]+$"},
+    "approval_status": {"type": "string", "enum": ["approved", "rejected", "revoked", "stale", "unavailable"]},
+    "source_revision": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "merchant_note": {"type": ["string", "null"], "maxLength": 1000},
+    "approved_by_user_id": {"type": ["string", "null"], "pattern": "^usr_[a-z0-9-]+$"},
+    "approved_at": {"type": ["string", "null"]},
+    "rejected_at": {"type": ["string", "null"]},
+    "revoked_at": {"type": ["string", "null"]},
+    "updated_at": {"type": "string"},
+    "created_at": {"type": "string"}
+  },
+  "additionalProperties": false
+}

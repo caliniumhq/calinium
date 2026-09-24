@@ -1,0 +1,86 @@
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign main_page_classes = 'co-main-page co-color-scheme-' | append: section.settings.color_scheme
+  assign main_page_classes = main_page_classes | append: ' co-main-page--width-' | append: section.settings.content_width
+  assign main_page_classes = main_page_classes | append: ' co-main-page--align-' | append: section.settings.content_alignment
+  assign main_page_heading_id = 'PageHeading-' | append: section.id
+%}
+
+<section
+  class="{{ main_page_classes }}"
+  {% if section.settings.show_title %}aria-labelledby="{{ main_page_heading_id }}"{% endif %}
+>
+  <div class="co-main-page__inner co-page-width">
+    {% if section.settings.show_title %}
+      <h1 id="{{ main_page_heading_id }}" class="co-main-page__heading">{{ page.title | escape }}</h1>
+    {% endif %}
+
+    {% if page.content != blank %}
+      <div class="co-main-page__content rte">{{ page.content }}</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_page.name",
+  "tag": "section",
+  "class": "co-section-main-page",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "t:sections.main_page.settings.show_title.label",
+      "info": "t:sections.main_page.settings.show_title.info",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "t:sections.main_page.settings.content_width.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.main_page.settings.content_width.options.narrow"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.main_page.settings.content_width.options.standard"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.main_page.settings.content_width.options.wide"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:sections.main_page.settings.content_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.main_page.settings.content_alignment.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.main_page.settings.content_alignment.options.center"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main_page.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

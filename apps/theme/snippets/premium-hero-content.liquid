@@ -1,0 +1,48 @@
+{% liquid
+  assign premium_heading = heading | default: blank
+  assign premium_heading_id = heading_id | default: blank
+  assign premium_heading_level = heading_level | default: 'h2'
+  assign premium_alignment = alignment | default: 'left'
+  assign premium_size = heading_size | default: 'large'
+  assign premium_button_size = button_size | default: 'large'
+  assign premium_has_actions = false
+
+  if primary_label != blank and primary_link != blank
+    assign premium_has_actions = true
+  endif
+  if secondary_label != blank and secondary_link != blank
+    assign premium_has_actions = true
+  endif
+%}
+
+<div class="co-premium-hero__content co-page-width co-premium-hero__content--align-{{ premium_alignment }}">
+  <div class="co-premium-hero__content-inner{% if content_panel %} co-premium-hero__content-inner--panel{% endif %}">
+    {% if badge != blank %}
+      <p class="co-premium-hero__badge">{{ badge | escape }}</p>
+    {% endif %}
+
+    {% render 'section-heading', eyebrow: eyebrow, heading: premium_heading, id: premium_heading_id, level: premium_heading_level, alignment: premium_alignment, size: premium_size, class: 'co-premium-hero__heading' %}
+
+    {% if product != blank %}
+      {% if show_vendor and product.vendor != blank %}<p class="co-premium-hero__vendor">{{ product.vendor | escape }}</p>{% endif %}
+      {% if show_price %}{% render 'price', product: product, class: 'co-premium-hero__price', show_currency: true, show_compare_at_price: true %}{% endif %}
+    {% endif %}
+
+    {% if text != blank %}
+      {% render 'rich-text', content: text, alignment: premium_alignment, class: 'co-premium-hero__text' %}
+    {% elsif collection != blank and show_collection_description and collection.description != blank %}
+      <div class="co-premium-hero__text co-rich-text">{{ collection.description | truncatewords: 36 }}</div>
+    {% endif %}
+
+    {% if premium_has_actions %}
+      <div class="co-premium-hero__actions{% if mobile_full_width %} co-premium-hero__actions--mobile-full-width{% endif %}">
+        {% if primary_label != blank and primary_link != blank %}{% render 'button', label: primary_label, url: primary_link, variant: primary_variant, size: premium_button_size %}{% endif %}
+        {% if secondary_label != blank and secondary_link != blank %}{% render 'button', label: secondary_label, url: secondary_link, variant: secondary_variant, size: premium_button_size %}{% endif %}
+      </div>
+    {% endif %}
+
+    {% if text_link_label != blank and text_link != blank %}
+      <a class="co-premium-hero__text-link" href="{{ text_link }}">{{ text_link_label | escape }}</a>
+    {% endif %}
+  </div>
+</div>

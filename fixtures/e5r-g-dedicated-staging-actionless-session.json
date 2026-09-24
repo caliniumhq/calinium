@@ -1,0 +1,86 @@
+{
+  "fixture_version": "e5r-g-dedicated-staging-actionless-session-v1",
+  "environment": {
+    "kind": "dedicated_controlled_staging",
+    "shop_domain": "calinium-example.myshopify.com"
+  },
+  "project": {
+    "id": "prj_e5r_g_dedicated_staging_fixture",
+    "organization_id": "org_e5r_g_dedicated_staging_fixture"
+  },
+  "session": {
+    "id": "cds_e5r_g_actionless_fixture",
+    "project_id": "prj_e5r_g_dedicated_staging_fixture",
+    "stage": "conversation",
+    "conversation_state": {
+      "version": "1.0",
+      "conversationId": "creative-director-e5r-g-actionless-fixture",
+      "stage": "complete",
+      "knownFacts": [],
+      "inferredFacts": [],
+      "unknowns": [
+        {
+          "path": "productsOrServices",
+          "reason": "The merchant chose not to provide this information yet."
+        },
+        {
+          "path": "targetAudience",
+          "reason": "The merchant chose not to provide this information yet."
+        },
+        {
+          "path": "primaryGoal",
+          "reason": "The merchant chose not to provide this information yet."
+        }
+      ],
+      "missingCriticalFacts": [
+        "productsOrServices",
+        "targetAudience",
+        "primaryGoal"
+      ],
+      "questionsAsked": [
+        "products",
+        "audience",
+        "goal",
+        "feeling",
+        "business-name",
+        "creative-freedom",
+        "brand-assets"
+      ],
+      "merchantCorrections": [],
+      "currentQuestionId": null,
+      "readyForCreativeBrief": false
+    },
+    "transcript": [
+      {
+        "id": "msg_e5r_g_previous_understanding",
+        "role": "calinium",
+        "content": "I still need a little more business context before preparing your direction.",
+        "created_at": "2026-08-26T09:00:00.000Z"
+      }
+    ],
+    "creative_brief": null,
+    "store_strategy": null,
+    "review": {},
+    "merchant_profile": null,
+    "resource_plan": {},
+    "generation_context": {},
+    "generation_state": {
+      "status": "not_started",
+      "stages": [],
+      "error": null,
+      "generated_at": null
+    },
+    "preview_state": {},
+    "content_plan": {},
+    "preset_selection": null,
+    "created_at": "2026-08-26T09:00:00.000Z",
+    "updated_at": "2026-08-26T09:00:00.000Z"
+  },
+  "pre_remediation_projection": {
+    "quick_start_instruction": "Answer the current question",
+    "current_question_id": null,
+    "primary_merchant_actions": [],
+    "advanced_available_at_embedded_narrow_viewport": false,
+    "actionless": true
+  }
+}

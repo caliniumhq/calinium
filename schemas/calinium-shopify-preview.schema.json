@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-shopify-preview.schema.json",
+  "title": "Calinium Shopify preview target",
+  "type": "object",
+  "required": ["version", "id", "project_id", "connection_id", "remote_theme_gid", "remote_theme_id", "theme_name", "theme_role", "preview_url", "status", "generated_build_id", "created_at", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^spt_[a-z0-9-]+$"},
+    "project_id": {"type": "string", "pattern": "^prj_[a-z0-9-]+$"},
+    "connection_id": {"type": "string", "pattern": "^shc_[a-z0-9-]+$"},
+    "remote_theme_gid": {"type": ["string", "null"]},
+    "remote_theme_id": {"type": ["string", "null"]},
+    "theme_name": {"type": ["string", "null"]},
+    "theme_role": {"type": ["string", "null"]},
+    "preview_url": {"type": ["string", "null"]},
+    "status": {"type": "string", "enum": ["not_requested", "preparing", "ready", "expired", "deleted", "failed"]},
+    "generated_build_id": {"type": ["string", "null"]},
+    "created_at": {"type": "string"},
+    "updated_at": {"type": "string"}
+  },
+  "additionalProperties": false
+}

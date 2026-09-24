@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "catalog_version": 1,
+  "compatible_compiler_versions": [
+    "1.0.0"
+  ],
+  "catalog_id": "draft_builder_readiness",
+  "description": "Readiness assessment for a future Strategy-to-Draft Configuration Builder. It does not create any storefront configuration.",
+  "decisions": [
+    {
+      "decision_id": "industry",
+      "readiness": "NO",
+      "explanation": "Industry is a compiler context decision. The current theme has no global industry setting, so no automatic Theme Editor value is available.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "industry"
+      }
+    },
+    {
+      "decision_id": "personality",
+      "readiness": "PARTIAL",
+      "explanation": "Brand personality influences downstream typography, spacing, motion, and composition, but it is not represented by a standalone Shopify setting.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "personality"
+      }
+    },
+    {
+      "decision_id": "design_language",
+      "readiness": "PARTIAL",
+      "explanation": "Visual language maps to existing scale, spacing, color-scheme, and composition controls, but it does not map to one atomic Theme Editor setting.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "design_language"
+      }
+    },
+    {
+      "decision_id": "typography",
+      "readiness": "PARTIAL",
+      "explanation": "Scale, line-height, and tracking map directly; font selection remains merchant-review because a profile name is not a licensed font choice.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "typography"
+      }
+    },
+    {
+      "decision_id": "spacing",
+      "readiness": "YES",
+      "explanation": "Spacing profiles map to the real global layout controls and their token-backed defaults.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "spacing"
+      }
+    },
+    {
+      "decision_id": "color_strategy",
+      "readiness": "PARTIAL",
+      "explanation": "The theme exposes scheme selection, while the actual palette definitions are merchant-owned color-scheme data rather than strategy-owned values.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "color_strategy"
+      }
+    },
+    {
+      "decision_id": "image_strategy",
+      "readiness": "PARTIAL",
+      "explanation": "The theme supports responsive media and explicit media fields, but photographic style cannot be automatically derived or manufactured by a Shopify setting.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "image_strategy"
+      }
+    },
+    {
+      "decision_id": "animation",
+      "readiness": "PARTIAL",
+      "explanation": "The global motion controls and several section-level animation toggles exist; there is no universal per-section animation profile setting.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "animation"
+      }
+    },
+    {
+      "decision_id": "conversion_strategy",
+      "readiness": "PARTIAL",
+      "explanation": "Conversion strategy maps to installed commerce, trust, and lead-capture sections, but urgency, claims, and proof require merchant-controlled content and verification.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "conversion_strategy"
+      }
+    },
+    {
+      "decision_id": "blueprint",
+      "readiness": "YES",
+      "explanation": "Blueprints constrain the installed-section flow and maximum section count through existing page-blueprints and section capabilities.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "blueprint"
+      }
+    },
+    {
+      "decision_id": "homepage_recipe",
+      "readiness": "YES",
+      "explanation": "Every current layout-recipe section is checked against an installed section capability profile.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "homepage_recipe"
+      }
+    },
+    {
+      "decision_id": "section_selection",
+      "readiness": "YES",
+      "explanation": "The compiler’s selected sections are validated against installed section files and their generated capability profiles.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "section_selection"
+      }
+    },
+    {
+      "decision_id": "section_ordering",
+      "readiness": "YES",
+      "explanation": "Ordering uses existing recipe, blueprint, composition-rule, compatibility, content-density, and installed-section data.",
+      "source": {
+        "file": "ai/compiler/compile-strategy.js",
+        "decision_id": "section_ordering"
+      }
+    }
+  ]
+}

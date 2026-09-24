@@ -1,0 +1,88 @@
+{% liquid
+  assign variant_picker_product = product
+  assign variant_picker_variant = selected_variant | default: variant_picker_product.selected_or_first_available_variant
+  assign variant_picker_type = picker_type | default: 'buttons'
+  assign variant_picker_section_id = section_id
+  assign variant_picker_id = 'ProductVariant-' | append: variant_picker_section_id
+  assign variant_picker_label = 'products.product.variant' | t
+  assign option_count = variant_picker_product.options_with_values.size
+%}
+
+{% unless variant_picker_product.has_only_default_variant %}
+  <div class="co-variant-picker" data-variant-picker data-option-count="{{ option_count }}">
+    <div class="co-variant-picker__fallback" data-variant-picker-fallback>
+      <label class="co-variant-picker__label" for="{{ variant_picker_id }}">{{ variant_picker_label }}</label>
+      <select id="{{ variant_picker_id }}" name="id" data-product-variant-id>
+        {% for variant in variant_picker_product.variants %}
+          <option
+            value="{{ variant.id }}"
+            data-option-1="{{ variant.option1 | escape }}"
+            data-option-2="{{ variant.option2 | escape }}"
+            data-option-3="{{ variant.option3 | escape }}"
+            data-variant-available="{{ variant.available }}"
+            data-variant-media-id="{% if variant.featured_media != blank %}{{ variant.featured_media.id }}{% endif %}"
+            data-variant-display-price="{{ variant.price | money | escape }}"
+            data-variant-title="{{ variant.title | escape }}"
+            data-quantity-min="{{ variant.quantity_rule.min }}"
+            data-quantity-max="{% if variant.quantity_rule.max != blank %}{{ variant.quantity_rule.max }}{% endif %}"
+            data-quantity-increment="{{ variant.quantity_rule.increment }}"
+            {% if variant == variant_picker_variant %}selected{% endif %}
+          >
+            {{ variant.title | escape }} — {{ variant.price | money }}{% unless variant.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="co-variant-picker__enhanced" data-variant-picker-options hidden>
+      {% for option in variant_picker_product.options_with_values %}
+        {% assign option_id = 'ProductOption-' | append: variant_picker_section_id | append: '-' | append: option.position %}
+
+        <fieldset class="co-variant-picker__option" data-variant-option-group data-option-position="{{ option.position }}">
+          <legend class="co-variant-picker__label">{{ option.name | escape }}</legend>
+
+          {% if variant_picker_type == 'dropdown' %}
+            <select
+              id="{{ option_id }}"
+              name="product-option-{{ variant_picker_section_id }}-{{ option.position }}"
+              data-variant-option-input
+            >
+              {% for option_value in option.values %}
+                <option
+                  value="{{ option_value | escape }}"
+                  {% if option_value == option.selected_value %}selected{% endif %}
+                  {% unless option_value.available %}disabled{% endunless %}
+                >{{ option_value | escape }}</option>
+              {% endfor %}
+            </select>
+          {% else %}
+            <div class="co-variant-picker__values">
+              {% for option_value in option.values %}
+                {% assign option_value_id = option_id | append: '-' | append: forloop.index %}
+                <div class="co-variant-picker__value{% if variant_picker_type == 'swatches' %} co-variant-picker__value--swatch{% endif %}">
+                  <input
+                    id="{{ option_value_id }}"
+                    type="radio"
+                    name="product-option-{{ variant_picker_section_id }}-{{ option.position }}"
+                    value="{{ option_value | escape }}"
+                    data-variant-option-input
+                    {% if option_value == option.selected_value %}checked{% endif %}
+                    {% unless option_value.available %}disabled{% endunless %}
+                  >
+                  <label for="{{ option_value_id }}">
+                    {% if variant_picker_type == 'swatches' and option_value.swatch != blank %}
+                      <span class="co-variant-picker__swatch"{% if option_value.swatch.color != blank %} style="--co-variant-swatch: {{ option_value.swatch.color }};"{% endif %}>
+                        {% if option_value.swatch.image != blank %}<img src="{{ option_value.swatch.image | image_url: width: 48 }}" alt="" width="48" height="48" loading="lazy">{% endif %}
+                      </span>
+                    {% endif %}
+                    <span>{{ option_value | escape }}</span>
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </fieldset>
+      {% endfor %}
+    </div>
+  </div>
+{% endunless %}

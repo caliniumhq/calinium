@@ -1,0 +1,31 @@
+{% liquid
+  assign footer_contact_page = contact_page | default: blank
+  assign footer_contact_label = contact_label | default: blank
+  assign footer_has_policy_links = false
+
+  if shop.privacy_policy != blank or shop.terms_of_service != blank or shop.refund_policy != blank or shop.shipping_policy != blank or footer_contact_page != blank
+    assign footer_has_policy_links = true
+  endif
+%}
+
+{% if footer_has_policy_links %}
+  <nav class="co-footer__policies" aria-label="{{ 'footer.policy_navigation' | t | escape }}">
+    <ul role="list">
+      {% if shop.privacy_policy != blank %}
+        <li><a href="{{ shop.privacy_policy.url | escape }}">{{ shop.privacy_policy.title | escape }}</a></li>
+      {% endif %}
+      {% if shop.terms_of_service != blank %}
+        <li><a href="{{ shop.terms_of_service.url | escape }}">{{ shop.terms_of_service.title | escape }}</a></li>
+      {% endif %}
+      {% if shop.refund_policy != blank %}
+        <li><a href="{{ shop.refund_policy.url | escape }}">{{ shop.refund_policy.title | escape }}</a></li>
+      {% endif %}
+      {% if shop.shipping_policy != blank %}
+        <li><a href="{{ shop.shipping_policy.url | escape }}">{{ shop.shipping_policy.title | escape }}</a></li>
+      {% endif %}
+      {% if footer_contact_page != blank %}
+        <li><a href="{{ footer_contact_page.url | escape }}">{{ footer_contact_label | default: footer_contact_page.title | escape }}</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

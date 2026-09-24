@@ -1,0 +1,93 @@
+/* Reusable button and button-like link component. */
+.co-button {
+  --co-button-background: var(--co-color-button);
+  --co-button-border: var(--co-color-button);
+  --co-button-color: var(--co-color-button-label);
+  --co-button-min-block-size: calc(var(--co-space-6) + var(--co-space-3));
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--co-space-2);
+  min-block-size: var(--co-button-min-block-size);
+  padding: var(--co-space-3) var(--co-space-5);
+  border: var(--co-border-width) solid var(--co-button-border);
+  border-radius: var(--co-radius-button);
+  background-color: var(--co-button-background);
+  color: var(--co-button-color);
+  font: inherit;
+  font-weight: 600;
+  line-height: var(--co-line-height-heading);
+  text-align: center;
+  text-decoration: none;
+  text-transform: var(--co-button-text-transform);
+  transition:
+    background-color var(--co-motion-duration) var(--co-motion-easing),
+    border-color var(--co-motion-duration) var(--co-motion-easing),
+    color var(--co-motion-duration) var(--co-motion-easing),
+    opacity var(--co-motion-duration) var(--co-motion-easing),
+    transform var(--co-motion-duration) var(--co-motion-easing);
+}
+
+.co-button--secondary {
+  --co-button-background: var(--co-color-secondary-button);
+  --co-button-border: var(--co-color-border);
+  --co-button-color: var(--co-color-secondary-button-label);
+}
+
+.co-button--text {
+  --co-button-background: transparent;
+  --co-button-border: transparent;
+  --co-button-color: var(--co-color-accent);
+
+  padding-inline: 0;
+  text-decoration: underline;
+  text-decoration-thickness: var(--co-border-width);
+  text-underline-offset: 0.2em;
+}
+
+.co-button--small {
+  padding: var(--co-space-2) var(--co-space-4);
+  font-size: var(--co-font-size-small);
+}
+
+.co-button--large {
+  min-block-size: calc(var(--co-space-7) + var(--co-space-1));
+  padding: var(--co-space-4) var(--co-space-6);
+}
+
+.co-button--full-width {
+  inline-size: 100%;
+}
+
+.co-button--icon-only {
+  inline-size: var(--co-button-min-block-size);
+  padding: var(--co-space-2);
+}
+
+.co-button__icon {
+  flex: 0 0 auto;
+}
+
+.co-button[aria-disabled="true"],
+.co-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.co-button:not([aria-disabled="true"]):not(:disabled):active {
+  transform: translateY(0.0625rem);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .co-button:not([aria-disabled="true"]):not(:disabled):hover {
+    opacity: 0.88;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .co-button {
+    transition: none;
+  }
+}

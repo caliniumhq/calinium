@@ -1,0 +1,11 @@
+{% liquid
+  assign product_highlight_text = text | default: blank
+  assign product_highlight_icon = icon | default: 'check'
+%}
+
+{% if product_highlight_text != blank %}
+  <li class="co-product-highlight">
+    {% render 'icon', icon: product_highlight_icon, size: 18, decorative: true %}
+    <span>{{ product_highlight_text | escape }}</span>
+  </li>
+{% endif %}

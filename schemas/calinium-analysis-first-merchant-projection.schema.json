@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-analysis-first-merchant-projection.schema.json",
+  "title": "Sanitized Calinium analysis-first merchant projection",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "stages", "current_stage", "status", "primary_action", "secondary_actions", "direction", "advanced_mode_available", "chat_refinement_available", "preview_ready", "commercial_boundary_pending", "theme_action_authorized", "safety_reassurance"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "analysis-first-merchant-projection-v1"},
+    "stages": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/stage"}},
+    "current_stage": {"type": "object", "required": ["id", "label"], "properties": {"id": {"enum": ["analyzing_store", "building_storefront", "review_preview"]}, "label": {"enum": ["Analyzing your store", "Building your storefront", "Review your preview"]}}, "additionalProperties": false},
+    "status": {"type": "object", "required": ["tone", "headline", "explanation", "progress"], "properties": {"tone": {"enum": ["working", "attention", "ready"]}, "headline": {"type": "string", "minLength": 1}, "explanation": {"type": "string", "minLength": 1}, "progress": {"type": "object", "required": ["kind", "percent", "time_remaining"], "properties": {"kind": {"enum": ["indeterminate", "action_required", "complete", "blocked"]}, "percent": {"type": "null"}, "time_remaining": {"type": "null"}}, "additionalProperties": false}}, "additionalProperties": false},
+    "primary_action": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/action"}]},
+    "secondary_actions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+    "direction": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/direction"}]},
+    "advanced_mode_available": {"const": true},
+    "chat_refinement_available": {"type": "boolean"},
+    "preview_ready": {"type": "boolean"},
+    "commercial_boundary_pending": {"type": "boolean"},
+    "theme_action_authorized": {"type": "boolean"},
+    "safety_reassurance": {"const": "Your current theme will not change while you review this preview."}
+  },
+  "$defs": {
+    "stage": {"type": "object", "required": ["id", "label", "status"], "properties": {"id": {"enum": ["analyzing_store", "building_storefront", "review_preview"]}, "label": {"enum": ["Analyzing your store", "Building your storefront", "Review your preview"]}, "status": {"enum": ["complete", "current", "upcoming"]}}, "additionalProperties": false},
+    "action": {"type": "object", "required": ["id", "label", "enabled"], "properties": {"id": {"enum": ["build_preview", "choose_direction", "provide_essential_detail", "retry", "resume", "approve_design", "request_changes", "compare_current_store", "open_advanced", "contact_support", "adjust_direction", "see_why"]}, "label": {"type": "string", "minLength": 1}, "enabled": {"type": "boolean"}}, "additionalProperties": false},
+    "option": {"type": "object", "required": ["id", "title", "description"], "properties": {"id": {"enum": ["visual_story_led", "direct_efficient"]}, "title": {"enum": ["Visual & story-led", "Direct & efficient"]}, "description": {"enum": ["Immersive imagery, editorial layouts, and discovery through storytelling.", "Clear product access, practical navigation, and faster browsing."]}}, "additionalProperties": false},
+    "direction": {"type": "object", "required": ["state", "headline", "choice_required", "selected_direction", "options", "reasons", "essential_detail"], "properties": {"state": {"enum": ["recommendation_ready", "direction_choice_required", "essential_detail_required", "blocked", "accepted", "superseded", "build_in_progress", "preview_ready"]}, "headline": {"type": ["string", "null"]}, "choice_required": {"type": "boolean"}, "selected_direction": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/option"}]}, "options": {"type": "array", "maxItems": 2, "items": {"$ref": "#/$defs/option"}}, "reasons": {"type": "array", "maxItems": 3, "items": {"type": "string", "minLength": 1}}, "essential_detail": {"oneOf": [{"type": "null"}, {"type": "object", "required": ["prompt"], "properties": {"prompt": {"type": "string", "minLength": 1}}, "additionalProperties": false}]}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

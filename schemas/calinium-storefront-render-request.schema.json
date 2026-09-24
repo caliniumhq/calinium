@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-storefront-render-request.schema.json",
+  "title": "Calinium Storefront Render Request",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "request_id", "render_revision", "capture_purpose", "generation", "architecture", "target", "routes", "viewports", "safety", "provenance"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "storefront-render-request-v1"},
+    "request_id": {"type": "string", "pattern": "^render-request-[a-f0-9]{20}$"},
+    "render_revision": {"type": "string", "const": "storefront-render-v1"},
+    "capture_purpose": {"type": "string", "enum": ["architecture_baseline", "architecture_comparison", "regression"]},
+    "generation": {
+      "type": "object",
+      "required": ["generation_id", "generation_revision", "artifact"],
+      "properties": {
+        "generation_id": {"type": "string", "minLength": 1},
+        "generation_revision": {"type": "string", "pattern": "^generation-revision-[a-f0-9]{20}$"},
+        "artifact": {
+          "type": "object",
+          "required": ["artifact_id", "source_kind", "source_reference", "sha256", "manifest_reference", "source_artifact_reference", "source_artifact_sha256", "resource_binding_revision"],
+          "properties": {
+            "artifact_id": {"type": "string", "pattern": "^theme-artifact-[a-f0-9]{20}$"},
+            "source_kind": {"type": "string", "const": "theme_zip"},
+            "source_reference": {"type": "string", "minLength": 1},
+            "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "manifest_reference": {"type": "string", "minLength": 1},
+            "source_artifact_reference": {"type": "string", "minLength": 1},
+            "source_artifact_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "resource_binding_revision": {"type": ["string", "null"], "pattern": "^render-binding-[a-f0-9]{20}$"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "architecture": {
+      "type": "object",
+      "required": ["profile_id", "profile_version", "selection_revision_id"],
+      "properties": {
+        "profile_id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"},
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "selection_revision_id": {"type": "string", "pattern": "^architecture-selection-[a-f0-9]{20}$"}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["target_id", "fixture_id", "fixture_version", "target_registry_version", "runtime_mode", "shop_domain", "expected_theme_role"],
+      "properties": {
+        "target_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+        "fixture_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+        "fixture_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "target_registry_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "runtime_mode": {"type": "string", "const": "shopify_development_proxy"},
+        "shop_domain": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"},
+        "expected_theme_role": {"type": "string", "enum": ["development", "unpublished"]}
+      },
+      "additionalProperties": false
+    },
+    "routes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "expected_landmarks", "safe_capture_state", "entity"],
+        "properties": {
+          "id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]},
+          "path": {"type": "string", "pattern": "^/"},
+          "expected_landmarks": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "safe_capture_state": {"type": "string", "enum": ["read_only", "fresh_empty_context_no_mutation"]},
+          "entity": {
+            "type": ["object", "null"],
+            "required": ["kind", "resource_id", "remote_gid", "handle", "source_revision", "resolution_source"],
+            "properties": {
+              "kind": {"type": "string", "enum": ["collection", "product"]},
+              "resource_id": {"type": "string", "minLength": 1},
+              "remote_gid": {"type": "string", "pattern": "^gid://shopify/(Collection|Product)/[0-9]+$"},
+              "handle": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+              "source_revision": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "resolution_source": {"type": "string", "enum": ["approved_resource_set", "approved_resource_snapshot", "controlled_render_fixture"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "viewports": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "width", "height", "device_scale_factor", "is_mobile", "has_touch"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "label": {"type": "string", "minLength": 1},
+          "width": {"type": "integer", "minimum": 1},
+          "height": {"type": "integer", "minimum": 1},
+          "device_scale_factor": {"type": "number", "minimum": 1},
+          "is_mobile": {"type": "boolean"},
+          "has_touch": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": ["shopify_write_boundary", "live_theme_allowed", "publish_allowed", "cart_mutation_allowed"],
+      "properties": {
+        "shopify_write_boundary": {"type": "string", "const": "development_theme_only"},
+        "live_theme_allowed": {"type": "boolean", "const": false},
+        "publish_allowed": {"type": "boolean", "const": false},
+        "cart_mutation_allowed": {"type": "boolean", "const": false}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["merchant_fixture_id", "store_fixture_id", "preset_id", "comparison_fixture_revision", "route_registry_version", "viewport_registry_version", "capture_policy_revision", "artifact_manifest_reference", "source_artifact_manifest_reference", "resource_binding_revision"],
+      "properties": {
+        "merchant_fixture_id": {"type": ["string", "null"]},
+        "store_fixture_id": {"type": "string", "minLength": 1},
+        "preset_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]+$"},
+        "comparison_fixture_revision": {"type": "string", "pattern": "^comparison-fixture-[a-f0-9]{20}$"},
+        "route_registry_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "viewport_registry_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "capture_policy_revision": {"type": "string", "const": "storefront-capture-policy-v1"},
+        "artifact_manifest_reference": {"type": "string", "minLength": 1},
+        "source_artifact_manifest_reference": {"type": "string", "minLength": 1},
+        "resource_binding_revision": {"type": ["string", "null"], "pattern": "^render-binding-[a-f0-9]{20}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

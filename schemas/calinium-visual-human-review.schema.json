@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-human-review.schema.json",
+  "title": "Calinium Visual Evaluation Human Review Decision",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "review_decision_id", "evaluation_id", "evaluation_checksum", "review_revision", "reviewed_at", "reviewer", "decision", "notes", "finding_decisions"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "visual-human-review-v1"},
+    "review_decision_id": {"type": "string", "pattern": "^visual-review-[a-f0-9]{20}$"},
+    "evaluation_id": {"type": "string", "pattern": "^visual-evaluation-[a-f0-9]{20}$"},
+    "evaluation_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "review_revision": {"type": "string", "pattern": "^visual-review-revision-[a-f0-9]{20}$"},
+    "reviewed_at": {"type": "string", "format": "date-time"},
+    "reviewer": {"type": "object", "required": ["type", "reference"], "properties": {"type": {"type": "string", "const": "human"}, "reference": {"type": "string", "minLength": 1, "maxLength": 120}}, "additionalProperties": false},
+    "decision": {"type": "string", "enum": ["accepted", "accepted_with_known_issue", "needs_fix", "false_positive", "deferred"]},
+    "notes": {"type": ["string", "null"], "maxLength": 2000},
+    "finding_decisions": {"type": "array", "items": {"type": "object", "required": ["finding_id", "decision", "notes"], "properties": {"finding_id": {"type": "string", "pattern": "^visual-finding-[a-f0-9]{20}$"}, "decision": {"type": "string", "enum": ["accepted_with_known_issue", "needs_fix", "false_positive", "deferred"]}, "notes": {"type": ["string", "null"], "maxLength": 1000}}, "additionalProperties": false}}
+  },
+  "additionalProperties": false
+}

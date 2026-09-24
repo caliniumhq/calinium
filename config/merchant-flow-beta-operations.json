@@ -1,0 +1,62 @@
+{
+  "policy_revision": "merchant-flow-beta-operations-v2",
+  "flow_contract": "merchant-generation-flow-v2",
+  "activation": {
+    "environment_flag": "CALINIUM_MERCHANT_FLOW_BETA_ENABLED",
+    "required_value": "true",
+    "controlled_beta_only": true
+  },
+  "merchant_statuses": [
+    "analyzing_store",
+    "understanding_direction",
+    "designing_storefront",
+    "building_theme",
+    "reviewing_result",
+    "preparing_preview",
+    "action_needed",
+    "ready_to_preview",
+    "needs_attention"
+  ],
+  "jobs": {
+    "allowed_kinds": ["generation", "render_qa"],
+    "statuses": ["queued", "running", "completed", "retryable", "terminal", "cancellation_requested", "cancelled"],
+    "stable_identity_required": true,
+    "lease_required": true,
+    "server_authoritative": true,
+    "controlled_runtime_required": true
+  },
+  "operator_operations": {
+    "contract_revision": "merchant-flow-operator-operation-v1",
+    "allowed_kinds": ["qa_review", "repair_resolution", "cancel"],
+    "persistent_idempotency_required": true,
+    "checksum_binding_required": true
+  },
+  "cancellation": {
+    "terminal_flow_state": "cancelled",
+    "queued_job_state": "cancelled",
+    "running_job_state": "cancellation_requested",
+    "immutable_evidence_preserved": true,
+    "billing_mutation_allowed": false,
+    "theme_mutation_allowed": false,
+    "reopen_allowed": false
+  },
+  "shopify_target": {
+    "allowed_roles": ["development", "unpublished", "demo", "staging"],
+    "forbidden_roles": ["main", "live", "published", "primary"],
+    "shop_ownership_required": true
+  },
+  "qa": {
+    "d1_first": true,
+    "d2_7_policy_gated": true,
+    "accepted_result_reused": true,
+    "human_review_required_when_paused": true
+  },
+  "safety": {
+    "automatic_repair_allowed": false,
+    "automatic_publish_allowed": false,
+    "automatic_theme_replacement_allowed": false,
+    "live_theme_mutation_allowed": false,
+    "merchant_action_required": true,
+    "maximum_material_questions": 1
+  }
+}

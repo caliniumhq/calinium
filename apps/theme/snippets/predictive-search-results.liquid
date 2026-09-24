@@ -1,0 +1,75 @@
+{% liquid
+  assign predictive_results = predictive_search
+  assign predictive_products_count = predictive_results.resources.products.size
+  assign predictive_articles_count = predictive_results.resources.articles.size
+  assign predictive_pages_count = predictive_results.resources.pages.size
+  assign predictive_total_count = predictive_products_count | plus: predictive_articles_count | plus: predictive_pages_count
+%}
+
+{% if predictive_results.performed %}
+  <div class="co-predictive-search__response" data-predictive-search-response>
+    <p class="co-visually-hidden" data-predictive-search-count>{{ 'search.predictive_result_count' | t: count: predictive_total_count }}</p>
+
+    {% if predictive_total_count > 0 %}
+      <div class="co-predictive-search__groups" id="PredictiveSearchResults" role="listbox">
+        {% if predictive_products_count > 0 %}
+          <section class="co-predictive-search__group" aria-labelledby="PredictiveProductsHeading">
+            <h2 id="PredictiveProductsHeading" class="co-predictive-search__heading">{{ 'search.products' | t }}</h2>
+            <ul class="co-predictive-search__list" role="list">
+              {% for product in predictive_results.resources.products %}
+                <li class="co-predictive-search__item" role="option">
+                  {% render 'product-card',
+                    product: product,
+                    image_ratio: 'square',
+                    image_loading: 'lazy',
+                    image_sizes: '5rem',
+                    image_widths: '88, 128, 165',
+                    show_availability: false,
+                    show_sale_badge: false,
+                    show_compare_at_price: false,
+                    show_vendor: false,
+                    show_rating: false,
+                    show_secondary_image: false,
+                    show_inventory: false,
+                    class: 'co-product-card--predictive'
+                  %}
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endif %}
+
+        {% if predictive_articles_count > 0 or predictive_pages_count > 0 %}
+          <section class="co-predictive-search__group" aria-labelledby="PredictiveContentHeading">
+            <h2 id="PredictiveContentHeading" class="co-predictive-search__heading">{{ 'search.content' | t }}</h2>
+            <ul class="co-predictive-search__list" role="list">
+              {% for article in predictive_results.resources.articles %}
+                <li class="co-predictive-search__item" role="option">
+                  {% render 'search-result-card',
+                    result: article,
+                    result_type: 'article',
+                    class: 'co-search-result-card--predictive',
+                    image_loading: 'lazy',
+                    image_sizes: '5rem',
+                    image_widths: '88, 128, 165',
+                    image_ratio: 'square'
+                  %}
+                </li>
+              {% endfor %}
+
+              {% for page in predictive_results.resources.pages %}
+                <li class="co-predictive-search__item" role="option">
+                  {% render 'search-result-card', result: page, result_type: 'page', class: 'co-search-result-card--predictive' %}
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endif %}
+      </div>
+    {% else %}
+      <p class="co-predictive-search__empty">{{ 'search.no_suggestions' | t }}</p>
+    {% endif %}
+
+    <a class="co-predictive-search__view-all" href="{{ routes.search_url }}?q={{ predictive_results.terms | url_encode }}">{{ 'search.view_all' | t: terms: predictive_results.terms }}</a>
+  </div>
+{% endif %}

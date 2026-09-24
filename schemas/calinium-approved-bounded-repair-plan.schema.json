@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-approved-bounded-repair-plan.schema.json",
+  "title": "Calinium Human-approved Bounded Repair Plan",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "phase", "policy", "target", "evidence", "confirmed_root_cause", "ownership", "supersession", "human_approval", "modification_scope", "intervention", "accessibility_invariants", "forbidden_scope", "acceptance", "verification", "rollback", "status", "safety", "repair_plan_id", "repair_plan_checksum"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "approved-bounded-repair-plan-v1"},
+    "phase": {"type": "string", "const": "D3A.2"},
+    "policy": {
+      "type": "object",
+      "required": ["policy_id", "policy_version", "policy_revision"],
+      "properties": {
+        "policy_id": {"type": "string", "const": "calinium_bounded_repair_planning"},
+        "policy_version": {"type": "string", "const": "bounded-repair-planning-policy-v1"},
+        "policy_revision": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["authoritative_finding_id", "human_decision", "architecture_profile_id", "route_id", "viewport_id", "browser_viewport", "rule_id", "severity"],
+      "properties": {
+        "authoritative_finding_id": {"type": "string"},
+        "human_decision": {"type": "string", "const": "needs_fix"},
+        "architecture_profile_id": {"type": "string", "const": "profile.current_calinium.v1"},
+        "route_id": {"type": "string", "const": "homepage"},
+        "viewport_id": {"type": "string", "const": "mobile-v1"},
+        "browser_viewport": {"type": "object", "required": ["width", "height"], "properties": {"width": {"type": "integer", "const": 390}, "height": {"type": "integer", "const": 844}}, "additionalProperties": false},
+        "rule_id": {"type": "string", "const": "root_horizontal_overflow"},
+        "severity": {"type": "string", "const": "high"}
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["d1", "human_design_review", "section_isolation", "descendant_isolation", "d3a_1_candidate"],
+      "properties": {
+        "d1": {"$ref": "#/definitions/fileBindingWithFinding"},
+        "human_design_review": {"$ref": "#/definitions/reviewBinding"},
+        "section_isolation": {"$ref": "#/definitions/isolationBinding"},
+        "descendant_isolation": {"$ref": "#/definitions/isolationBinding"},
+        "d3a_1_candidate": {"$ref": "#/definitions/candidateBinding"}
+      },
+      "additionalProperties": false
+    },
+    "confirmed_root_cause": {
+      "type": "object",
+      "required": ["status", "confidence", "runtime_selector", "geometry", "containing_block_before", "mechanism", "decisive_neutralizations", "negative_controls", "contributor_count"],
+      "properties": {
+        "status": {"type": "string", "const": "confirmed"},
+        "confidence": {"type": "string", "const": "high"},
+        "runtime_selector": {"type": "string"},
+        "geometry": {"type": "object"},
+        "containing_block_before": {"type": "string", "const": "body"},
+        "mechanism": {"type": "string", "minLength": 1},
+        "decisive_neutralizations": {"type": "array", "minItems": 4, "items": {"type": "string"}},
+        "negative_controls": {"type": "array", "minItems": 7, "items": {"type": "string"}},
+        "contributor_count": {"type": "string", "const": "one_parent_child_containing_block_relationship"}
+      },
+      "additionalProperties": false
+    },
+    "ownership": {
+      "type": "object",
+      "required": ["primary_architecture_family_id", "supporting_architecture_family_id", "shared_primitives_unchanged", "profile_specific_boundary", "editorial_discovery_targeted"],
+      "properties": {
+        "primary_architecture_family_id": {"type": "string", "const": "family.responsive_behavior.current_calinium.v1"},
+        "supporting_architecture_family_id": {"type": "string", "const": "family.product_card.current_calinium.v1"},
+        "shared_primitives_unchanged": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+        "profile_specific_boundary": {"type": "string"},
+        "editorial_discovery_targeted": {"type": "boolean", "const": false}
+      },
+      "additionalProperties": false
+    },
+    "supersession": {
+      "type": "object",
+      "required": ["rejected_plan"],
+      "properties": {
+        "rejected_plan": {
+          "type": "object",
+          "required": ["reference", "file_sha256", "repair_plan_id", "repair_plan_checksum", "status", "reason", "immutable"],
+          "properties": {
+            "reference": {"type": "string"},
+            "file_sha256": {"$ref": "#/definitions/sha256"},
+            "repair_plan_id": {"type": "string"},
+            "repair_plan_checksum": {"$ref": "#/definitions/sha256"},
+            "status": {"type": "string", "const": "rejected_after_diagnostic"},
+            "reason": {"type": "string"},
+            "immutable": {"type": "boolean", "const": true}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "human_approval": {
+      "type": "object",
+      "required": ["source_kind", "decision", "reviewer_role", "approved_candidate_id", "approved_candidate_checksum", "approved_intervention", "approved_file", "approved_on", "final_review_after_execution_required", "approval_id", "approval_checksum"],
+      "properties": {
+        "source_kind": {"type": "string", "const": "explicit_human_instruction"},
+        "decision": {"type": "string", "const": "approved_for_bounded_execution"},
+        "reviewer_role": {"type": "string", "const": "human_reviewer"},
+        "approved_candidate_id": {"type": "string"},
+        "approved_candidate_checksum": {"$ref": "#/definitions/sha256"},
+        "approved_intervention": {"type": "string", "const": "position: relative"},
+        "approved_file": {"type": "string", "const": "apps/theme/assets/calinium-sections.css"},
+        "approved_on": {"type": "string"},
+        "final_review_after_execution_required": {"type": "boolean", "const": true},
+        "approval_id": {"type": "string", "pattern": "^repair-plan-approval-[a-f0-9]{20}$"},
+        "approval_checksum": {"$ref": "#/definitions/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "modification_scope": {
+      "type": "object",
+      "required": ["maximum_file_count", "allowed_files", "unrelated_refactoring_allowed"],
+      "properties": {
+        "maximum_file_count": {"type": "integer", "const": 1},
+        "allowed_files": {"type": "array", "minItems": 1, "maxItems": 1, "items": {"$ref": "#/definitions/allowedFile"}},
+        "unrelated_refactoring_allowed": {"type": "boolean", "const": false}
+      },
+      "additionalProperties": false
+    },
+    "intervention": {
+      "type": "object",
+      "required": ["type", "primary_selector", "declaration", "purpose", "minimum_diff_only", "additional_containment_allowed", "global_overflow_suppression_allowed", "stop_if_insufficient"],
+      "properties": {
+        "type": {"type": "string", "const": "component_scoped_containing_block_boundary"},
+        "primary_selector": {"type": "string"},
+        "declaration": {"type": "string", "const": "position: relative"},
+        "purpose": {"type": "string"},
+        "minimum_diff_only": {"type": "boolean", "const": true},
+        "additional_containment_allowed": {"type": "boolean", "const": false},
+        "global_overflow_suppression_allowed": {"type": "boolean", "const": false},
+        "stop_if_insufficient": {"type": "boolean", "const": true}
+      },
+      "additionalProperties": false
+    },
+    "accessibility_invariants": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+    "forbidden_scope": {"type": "array", "minItems": 18, "items": {"type": "string"}},
+    "acceptance": {
+      "type": "object",
+      "required": ["before", "after", "functional"],
+      "properties": {
+        "before": {"$ref": "#/definitions/beforeGeometry"},
+        "after": {"$ref": "#/definitions/afterGeometry"},
+        "functional": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "required": ["target_first", "d1_target_required", "functional_rail_required", "accessible_price_label_required", "full_16_cell_render_required", "full_16_cell_d1_required", "editorial_byte_identical_expected", "stabilized_d2_7_after_deterministic_pass", "human_final_review_required", "automatic_approval_allowed", "regression_matrix"],
+      "properties": {
+        "target_first": {"type": "boolean", "const": true},
+        "d1_target_required": {"type": "boolean", "const": true},
+        "functional_rail_required": {"type": "boolean", "const": true},
+        "accessible_price_label_required": {"type": "boolean", "const": true},
+        "full_16_cell_render_required": {"type": "boolean", "const": true},
+        "full_16_cell_d1_required": {"type": "boolean", "const": true},
+        "editorial_byte_identical_expected": {"type": "boolean", "const": true},
+        "stabilized_d2_7_after_deterministic_pass": {"type": "boolean", "const": true},
+        "human_final_review_required": {"type": "boolean", "const": true},
+        "automatic_approval_allowed": {"type": "boolean", "const": false},
+        "regression_matrix": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"$ref": "#/definitions/regressionCell"}}
+      },
+      "additionalProperties": false
+    },
+    "rollback": {
+      "type": "object",
+      "required": ["approved_baseline_tag", "approved_baseline_commit", "pre_execution_checkpoint_tag", "pre_execution_checkpoint_commit_resolution", "boundary", "failure_action"],
+      "properties": {
+        "approved_baseline_tag": {"type": "string", "const": "core-2-phase-d3a-complete"},
+        "approved_baseline_commit": {"type": "string", "const": "1000000000000000000000000000000000000003"},
+        "pre_execution_checkpoint_tag": {"type": "string", "const": "core-2-phase-d3a-1-complete"},
+        "pre_execution_checkpoint_commit_resolution": {"type": "string", "const": "resolve_tag_at_d3b_preflight"},
+        "boundary": {"type": "string"},
+        "failure_action": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "status": {"type": "string", "const": "approved_for_bounded_execution"},
+    "safety": {
+      "type": "object",
+      "required": ["bounded_execution_human_approved", "automatic_repair_allowed", "human_final_review_required", "source_mutation_in_d3a_2_allowed", "repair_executed", "d3b_started", "openai_api_calls_required"],
+      "properties": {
+        "bounded_execution_human_approved": {"type": "boolean", "const": true},
+        "automatic_repair_allowed": {"type": "boolean", "const": false},
+        "human_final_review_required": {"type": "boolean", "const": true},
+        "source_mutation_in_d3a_2_allowed": {"type": "boolean", "const": false},
+        "repair_executed": {"type": "boolean", "const": false},
+        "d3b_started": {"type": "boolean", "const": false},
+        "openai_api_calls_required": {"type": "boolean", "const": false}
+      },
+      "additionalProperties": false
+    },
+    "repair_plan_id": {"type": "string", "pattern": "^repair-plan-[a-f0-9]{20}$"},
+    "repair_plan_checksum": {"$ref": "#/definitions/sha256"}
+  },
+  "definitions": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "isolationBinding": {
+      "type": "object",
+      "required": ["reference", "sha256", "isolation_id", "isolation_checksum"],
+      "properties": {"reference": {"type": "string"}, "sha256": {"$ref": "#/definitions/sha256"}, "isolation_id": {"type": "string"}, "isolation_checksum": {"$ref": "#/definitions/sha256"}},
+      "additionalProperties": false
+    },
+    "candidateBinding": {
+      "type": "object",
+      "required": ["reference", "sha256", "repair_plan_id", "repair_plan_checksum"],
+      "properties": {"reference": {"type": "string"}, "sha256": {"$ref": "#/definitions/sha256"}, "repair_plan_id": {"type": "string"}, "repair_plan_checksum": {"$ref": "#/definitions/sha256"}},
+      "additionalProperties": false
+    },
+    "fileBindingWithFinding": {
+      "type": "object",
+      "required": ["result_reference", "file_sha256", "evaluation_id", "finding_id"],
+      "properties": {"result_reference": {"type": "string"}, "file_sha256": {"$ref": "#/definitions/sha256"}, "evaluation_id": {"type": "string"}, "finding_id": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "reviewBinding": {
+      "type": "object",
+      "required": ["reference", "file_sha256", "review_id", "checksum"],
+      "properties": {"reference": {"type": "string"}, "file_sha256": {"$ref": "#/definitions/sha256"}, "review_id": {"type": "string"}, "checksum": {"$ref": "#/definitions/sha256"}},
+      "additionalProperties": false
+    },
+    "allowedFile": {
+      "type": "object",
+      "required": ["path", "before_sha256", "permitted_change", "must_remain_untouched"],
+      "properties": {"path": {"type": "string", "const": "apps/theme/assets/calinium-sections.css"}, "before_sha256": {"$ref": "#/definitions/sha256"}, "permitted_change": {"type": "string"}, "must_remain_untouched": {"type": "array", "minItems": 1, "items": {"type": "string"}}},
+      "additionalProperties": false
+    },
+    "beforeGeometry": {
+      "type": "object",
+      "required": ["viewport_width_css_px", "document_width_css_px", "horizontal_overflow_css_px", "d1_rule_id"],
+      "properties": {"viewport_width_css_px": {"type": "number", "const": 390}, "document_width_css_px": {"type": "number", "const": 657}, "horizontal_overflow_css_px": {"type": "number", "const": 267}, "d1_rule_id": {"type": "string", "const": "root_horizontal_overflow"}},
+      "additionalProperties": false
+    },
+    "afterGeometry": {
+      "type": "object",
+      "required": ["maximum_document_width_css_px", "rounding_tolerance_css_px", "root_horizontal_overflow_finding_allowed"],
+      "properties": {"maximum_document_width_css_px": {"type": "number", "const": 390}, "rounding_tolerance_css_px": {"type": "number", "const": 1}, "root_horizontal_overflow_finding_allowed": {"type": "boolean", "const": false}},
+      "additionalProperties": false
+    },
+    "regressionCell": {
+      "type": "object",
+      "required": ["profile_id", "route_id", "viewport_id", "expectation"],
+      "properties": {"profile_id": {"type": "string"}, "route_id": {"type": "string"}, "viewport_id": {"type": "string"}, "expectation": {"type": "string"}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

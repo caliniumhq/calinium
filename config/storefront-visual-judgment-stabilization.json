@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "1.0.0",
+  "policy_id": "calinium_visual_judgment_stabilization",
+  "policy_revision": "visual-judgment-stabilization-phase-d2-6-v1",
+  "source_design_policy_revision": "storefront-design-evaluation-policy-v1",
+  "contracts": {
+    "observation": "visual-observation-v1",
+    "classification": "design-classification-v1",
+    "request": "visual-judgment-stabilization-request-v1",
+    "report": "visual-judgment-reliability-report-v1"
+  },
+  "observation_kinds": [
+    {"id": "page_overflow", "definition": "The page or a page-level container visibly exceeds its intended viewport."},
+    {"id": "content_truncation", "definition": "A child surface, card, label, or media item is visibly cut off or clipped."},
+    {"id": "empty_module_visible", "definition": "A rendered module or heading is visible without the supporting content it promises."},
+    {"id": "repeated_information", "definition": "A later visible module repeats information or media already presented without adding visible information."},
+    {"id": "control_crowding", "definition": "Visible controls and identity or content surfaces have insufficient separation."},
+    {"id": "typographic_word_break", "definition": "A visible word or lockup breaks at an awkward internal point or isolates a character."},
+    {"id": "duplicate_surface", "definition": "Two visible modules perform substantially the same role in close succession."},
+    {"id": "comparison_friction", "definition": "Visible presentation makes side-by-side product comparison materially harder."},
+    {"id": "architecture_difference", "definition": "The supplied profiles visibly use meaningfully different structural presentation."},
+    {"id": "other_visible_condition", "definition": "A visible condition that cannot be assigned safely to a more specific observation kind."}
+  ],
+  "responsibility_ontology": [
+    {
+      "id": "architecture_level",
+      "use_when": "Trusted provenance shows the condition arises from structural presenter composition, information hierarchy, navigation/grid/PDP relationships, or responsive transformation inherent to an architecture family.",
+      "do_not_use_when": "An architecture profile merely exists, or the condition is primarily a local arrangement, token constraint, absent content, or invalid data."
+    },
+    {
+      "id": "composition_level",
+      "use_when": "The selected architecture is valid but generated modules are locally ordered, grouped, repeated, spaced, or left visibly empty without graceful fallback.",
+      "do_not_use_when": "The structural presenter itself creates the behavior, or one visual-system value is the primary cause."
+    },
+    {
+      "id": "design_token_level",
+      "use_when": "Structure is sound and typography scale, line-height, width, spacing, or breakpoint constraints primarily cause the visible condition.",
+      "do_not_use_when": "Changing a token would mask a structural hierarchy or presenter-composition defect."
+    },
+    {
+      "id": "merchant_content_level",
+      "use_when": "The design system handles the input correctly and merchant-supplied content is absent, excessive, low-quality, or inappropriate.",
+      "do_not_use_when": "Calinium knowingly renders an empty dependent module instead of suppressing or degrading it gracefully."
+    },
+    {
+      "id": "data_quality_level",
+      "use_when": "Trusted context proves structured resource data is invalid, incomplete, or unavailable.",
+      "do_not_use_when": "The evidence establishes only aesthetic preference or ordinary merchant-content absence."
+    },
+    {
+      "id": "uncertain",
+      "use_when": "Screenshots and trusted context cannot establish ownership reliably.",
+      "do_not_use_when": "A stricter boundary above is directly supported by trusted provenance."
+    }
+  ],
+  "dimension_rules": [
+    {"id": "visual_hierarchy", "primary_when": "The dominant visible issue is attention order among multiple surfaces.", "not_primary_when": "A more specific typography, navigation, product-discovery, PDP, mobile, or composition rule applies."},
+    {"id": "spacing_and_rhythm", "primary_when": "Spacing cadence itself is the visible problem and no missing, duplicated, or miscomposed module explains it.", "not_primary_when": "Blank space is downstream of an empty module or structural composition."},
+    {"id": "typographic_hierarchy", "primary_when": "Text hierarchy, measure, wrapping, or legibility is the dominant visible condition.", "not_primary_when": "Typography is merely affected by page overflow or header structure."},
+    {"id": "image_media_dominance", "primary_when": "Media scale or sequencing itself creates the dominant visual consequence.", "not_primary_when": "Repeated media is primarily an information-duplication issue."},
+    {"id": "composition", "primary_when": "Local module arrangement, repetition, grouping, or cross-surface relationship is the dominant condition.", "not_primary_when": "A route-purpose dimension or page-level responsive failure is more specific."},
+    {"id": "product_discovery", "primary_when": "Collection or product-browsing comprehension, comparison, or discovery is directly impaired.", "not_primary_when": "A generic spacing or polish label only describes a downstream effect."},
+    {"id": "pdp_communication", "primary_when": "Product-page explanation, comparison, support, or purchase communication is directly affected.", "not_primary_when": "The condition is a generic typography defect shared outside the PDP."},
+    {"id": "navigation_header_clarity", "primary_when": "Header identity, navigation, search, or utility controls are directly crowded or unclear.", "not_primary_when": "The issue is page-wide responsive containment outside the header."},
+    {"id": "mobile_adaptation_quality", "primary_when": "Viewport containment or structural mobile transformation is the root visible condition.", "not_primary_when": "A child truncation is only a symptom of an already identified page-level overflow."},
+    {"id": "design_dna_coherence", "primary_when": "Approved Design DNA is available and visible execution conflicts with it.", "not_primary_when": "Design DNA is unavailable or only general aesthetic preference is visible."},
+    {"id": "perceived_polish", "primary_when": "A visible refinement issue remains after every specific functional/design dimension is ruled out.", "not_primary_when": "It is being used as a catch-all for typography, spacing, composition, or navigation."},
+    {"id": "architecture_differentiation", "primary_when": "The finding directly compares meaningful structural behavior between bound profiles.", "not_primary_when": "A defect happens within one profile merely because it has an architecture identity."}
+  ],
+  "recommendation_taxonomy": [
+    {"id": "responsive_adaptation", "legacy_category": "responsive_adaptation", "definition": "Adjust the class of responsive transformation or containment behavior."},
+    {"id": "suppress_empty_module", "legacy_category": "content_omission", "definition": "Omit or gracefully degrade a module whose required content is unavailable."},
+    {"id": "navigation_clarity", "legacy_category": "navigation_clarity", "definition": "Clarify the relationship among identity, navigation, search, and utility controls."},
+    {"id": "typographic_containment", "legacy_category": "typography", "definition": "Correct the class of text measure, wrapping, scale, or containment behavior."},
+    {"id": "composition_simplification", "legacy_category": "composition", "definition": "Remove or consolidate redundant local surfaces or information."},
+    {"id": "content_omission", "legacy_category": "content_omission", "definition": "Omit content that is inappropriate or unsupported while the rendering system is otherwise correct."},
+    {"id": "hierarchy_adjustment", "legacy_category": "hierarchy", "definition": "Adjust the class of visual or informational priority among visible surfaces."},
+    {"id": "no_action_preference_only", "legacy_category": "polish", "definition": "Record a legitimate preference without creating an independent repair recommendation."},
+    {"id": "uncertain_requires_review", "legacy_category": "composition", "definition": "Preserve the observation for human classification because intervention class is not safely inferable."}
+  ],
+  "relationships": ["root_finding", "symptom_of", "related_finding", "independent"],
+  "reliability": {
+    "statuses": ["not_reliable", "human_review_only", "repair_planning_eligible"],
+    "repair_planning_eligible_thresholds": {
+      "observation_agreement": 0.75,
+      "high_impact_finding_agreement": 0.75,
+      "primary_dimension_agreement": 0.8,
+      "responsibility_agreement": 0.8,
+      "recommendation_agreement": 0.8,
+      "root_symptom_agreement": 0.8,
+      "maximum_d1_contradictions": 0,
+      "maximum_unsupported_finding_rate": 0.1
+    },
+    "automatic_repair_allowed": false,
+    "human_review_required": true
+  },
+  "limited_live_validation": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "medium",
+    "routes": ["homepage", "collection", "product"],
+    "viewports": ["desktop-v1", "mobile-v1"],
+    "profiles": ["profile.current_calinium.v1", "profile.editorial_discovery.v1"],
+    "screenshot_cells": 12,
+    "accepted_repeats": 2,
+    "maximum_accepted_calls": 2,
+    "semantic_completeness_attempts_per_repeat": 2,
+    "fixture_fallback_allowed": false,
+    "automatic_repair_allowed": false,
+    "automatic_mutation_allowed": false,
+    "shopify_write_allowed": false
+  }
+}

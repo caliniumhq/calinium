@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-membership.schema.json",
+  "title": "Calinium organization membership",
+  "type": "object",
+  "required": ["version", "id", "organization_id", "user_id", "role", "status", "created_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^mem_[a-z0-9-]+$"},
+    "organization_id": {"type": "string", "pattern": "^org_[a-z0-9-]+$"},
+    "user_id": {"type": "string", "pattern": "^usr_[a-z0-9-]+$"},
+    "role": {"type": "string", "enum": ["owner", "administrator", "editor", "viewer"]},
+    "status": {"type": "string", "enum": ["active", "invited", "suspended"]},
+    "created_at": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

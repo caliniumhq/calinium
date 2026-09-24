@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-shopify-connection.schema.json",
+  "title": "Calinium Shopify connection",
+  "description": "A safe merchant-facing view of an organization-owned Shopify connection. Credential envelopes are intentionally excluded.",
+  "type": "object",
+  "required": ["version", "id", "organization_id", "shop_domain", "shop_gid", "display_name", "storefront_url", "primary_market", "granted_scopes", "connection_status", "credential_status", "health", "last_synced_at", "connected_by_user_id", "connected_at", "disconnected_at", "created_at", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^shc_[a-z0-9-]+$"},
+    "organization_id": {"type": "string", "pattern": "^org_[a-z0-9-]+$"},
+    "shop_domain": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]\\.myshopify\\.com$"},
+    "shop_gid": {"type": ["string", "null"]},
+    "display_name": {"type": ["string", "null"], "maxLength": 240},
+    "storefront_url": {"type": ["string", "null"]},
+    "primary_market": {"type": ["object", "null"]},
+    "granted_scopes": {"type": "array", "items": {"type": "string", "pattern": "^(read|write)_[a-z_]+$"}, "uniqueItems": true},
+    "connection_status": {"type": "string", "enum": ["pending", "connected", "sync_required", "synchronizing", "ready", "degraded", "reauthorization_required", "disconnected", "revoked", "failed"]},
+    "credential_status": {"type": "string", "enum": ["missing", "active", "revoked", "invalid"]},
+    "health": {"type": "object", "required": ["status", "missing_scopes", "checked_at", "message"], "properties": {"status": {"type": "string"}, "missing_scopes": {"type": "array", "items": {"type": "string"}}, "checked_at": {"type": ["string", "null"]}, "message": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "last_synced_at": {"type": ["string", "null"]},
+    "connected_by_user_id": {"type": ["string", "null"], "pattern": "^usr_[a-z0-9-]+$"},
+    "connected_at": {"type": ["string", "null"]},
+    "disconnected_at": {"type": ["string", "null"]},
+    "created_at": {"type": "string"},
+    "updated_at": {"type": "string"}
+  },
+  "additionalProperties": false
+}

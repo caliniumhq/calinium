@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/theme-block-materialization-policy.schema.json",
+  "title": "Calinium theme block materialization policy",
+  "type": "object",
+  "required": ["schema_version", "catalog_version", "policies"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 1},
+    "catalog_version": {"type": "integer", "const": 1},
+    "policies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/policy"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "setting_mapping": {
+      "type": "object",
+      "required": ["semantic_field", "runtime_setting_id"],
+      "properties": {
+        "semantic_field": {"type": "string", "enum": ["title", "summary", "eyebrow", "text", "media_ratio", "icon", "date", "name", "role", "bio", "issuer", "year"]},
+        "runtime_setting_id": {"type": "string", "enum": ["heading", "excerpt", "eyebrow", "title", "text", "media_ratio", "craft_icon", "process_icon", "date", "timeline_icon", "initiative_icon", "name", "role", "bio", "issuer", "year", "award_icon"]}
+      },
+      "additionalProperties": false
+    },
+    "destination_mapping": {
+      "type": "object",
+      "required": ["resource_type", "runtime_setting_id"],
+      "properties": {
+        "resource_type": {"type": "string", "enum": ["shopify_product", "shopify_article", "shopify_collection", "external_url"]},
+        "runtime_setting_id": {"type": "string", "enum": ["product", "article", "collection", "link"]}
+      },
+      "additionalProperties": false
+    },
+    "optional_resource_mapping": {
+      "type": "object",
+      "required": ["resource_type", "runtime_setting_id"],
+      "properties": {
+        "resource_type": {"type": "string", "const": "project_image"},
+        "reference_role": {"type": ["string", "null"], "enum": ["primary_media", "mobile_media", "supporting_media", null]},
+        "runtime_setting_id": {"type": "string", "enum": ["image", "mobile_image", "logo"]}
+      },
+      "additionalProperties": false
+    },
+    "placement_value_mapping": {
+      "type": "object",
+      "required": ["semantic_field", "runtime_setting_id"],
+      "properties": {
+        "semantic_field": {"type": "string", "enum": ["marker_position.x_percent", "marker_position.y_percent"]},
+        "runtime_setting_id": {"type": "string", "enum": ["x_position", "y_position"]}
+      },
+      "additionalProperties": false
+    },
+    "section_resource_mapping": {
+      "type": "object",
+      "required": ["resource_type", "reference_role", "runtime_setting_id", "required"],
+      "properties": {
+        "resource_type": {"type": "string", "const": "project_image"},
+        "reference_role": {"type": "string", "enum": ["primary_media", "mobile_media"]},
+        "runtime_setting_id": {"type": "string", "enum": ["image", "mobile_image"]},
+        "required": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "required": ["policy_id", "page_role", "semantic_section_role", "runtime_section_id", "runtime_block_type", "semantic_block_role", "max_blocks", "destination_precedence", "destination_mappings", "localized_value_mappings", "optional_resource_mappings", "minimum_content", "duplicate_key", "empty_section_behavior", "omission_reasons", "hard_failure_conditions"],
+      "properties": {
+        "policy_id": {"type": "string", "enum": ["editorial_grid", "lookbook", "craftsmanship", "manufacturing_process", "brand_timeline", "sustainability", "team", "awards_certifications", "cross_sell_products", "product_bundle_showcase", "shop_the_look", "complementary_products_fallback"]},
+        "page_role": {"type": "string", "enum": ["homepage", "product_page", "collection_page", "standard_page"]},
+        "page_roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["homepage", "product_page", "collection_page", "standard_page"]}},
+        "semantic_section_role": {"type": "string", "enum": ["editorial_discovery_grid", "editorial_lookbook", "craftsmanship_evidence", "manufacturing_process", "brand_timeline", "sustainability_evidence", "team_directory", "recognition_evidence", "cross_sell_products", "product_bundle_showcase", "shop_the_look", "complementary_products_fallback"]},
+        "runtime_section_id": {"type": "string", "enum": ["editorial-grid", "lookbook", "craftsmanship", "manufacturing-process", "brand-timeline", "sustainability", "team", "awards-certifications", "cross-sell-products", "product-bundle-showcase", "shop-the-look", "complementary-products"]},
+        "runtime_block_type": {"type": "string", "enum": ["story", "item", "craft_step", "process_step", "timeline_item", "initiative", "team_member", "award", "certification", "product", "fallback_product"]},
+        "runtime_block_type_by_semantic_kind": {"type": "object", "additionalProperties": {"type": "string", "enum": ["award", "certification"]}},
+        "semantic_kind_values": {"type": "array", "items": {"type": "string", "enum": ["award", "certification"]}},
+        "semantic_block_role": {"type": "string", "enum": ["editorial_story", "lookbook_frame", "craftsmanship_step", "manufacturing_process_step", "timeline_item", "sustainability_initiative", "team_member", "recognition", "curated_cross_sell_product", "bundle_product", "shop_the_look_product", "fallback_product"]},
+        "visible_name_field": {"type": "string", "enum": ["title", "name"]},
+        "max_blocks": {"type": "integer", "minimum": 1, "maximum": 12},
+        "min_blocks": {"type": "integer", "minimum": 1, "maximum": 12},
+        "destination_precedence": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["shopify_product", "shopify_article", "shopify_collection", "shopify_page", "external_url"]}
+        },
+        "destination_mappings": {"type": "array", "items": {"$ref": "#/$defs/destination_mapping"}},
+        "localized_value_mappings": {"type": "array", "items": {"$ref": "#/$defs/setting_mapping"}},
+        "required_localized_fields": {"type": "array", "items": {"type": "string", "enum": ["title", "date", "text", "name", "role", "issuer", "kind"]}},
+        "optional_resource_mappings": {"type": "array", "items": {"$ref": "#/$defs/optional_resource_mapping"}},
+        "section_resource_mappings": {"type": "array", "items": {"$ref": "#/$defs/section_resource_mapping"}},
+        "placement_value_mappings": {"type": "array", "items": {"$ref": "#/$defs/placement_value_mapping"}},
+        "minimum_content": {"type": "array", "items": {"type": "string", "enum": ["destination", "visible_name", "image", "accessible_context", "evidence", "marker_position"]}},
+        "duplicate_key": {"type": "string", "enum": ["runtime_destination", "runtime_destination_or_frame", "semantic_heading", "runtime_product"]},
+        "source_authority": {"type": "string", "enum": ["merchant_curated", "shopify_complementary_fallback"]},
+        "current_product_behavior": {"type": "string", "enum": ["runtime_setting", "always_exclude", "not_applicable"]},
+        "empty_section_behavior": {"type": "string", "enum": ["preserve_shell", "omit"]},
+        "omission_reasons": {"type": "array", "items": {"type": "string"}},
+        "hard_failure_conditions": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  }
+}

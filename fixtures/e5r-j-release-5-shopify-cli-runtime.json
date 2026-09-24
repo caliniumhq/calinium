@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "fixture_revision": "e5r-j-release-5-shopify-cli-runtime-v1",
+  "source_release": 5,
+  "shop_domain": "calinium-example.myshopify.com",
+  "main_theme_id": "100000000001",
+  "development_theme_id": "100000000006",
+  "cli_before": "4.6.0",
+  "cli_after": "4.7.0",
+  "theme_list_json": [
+    {
+      "id": 100000000001,
+      "name": "Dawn",
+      "role": "live"
+    },
+    {
+      "id": 100000000006,
+      "name": "Calinium Controlled Development",
+      "role": "development"
+    },
+    {
+      "id": 100000000008,
+      "name": "Unpublished A",
+      "role": "unpublished"
+    },
+    {
+      "id": 100000000009,
+      "name": "Unpublished B",
+      "role": "unpublished"
+    }
+  ],
+  "recognized_upgrade_chatter": "✨ New version of Shopify CLI available! (4.6.0 → 4.7.0)\nTo upgrade: npm install --global @shopify/cli@4.7.0\nnpm warn controlled updater diagnostic\nchanged 15 packages in 4s\n12 packages are looking for funding\nrun `npm fund` for details\n",
+  "legacy_error": "Unexpected non-whitespace character after JSON at position 572 (line 32 column 1)",
+  "expected_classification": "shopify_cli_update_chatter",
+  "preserved_identity": {
+    "project_id": "prj_public-fixture-0001",
+    "merchant_flow_id": "merchant-flow-00000000000000000001",
+    "generation_job_id": "merchant-flow-job-00000000000000000002",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "artifact_checksum": "c2e5dd71a4b06b173f266cc3c5e7cf60aff4c3c9f269b73b372bcf3f66e95b09",
+    "render_job_id": "merchant-flow-job-00000000000000000001",
+    "architecture_profile_id": "profile.editorial_discovery.v1",
+    "architecture_revision_id": "architecture-selection-7b835c017232aa922918",
+    "design_dna_id": "adna_0989b341020b3def5aac2c7eda0b1b93b9af1aae"
+  },
+  "expected_retry_state": "retryable"
+}

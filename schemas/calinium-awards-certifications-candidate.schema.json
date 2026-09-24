@@ -1,0 +1,10 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://calinium.local/schemas/calinium-awards-certifications-candidate.schema.json",
+  "title":"Calinium Awards and Certifications Candidate Plan",
+  "description":"Mutable review state for merchant-verified awards and credentials. It cannot create an unverified credential claim.",
+  "type":"object","additionalProperties":false,
+  "required":["version","status","candidate_version","recognitions","warnings","updated_at"],
+  "properties":{"version":{"type":"integer","const":1},"status":{"type":"string","enum":["not_required","draft","approved"]},"candidate_version":{"type":"integer","minimum":0},"recognitions":{"type":"array","maxItems":12,"items":{"$ref":"#/$defs/item"}},"warnings":{"type":"array","items":{"type":"string","minLength":1,"maxLength":240}},"updated_at":{"type":"string","minLength":1}},
+  "$defs":{"item":{"type":"object","additionalProperties":false,"required":["content_id","placement_id","kind","title","issuer","year","text","award_icon","image_asset_id","image_alt_text","decorative_media","evidence_note","order"],"properties":{"content_id":{"type":"string","pattern":"^abpc_[a-z0-9][a-z0-9_-]*$"},"placement_id":{"type":"string","pattern":"^abpl_[a-z0-9][a-z0-9_-]*$"},"kind":{"type":"string","enum":["award","certification"]},"title":{"type":"string","maxLength":240},"issuer":{"type":"string","maxLength":240},"year":{"type":"string","maxLength":40},"text":{"type":"string","maxLength":1200},"award_icon":{"type":"string","enum":["none","award","medal","star","certificate","verified","shield-check"]},"image_asset_id":{"type":["string","null"],"minLength":1,"maxLength":240},"image_alt_text":{"type":["string","null"],"maxLength":500},"decorative_media":{"type":"boolean"},"evidence_note":{"type":"string","maxLength":1200},"order":{"type":"integer","minimum":1}}}}
+}

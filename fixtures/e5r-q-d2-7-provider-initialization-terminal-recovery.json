@@ -1,0 +1,50 @@
+{
+  "fixture_version": "e5r-q-d2-7-provider-initialization-terminal-recovery-v1",
+  "historical_attempt_6": {
+    "flow_id": "merchant-flow-00000000000000000001",
+    "job_id": "merchant-flow-job-00000000000000000001",
+    "logical_attempt": 6,
+    "status": "terminal",
+    "recorded_stage": "unknown",
+    "recorded_category": "d2_7_unknown_provider_failure",
+    "diagnosed_category": "D2_7_PROVIDER_CLIENT_INITIALIZATION_FAILED",
+    "provider_transport_started": false,
+    "transport_attempts": 0,
+    "mutated_by_e5r_q": false
+  },
+  "future_recovery": {
+    "source_attempt": 6,
+    "target_attempt": 7,
+    "operator_authentication_required": true,
+    "source_revision_change_required": true,
+    "protected_readiness_required": true,
+    "expected_flow_revision_required": true,
+    "idempotency_required": true,
+    "cas_required": true,
+    "lineage_binding_required": true,
+    "render_calls_before_provider": 0,
+    "d1_calls_before_provider": 0,
+    "new_d2_7_parent_allowed": false,
+    "attempt_8_from_same_action_allowed": false
+  },
+  "authoritative_evidence": {
+    "project_id": "prj_public-fixture-0001",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "d1_evaluation_id": "merchant-flow-d1-evaluation-00000000000000000001",
+    "d2_7_parent_request_id": "merchant-flow-d2-7-request-00000000000000000001",
+    "render_cells_passed": 8,
+    "d1_finding_count": 0
+  },
+  "safety": {
+    "openai_calls": 0,
+    "shopify_calls": 0,
+    "shopify_writes": 0,
+    "render_calls": 0,
+    "d1_calls": 0,
+    "theme_mutations": 0,
+    "attempt_7_created": false,
+    "deployment_allowed": false,
+    "automatic_retry_allowed": false,
+    "automatic_repair_allowed": false
+  }
+}

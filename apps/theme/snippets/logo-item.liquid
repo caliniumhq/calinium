@@ -1,0 +1,32 @@
+{% liquid
+  assign logo_image = image | default: logo | default: blank
+  assign logo_name = company_name | default: name | default: blank
+  assign logo_url = url | default: link | default: blank
+  assign logo_loading = loading | default: 'lazy'
+  assign logo_class = 'co-primitive-logo-item'
+  assign logo_is_linked = false
+  assign logo_image_alt = logo_name
+  assign logo_sizes = image_sizes | default: '180px'
+  assign logo_widths = image_widths | default: '96, 144, 180, 240'
+
+  if logo_url != blank and logo_name != blank
+    assign logo_is_linked = true
+    assign logo_image_alt = ''
+  endif
+
+  if class != blank
+    assign logo_class = logo_class | append: ' ' | append: class
+  endif
+%}
+
+{% if logo_image != blank or logo_name != blank %}
+  <div class="{{ logo_class | escape }}">
+    {% if logo_is_linked %}<a class="co-primitive-logo-item__link" href="{{ logo_url | escape }}" aria-label="{{ logo_name | escape }}">{% endif %}
+      {% if logo_image != blank %}
+        {% render 'responsive-image', image: logo_image, alt: logo_image_alt, loading: logo_loading, sizes: logo_sizes, widths: logo_widths, ratio: 'natural', fit: 'contain', class: 'co-primitive-logo-item__media' %}
+      {% else %}
+        <span class="co-primitive-logo-item__name">{{ logo_name | escape }}</span>
+      {% endif %}
+    {% if logo_is_linked %}</a>{% endif %}
+  </div>
+{% endif %}

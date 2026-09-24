@@ -1,0 +1,260 @@
+{% liquid
+  assign mosaic_classes = 'co-image-mosaic co-library-section co-editorial-pack-section co-color-scheme-' | append: section.settings.color_scheme
+  assign mosaic_heading_id = 'ImageMosaicHeading-' | append: section.id
+%}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{% render 'section-spacing', section: section %}
+<section class="{{ mosaic_classes }}" {% if section.settings.heading != blank %}aria-labelledby="{{ mosaic_heading_id }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.description, id: mosaic_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size %}
+    {% if section.blocks.size > 0 %}<div class="co-image-mosaic__grid co-image-mosaic__grid--{{ section.settings.layout }}" role="list">{% for block in section.blocks %}{% liquid
+      assign mosaic_image_class = 'co-image-mosaic__media co-image-mosaic__image--focal-' | append: block.settings.focal_position
+    %}<article class="co-image-mosaic__item" role="listitem" {{ block.shopify_attributes }}>{% capture mosaic_content %}{% if block.settings.image != blank %}{% render 'responsive-image', image: block.settings.image, mobile_image: block.settings.mobile_image, loading: 'lazy', sizes: '(min-width: 48rem) 34vw, 50vw', widths: '240, 360, 535, 750, 1000, 1500', ratio: section.settings.media_ratio, class: mosaic_image_class %}{% elsif request.design_mode %}<div class="co-editorial-pack-section__placeholder">{{ 'lifestyle-1' | placeholder_svg_tag }}</div>{% endif %}{% if section.settings.show_captions and block.settings.caption != blank %}<p class="co-image-mosaic__caption">{{ block.settings.caption | escape }}</p>{% endif %}{% endcapture %}{% if block.settings.link != blank %}<a class="co-image-mosaic__link" href="{{ block.settings.link | escape }}"{% if block.settings.caption != blank %} aria-label="{{ block.settings.caption | escape }}"{% endif %}>{{ mosaic_content }}</a>{% else %}{{ mosaic_content }}{% endif %}</article>{% endfor %}</div>{% elsif request.design_mode %}<p>{{ 'sections.image_mosaic.empty' | t }}</p>{% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.image_mosaic.name",
+  "tag": "section",
+  "class": "co-section-image-mosaic",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.shared.settings.eyebrow.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.shared.settings.heading.label",
+      "default": "Image mosaic"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.shared.settings.description.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.shared.settings.heading_size.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.shared.options.small"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.shared.options.standard"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.shared.options.large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shared.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shared.options.center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.shared.settings.layout.label",
+      "default": "balanced",
+      "options": [
+        {
+          "value": "balanced",
+          "label": "t:sections.image_mosaic.settings.layout.options.balanced"
+        },
+        {
+          "value": "feature-left",
+          "label": "t:sections.image_mosaic.settings.layout.options.feature_left"
+        },
+        {
+          "value": "feature-right",
+          "label": "t:sections.image_mosaic.settings.layout.options.feature_right"
+        },
+        {
+          "value": "triptych",
+          "label": "t:sections.image_mosaic.settings.layout.options.triptych"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "t:sections.image_mosaic.settings.media_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.shared.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.shared.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.shared.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_captions",
+      "label": "t:sections.shared.settings.show_captions.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.shared.settings.desktop_top_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.shared.settings.desktop_bottom_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "t:sections.shared.settings.mobile_top_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "t:sections.shared.settings.mobile_bottom_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.image_mosaic.blocks.image_name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.shared.settings.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "t:sections.shared.settings.mobile_image.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.shared.settings.link.label"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "t:sections.shared.settings.caption.label"
+        },
+        {
+          "type": "select",
+          "id": "focal_position",
+          "label": "t:sections.image_mosaic.settings.focal_position.label",
+          "default": "center",
+          "options": [
+            {
+              "value": "top-left",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.top_left"
+            },
+            {
+              "value": "top-center",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.top_center"
+            },
+            {
+              "value": "top-right",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.top_right"
+            },
+            {
+              "value": "center-left",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.center_left"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.shared.options.center"
+            },
+            {
+              "value": "center-right",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.center_right"
+            },
+            {
+              "value": "bottom-left",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.bottom_left"
+            },
+            {
+              "value": "bottom-center",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.bottom_center"
+            },
+            {
+              "value": "bottom-right",
+              "label": "t:sections.image_mosaic.settings.focal_position.options.bottom_right"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "t:sections.image_mosaic.preset",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

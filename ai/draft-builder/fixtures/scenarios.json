@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "description": "Deterministic Draft Builder scenarios. Profile fixtures remain canonical in ai/compiler/fixtures and are compiled in memory; no Shopify files are created.",
+  "scenarios": [
+    {"id": "luxury-bags", "name": "Luxury Bags", "profile_fixture": "ai/compiler/fixtures/valid/luxury-leather-bags.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "electronics", "name": "Electronics", "profile_fixture": "ai/compiler/fixtures/valid/electronics.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "beauty", "name": "Beauty", "profile_fixture": "ai/compiler/fixtures/valid/beauty.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "jewelry", "name": "Jewelry", "profile_fixture": "ai/compiler/fixtures/valid/jewelry.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "furniture", "name": "Furniture", "profile_fixture": "ai/compiler/fixtures/valid/furniture.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "hospitality", "name": "Hospitality", "profile_fixture": "ai/compiler/fixtures/valid/hospitality.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "food", "name": "Food", "profile_fixture": "ai/compiler/fixtures/valid/food.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "digital-products", "name": "Digital Products", "profile_fixture": "ai/compiler/fixtures/valid/digital-products.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "minimal-merchant", "name": "Minimal Merchant", "profile_fixture": "ai/compiler/fixtures/valid/unresolved-input.json", "strategy_mode": "compile", "expected_error": "Storefront strategy validation failed."},
+    {"id": "incomplete-merchant", "name": "Incomplete Merchant", "profile_fixture": "ai/compiler/fixtures/invalid/missing-required-asset.json", "strategy_mode": "compile", "expected_readiness": "Blocked"},
+    {"id": "invalid-strategy", "name": "Invalid Strategy", "profile_fixture": "ai/compiler/fixtures/valid/luxury-leather-bags.json", "strategy_fixture": "ai/draft-builder/fixtures/invalid/invalid-strategy.json", "expected_error": "Storefront strategy validation failed."},
+    {"id": "blocked-strategy", "name": "Blocked Strategy", "profile_fixture": "ai/compiler/fixtures/valid/luxury-leather-bags.json", "strategy_mode": "compile", "expected_readiness": "Blocked"}
+  ]
+}

@@ -1,0 +1,18 @@
+{% liquid
+  assign footer_payment_heading = heading | default: blank
+  assign footer_payment_alignment = alignment | default: 'start'
+%}
+
+{% if shop.enabled_payment_types.size > 0 %}
+  <section class="co-footer__block co-footer__block--payments co-footer__block--align-{{ footer_payment_alignment | escape }}" {% if block != blank %}{{ block.shopify_attributes }}{% endif %}>
+    {% if footer_payment_heading != blank %}
+      <h2 class="co-footer__block-heading">{{ footer_payment_heading | escape }}</h2>
+    {% endif %}
+
+    <ul class="co-footer__payment-icons" role="list" aria-label="{{ 'cart.payment_methods' | t | escape }}">
+      {% for payment_type in shop.enabled_payment_types %}
+        <li>{{ payment_type | payment_type_svg_tag: class: 'co-footer__payment-icon' }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}

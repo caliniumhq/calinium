@@ -1,0 +1,51 @@
+/* Featured collection section and its product-card composition. */
+.co-featured-collection {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-featured-collection__header {
+  display: grid;
+  gap: var(--co-space-5);
+  margin-block-end: var(--co-space-6);
+}
+
+.co-featured-collection__heading-group {
+  display: grid;
+  gap: var(--co-space-3);
+}
+
+.co-featured-collection__eyebrow {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.co-featured-collection__description > * + * {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-featured-collection__empty {
+  max-inline-size: var(--co-content-width);
+  color: var(--co-color-text-muted);
+}
+
+.co-featured-collection__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--co-grid-gap);
+}
+
+@media (min-width: 48rem) {
+  .co-featured-collection__header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .co-featured-collection__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

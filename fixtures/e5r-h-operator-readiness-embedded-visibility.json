@@ -1,0 +1,38 @@
+{
+  "phase": "E5R-H",
+  "source_baseline": "1000000000000000000000000000000000000005",
+  "deployed_release": 3,
+  "shop_domain": "calinium-example.myshopify.com",
+  "project_id": "prj_public-fixture-0001",
+  "e5r_g_recovery": {
+    "status": "passed",
+    "question_id": "products",
+    "prompt": "What do you sell?",
+    "quick_start_destination": "chat",
+    "duplicate_recovery_count": 0
+  },
+  "release_3_blockers": {
+    "operator_readiness_acceptance_surface": "missing",
+    "advanced_displacement_pixels": 1693
+  },
+  "viewport_matrix": [
+    { "id": "dashboard_desktop_short", "width": 1440, "height": 900, "embedded": false, "transcript": "short" },
+    { "id": "embedded_desktop_short", "width": 1180, "height": 780, "embedded": true, "transcript": "short" },
+    { "id": "embedded_narrow_short", "width": 390, "height": 844, "embedded": true, "transcript": "short" },
+    { "id": "embedded_narrow_long", "width": 390, "height": 844, "embedded": true, "transcript": "1693px" },
+    { "id": "embedded_desktop_long", "width": 1180, "height": 780, "embedded": true, "transcript": "1693px" },
+    { "id": "embedded_recovered_question", "width": 390, "height": 844, "embedded": true, "transcript": "recovered_products" },
+    { "id": "embedded_subsequent_question", "width": 390, "height": 844, "embedded": true, "transcript": "subsequent_audience" },
+    { "id": "embedded_reload_awaiting_answer", "width": 390, "height": 844, "embedded": true, "transcript": "reload_products" }
+  ],
+  "invariants": {
+    "advanced_control_count": 1,
+    "minimum_hit_height_pixels": 40,
+    "persistent_controls": true,
+    "transcript_scroll_isolated": true,
+    "horizontal_scroll_required": false,
+    "operator_readiness_backend_authorized": true,
+    "automatic_repair_allowed": false,
+    "shopify_theme_mutation_allowed": false
+  }
+}

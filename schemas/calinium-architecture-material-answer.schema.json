@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-architecture-material-answer.schema.json",
+  "title": "Calinium architecture material-question answer",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "answer_revision", "question_id", "question_checksum", "originating_selection_outcome_id", "originating_selection_outcome_checksum", "intent_path", "normalized_value", "normalization", "conversation_revision", "merchant_context_checksum", "answered_at", "provenance", "checksum"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "architecture-material-answer-v1"},
+    "answer_revision": {"type": "string", "pattern": "^architecture-answer-[a-f0-9]{20}$"},
+    "question_id": {"type": "string", "pattern": "^architecture-question-[a-f0-9]{20}$"},
+    "question_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "originating_selection_outcome_id": {"type": "string", "pattern": "^architecture-selection-outcome-[a-f0-9]{20}$"},
+    "originating_selection_outcome_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "intent_path": {"const": "storefront.shopping_mode"},
+    "normalized_value": {"enum": ["image_led", "information_led"]},
+    "normalization": {"type": "object", "required": ["revision", "confidence", "status", "raw_input_stored"], "properties": {"revision": {"const": "shopping-mode-natural-answer-v1"}, "confidence": {"const": "High"}, "status": {"const": "resolved"}, "raw_input_stored": {"const": false}}, "additionalProperties": false},
+    "conversation_revision": {"type": "string", "minLength": 1},
+    "merchant_context_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "answered_at": {"type": "string", "format": "date-time"},
+    "provenance": {"type": "object", "required": ["source_type", "explicit_merchant_input", "source_question_id"], "properties": {"source_type": {"const": "merchant_answer"}, "explicit_merchant_input": {"const": true}, "source_question_id": {"type": "string", "pattern": "^architecture-question-[a-f0-9]{20}$"}}, "additionalProperties": false},
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,37 @@
+{% liquid
+  assign pagination = paginate
+%}
+
+{% if pagination.pages > 1 %}
+  <nav class="co-pagination" aria-label="{{ 'pagination.label' | t }}">
+    <ul class="co-pagination__list" role="list">
+      {% if pagination.previous != blank %}
+        <li class="co-pagination__item co-pagination__item--previous">
+          <a class="co-pagination__link" href="{{ pagination.previous.url | escape }}" aria-label="{{ 'pagination.previous' | t }}">
+            {% render 'icon', name: 'arrow-left', size: 18 %}
+            <span>{{ 'pagination.previous' | t }}</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {% for part in pagination.parts %}
+        <li class="co-pagination__item">
+          {% if part.is_link %}
+            <a class="co-pagination__link" href="{{ part.url | escape }}" aria-label="{{ 'pagination.page' | t: number: part.title }}">{{ part.title }}</a>
+          {% else %}
+            <span class="co-pagination__link{% if part.title == pagination.current_page %} is-current{% endif %}"{% if part.title == pagination.current_page %} aria-current="page"{% endif %}>{{ part.title }}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+
+      {% if pagination.next != blank %}
+        <li class="co-pagination__item co-pagination__item--next">
+          <a class="co-pagination__link" href="{{ pagination.next.url | escape }}" aria-label="{{ 'pagination.next' | t }}">
+            <span>{{ 'pagination.next' | t }}</span>
+            {% render 'icon', name: 'arrow-right', size: 18 %}
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-concrete-visual-observation.schema.json",
+  "title": "Calinium Concrete Visual Observation",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "observation_id", "evaluation_request_id", "run_sequence", "profile_id", "route_id", "viewport_id", "cell_id", "screenshot_sha256", "phenomenon", "phenomenon_kind", "component", "visible_region", "region_reference", "evidence_summary", "confidence", "objective_facts", "source_observation_ids", "relationship", "architecture_presenter", "frozen"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "concrete-visual-observation-v1"},
+    "observation_id": {"type": "string", "pattern": "^concrete-visual-observation-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string"},
+    "run_sequence": {"type": "integer", "minimum": 1},
+    "profile_id": {"type": "string"},
+    "route_id": {"type": "string", "enum": ["homepage", "collection", "product"]},
+    "viewport_id": {"type": "string"},
+    "cell_id": {"type": "string"},
+    "screenshot_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "phenomenon": {"type": "string"},
+    "phenomenon_kind": {"type": "string", "enum": ["issue", "structure"]},
+    "component": {"type": "string"},
+    "visible_region": {"type": "string", "minLength": 1, "maxLength": 500},
+    "region_reference": {"type": "object", "required": ["kind", "landmark_id", "bounds"], "properties": {"kind": {"type": "string", "enum": ["presenter_landmark", "described_region", "bounding_region"]}, "landmark_id": {"type": ["string", "null"]}, "bounds": {"type": ["object", "null"], "properties": {"x": {"type": "number"}, "y": {"type": "number"}, "width": {"type": "number", "exclusiveMinimum": 0}, "height": {"type": "number", "exclusiveMinimum": 0}}, "required": ["x", "y", "width", "height"], "additionalProperties": false}}, "additionalProperties": false},
+    "evidence_summary": {"type": "string", "minLength": 1, "maxLength": 800},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "objective_facts": {"type": "array", "items": {"type": "object", "required": ["finding_id", "rule_id", "severity", "authority"], "properties": {"finding_id": {"type": "string"}, "rule_id": {"type": "string"}, "severity": {"type": "string"}, "authority": {"type": "string", "const": "phase_d1_authoritative"}}, "additionalProperties": false}},
+    "source_observation_ids": {"type": "array", "items": {"type": "string"}},
+    "relationship": {"type": "object", "required": ["mode", "root_evidence_key"], "properties": {"mode": {"type": "string", "enum": ["root_finding", "symptom_of", "independent"]}, "root_evidence_key": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "architecture_presenter": {"type": "object", "required": ["system_scope", "family_ids", "presenter_ids", "provenance_revision"], "properties": {"system_scope": {"type": "string", "enum": ["architecture_family", "shared_core", "unknown"]}, "family_ids": {"type": "array", "items": {"type": "string"}}, "presenter_ids": {"type": "array", "items": {"type": "string"}}, "provenance_revision": {"type": "string"}}, "additionalProperties": false},
+    "frozen": {"type": "boolean", "const": true}
+  },
+  "additionalProperties": false
+}

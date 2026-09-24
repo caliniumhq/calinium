@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-merchant-profile.schema.json",
+  "title": "Calinium merchant profile",
+  "type": "object",
+  "required": ["version", "business", "industry", "subcategory", "catalog", "audience", "goals", "assets", "preferences", "brand_personality"],
+  "$defs": {
+    "asset_id": {"type":"string","pattern":"^ast_[a-z0-9-]+$"},
+    "reference": {
+      "type":"object",
+      "required":["name","url","reason","traits","specific_focus","screenshot_asset_id","market_relationship"],
+      "properties": {
+        "name":{"type":"string","minLength":1}, "url":{"type":["string","null"]}, "reason":{"type":["string","null"]},
+        "traits":{"type":"array","items":{"type":"string"}}, "specific_focus":{"type":["string","null"]},
+        "screenshot_asset_id":{"type":["string","null"],"pattern":"^ast_[a-z0-9-]+$"}, "market_relationship":{"type":["string","null"]}
+      }, "additionalProperties":false
+    },
+    "palette": {
+      "type":"object", "required":["source","approved","source_asset_id","colors"],
+      "properties": {
+        "source":{"type":"string","enum":["manual","existing_brand","extracted"]}, "approved":{"type":"boolean"},
+        "source_asset_id":{"type":["string","null"],"pattern":"^ast_[a-z0-9-]+$"},
+        "colors":{"type":"object","required":["primary","secondary","accent","background","text","additional"],"properties":{
+          "primary":{"type":"string","pattern":"^#[0-9A-F]{6}$"}, "secondary":{"type":["string","null"],"pattern":"^#[0-9A-F]{6}$"},
+          "accent":{"type":["string","null"],"pattern":"^#[0-9A-F]{6}$"}, "background":{"type":"string","pattern":"^#[0-9A-F]{6}$"},
+          "text":{"type":"string","pattern":"^#[0-9A-F]{6}$"}, "additional":{"type":"array","maxItems":6,"items":{"type":"string","pattern":"^#[0-9A-F]{6}$"}}
+        },"additionalProperties":false}
+      }, "additionalProperties":false
+    },
+    "trace": {"type":"object","required":["field","source_type","source_id"],"properties":{"field":{"type":"string","minLength":1},"source_type":{"type":"string","enum":["interview_answer","asset","merchant_approval"]},"source_id":{"type":"string","minLength":1}},"additionalProperties":false}
+  },
+  "properties": {
+    "version": {"type":"integer","const":1},
+    "business": {"type":"object","required":["name","model"],"properties":{"name":{"type":["string","null"]},"model":{"type":["string","null"]}},"additionalProperties":false},
+    "industry": {"type":["string","null"],"pattern":"^[a-z0-9_]+$"},
+    "subcategory": {"type":["string","null"]},
+    "catalog": {"type":"object","required":["product_count","product_types","has_variants","price_positioning"],"properties":{"product_count":{"type":["integer","null"],"minimum":0},"product_types":{"type":"array","items":{"type":"string","minLength":1}},"has_variants":{"type":["boolean","null"]},"price_positioning":{"type":["string","null"]}},"additionalProperties":false},
+    "audience": {"type":"object","required":["primary","needs"],"properties":{"primary":{"type":["string","null"]},"needs":{"type":"array","items":{"type":"string","minLength":1}}},"additionalProperties":false},
+    "goals": {"type":"object","required":["primary","secondary"],"properties":{"primary":{"type":"array","items":{"type":"string","minLength":1}},"secondary":{"type":"array","items":{"type":"string","minLength":1}}},"additionalProperties":false},
+    "assets": {"type":"object","required":["available","notes"],"properties":{"available":{"type":"array","items":{"type":"string","pattern":"^[a-z0-9_]+$"}},"notes":{"type":"array","items":{"type":"string","minLength":1}}},"additionalProperties":false},
+    "preferences": {"type":"object","required":["page_type","design_languages","color_strategies","image_styles","content_density"],"properties":{"page_type":{"type":["string","null"],"pattern":"^[a-z0-9_]+$"},"design_languages":{"type":"array","items":{"type":"string","pattern":"^[a-z0-9_]+$"}},"color_strategies":{"type":"array","items":{"type":"string","pattern":"^[a-z0-9_]+$"}},"image_styles":{"type":"array","items":{"type":"string","pattern":"^[a-z0-9_]+$"}},"content_density":{"type":["string","null"],"enum":["low","medium","high",null]}},"additionalProperties":false},
+    "brand_personality": {"type":"object","required":["primary","secondary"],"properties":{"primary":{"type":["string","null"],"pattern":"^[a-z0-9_]+$"},"secondary":{"type":"array","maxItems":2,"items":{"type":"string","pattern":"^[a-z0-9_]+$"}}},"additionalProperties":false},
+    "enrichment": {"type":"object","required":["version","discovery","existing_presence","desired_outcomes","creative_direction","brand_assets","brand_colors","typography","inspiration_references","competitor_references","available_content_assets","asset_readiness","traceability"],"properties":{
+      "version":{"type":"integer","const":1},
+      "discovery":{"type":"object","required":["business_stage"],"properties":{"business_stage":{"type":["string","null"],"enum":["idea","preparing_to_launch","newly_launched","established_business","existing_shopify_store","migrating_platform","redesigning_existing_store",null]}},"additionalProperties":false},
+      "existing_presence":{"type":"object","required":["website","shopify"],"properties":{
+        "website":{"type":"object","required":["status","url","platform","is_live","preserve","improve","dislikes"],"properties":{"status":{"type":["string","null"],"enum":["no_existing_website","yes_existing_website",null]},"url":{"type":["string","null"]},"platform":{"type":["string","null"]},"is_live":{"type":["boolean","null"]},"preserve":{"type":"array","items":{"type":"string"}},"improve":{"type":"array","items":{"type":"string"}},"dislikes":{"type":["string","null"]}},"additionalProperties":false},
+        "shopify":{"type":"object","required":["status","url","is_live","structure_preference","intent"],"properties":{"status":{"type":["boolean","null"]},"url":{"type":["string","null"]},"is_live":{"type":["boolean","null"]},"structure_preference":{"type":["string","null"]},"intent":{"type":["string","null"]}},"additionalProperties":false}
+      },"additionalProperties":false},
+      "desired_outcomes":{"type":"array","items":{"type":"string"}},
+      "creative_direction":{"type":"object","required":["creative_freedom","visual_personality","emotional_response","image_emphasis","motion_preference","tradition_direction"],"properties":{"creative_freedom":{"type":["string","null"]},"visual_personality":{"type":"array","items":{"type":"string"}},"emotional_response":{"type":"array","items":{"type":"string"}},"image_emphasis":{"type":["string","null"]},"motion_preference":{"type":["string","null"]},"tradition_direction":{"type":["string","null"]}},"additionalProperties":false},
+      "brand_assets":{"type":"object","required":["logo_status","logo_asset_id","assets"],"properties":{"logo_status":{"type":["string","null"]},"logo_asset_id":{"type":["string","null"],"pattern":"^ast_[a-z0-9-]+$"},"assets":{"type":"array","items":{"$ref":"#/$defs/asset_id"}}},"additionalProperties":false},
+      "brand_colors":{"type":"object","required":["source","palette"],"properties":{"source":{"type":["string","null"]},"palette":{"type":["object","null"],"required":["source","approved","source_asset_id","colors"],"properties":{"source":{"type":"string","enum":["manual","existing_brand","extracted"]},"approved":{"type":"boolean"},"source_asset_id":{"type":["string","null"],"pattern":"^ast_[a-z0-9-]+$"},"colors":{"type":"object","required":["primary","secondary","accent","background","text","additional"],"properties":{"primary":{"type":"string","pattern":"^#[0-9A-F]{6}$"},"secondary":{"type":["string","null"],"pattern":"^#[0-9A-F]{6}$"},"accent":{"type":["string","null"],"pattern":"^#[0-9A-F]{6}$"},"background":{"type":"string","pattern":"^#[0-9A-F]{6}$"},"text":{"type":"string","pattern":"^#[0-9A-F]{6}$"},"additional":{"type":"array","maxItems":6,"items":{"type":"string","pattern":"^#[0-9A-F]{6}$"}}},"additionalProperties":false}},"additionalProperties":false}},"additionalProperties":false},
+      "typography":{"type":"object","required":["preference","heading_styles","body_styles","font_references"],"properties":{"preference":{"type":["string","null"]},"heading_styles":{"type":"array","items":{"type":"string"}},"body_styles":{"type":"array","items":{"type":"string"}},"font_references":{"type":"array","items":{"type":"string"}}},"additionalProperties":false},
+      "inspiration_references":{"type":"array","items":{"$ref":"#/$defs/reference"}}, "competitor_references":{"type":"array","items":{"$ref":"#/$defs/reference"}},
+      "available_content_assets":{"type":"object","required":["declared","asset_ids"],"properties":{"declared":{"type":"array","items":{"type":"string"}},"asset_ids":{"type":"array","items":{"$ref":"#/$defs/asset_id"}}},"additionalProperties":false},
+      "asset_readiness":{"type":"object","required":["next_step"],"properties":{"next_step":{"type":["string","null"]}},"additionalProperties":false},
+      "traceability":{"type":"array","items":{"$ref":"#/$defs/trace"}}
+    },"additionalProperties":false}
+  },
+  "additionalProperties": false
+}

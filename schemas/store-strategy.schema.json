@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/store-strategy.schema.json",
+  "title": "Calinium Creative Director Store Strategy",
+  "type": "object",
+  "required": ["version", "creativeBriefVersion", "designDirection", "colorDirection", "typographyDirection", "homepage", "navigation", "productPage", "collectionPage", "motion", "technicalRequirements", "recommendations", "merchantApprovalsRequired", "traceability", "validation"],
+  "properties": {
+    "version": {"type": "string", "const": "1.0"},
+    "creativeBriefVersion": {"type": "string", "const": "1.0"},
+    "designDirection": {"$ref": "#/$defs/direction"},
+    "colorDirection": {"$ref": "#/$defs/color"},
+    "typographyDirection": {"$ref": "#/$defs/typography"},
+    "homepage": {"$ref": "#/$defs/homepage"},
+    "navigation": {"$ref": "#/$defs/navigation"},
+    "productPage": {"$ref": "#/$defs/product_page"},
+    "collectionPage": {"$ref": "#/$defs/collection_page"},
+    "motion": {"$ref": "#/$defs/motion"},
+    "technicalRequirements": {"type": "object", "required": ["accessibility", "performance", "responsive", "progressiveEnhancement"], "properties": {"accessibility": {"type": "string", "const": "WCAG 2.2 AA"}, "performance": {"type": "string", "enum": ["high"]}, "responsive": {"type": "boolean", "const": true}, "progressiveEnhancement": {"type": "boolean", "const": true}}, "additionalProperties": false},
+    "recommendations": {"type": "array", "items": {"$ref": "#/$defs/recommendation"}},
+    "merchantApprovalsRequired": {"type": "array", "items": {"$ref": "#/$defs/approval"}},
+    "traceability": {"type": "object", "required": ["sources", "legacyCompilerStrategy"], "properties": {"sources": {"type": "array", "items": {"type": "string"}}, "legacyCompilerStrategy": {"type": ["object", "null"]}, "compilerIndustryResolution": {"$ref": "#/$defs/compiler_industry_resolution_provenance"}}, "additionalProperties": false},
+    "validation": {"type": "object", "required": ["valid", "warnings"], "properties": {"valid": {"type": "boolean"}, "warnings": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false}
+  },
+  "$defs": {
+    "direction": {"type": "object", "required": ["name", "rationale", "traits", "confidence"], "properties": {"name": {"type": "string"}, "rationale": {"type": "string"}, "traits": {"type": "array", "items": {"type": "string"}}, "confidence": {"type": "number", "minimum": 0, "maximum": 1}}, "additionalProperties": false},
+    "color": {"type": "object", "required": ["paletteRole", "recommendedColors", "rationale"], "properties": {"paletteRole": {"type": "string"}, "recommendedColors": {"type": "array", "items": {"type": "string"}}, "rationale": {"type": "string"}}, "additionalProperties": false},
+    "typography": {"type": "object", "required": ["style", "recommendedRoles", "rationale"], "properties": {"style": {"type": "string"}, "recommendedRoles": {"type": "object", "required": ["headings", "body", "labels"], "properties": {"headings": {"type": "string"}, "body": {"type": "string"}, "labels": {"type": "string"}}, "additionalProperties": false}, "rationale": {"type": "string"}}, "additionalProperties": false},
+    "homepage": {"type": "object", "required": ["objective", "hero", "sections"], "properties": {"objective": {"type": "string"}, "hero": {"type": "object", "required": ["treatment", "rationale"], "properties": {"treatment": {"type": "string"}, "rationale": {"type": "string"}}, "additionalProperties": false}, "sections": {"type": "array", "items": {"$ref": "#/$defs/section"}}}, "additionalProperties": false},
+    "section": {"type": "object", "required": ["sectionId", "purpose", "rationale", "source"], "properties": {"sectionId": {"type": "string"}, "purpose": {"type": "string"}, "rationale": {"type": "string"}, "source": {"type": "string", "enum": ["existing_strategy_compiler", "creative_director_fallback"]}}, "additionalProperties": false},
+    "navigation": {"type": "object", "required": ["primaryItems", "recommendMegaMenu", "rationale"], "properties": {"primaryItems": {"type": "array", "items": {"type": "string"}}, "recommendMegaMenu": {"type": "boolean"}, "rationale": {"type": "string"}}, "additionalProperties": false},
+    "product_page": {"type": "object", "required": ["galleryStyle", "purchaseExperience", "trustElements"], "properties": {"galleryStyle": {"type": "string"}, "purchaseExperience": {"type": "string"}, "trustElements": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "collection_page": {"type": "object", "required": ["layout", "filters", "sorting"], "properties": {"layout": {"type": "string"}, "filters": {"type": "array", "items": {"type": "string"}}, "sorting": {"type": "string"}}, "additionalProperties": false},
+    "motion": {"type": "object", "required": ["level", "principles"], "properties": {"level": {"type": "string"}, "principles": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "recommendation": {"type": "object", "required": ["id", "area", "recommendation", "rationale", "confidence", "requiresMerchantApproval"], "properties": {"id": {"type": "string"}, "area": {"type": "string"}, "recommendation": {"type": "string"}, "rationale": {"type": "string"}, "confidence": {"type": "number", "minimum": 0, "maximum": 1}, "requiresMerchantApproval": {"type": "boolean"}}, "additionalProperties": false},
+    "approval": {"type": "object", "required": ["path", "reason"], "properties": {"path": {"type": "string"}, "reason": {"type": "string"}}, "additionalProperties": false},
+    "compiler_industry_resolution_provenance": {"type": "object", "required": ["contract_version", "resolver_revision", "status", "compiler_profile_id", "resolution_source", "reason_code", "strength", "fallback_from_profile_id"], "properties": {
+      "contract_version": {"type": "string", "const": "compiler-supported-industry-resolution-v1"},
+      "resolver_revision": {"type": "integer", "const": 1},
+      "status": {"type": "string", "enum": ["supported_profile", "generic_supported_fallback", "unresolved_blocking"]},
+      "compiler_profile_id": {"type": ["string", "null"], "pattern": "^[a-z0-9_]+$"},
+      "resolution_source": {"type": "string"},
+      "reason_code": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+      "strength": {"type": "string", "enum": ["high", "medium", "low", "unresolved"]},
+      "fallback_from_profile_id": {"type": ["string", "null"], "pattern": "^[a-z0-9_]+$"}
+    }, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

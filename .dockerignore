@@ -1,0 +1,15 @@
+.git
+.shopify
+.calinium-checkpoints
+.calinium-data
+.env
+.env.*
+**/.env
+**/.env.*
+**/node_modules
+**/dist
+output
+*.log
+*.zip
+*.tgz
+.DS_Store

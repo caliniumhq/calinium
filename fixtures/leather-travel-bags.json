@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "businessName": "Sable & Alder",
+  "businessDescription": "Sable & Alder makes considered leather travel bags and small leather goods in limited runs.",
+  "productsOrServices": ["handmade leather travel bags", "small leather goods"],
+  "targetAudience": "people who value durable travel pieces and the story behind how they are made",
+  "primaryGoal": "strengthen luxury positioning and help shoppers discover the collection",
+  "countries": ["United Kingdom", "United States"],
+  "existingStoreUrl": null,
+  "existingBrand": {
+    "hasLogo": true,
+    "brandColors": ["#392A21", "#EEE6DA"],
+    "inspirations": ["Quiet luxury product storytelling"],
+    "assets": ["logo", "product photography", "craft media"]
+  },
+  "preferences": {
+    "desiredFeeling": ["refined", "considered", "warm"],
+    "creativeFreedom": "medium",
+    "brandPersonality": ["luxury", "sophisticated"]
+  }
+}

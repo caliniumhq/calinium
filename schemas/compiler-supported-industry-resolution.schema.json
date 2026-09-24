@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/compiler-supported-industry-resolution.schema.json",
+  "title": "Calinium compiler-supported industry resolution",
+  "type": "object",
+  "required": ["contract_version", "resolver_revision", "status", "compiler_profile_id", "generic_profile_id", "resolution_source", "reason_code", "strength", "fallback_from_profile_id", "business_understanding", "evidence"],
+  "properties": {
+    "contract_version": {"type": "string", "const": "compiler-supported-industry-resolution-v1"},
+    "resolver_revision": {"type": "integer", "const": 1},
+    "status": {"type": "string", "enum": ["supported_profile", "generic_supported_fallback", "unresolved_blocking"]},
+    "compiler_profile_id": {"type": ["string", "null"], "pattern": "^[a-z0-9_]+$"},
+    "generic_profile_id": {"type": "string", "const": "general_retail"},
+    "resolution_source": {"type": "string", "enum": ["none", "canonical_supported_profile", "deterministic_lexical_alias", "generic_supported_fallback", "conflicting_authoritative_signals", "validated_strategy_fallback"]},
+    "reason_code": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+    "strength": {"type": "string", "enum": ["high", "medium", "low", "unresolved"]},
+    "fallback_from_profile_id": {"type": ["string", "null"], "pattern": "^[a-z0-9_]+$"},
+    "business_understanding": {
+      "type": "object",
+      "required": ["raw_industry", "products_or_services", "business_summary", "store_categories"],
+      "properties": {
+        "raw_industry": {"type": ["string", "null"]},
+        "products_or_services": {"type": "array", "items": {"type": "string"}},
+        "business_summary": {"type": ["string", "null"]},
+        "store_categories": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "kind", "profile_id", "rule_id", "strength"],
+        "properties": {
+          "source": {"type": "string"},
+          "kind": {"type": "string", "enum": ["canonical_profile", "lexical_alias"]},
+          "profile_id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+          "rule_id": {"type": "string"},
+          "strength": {"type": "string", "enum": ["high", "medium", "low"]}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

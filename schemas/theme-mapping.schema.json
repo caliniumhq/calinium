@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/theme-mapping.schema.json",
+  "title": "Calinium theme mapping shared definitions",
+  "$defs": {
+    "metadata": {
+      "type": "object",
+      "required": ["schema_version", "catalog_version", "compatible_compiler_versions", "catalog_id"],
+      "properties": {
+        "schema_version": {"type": "integer", "const": 1},
+        "catalog_version": {"type": "integer", "const": 1},
+        "compatible_compiler_versions": {"type": "array", "minItems": 1, "items": {"type": "string", "const": "1.0.0"}},
+        "catalog_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["file"],
+      "properties": {
+        "file": {"type": "string", "minLength": 1},
+        "setting_id": {"type": "string"},
+        "section_id": {"type": "string"},
+        "block_type": {"type": "string"},
+        "group": {"type": "string"},
+        "id": {"type": "string"},
+        "decision_id": {"type": "string"}
+      }
+    },
+    "source_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "accepted_values": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {"type": "string", "minLength": 1},
+        "values": {"type": "array"},
+        "minimum": {"type": "number"},
+        "maximum": {"type": "number"},
+        "step": {"type": "number"},
+        "unit": {"type": ["string", "null"]}
+      }
+    },
+    "setting": {
+      "type": "object",
+      "required": ["setting_id", "setting_type", "default_value", "accepted_values", "ai_configurable", "merchant_configurable", "merchant_review_required", "merchant_only", "safety_level", "classification_rationale", "source"],
+      "properties": {
+        "setting_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "setting_type": {"type": "string", "minLength": 1},
+        "default_value": {},
+        "accepted_values": {"$ref": "#/$defs/accepted_values"},
+        "ai_configurable": {"type": "boolean"},
+        "merchant_configurable": {"type": "boolean", "const": true},
+        "merchant_review_required": {"type": "boolean"},
+        "merchant_only": {"type": "boolean"},
+        "safety_level": {"type": "string", "enum": ["safe_to_generate", "generate_with_context", "merchant_confirmation_required", "merchant_only"]},
+        "classification_rationale": {"type": "string", "minLength": 1},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "required": ["snippets", "assets"],
+      "properties": {
+        "snippets": {"type": "array", "items": {"type": "string"}},
+        "assets": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

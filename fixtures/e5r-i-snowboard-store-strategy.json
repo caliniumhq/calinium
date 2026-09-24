@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "fixture_id": "e5r-i-controlled-snowboard-store-strategy",
+  "source": "sanitized_release_4_controlled_staging_evidence",
+  "merchant_input": {
+    "version": "1.0",
+    "businessName": "Calinium Staging Store",
+    "businessDescription": "A controlled commerce fixture for snowboard products.",
+    "productsOrServices": ["Snowboards and snowboard wax."],
+    "targetAudience": "Recreational snowboard shoppers.",
+    "primaryGoal": "Help customers discover products and buy confidently.",
+    "countries": [],
+    "existingStoreUrl": null,
+    "existingBrand": {
+      "hasLogo": false,
+      "brandColors": [],
+      "inspirations": [],
+      "assets": []
+    },
+    "preferences": {
+      "desiredFeeling": [],
+      "creativeFreedom": "high",
+      "brandPersonality": []
+    }
+  },
+  "approved_recommendation_ids": [
+    "design-direction",
+    "homepage-hero",
+    "color-direction",
+    "typography-direction"
+  ],
+  "release_4_before": {
+    "http_status": 409,
+    "error_code": "preset_recommendation_unavailable",
+    "compiler_industry": null,
+    "invalid_homepage_adjacency": ["hero-slideshow", "editorial-hero"],
+    "store_strategy_status": "pending",
+    "merchant_flow_created": false
+  },
+  "expected_after": {
+    "compiler_industry": "sports",
+    "industry_resolution_status": "supported_profile",
+    "strategy_valid": true,
+    "store_strategy_completion_eligible": true,
+    "approved_recommendations_reused": true,
+    "generic_profile": "general_retail",
+    "maximum_strategy_fallback_transitions": 1
+  }
+}

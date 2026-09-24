@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0",
+  "fixture_revision": "theme-generator-content-eligibility-fixture-v1",
+  "policy_revision": "theme-section-content-eligibility-v1",
+  "trusted_resource_snapshot": {
+    "snapshot_id": "abps_content_eligibility_fixture",
+    "revision_id": "abpsr_content_eligibility_fixture",
+    "resources": {
+      "abprs_comparison_product_one": {
+        "resource_type": "shopify_product",
+        "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111",
+        "runtime_value": "fixture-product-one",
+        "source_reference": "fixture:product-one",
+        "approval_eligible": true,
+        "availability_at_snapshot": "available"
+      },
+      "abprs_comparison_product_two": {
+        "resource_type": "shopify_product",
+        "approved_revision": "2222222222222222222222222222222222222222222222222222222222222222",
+        "runtime_value": "fixture-product-two",
+        "source_reference": "fixture:product-two",
+        "approval_eligible": true,
+        "availability_at_snapshot": "available"
+      },
+      "abprs_non_product": {
+        "resource_type": "shopify_collection",
+        "approved_revision": "3333333333333333333333333333333333333333333333333333333333333333",
+        "runtime_value": "fixture-collection",
+        "source_reference": "fixture:collection",
+        "approval_eligible": true,
+        "availability_at_snapshot": "available"
+      }
+    }
+  },
+  "comparison_cases": [
+    {
+      "case_id": "comparison_zero_blocks",
+      "section_instance": {
+        "instance_id": "fixture_comparison_zero",
+        "type": "product-comparison",
+        "settings": {},
+        "blocks": {},
+        "block_order": []
+      },
+      "expected": {
+        "eligible": false,
+        "reason_code": "comparison_insufficient_resolved_products",
+        "configured": 0,
+        "resolved": 0,
+        "unresolved": 0,
+        "ordered_eligible_block_ids": []
+      }
+    },
+    {
+      "case_id": "comparison_one_resolved_product",
+      "section_instance": {
+        "instance_id": "fixture_comparison_one",
+        "type": "product-comparison",
+        "settings": {},
+        "blocks": {
+          "product_one": {"type": "product", "settings": {"product": "fixture-product-one"}}
+        },
+        "block_order": ["product_one"]
+      },
+      "expected": {
+        "eligible": false,
+        "reason_code": "comparison_insufficient_resolved_products",
+        "configured": 1,
+        "resolved": 1,
+        "unresolved": 0,
+        "ordered_eligible_block_ids": ["product_one"]
+      }
+    },
+    {
+      "case_id": "comparison_one_unresolved_of_two",
+      "section_instance": {
+        "instance_id": "fixture_comparison_unresolved",
+        "type": "product-comparison",
+        "settings": {},
+        "blocks": {
+          "product_one": {"type": "product", "settings": {"product": "fixture-product-one"}},
+          "product_missing": {"type": "product", "settings": {"product": "fixture-product-missing"}}
+        },
+        "block_order": ["product_one", "product_missing"]
+      },
+      "expected": {
+        "eligible": false,
+        "reason_code": "comparison_unresolved_product_references",
+        "configured": 2,
+        "resolved": 1,
+        "unresolved": 1,
+        "ordered_eligible_block_ids": ["product_one"]
+      }
+    },
+    {
+      "case_id": "comparison_blank_references",
+      "section_instance": {
+        "instance_id": "fixture_comparison_blank",
+        "type": "product-comparison",
+        "settings": {},
+        "blocks": {
+          "product_blank": {"type": "product", "settings": {"product": ""}},
+          "product_whitespace": {"type": "product", "settings": {"product": "   "}}
+        },
+        "block_order": ["product_blank", "product_whitespace"]
+      },
+      "expected": {
+        "eligible": false,
+        "reason_code": "comparison_insufficient_resolved_products",
+        "configured": 0,
+        "resolved": 0,
+        "unresolved": 0,
+        "ordered_eligible_block_ids": []
+      }
+    },
+    {
+      "case_id": "comparison_two_resolved_products_ordered",
+      "section_instance": {
+        "instance_id": "fixture_comparison_positive",
+        "type": "product-comparison",
+        "settings": {"heading": "Compare products"},
+        "blocks": {
+          "product_one": {"type": "product", "settings": {"product": "fixture-product-one"}},
+          "product_two": {"type": "product", "settings": {"product": "fixture-product-two"}},
+          "feature_one": {"type": "feature", "settings": {"label": "Material", "value_1": "One", "value_2": "Two"}}
+        },
+        "block_order": ["product_two", "feature_one", "product_one"]
+      },
+      "expected": {
+        "eligible": true,
+        "reason_code": "comparison_eligible_resolved_products",
+        "configured": 2,
+        "resolved": 2,
+        "unresolved": 0,
+        "ordered_eligible_block_ids": ["product_two", "product_one"]
+      }
+    }
+  ],
+  "faq_cases": [
+    {
+      "case_id": "faq_zero_blocks",
+      "section_instance": {"instance_id": "fixture_faq_zero", "type": "faq", "settings": {}, "blocks": {}, "block_order": []},
+      "expected": {"eligible": false, "reason_code": "faq_no_complete_items", "complete": 0}
+    },
+    {
+      "case_id": "faq_question_only",
+      "section_instance": {
+        "instance_id": "fixture_faq_question_only",
+        "type": "faq",
+        "settings": {},
+        "blocks": {"question_one": {"type": "question", "settings": {"question": "A question", "answer": ""}}},
+        "block_order": ["question_one"]
+      },
+      "expected": {"eligible": false, "reason_code": "faq_no_complete_items", "complete": 0}
+    },
+    {
+      "case_id": "faq_answer_only",
+      "section_instance": {
+        "instance_id": "fixture_faq_answer_only",
+        "type": "faq",
+        "settings": {},
+        "blocks": {"question_one": {"type": "question", "settings": {"question": "", "answer": "<p>An answer.</p>"}}},
+        "block_order": ["question_one"]
+      },
+      "expected": {"eligible": false, "reason_code": "faq_no_complete_items", "complete": 0}
+    },
+    {
+      "case_id": "faq_whitespace_pair",
+      "section_instance": {
+        "instance_id": "fixture_faq_whitespace",
+        "type": "faq",
+        "settings": {},
+        "blocks": {"question_one": {"type": "question", "settings": {"question": "  ", "answer": "\n"}}},
+        "block_order": ["question_one"]
+      },
+      "expected": {"eligible": false, "reason_code": "faq_no_complete_items", "complete": 0}
+    },
+    {
+      "case_id": "faq_one_complete_item",
+      "section_instance": {
+        "instance_id": "fixture_faq_positive",
+        "type": "faq",
+        "settings": {"heading": "Questions, answered"},
+        "blocks": {"question_one": {"type": "question", "settings": {"question": "What should I know?", "answer": "<p>This is approved fixture content.</p>"}}},
+        "block_order": ["question_one"]
+      },
+      "expected": {"eligible": true, "reason_code": "faq_eligible_complete_items", "complete": 1}
+    },
+    {
+      "case_id": "faq_mixed_complete_and_incomplete",
+      "section_instance": {
+        "instance_id": "fixture_faq_mixed",
+        "type": "faq",
+        "settings": {},
+        "blocks": {
+          "question_incomplete": {"type": "question", "settings": {"question": "Incomplete", "answer": ""}},
+          "question_complete": {"type": "question", "settings": {"question": "Complete?", "answer": "<p>Complete.</p>"}}
+        },
+        "block_order": ["question_incomplete", "question_complete"]
+      },
+      "expected": {"eligible": true, "reason_code": "faq_eligible_complete_items", "complete": 1}
+    }
+  ],
+  "mixed_scenarios": [
+    {
+      "scenario_id": "negative_both",
+      "comparison_case": "comparison_zero_blocks",
+      "faq_case": "faq_zero_blocks",
+      "expected": {"comparison_admitted": false, "faq_admitted": false}
+    },
+    {
+      "scenario_id": "positive_both",
+      "comparison_case": "comparison_two_resolved_products_ordered",
+      "faq_case": "faq_one_complete_item",
+      "expected": {"comparison_admitted": true, "faq_admitted": true}
+    },
+    {
+      "scenario_id": "comparison_ineligible_faq_eligible",
+      "comparison_case": "comparison_one_resolved_product",
+      "faq_case": "faq_one_complete_item",
+      "expected": {"comparison_admitted": false, "faq_admitted": true}
+    },
+    {
+      "scenario_id": "comparison_eligible_faq_ineligible",
+      "comparison_case": "comparison_two_resolved_products_ordered",
+      "faq_case": "faq_question_only",
+      "expected": {"comparison_admitted": true, "faq_admitted": false}
+    }
+  ]
+}

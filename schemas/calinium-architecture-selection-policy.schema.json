@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-architecture-selection-policy.schema.json",
+  "title": "Calinium Core 2.0 automatic architecture-selection policy",
+  "type": "object",
+  "required": ["schema_version", "policy_revision", "selection_engine_version", "eligibility_evaluator_version", "fit_evaluator_version", "ambiguity_evaluator_version", "signal_derivation_revision", "mode", "supported_profiles", "conservative_fallback_profile_id", "base_score", "score_bounds", "profile_fit_definitions", "store_signal_rules", "intent_signal_rules", "ambiguity", "fallback", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "policy_revision": {"type": "string", "const": "architecture-selection-policy-v1"},
+    "selection_engine_version": {"type": "string", "const": "architecture-selection-v2"},
+    "eligibility_evaluator_version": {"type": "string", "const": "architecture-eligibility-v2"},
+    "fit_evaluator_version": {"type": "string", "const": "architecture-fit-v2"},
+    "ambiguity_evaluator_version": {"type": "string", "const": "architecture-ambiguity-v1"},
+    "signal_derivation_revision": {"type": "string", "const": "architecture-store-signal-derivation-v1"},
+    "mode": {"type": "string", "const": "automatic_beta"},
+    "supported_profiles": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"}},
+    "conservative_fallback_profile_id": {"type": "string", "const": "profile.current_calinium.v1"},
+    "base_score": {"type": "number", "minimum": 0},
+    "score_bounds": {"type": "object", "required": ["minimum", "maximum"], "properties": {"minimum": {"type": "number"}, "maximum": {"type": "number"}}, "additionalProperties": false},
+    "profile_fit_definitions": {"type": "object", "required": ["profile.current_calinium.v1", "profile.editorial_discovery.v1"], "properties": {"profile.current_calinium.v1": {"$ref": "#/$defs/fitDefinition"}, "profile.editorial_discovery.v1": {"$ref": "#/$defs/fitDefinition"}}, "additionalProperties": false},
+    "store_signal_rules": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/rule"}},
+    "intent_signal_rules": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/rule"}},
+    "ambiguity": {"type": "object", "required": ["maximum_score_margin", "question_limit", "high_impact_intent_paths", "material_questions"], "properties": {"maximum_score_margin": {"type": "number", "minimum": 0}, "question_limit": {"type": "integer", "const": 1}, "high_impact_intent_paths": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "material_questions": {"type": "array", "minItems": 1, "maxItems": 1, "items": {"$ref": "#/$defs/materialQuestionPolicy"}}}, "additionalProperties": false},
+    "fallback": {"type": "object", "required": ["allowed_reasons", "invalid_explicit_profile", "legacy_mode_default"], "properties": {"allowed_reasons": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["signals_insufficient", "question_unavailable", "exact_tie_after_known_intent"]}}, "invalid_explicit_profile": {"type": "string", "const": "fail_closed"}, "legacy_mode_default": {"type": "string", "const": "profile.current_calinium.v1"}}, "additionalProperties": false},
+    "safety": {"type": "object", "required": ["automatic_repair_allowed", "merchant_ui_activation", "live_theme_mutation_allowed", "maximum_material_questions"], "properties": {"automatic_repair_allowed": {"type": "boolean", "const": false}, "merchant_ui_activation": {"type": "boolean", "const": false}, "live_theme_mutation_allowed": {"type": "boolean", "const": false}, "maximum_material_questions": {"type": "integer", "const": 1}}, "additionalProperties": false}
+  },
+  "$defs": {
+    "fitDefinition": {"type": "object", "required": ["summary", "structural_evidence"], "properties": {"summary": {"type": "string", "minLength": 1}, "structural_evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}, "additionalProperties": false},
+    "weights": {"type": "object", "required": ["profile.current_calinium.v1", "profile.editorial_discovery.v1"], "properties": {"profile.current_calinium.v1": {"type": "number"}, "profile.editorial_discovery.v1": {"type": "number"}}, "additionalProperties": false},
+    "rule": {"type": "object", "required": ["id", "path", "value", "impact", "weights"], "properties": {"id": {"type": "string", "pattern": "^[a-z0-9_]+$"}, "path": {"type": "string", "minLength": 1}, "value": {}, "impact": {"type": "string", "enum": ["low", "medium", "high"]}, "weights": {"$ref": "#/$defs/weights"}}, "additionalProperties": false},
+    "materialQuestionPolicy": {"type": "object", "required": ["topic", "intent_path", "why_it_matters", "profiles_affected", "decision_to_resolve", "answer_values"], "properties": {"topic": {"type": "string"}, "intent_path": {"type": "string"}, "why_it_matters": {"type": "string", "minLength": 1}, "profiles_affected": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string"}}, "decision_to_resolve": {"type": "string", "minLength": 1}, "answer_values": {"type": "array", "minItems": 2, "items": {"type": "string"}}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

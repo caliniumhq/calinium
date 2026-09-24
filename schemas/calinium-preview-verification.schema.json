@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-preview-verification.schema.json",
+  "title": "Calinium preview verification report",
+  "description": "Immutable, read-only verification evidence for an approved development-theme deployment.",
+  "type": "object",
+  "required": ["version", "engine_version", "verification_id", "verification_timestamp", "status", "state_history", "verification_source", "deployment", "review_session", "approval_manifest", "traceability", "verified_deployment", "verified_theme", "verified_checksums", "verified_files", "verified_settings", "verified_templates", "verified_sections", "warnings", "failures", "verification_summary"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "engine_version": {"type": "string", "const": "1.0.0"},
+    "verification_id": {"type": "string", "pattern": "^preview-verification-[a-z0-9-]+$"},
+    "verification_timestamp": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["verified", "failed"]},
+    "state_history": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/state_transition"}},
+    "verification_source": {"type": "string", "enum": ["deployment_snapshot", "fresh_remote_pull"]},
+    "deployment": {"$ref": "#/$defs/deployment"},
+    "review_session": {"$ref": "#/$defs/reference"},
+    "approval_manifest": {"$ref": "#/$defs/reference"},
+    "traceability": {"$ref": "calinium-review-session.schema.json#/$defs/traceability"},
+    "verified_deployment": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "verified_theme": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "verified_checksums": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "verified_files": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "verified_settings": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "verified_templates": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "verified_sections": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "warnings": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "failures": {"type": "array", "items": {"$ref": "#/$defs/result"}},
+    "verification_summary": {"$ref": "#/$defs/summary"}
+  },
+  "$defs": {
+    "state_transition": {
+      "type": "object",
+      "required": ["from", "to", "method"],
+      "properties": {
+        "from": {"type": "string", "enum": ["pending", "running", "verified", "failed"]},
+        "to": {"type": "string", "enum": ["pending", "running", "verified", "failed"]},
+        "method": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "deployment": {
+      "type": "object",
+      "required": ["deployment_id", "record_path", "history_path", "target_theme_id", "target_theme_name", "target_role", "preview_url", "deployment_timestamp"],
+      "properties": {
+        "deployment_id": {"type": "string", "pattern": "^deployment-[a-z0-9-]+$"},
+        "record_path": {"type": "string", "minLength": 1},
+        "history_path": {"type": "string", "minLength": 1},
+        "target_theme_id": {"type": ["string", "integer"]},
+        "target_theme_name": {"type": "string", "minLength": 1},
+        "target_role": {"type": "string", "enum": ["unpublished", "development"]},
+        "preview_url": {"type": "string", "minLength": 1},
+        "deployment_timestamp": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "reference": {
+      "type": "object",
+      "required": ["path", "checksum"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "origin": {
+      "type": "object",
+      "required": ["deployment_id", "review_session", "approval_manifest", "generated_file"],
+      "properties": {
+        "deployment_id": {"type": "string", "minLength": 1},
+        "review_session": {"type": "string", "minLength": 1},
+        "approval_manifest": {"type": "string", "minLength": 1},
+        "generated_file": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "required": ["id", "category", "method", "expected", "actual", "result", "remediation", "origin"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9._:-]*$"},
+        "category": {"type": "string", "enum": ["deployment", "theme_identity", "preview", "file", "checksum", "settings", "template", "section", "history"]},
+        "method": {"type": "string", "minLength": 1},
+        "expected": {},
+        "actual": {},
+        "result": {"type": "string", "enum": ["passed", "failed", "warning"]},
+        "blocking": {"type": "boolean", "description": "Optional release gate for a verified preview warning. Omitted warnings are non-blocking for backward compatibility."},
+        "remediation": {"type": "string", "minLength": 1},
+        "origin": {"$ref": "#/$defs/origin"}
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_checks", "passed_checks", "failed_checks", "warning_checks", "status", "method"],
+      "properties": {
+        "total_checks": {"type": "integer", "minimum": 0},
+        "passed_checks": {"type": "integer", "minimum": 0},
+        "failed_checks": {"type": "integer", "minimum": 0},
+        "warning_checks": {"type": "integer", "minimum": 0},
+        "status": {"type": "string", "enum": ["verified", "failed"]},
+        "method": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

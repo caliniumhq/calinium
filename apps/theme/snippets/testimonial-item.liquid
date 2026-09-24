@@ -1,0 +1,41 @@
+{% liquid
+  assign testimonial_quote = quote | default: blank
+  assign testimonial_author = author | default: blank
+  assign testimonial_role = role | default: company | default: blank
+  assign testimonial_avatar = avatar | default: blank
+  assign testimonial_rating = rating | default: blank
+  assign testimonial_url = url | default: link | default: blank
+  assign testimonial_link_label = link_label | default: blank
+  assign testimonial_class = 'co-primitive-testimonial-item'
+  assign testimonial_rating_value = testimonial_rating | plus: 0
+
+  if class != blank
+    assign testimonial_class = testimonial_class | append: ' ' | append: class
+  endif
+%}
+
+{% if testimonial_quote != blank or testimonial_author != blank or testimonial_role != blank %}
+  <figure class="{{ testimonial_class | escape }}">
+    {% if testimonial_rating != blank and rating_label != blank %}
+      <div class="co-primitive-testimonial-item__rating" role="img" aria-label="{{ rating_label | escape }}">
+        {% for rating_index in (1..5) %}
+          {% liquid
+            assign testimonial_star_class = 'co-primitive-testimonial-item__star'
+            if rating_index > testimonial_rating_value
+              assign testimonial_star_class = testimonial_star_class | append: ' is-empty'
+            endif
+          %}
+          {% render 'icon', icon: 'star', size: 16, decorative: true, class: testimonial_star_class %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if testimonial_quote != blank %}<blockquote class="co-primitive-testimonial-item__quote">{{ testimonial_quote }}</blockquote>{% endif %}
+    {% if testimonial_author != blank or testimonial_role != blank or testimonial_avatar != blank %}
+      <figcaption class="co-primitive-testimonial-item__author">
+        {% if testimonial_avatar != blank %}{% render 'responsive-image', image: testimonial_avatar, alt: testimonial_author, loading: 'lazy', sizes: '64px', widths: '48, 64, 96', ratio: 'square', class: 'co-primitive-testimonial-item__avatar' %}{% endif %}
+        {% if testimonial_author != blank or testimonial_role != blank %}<span>{% if testimonial_author != blank %}<cite class="co-primitive-testimonial-item__name">{{ testimonial_author | escape }}</cite>{% endif %}{% if testimonial_role != blank %}<span class="co-primitive-testimonial-item__role">{{ testimonial_role | escape }}</span>{% endif %}</span>{% endif %}
+      </figcaption>
+    {% endif %}
+    {% if testimonial_url != blank and testimonial_link_label != blank %}<div class="co-primitive-testimonial-item__action">{% render 'button', label: testimonial_link_label, url: testimonial_url, variant: 'text' %}</div>{% endif %}
+  </figure>
+{% endif %}

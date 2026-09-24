@@ -1,0 +1,31 @@
+{% liquid
+  assign feature_icon = icon | default: blank
+  assign feature_image = image | default: blank
+  assign feature_heading = heading | default: blank
+  assign feature_text = text | default: blank
+  assign feature_link_url = url | default: link | default: blank
+  assign feature_link_label = link_label | default: blank
+  assign feature_icon_size = icon_size | default: 28
+  assign feature_link_variant = link_variant | default: 'text'
+  assign feature_class = 'co-primitive-feature-item'
+
+  if class != blank
+    assign feature_class = feature_class | append: ' ' | append: class
+  endif
+%}
+
+{% if feature_icon != blank or feature_image != blank or feature_heading != blank or feature_text != blank or feature_link_label != blank %}
+  <article class="{{ feature_class | escape }}">
+    {% if feature_image != blank %}
+      {% render 'responsive-image', image: feature_image, alt: image_alt, loading: image_loading, sizes: image_sizes, widths: image_widths, ratio: image_ratio, fit: image_fit, class: 'co-primitive-feature-item__media' %}
+    {% elsif feature_icon != blank %}
+      <span class="co-primitive-feature-item__icon">{% render 'icon', icon: feature_icon, size: feature_icon_size, decorative: decorative, label: icon_label %}</span>
+    {% endif %}
+
+    {% if feature_heading != blank %}<h3 class="co-primitive-feature-item__heading">{{ feature_heading }}</h3>{% endif %}
+    {% if feature_text != blank %}{% render 'rich-text', content: feature_text, class: 'co-primitive-feature-item__text' %}{% endif %}
+    {% if feature_link_url != blank and feature_link_label != blank %}
+      <div class="co-primitive-feature-item__action">{% render 'button', label: feature_link_label, url: feature_link_url, variant: feature_link_variant %}</div>
+    {% endif %}
+  </article>
+{% endif %}

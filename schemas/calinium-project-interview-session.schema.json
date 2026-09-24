@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-project-interview-session.schema.json",
+  "title": "Calinium project interview session",
+  "description": "Organization-scoped storage envelope for the unchanged Merchant Interview session contract.",
+  "type": "object",
+  "required": ["version", "id", "project_id", "engine_session", "active_category_id", "created_at", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^pis_[a-z0-9-]+$"},
+    "project_id": {"type": "string", "pattern": "^prj_[a-z0-9-]+$"},
+    "engine_session": {"$ref": "calinium-interview-session.schema.json"},
+    "active_category_id": {"type": ["string", "null"]},
+    "created_at": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

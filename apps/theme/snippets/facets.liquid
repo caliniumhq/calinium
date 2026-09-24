@@ -1,0 +1,78 @@
+{% liquid
+  assign facets_filters = filters
+  assign facets_id_prefix = id_prefix | default: 'Facets'
+%}
+
+{% if facets_filters.size > 0 %}
+  <div class="co-facets" data-facets>
+    <p class="co-facets__heading">{{ 'collections.filters' | t }}</p>
+
+    {% for filter in facets_filters %}
+      {% assign facet_id = facets_id_prefix | append: '-' | append: forloop.index %}
+      <details class="co-facets__filter">
+        <summary class="co-facets__summary">
+          <span>{{ filter.label | escape }}</span>
+          {% render 'icon', name: 'chevron-down', size: 18, class: 'co-facets__summary-icon' %}
+        </summary>
+
+        <div class="co-facets__content">
+          {% case filter.type %}
+            {% when 'boolean', 'list' %}
+              <ul class="co-facets__values" role="list">
+                {% for value in filter.values %}
+                  {% assign facet_value_id = facet_id | append: '-' | append: forloop.index %}
+                  <li class="co-facets__value">
+                    <label class="co-facets__label" for="{{ facet_value_id | escape }}">
+                      <input
+                        id="{{ facet_value_id | escape }}"
+                        class="co-facets__checkbox"
+                        type="checkbox"
+                        name="{{ value.param_name | escape }}"
+                        value="{{ value.value | escape }}"
+                        {% if value.active %}checked{% endif %}
+                        {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                        data-facet-control
+                      >
+                      <span>{{ value.label | escape }}</span>
+                      <span class="co-facets__count">({{ value.count }})</span>
+                    </label>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% when 'price_range' %}
+              <div class="co-facets__price-range">
+                <div class="co-facets__price-field">
+                  <label for="{{ facet_id | escape }}-minimum">{{ 'collections.minimum_price' | t }}</label>
+                  <input
+                    id="{{ facet_id | escape }}-minimum"
+                    type="number"
+                    inputmode="decimal"
+                    name="{{ filter.min_value.param_name | escape }}"
+                    value="{% if filter.min_value.value != nil %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% endif %}"
+                    min="0"
+                    placeholder="0"
+                    data-facet-price-control
+                  >
+                </div>
+
+                <div class="co-facets__price-field">
+                  <label for="{{ facet_id | escape }}-maximum">{{ 'collections.maximum_price' | t }}</label>
+                  <input
+                    id="{{ facet_id | escape }}-maximum"
+                    type="number"
+                    inputmode="decimal"
+                    name="{{ filter.max_value.param_name | escape }}"
+                    value="{% if filter.max_value.value != nil %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% endif %}"
+                    min="0"
+                    {% if filter.range_max != blank %}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %}
+                    placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                    data-facet-price-control
+                  >
+                </div>
+              </div>
+          {% endcase %}
+        </div>
+      </details>
+    {% endfor %}
+  </div>
+{% endif %}

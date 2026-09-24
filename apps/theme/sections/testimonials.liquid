@@ -1,0 +1,97 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign testimonials_classes = 'co-testimonials co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign testimonials_classes = testimonials_classes | append: ' co-testimonials--layout-' | append: section.settings.layout
+  assign testimonials_classes = testimonials_classes | append: ' co-testimonials--columns-' | append: section.settings.desktop_columns
+  assign testimonials_classes = testimonials_classes | append: ' co-testimonials--card-' | append: section.settings.card_style
+  assign testimonials_heading_id = 'TestimonialsHeading-' | append: section.id
+  assign testimonials_track_id = 'TestimonialsTrack-' | append: section.id
+  assign testimonials_auto_rotate = false
+  assign testimonials_previous_label = 'sections.testimonials.previous' | t
+  assign testimonials_next_label = 'sections.testimonials.next' | t
+  assign testimonials_pause_label = 'sections.testimonials.pause' | t
+  assign testimonials_resume_label = 'sections.testimonials.resume' | t
+
+  if section.settings.layout == 'carousel' and section.settings.auto_rotate
+    assign testimonials_auto_rotate = true
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ testimonials_classes }}" aria-labelledby="{{ testimonials_heading_id }}" data-co-section-behavior data-co-carousel data-pause-label="{{ testimonials_pause_label | escape }}" data-resume-label="{{ testimonials_resume_label | escape }}" {% if testimonials_auto_rotate %}data-auto-rotate="true" data-rotation-speed="{{ section.settings.rotation_speed | times: 1000 }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-testimonials__inner co-page-width">
+    {% render 'section-heading', heading: section.settings.heading, description: section.settings.description, id: testimonials_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="co-testimonials__viewport" id="{{ testimonials_track_id }}" tabindex="0" aria-label="{{ 'sections.testimonials.carousel_label' | t }}" data-carousel-track>
+        <ul class="co-testimonials__list" role="list">
+          {% for block in section.blocks %}
+            <li class="co-testimonials__item" data-carousel-slide {{ block.shopify_attributes }}>
+              <article class="co-testimonial-card">
+                {% if block.settings.rating > 0 %}<p class="co-testimonial-card__rating" aria-label="{{ 'sections.testimonials.rating_label' | t: rating: block.settings.rating }}">{% for star in (1..5) %}<span{% if star > block.settings.rating %} class="is-empty"{% endif %} aria-hidden="true">★</span>{% endfor %}</p>{% endif %}
+                {% if block.settings.quote != blank %}<blockquote class="co-testimonial-card__quote">{{ block.settings.quote | escape | newline_to_br }}</blockquote>{% endif %}
+                <footer class="co-testimonial-card__footer">
+                  {% if block.settings.avatar != blank %}{% render 'responsive-image', image: block.settings.avatar, alt: block.settings.author, loading: 'lazy', sizes: '64px', widths: '48, 64, 96', ratio: 'square', class: 'co-testimonial-card__avatar' %}{% endif %}
+                  <div>{% if block.settings.author != blank %}<cite class="co-testimonial-card__author">{{ block.settings.author | escape }}</cite>{% endif %}{% if block.settings.role != blank %}<p class="co-testimonial-card__role">{{ block.settings.role | escape }}</p>{% endif %}</div>
+                </footer>
+                {% if block.settings.link != blank %}<a class="co-testimonial-card__link" href="{{ block.settings.link | escape }}">{{ 'sections.testimonials.read_more' | t }}</a>{% endif %}
+              </article>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% if section.settings.layout == 'carousel' and section.settings.show_navigation %}
+        <div class="co-testimonials__controls">
+          {% render 'button', aria_label: testimonials_previous_label, icon: 'arrow-left', variant: 'secondary', data_action: 'carousel-prev', class: 'co-testimonials__control', aria_controls: testimonials_track_id %}
+          {% if testimonials_auto_rotate %}{% render 'button', label: testimonials_pause_label, type: 'button', variant: 'text', class: 'co-testimonials__pause', data_action: 'carousel-pause' %}{% endif %}
+          {% render 'button', aria_label: testimonials_next_label, icon: 'arrow-right', variant: 'secondary', data_action: 'carousel-next', class: 'co-testimonials__control', aria_controls: testimonials_track_id %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.layout == 'carousel' and section.settings.show_pagination %}
+        <div class="co-testimonials__pagination" aria-label="{{ 'sections.testimonials.pagination_label' | t }}">
+          {% for block in section.blocks %}
+            <button class="co-testimonials__dot" type="button" data-carousel-dot="{{ forloop.index0 }}" aria-label="{{ 'sections.testimonials.go_to' | t: number: forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% elsif request.design_mode %}
+      <p class="co-testimonials__empty">{{ 'sections.testimonials.placeholder_text' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.testimonials.name",
+  "tag": "section",
+  "class": "co-section-testimonials",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "Kind words" },
+    { "type": "richtext", "id": "description", "label": "t:sections.shared.settings.description.label" },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "standard", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "select", "id": "text_alignment", "label": "t:sections.shared.settings.text_alignment.label", "default": "center", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "center", "label": "t:sections.shared.options.center" }] },
+    { "type": "select", "id": "layout", "label": "t:sections.shared.settings.layout.label", "default": "grid", "options": [{ "value": "grid", "label": "t:sections.shared.options.grid" }, { "value": "stacked", "label": "t:sections.shared.options.stacked" }, { "value": "carousel", "label": "t:sections.shared.options.carousel" }] },
+    { "type": "select", "id": "desktop_columns", "label": "t:sections.shared.settings.desktop_columns.label", "default": "3", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }] },
+    { "type": "checkbox", "id": "auto_rotate", "label": "t:sections.shared.settings.auto_rotate.label", "info": "t:sections.shared.settings.auto_rotate.info", "default": false },
+    { "type": "range", "id": "rotation_speed", "label": "t:sections.shared.settings.rotation_speed.label", "min": 3, "max": 12, "step": 1, "unit": "s", "default": 6 },
+    { "type": "checkbox", "id": "show_navigation", "label": "t:sections.shared.settings.show_navigation.label", "default": true },
+    { "type": "checkbox", "id": "show_pagination", "label": "t:sections.shared.settings.show_pagination.label", "default": true },
+    { "type": "select", "id": "card_style", "label": "t:sections.shared.settings.card_style.label", "default": "surface", "options": [{ "value": "plain", "label": "t:sections.shared.options.plain" }, { "value": "surface", "label": "t:sections.shared.options.surface" }, { "value": "outline", "label": "t:sections.shared.options.outline" }] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [
+    { "type": "testimonial", "name": "t:sections.testimonials.blocks.testimonial", "settings": [{ "type": "textarea", "id": "quote", "label": "t:sections.shared.settings.quote.label", "default": "Beautifully made, considered in every detail, and a pleasure to use." }, { "type": "text", "id": "author", "label": "t:sections.shared.settings.author.label", "default": "Customer name" }, { "type": "text", "id": "role", "label": "t:sections.shared.settings.role.label", "default": "Verified customer" }, { "type": "range", "id": "rating", "label": "t:sections.shared.settings.rating.label", "min": 0, "max": 5, "step": 1, "default": 5 }, { "type": "image_picker", "id": "avatar", "label": "t:sections.shared.settings.avatar.label" }, { "type": "url", "id": "link", "label": "t:sections.shared.settings.link.label" }] }
+  ],
+  "max_blocks": 12,
+  "presets": [{ "name": "t:sections.testimonials.preset", "blocks": [{ "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }] }]
+}
+{% endschema %}

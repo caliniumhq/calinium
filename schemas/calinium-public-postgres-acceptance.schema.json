@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.com/schemas/calinium-public-postgres-acceptance.schema.json",
+  "title": "Calinium Public PostgreSQL Acceptance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version", "acceptance_revision", "status", "provider", "postgres_major_version",
+    "migration_count", "clean_bootstrap_verified", "repeat_migration_verified", "transaction_rollback_verified",
+    "restart_readback_verified", "backup_format", "backup_checksum_sha256", "restore_verified",
+    "source_fixture_checksum", "restored_fixture_checksum", "restored_counts", "privacy_verified",
+    "tenancy_isolation_verified", "durable_reference_verified", "session_state_verified",
+    "production_resource_created", "acceptance_checksum"
+  ],
+  "properties": {
+    "contract_version": { "const": "calinium-public-postgres-acceptance-v1" },
+    "acceptance_revision": { "const": "local-postgres-clean-bootstrap-restore-v1" },
+    "status": { "const": "READY" },
+    "provider": { "const": "local_postgres" },
+    "postgres_major_version": { "type": "integer", "minimum": 16 },
+    "migration_count": { "const": 28 },
+    "clean_bootstrap_verified": { "const": true },
+    "repeat_migration_verified": { "const": true },
+    "transaction_rollback_verified": { "const": true },
+    "restart_readback_verified": { "const": true },
+    "backup_format": { "const": "pg_dump-custom" },
+    "backup_checksum_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "restore_verified": { "const": true },
+    "source_fixture_checksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "restored_fixture_checksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "restored_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["users", "organizations", "projects", "auth_sessions", "merchant_flow_jobs", "privacy_lifecycle_operations", "durable_object_references"],
+      "properties": {
+        "users": { "const": 1 }, "organizations": { "const": 1 }, "projects": { "const": 1 },
+        "auth_sessions": { "const": 1 }, "merchant_flow_jobs": { "const": 1 },
+        "privacy_lifecycle_operations": { "const": 1 }, "durable_object_references": { "const": 1 }
+      }
+    },
+    "privacy_verified": { "const": true },
+    "tenancy_isolation_verified": { "const": true },
+    "durable_reference_verified": { "const": true },
+    "session_state_verified": { "const": true },
+    "production_resource_created": { "const": false },
+    "acceptance_checksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

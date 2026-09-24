@@ -1,0 +1,44 @@
+/* Collection banner composition. */
+.co-collection-banner {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-collection-banner__inner {
+  display: grid;
+  gap: var(--co-space-6);
+}
+
+.co-collection-banner__content {
+  display: grid;
+  align-content: center;
+  gap: var(--co-space-4);
+}
+
+.co-collection-banner__description > * + * {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-collection-banner--center .co-collection-banner__content {
+  justify-items: center;
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .co-collection-banner__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--co-space-8);
+  }
+
+  .co-collection-banner--center .co-collection-banner__content {
+    grid-column: 1 / -1;
+    max-inline-size: var(--co-content-width);
+    margin-inline: auto;
+  }
+
+  .co-collection-banner--center .co-collection-banner__media {
+    grid-column: 1 / -1;
+  }
+}

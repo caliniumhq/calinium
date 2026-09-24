@@ -1,0 +1,13 @@
+{% liquid
+  assign rich_text_content = content | default: text | default: blank
+  assign rich_text_alignment = alignment | default: 'left'
+  assign rich_text_class = 'co-primitive-rich-text co-primitive-rich-text--align-' | append: rich_text_alignment
+
+  if class != blank
+    assign rich_text_class = rich_text_class | append: ' ' | append: class
+  endif
+%}
+
+{% if rich_text_content != blank %}
+  <div class="{{ rich_text_class | escape }}">{{ rich_text_content }}</div>
+{% endif %}

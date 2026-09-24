@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "registry_version": "1.0.0",
+  "registry_id": "calinium_storefront_render_targets",
+  "targets": [
+    {
+      "id": "controlled-calinium-development-v1",
+      "runtime_mode": "shopify_development_proxy",
+      "shop_domain": "calinium-development.myshopify.com",
+      "expected_theme_role": "development"
+    }
+  ]
+}

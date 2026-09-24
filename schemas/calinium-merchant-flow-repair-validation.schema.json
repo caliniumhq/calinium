@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-repair-validation.schema.json",
+  "title": "Calinium Merchant Flow Repair Validation Transport",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "transport_id", "transport_checksum", "classification", "status", "flow", "lineage", "target", "render_backend", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "repair-validation-v1"},
+    "transport_id": {"type": "string", "pattern": "^repair-validation-[a-f0-9]{20}$"},
+    "transport_checksum": {"$ref": "#/$defs/sha256"},
+    "classification": {"type": "string", "const": "repaired_derivative_validation"},
+    "status": {"type": "string", "const": "blocked"},
+    "flow": {
+      "type": "object",
+      "required": ["flow_id", "state", "sequence", "checksum", "project_id", "organization_id", "shop_domain", "order_id", "generation_id"],
+      "properties": {
+        "flow_id": {"type": "string", "minLength": 1},
+        "state": {"type": "string", "const": "repair_review_required"},
+        "sequence": {"type": "integer", "minimum": 0},
+        "checksum": {"$ref": "#/$defs/sha256"},
+        "project_id": {"type": "string", "minLength": 1},
+        "organization_id": {"type": "string", "minLength": 1},
+        "shop_domain": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"},
+        "order_id": {"type": "string", "minLength": 1},
+        "generation_id": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "lineage": {
+      "type": "object",
+      "required": ["original_artifact", "repair_plan", "repair_approval", "repair_execution", "derivative_artifact", "repair_class", "changed_json_pointers", "implementation_source_revision", "lineage_checksum"],
+      "properties": {
+        "original_artifact": {
+          "type": "object",
+          "required": ["artifact_id", "checksum", "source_reference", "manifest_reference", "manifest_sha256", "paid_artifact_integrity", "paid_artifact_integrity_checksum"],
+          "properties": {
+            "artifact_id": {"type": "string", "pattern": "^theme-artifact-[a-f0-9]{20}$"},
+            "checksum": {"$ref": "#/$defs/sha256"},
+            "source_reference": {"type": "string", "pattern": "^output/"},
+            "manifest_reference": {"type": "string", "pattern": "^output/"},
+            "manifest_sha256": {"$ref": "#/$defs/sha256"},
+            "paid_artifact_integrity": {"$ref": "#/$defs/paidArtifactIntegrity"},
+            "paid_artifact_integrity_checksum": {"$ref": "#/$defs/sha256"}
+          },
+          "additionalProperties": false
+        },
+        "repair_plan": {"$ref": "#/$defs/evidenceBinding"},
+        "repair_approval": {"$ref": "#/$defs/evidenceBinding"},
+        "repair_execution": {"$ref": "#/$defs/evidenceBinding"},
+        "derivative_artifact": {
+          "type": "object",
+          "required": ["artifact_id", "checksum", "parent_artifact_id", "parent_artifact_checksum", "reference", "manifest_reference", "manifest_file_sha256"],
+          "properties": {
+            "artifact_id": {"type": "string", "pattern": "^theme-artifact-[a-f0-9]{20}$"},
+            "checksum": {"$ref": "#/$defs/sha256"},
+            "parent_artifact_id": {"type": "string", "pattern": "^theme-artifact-[a-f0-9]{20}$"},
+            "parent_artifact_checksum": {"$ref": "#/$defs/sha256"},
+            "reference": {"type": "string", "pattern": "^output/"},
+            "manifest_reference": {"type": "string", "pattern": "^output/"},
+            "manifest_file_sha256": {"$ref": "#/$defs/sha256"}
+          },
+          "additionalProperties": false
+        },
+        "repair_class": {"type": "string", "const": "responsive_layout"},
+        "changed_json_pointers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["pointer", "before", "after"],
+            "properties": {
+              "pointer": {"type": "string", "pattern": "^/"},
+              "before": {},
+              "after": {}
+            },
+            "additionalProperties": false
+          }
+        },
+        "implementation_source_revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "lineage_checksum": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["shop_domain", "development_theme_id", "main_theme_id", "expected_theme_role", "main_excluded"],
+      "properties": {
+        "shop_domain": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"},
+        "development_theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+        "main_theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+        "expected_theme_role": {"type": "string", "const": "development"},
+        "main_excluded": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "render_backend": {
+      "type": "object",
+      "required": ["available", "status", "code", "reason_code", "shopify_theme_dev_fallback_allowed"],
+      "properties": {
+        "available": {"const": false},
+        "status": {"type": "string", "const": "unavailable"},
+        "code": {"type": "string", "const": "ZERO_WRITE_RENDER_BACKEND_UNAVAILABLE"},
+        "reason_code": {"type": "string", "const": "shopify_liquid_runtime_requires_development_sync"},
+        "shopify_theme_dev_fallback_allowed": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": ["shopify_reads", "shopify_writes", "theme_mutations", "main_mutations", "publishing_operations", "provider_calls", "renders", "d1_runs", "d2_7_runs", "new_repairs", "new_jobs", "flow_mutations", "automatic_repair_allowed"],
+      "properties": {
+        "shopify_reads": {"type": "integer", "const": 0},
+        "shopify_writes": {"type": "integer", "const": 0},
+        "theme_mutations": {"type": "integer", "const": 0},
+        "main_mutations": {"type": "integer", "const": 0},
+        "publishing_operations": {"type": "integer", "const": 0},
+        "provider_calls": {"type": "integer", "const": 0},
+        "renders": {"type": "integer", "const": 0},
+        "d1_runs": {"type": "integer", "const": 0},
+        "d2_7_runs": {"type": "integer", "const": 0},
+        "new_repairs": {"type": "integer", "const": 0},
+        "new_jobs": {"type": "integer", "const": 0},
+        "flow_mutations": {"type": "integer", "const": 0},
+        "automatic_repair_allowed": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "artifactFile": {
+      "type": "object",
+      "required": ["reference", "sha256"],
+      "properties": {
+        "reference": {"type": "string", "pattern": "^output/"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "paidArtifactIntegrity": {
+      "type": "object",
+      "required": ["version", "order_id", "generation_id", "artifacts"],
+      "properties": {
+        "version": {"type": "integer", "const": 1},
+        "order_id": {"type": "string", "minLength": 1},
+        "generation_id": {"type": "string", "minLength": 1},
+        "artifacts": {
+          "type": "object",
+          "required": ["theme_zip", "package_manifest"],
+          "properties": {
+            "theme_zip": {"$ref": "#/$defs/artifactFile"},
+            "package_manifest": {"$ref": "#/$defs/artifactFile"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceBinding": {
+      "type": "object",
+      "required": ["id", "checksum", "reference"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "checksum": {"$ref": "#/$defs/sha256"},
+        "reference": {"type": "string", "pattern": "^output/"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

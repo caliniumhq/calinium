@@ -1,0 +1,216 @@
+/* Hero banner section. */
+.co-hero-banner {
+  position: relative;
+  display: grid;
+  isolation: isolate;
+  overflow: hidden;
+  min-block-size: calc(var(--co-space-11) + var(--co-space-11) + var(--co-space-6));
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-hero-banner--height-standard {
+  min-block-size: calc(var(--co-space-11) + var(--co-space-11) + var(--co-space-11) + var(--co-space-6));
+}
+
+.co-hero-banner--height-tall {
+  min-block-size: calc(var(--co-space-11) + var(--co-space-11) + var(--co-space-11) + var(--co-space-11));
+}
+
+.co-hero-banner--height-full-screen {
+  min-block-size: 100svh;
+}
+
+.co-hero-banner__media,
+.co-hero-banner__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.co-hero-banner__media {
+  z-index: -2;
+}
+
+.co-hero-banner__media .co-image,
+.co-hero-banner__media .co-image__frame,
+.co-hero-banner__media .co-image__picture,
+.co-hero-banner__media .co-image__media {
+  block-size: 100%;
+}
+
+.co-hero-banner__media .co-image__media {
+  object-fit: cover;
+}
+
+.co-hero-banner__media .co-image {
+  border-radius: 0;
+}
+
+.co-hero-banner__overlay {
+  z-index: -1;
+  background-color: transparent;
+}
+
+.co-hero-banner--overlay-low .co-hero-banner__overlay {
+  background-color: color-mix(in srgb, var(--co-color-text) 20%, transparent);
+}
+
+.co-hero-banner--overlay-medium .co-hero-banner__overlay {
+  background-color: color-mix(in srgb, var(--co-color-text) 40%, transparent);
+}
+
+.co-hero-banner--overlay-high .co-hero-banner__overlay {
+  background-color: color-mix(in srgb, var(--co-color-text) 60%, transparent);
+}
+
+.co-hero-banner__content {
+  display: flex;
+  z-index: var(--co-z-content);
+  align-items: center;
+  padding-block: var(--co-space-5);
+}
+
+.co-hero-banner--content-top .co-hero-banner__content {
+  align-items: flex-start;
+}
+
+.co-hero-banner--content-bottom .co-hero-banner__content {
+  align-items: flex-end;
+}
+
+.co-hero-banner--align-center .co-hero-banner__content {
+  justify-content: center;
+  text-align: center;
+}
+
+.co-hero-banner__content-inner {
+  inline-size: min(100%, var(--co-content-width));
+  padding: var(--co-space-5);
+  color: var(--co-color-text);
+  background-color: transparent;
+}
+
+.co-hero-banner__eyebrow {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.co-hero-banner__heading {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-hero-banner__text {
+  margin-block-start: var(--co-space-4);
+}
+
+.co-hero-banner__text > * + * {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-hero-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--co-space-3);
+  margin-block-start: var(--co-space-5);
+}
+
+.co-hero-banner--align-center .co-hero-banner__actions {
+  justify-content: center;
+}
+
+@media (min-width: 48rem) {
+  .co-hero-banner {
+    min-block-size: calc(var(--co-space-11) + var(--co-space-11) + var(--co-space-11));
+  }
+
+  .co-hero-banner--height-standard {
+    min-block-size: calc(var(--co-space-11) + var(--co-space-11) + var(--co-space-11) + var(--co-space-11));
+  }
+
+  .co-hero-banner--height-tall {
+    min-block-size: calc(var(--co-space-11) + var(--co-space-11) + var(--co-space-11) + var(--co-space-11) + var(--co-space-8));
+  }
+
+  .co-hero-banner--height-full-screen {
+    min-block-size: 100svh;
+  }
+
+  .co-hero-banner__content {
+    padding-block: var(--co-space-8);
+  }
+
+  .co-hero-banner__content-inner {
+    padding: var(--co-space-7);
+  }
+}
+.co-hero-banner {
+  min-height: 85vh;
+}
+
+.co-hero-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 42%) 0%,
+    rgb(0 0 0 / 15%) 48%,
+    transparent 75%
+  );
+  pointer-events: none;
+}
+
+.co-hero-banner__content {
+  position: relative;
+  z-index: 2;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 64px;
+}
+
+.co-hero-banner__content-inner {
+  max-width: 600px;
+  padding: 0;
+  color: #ffffff;
+  background: transparent;
+  box-shadow: none;
+}
+
+.co-hero-banner__heading {
+  margin: 0;
+  font-size: clamp(52px, 6vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.co-hero-banner__text {
+  max-width: 480px;
+  margin-top: 24px;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.co-hero-banner__actions {
+  margin-top: 32px;
+}
+
+@media screen and (max-width: 749px) {
+  .co-hero-banner {
+    min-height: 75vh;
+  }
+
+  .co-hero-banner__content {
+    padding: 24px 20px 40px;
+  }
+
+  .co-hero-banner__heading {
+    font-size: clamp(42px, 13vw, 64px);
+  }
+
+  .co-hero-banner__text {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-design-classification.schema.json",
+  "title": "Calinium Stabilized Design Classification",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "classification_id", "observation_id", "observation_checksum", "primary_dimension", "secondary_dimensions", "importance", "responsibility", "recommendation_category", "legacy_recommendation_category", "relationship", "architecture_context", "classification_rationale", "uncertainty_reasons", "independent_repair_candidate", "human_review_required", "automatic_repair_allowed"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "design-classification-v1"},
+    "classification_id": {"type": "string", "pattern": "^design-classification-[a-f0-9]{20}$"},
+    "observation_id": {"type": "string"},
+    "observation_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "primary_dimension": {"type": "string", "enum": ["visual_hierarchy", "spacing_and_rhythm", "typographic_hierarchy", "image_media_dominance", "composition", "product_discovery", "pdp_communication", "navigation_header_clarity", "mobile_adaptation_quality", "design_dna_coherence", "perceived_polish", "architecture_differentiation"]},
+    "secondary_dimensions": {"type": "array", "items": {"type": "string"}},
+    "importance": {"type": "string", "enum": ["high", "medium", "low", "note"]},
+    "responsibility": {"type": "string", "enum": ["architecture_level", "design_token_level", "composition_level", "merchant_content_level", "data_quality_level", "uncertain"]},
+    "recommendation_category": {"type": "string", "enum": ["responsive_adaptation", "suppress_empty_module", "navigation_clarity", "typographic_containment", "composition_simplification", "content_omission", "hierarchy_adjustment", "no_action_preference_only", "uncertain_requires_review"]},
+    "legacy_recommendation_category": {"type": "string"},
+    "relationship": {"type": "object", "required": ["mode", "target_observation_id", "objective_finding_ids"], "properties": {"mode": {"type": "string", "enum": ["root_finding", "symptom_of", "related_finding", "independent"]}, "target_observation_id": {"type": ["string", "null"]}, "objective_finding_ids": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "architecture_context": {"type": "object", "required": ["system_scope", "family_types", "family_ids", "presenter_ids", "shared_between_profiles", "profile_specific", "provenance_revision"], "properties": {"system_scope": {"type": "string", "enum": ["architecture_family", "shared_core", "unknown"]}, "family_types": {"type": "array", "items": {"type": "string"}}, "family_ids": {"type": "array", "items": {"type": "string"}}, "presenter_ids": {"type": "array", "items": {"type": "string"}}, "shared_between_profiles": {"type": "boolean"}, "profile_specific": {"type": "boolean"}, "provenance_revision": {"type": "string"}}, "additionalProperties": false},
+    "classification_rationale": {"type": "string", "minLength": 1, "maxLength": 1200},
+    "uncertainty_reasons": {"type": "array", "items": {"type": "string"}},
+    "independent_repair_candidate": {"type": "boolean"},
+    "human_review_required": {"type": "boolean", "const": true},
+    "automatic_repair_allowed": {"type": "boolean", "const": false}
+  },
+  "additionalProperties": false
+}

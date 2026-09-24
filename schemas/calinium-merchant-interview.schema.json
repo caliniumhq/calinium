@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-interview.schema.json",
+  "title": "Calinium merchant interview specification",
+  "description": "Versioned, localization-ready question catalog for collecting merchant intent. It is independent of Shopify runtime and maps only approved answers to the existing canonical merchant profile.",
+  "type": "object",
+  "required": ["version", "catalog_version", "branching_version", "interview_id", "title", "description", "categories", "questions"],
+  "properties": {
+    "version": {"type": "integer", "const": 1, "description": "Schema payload version."},
+    "catalog_version": {"type": "string", "const": "1.1.0", "description": "Question-catalog compatibility version."},
+    "branching_version": {"type": "string", "const": "1.1.0", "description": "Branching-rule compatibility version."},
+    "interview_id": {"type": "string", "const": "merchant-interview-v1", "description": "Stable interview identifier."},
+    "title": {"type": "string", "minLength": 1, "description": "Human-readable interview title."},
+    "description": {"type": "string", "minLength": 1, "description": "Human-readable purpose statement."},
+    "categories": {"type": "array", "minItems": 10, "items": {"$ref": "#/$defs/category"}, "description": "Ordered interview categories."},
+    "questions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/question"}, "description": "Stable question definitions."}
+  },
+  "$defs": {
+    "category": {
+      "type": "object",
+      "required": ["id", "title", "description", "order"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "Stable category identifier."},
+        "title": {"type": "string", "minLength": 1, "description": "Merchant-facing category title."},
+        "description": {"type": "string", "minLength": 1, "description": "Merchant-facing category explanation."},
+        "order": {"type": "integer", "minimum": 1, "description": "Deterministic display order."}
+      },
+      "additionalProperties": false
+    },
+    "option": {
+      "type": "object",
+      "required": ["value", "label"],
+      "properties": {
+        "value": {"type": "string", "minLength": 1, "description": "Stable machine-readable value."},
+        "label": {"type": "string", "minLength": 1, "description": "Localizable merchant-facing label."}
+      },
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "min_length": {"type": "integer", "minimum": 0},
+        "max_length": {"type": "integer", "minimum": 1},
+        "minimum": {"type": "number"},
+        "maximum": {"type": "number"},
+        "min_items": {"type": "integer", "minimum": 0},
+        "max_items": {"type": "integer", "minimum": 1},
+        "integer": {"type": "boolean"},
+        "allow_not_available": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "dependency": {
+      "type": "object",
+      "required": ["question_id", "operator", "value"],
+      "properties": {
+        "question_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "Question whose answer controls visibility."},
+        "operator": {"type": "string", "enum": ["equals", "not_equals", "includes", "exists"], "description": "Deterministic visibility comparison."},
+        "value": {"description": "Value used by the selected comparison operator."}
+      },
+      "additionalProperties": false
+    },
+    "question": {
+      "type": "object",
+      "required": ["id", "category_id", "title", "description", "answer_type", "required", "validation", "options", "dependencies", "follow_up_question_ids", "mapping_destination"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "Stable, unique question identifier."},
+        "category_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "Owning category identifier."},
+        "title": {"type": "string", "minLength": 1, "description": "Merchant-facing question."},
+        "description": {"type": "string", "minLength": 1, "description": "Merchant-facing help text."},
+        "answer_type": {"type": "string", "enum": ["text", "textarea", "number", "currency", "boolean", "multiple_choice", "single_choice", "tags", "url", "url_or_domain", "email", "upload_placeholder", "color", "image_placeholder", "asset_reference", "color_palette", "reference_list"], "description": "Input control and validation behavior."},
+        "required": {"type": "boolean", "description": "Whether a visible question must be answered before completion."},
+        "validation": {"$ref": "#/$defs/validation"},
+        "options": {"type": "array", "items": {"$ref": "#/$defs/option"}, "description": "Stable option values for choice-based questions."},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/dependency"}, "description": "All visibility conditions that must be satisfied."},
+        "follow_up_question_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}, "description": "Explicit related follow-up question IDs."},
+        "mapping_destination": {"type": ["string", "null"], "description": "Canonical merchant-profile field path, or null when retained only in the interview session."},
+        "ui": {"type": ["object", "null"], "description": "Optional host-rendering metadata. It never contains branching or profile-mapping rules."}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

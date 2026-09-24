@@ -1,0 +1,59 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign icon_row_classes = 'co-icon-row co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign icon_row_classes = icon_row_classes | append: ' co-icon-row--columns-' | append: section.settings.items_per_row
+  assign icon_row_classes = icon_row_classes | append: ' co-icon-row--align-' | append: section.settings.alignment
+  assign icon_row_classes = icon_row_classes | append: ' co-icon-row--divider-' | append: section.settings.divider_style
+
+  if section.settings.mobile_scroll
+    assign icon_row_classes = icon_row_classes | append: ' co-icon-row--mobile-scroll'
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ icon_row_classes }}" {{ section.shopify_attributes }}>
+  <div class="co-icon-row__inner co-page-width">
+    <ul class="co-icon-row__list" role="list">
+      {% for block in section.blocks %}
+        <li class="co-icon-row__item" {{ block.shopify_attributes }}>
+          {% capture icon_row_content %}
+            {% if block.settings.image != blank %}
+              {% render 'responsive-image', image: block.settings.image, alt: block.settings.image_alt, loading: 'lazy', sizes: '72px', widths: '48, 72, 96', ratio: 'natural', fit: 'contain', class: 'co-icon-row__image' %}
+            {% else %}
+              <span class="co-icon-row__icon">{% render 'icon', name: block.settings.icon, size: 32 %}</span>
+            {% endif %}
+            {% if block.settings.heading != blank %}<h2 class="co-icon-row__heading">{{ block.settings.heading | escape }}</h2>{% endif %}
+            {% if block.settings.text != blank %}<p class="co-icon-row__text">{{ block.settings.text | escape }}</p>{% endif %}
+          {% endcapture %}
+          {% if block.settings.link != blank %}<a class="co-icon-row__link" href="{{ block.settings.link | escape }}" {% if block.settings.heading != blank %}aria-label="{{ block.settings.heading | escape }}"{% endif %}>{{ icon_row_content }}</a>{% else %}{{ icon_row_content }}{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.icon_row.name",
+  "tag": "section",
+  "class": "co-section-icon-row",
+  "settings": [
+    { "type": "select", "id": "items_per_row", "label": "t:sections.shared.settings.items_per_row.label", "default": "4", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "5", "label": "5" }] },
+    { "type": "select", "id": "alignment", "label": "t:sections.shared.settings.text_alignment.label", "default": "center", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "center", "label": "t:sections.shared.options.center" }] },
+    { "type": "select", "id": "divider_style", "label": "t:sections.shared.settings.divider_style.label", "default": "none", "options": [{ "value": "none", "label": "t:sections.shared.options.none" }, { "value": "vertical", "label": "t:sections.shared.options.vertical" }, { "value": "horizontal", "label": "t:sections.shared.options.horizontal" }] },
+    { "type": "checkbox", "id": "mobile_scroll", "label": "t:sections.shared.settings.mobile_horizontal_scroll.label", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    { "type": "item", "name": "t:sections.icon_row.blocks.item", "settings": [{ "type": "select", "id": "icon", "label": "t:sections.shared.settings.icon.label", "default": "truck", "options": [{ "value": "cart", "label": "t:sections.shared.options.cart" }, { "value": "bag", "label": "t:sections.shared.options.bag" }, { "value": "package", "label": "t:sections.shared.options.package" }, { "value": "truck", "label": "t:sections.shared.options.truck" }, { "value": "return", "label": "t:sections.shared.options.return" }, { "value": "exchange", "label": "t:sections.shared.options.exchange" }, { "value": "receipt", "label": "t:sections.shared.options.receipt" }, { "value": "tag", "label": "t:sections.shared.options.tag" }, { "value": "gift", "label": "t:sections.shared.options.gift" }, { "value": "discount", "label": "t:sections.shared.options.discount" }, { "value": "box", "label": "t:sections.shared.options.box" }, { "value": "credit-card", "label": "t:sections.shared.options.credit-card" }, { "value": "storefront", "label": "t:sections.shared.options.storefront" }, { "value": "shield", "label": "t:sections.shared.options.shield" }, { "value": "shield-check", "label": "t:sections.shared.options.shield-check" }, { "value": "verified", "label": "t:sections.shared.options.verified" }, { "value": "lock", "label": "t:sections.shared.options.lock" }, { "value": "certificate", "label": "t:sections.shared.options.certificate" }, { "value": "medal", "label": "t:sections.shared.options.medal" }, { "value": "guarantee", "label": "t:sections.shared.options.guarantee" }, { "value": "key", "label": "t:sections.shared.options.key" }, { "value": "arrow-left", "label": "t:sections.shared.options.arrow-left" }, { "value": "arrow-right", "label": "t:sections.shared.options.arrow-right" }, { "value": "arrow-up", "label": "t:sections.shared.options.arrow-up" }, { "value": "arrow-down", "label": "t:sections.shared.options.arrow-down" }, { "value": "chevron-left", "label": "t:sections.shared.options.chevron-left" }, { "value": "chevron-right", "label": "t:sections.shared.options.chevron-right" }, { "value": "chevron-up", "label": "t:sections.shared.options.chevron-up" }, { "value": "chevron-down", "label": "t:sections.shared.options.chevron-down" }, { "value": "plus", "label": "t:sections.shared.options.plus" }, { "value": "minus", "label": "t:sections.shared.options.minus" }, { "value": "close", "label": "t:sections.shared.options.close" }, { "value": "menu", "label": "t:sections.shared.options.menu" }, { "value": "search", "label": "t:sections.shared.options.search" }, { "value": "filter", "label": "t:sections.shared.options.filter" }, { "value": "external-link", "label": "t:sections.shared.options.external-link" }, { "value": "more-horizontal", "label": "t:sections.shared.options.more-horizontal" }, { "value": "more-vertical", "label": "t:sections.shared.options.more-vertical" }, { "value": "check", "label": "t:sections.shared.options.check" }, { "value": "info", "label": "t:sections.shared.options.info" }, { "value": "alert", "label": "t:sections.shared.options.alert" }, { "value": "eye", "label": "t:sections.shared.options.eye" }, { "value": "eye-off", "label": "t:sections.shared.options.eye-off" }, { "value": "trash", "label": "t:sections.shared.options.trash" }, { "value": "edit", "label": "t:sections.shared.options.edit" }, { "value": "heart", "label": "t:sections.shared.options.heart" }, { "value": "star", "label": "t:sections.shared.options.star" }, { "value": "chat", "label": "t:sections.shared.options.chat" }, { "value": "phone", "label": "t:sections.shared.options.phone" }, { "value": "email", "label": "t:sections.shared.options.email" }, { "value": "share", "label": "t:sections.shared.options.share" }, { "value": "account", "label": "t:sections.shared.options.account" }, { "value": "bell", "label": "t:sections.shared.options.bell" }, { "value": "bookmark", "label": "t:sections.shared.options.bookmark" }, { "value": "thumbs-up", "label": "t:sections.shared.options.thumbs-up" }, { "value": "send", "label": "t:sections.shared.options.send" }, { "value": "play", "label": "t:sections.shared.options.play" }, { "value": "pause", "label": "t:sections.shared.options.pause" }, { "value": "camera", "label": "t:sections.shared.options.camera" }, { "value": "image", "label": "t:sections.shared.options.image" }, { "value": "gallery", "label": "t:sections.shared.options.gallery" }, { "value": "video", "label": "t:sections.shared.options.video" }, { "value": "volume-high", "label": "t:sections.shared.options.volume-high" }, { "value": "volume-mute", "label": "t:sections.shared.options.volume-mute" }, { "value": "zoom-in", "label": "t:sections.shared.options.zoom-in" }, { "value": "zoom-out", "label": "t:sections.shared.options.zoom-out" }, { "value": "upload", "label": "t:sections.shared.options.upload" }, { "value": "download", "label": "t:sections.shared.options.download" }, { "value": "globe", "label": "t:sections.shared.options.globe" }, { "value": "leaf", "label": "t:sections.shared.options.leaf" }, { "value": "recycle", "label": "t:sections.shared.options.recycle" }, { "value": "sparkle", "label": "t:sections.shared.options.sparkle" }, { "value": "diamond", "label": "t:sections.shared.options.diamond" }, { "value": "crown", "label": "t:sections.shared.options.crown" }, { "value": "factory", "label": "t:sections.shared.options.factory" }, { "value": "award", "label": "t:sections.shared.options.award" }, { "value": "home", "label": "t:sections.shared.options.home" }, { "value": "airplane", "label": "t:sections.shared.options.airplane" }, { "value": "suitcase", "label": "t:sections.shared.options.suitcase" }, { "value": "coffee", "label": "t:sections.shared.options.coffee" }, { "value": "mountain", "label": "t:sections.shared.options.mountain" }, { "value": "sun", "label": "t:sections.shared.options.sun" }, { "value": "moon", "label": "t:sections.shared.options.moon" }, { "value": "map-pin", "label": "t:sections.shared.options.map-pin" }, { "value": "calendar", "label": "t:sections.shared.options.calendar" }, { "value": "clock", "label": "t:sections.shared.options.clock" }, { "value": "lightning", "label": "t:sections.shared.options.lightning" }, { "value": "ai", "label": "t:sections.shared.options.ai" }, { "value": "robot", "label": "t:sections.shared.options.robot" }, { "value": "cloud", "label": "t:sections.shared.options.cloud" }, { "value": "database", "label": "t:sections.shared.options.database" }, { "value": "code", "label": "t:sections.shared.options.code" }, { "value": "settings", "label": "t:sections.shared.options.settings" }, { "value": "wifi", "label": "t:sections.shared.options.wifi" }, { "value": "mobile", "label": "t:sections.shared.options.mobile" }, { "value": "desktop", "label": "t:sections.shared.options.desktop" }, { "value": "link", "label": "t:sections.shared.options.link" }, { "value": "spinner", "label": "t:sections.shared.options.spinner" }] }, { "type": "image_picker", "id": "image", "label": "t:sections.shared.settings.custom_image.label" }, { "type": "text", "id": "image_alt", "label": "t:sections.shared.settings.image_alt.label", "info": "t:sections.shared.settings.image_alt.info" }, { "type": "text", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "Thoughtful service" }, { "type": "textarea", "id": "text", "label": "t:sections.shared.settings.text.label", "default": "A short benefit or promise for your customers." }, { "type": "url", "id": "link", "label": "t:sections.shared.settings.link.label" }] }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "t:sections.icon_row.preset", "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" }] }]
+}
+{% endschema %}

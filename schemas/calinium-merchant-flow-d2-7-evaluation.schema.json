@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-d2-7-evaluation.schema.json",
+  "title": "Calinium Merchant Flow Policy D2.7 Evaluation",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "evidence_id", "status", "request", "request_checksum", "provider", "observations", "classifications", "rejected_interpretations", "diagnostics", "operation", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "merchant-flow-policy-d2-7-evaluation-v1"},
+    "evidence_id": {"type": "string", "pattern": "^merchant-flow-d2-7-evaluation-[a-f0-9]{20}$"},
+    "status": {"type": "string", "enum": ["passed", "review_required", "failed"]},
+    "request": {"$ref": "calinium-merchant-flow-d2-7-request.schema.json"},
+    "request_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "provider": {"type": "object"},
+    "observations": {"type": "array", "items": {"$ref": "calinium-concrete-visual-observation.schema.json"}},
+    "classifications": {"type": "array", "items": {"$ref": "#/$defs/classification"}},
+    "rejected_interpretations": {"type": "array", "items": {"type": "object"}},
+    "diagnostics": {"type": "object"},
+    "operation": {"type": "object"},
+    "safety": {"type": "object", "required": ["d1_authoritative", "d1_contradiction_count", "human_review_required", "automatic_repair_allowed", "fixture_fallback_used", "approved_replay_used"], "properties": {"d1_authoritative": {"const": true}, "d1_contradiction_count": {"type": "integer", "const": 0}, "human_review_required": {"const": true}, "automatic_repair_allowed": {"const": false}, "fixture_fallback_used": {"const": false}, "approved_replay_used": {"const": false}}, "additionalProperties": false}
+  },
+  "$defs": {
+    "classification": {
+      "type": "object",
+      "required": ["observation_id", "observation_checksum", "primary_dimension", "importance", "responsibility", "recommendation_category", "relationship_mode", "source_classification_id"],
+      "properties": {
+        "observation_id": {"type": "string"},
+        "observation_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "primary_dimension": {"type": "string"},
+        "importance": {"type": "string", "enum": ["high", "medium", "low", "note"]},
+        "responsibility": {"type": "string"},
+        "recommendation_category": {"type": "string"},
+        "relationship_mode": {"type": "string", "enum": ["root_finding", "symptom_of", "related_finding", "independent"]},
+        "source_classification_id": {"type": "string", "pattern": "^design-classification-[a-f0-9]{20}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

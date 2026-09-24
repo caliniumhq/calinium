@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "businessName": "Northline Goods",
+  "businessDescription": "Northline Goods has a small approved electronics catalog and prioritizes a clear, fast storefront.",
+  "productsOrServices": ["consumer electronics accessories"],
+  "targetAudience": "shoppers who want a concise path to the product catalog",
+  "primaryGoal": "make the small collection easy to browse",
+  "countries": ["United States"],
+  "existingStoreUrl": "https://northline.example",
+  "existingBrand": {
+    "hasLogo": true,
+    "brandColors": ["#1E252B", "#F7F7F4"],
+    "inspirations": ["Clear product presentation"],
+    "assets": ["logo", "product photography"]
+  },
+  "preferences": {
+    "desiredFeeling": ["clear", "simple", "efficient"],
+    "creativeFreedom": "low",
+    "brandPersonality": ["minimal", "modern"]
+  }
+}

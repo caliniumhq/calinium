@@ -1,0 +1,13 @@
+{
+  "resource_snapshot": {
+    "snapshot_id": "abps_oak-loom-lookbook-r1",
+    "approval": {"approval_id": "aba_oak_loom_lookbook"},
+    "resources": {
+      "abprs_oak-loom-lookbook-primary": {"resource_type": "project_image", "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111", "runtime_value": "dashboard://fixture-assets/oak-loom-lookbook-primary"},
+      "abprs_oak-loom-lookbook-mobile": {"resource_type": "project_image", "approved_revision": "2222222222222222222222222222222222222222222222222222222222222222", "runtime_value": "dashboard://fixture-assets/oak-loom-lookbook-mobile"},
+      "abprs_oak-loom-lookbook-product": {"resource_type": "shopify_product", "approved_revision": "3333333333333333333333333333333333333333333333333333333333333333", "runtime_value": "oak-loom-loom-rug"},
+      "abprs_oak-loom-lookbook-care-image": {"resource_type": "project_image", "approved_revision": "4444444444444444444444444444444444444444444444444444444444444444", "runtime_value": "dashboard://fixture-assets/oak-loom-care"},
+      "abprs_oak-loom-lookbook-care-collection": {"resource_type": "shopify_collection", "approved_revision": "5555555555555555555555555555555555555555555555555555555555555555", "runtime_value": "oak-loom-care"}
+    }
+  }
+}

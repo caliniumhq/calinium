@@ -1,0 +1,167 @@
+{
+  "schema_version": "1.0",
+  "evidence_version": "1.0.0",
+  "evidence_id": "phase-b-current-calinium-baseline-v1",
+  "status": "approved",
+  "architecture": {
+    "profile_id": "profile.current_calinium.v1",
+    "profile_version": "1.0.0",
+    "selection_revision_id": "architecture-selection-ccbcab2a5f566e2b1b6f"
+  },
+  "contracts": {
+    "render_request": "storefront-render-request-v1",
+    "render_result": "storefront-render-result-v1",
+    "render_revision": "storefront-render-v1",
+    "readiness_strategy": "storefront-readiness-v1",
+    "capture_policy_revision": "storefront-capture-policy-v1",
+    "comparison_contract": "storefront-architecture-comparison-v1",
+    "controlled_materializer": "controlled-storefront-artifact-v1"
+  },
+  "target": {
+    "fixture_id": "controlled-current-calinium-snowboards-v1",
+    "fixture_version": "1.0.0",
+    "shop_domain": "calinium-development.myshopify.com",
+    "theme_role": "development"
+  },
+  "generation": {
+    "request_id": "render-request-9a08c43cb2021489f3de",
+    "generation_revision": "generation-revision-e0853106ec052983e520",
+    "artifact_id": "theme-artifact-36912ebb3dbeab07089f",
+    "artifact_sha256": "b3712b207b87fd18a23b0baa37baa4ca3d12f727780f2f605e01f69c82d62cab",
+    "source_artifact_sha256": "ccd3a02f6475cf908d61de0c5088dc16ba715e9505c9ffc9acae9ac5b0b40bb3",
+    "resource_binding_revision": "render-binding-a0923c7963487eacae24"
+  },
+  "comparison": {
+    "comparison_fixture_revision": "comparison-fixture-0c881e4699c1cd3e33b0",
+    "comparison_key": "d7413cc5957c06221d6426210f86ae7cfd081bc2e66d55dbdb98a13b12d417f6"
+  },
+  "entities": {
+    "collection": {
+      "resource_id": "shr_d679946c-3a0a-4358-8815-5fc9955faef8",
+      "remote_gid": "gid://shopify/Collection/200000000003",
+      "handle": "hydrogen",
+      "source_revision": "14be935588b9922cdd682dfa1a7438f13e5d04f1b2f2e473f60ec756c4ea6cf8"
+    },
+    "product": {
+      "resource_id": "shr_2d1478f2-ea93-423e-ae35-fb0333623775",
+      "remote_gid": "gid://shopify/Product/20000000000001",
+      "handle": "the-collection-snowboard-hydrogen",
+      "source_revision": "ecc2ca261e54697abc06ec02dcccb5eaa5dfec35cddbe61261c0881836a0c9a0"
+    }
+  },
+  "captures": [
+    {
+      "route": "homepage",
+      "path": "/",
+      "viewport": { "id": "desktop-v1", "width": 1440, "height": 900 },
+      "render_id": "render-5b1071067075d0148ad2",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/homepage/desktop-v1--render-5b1071067075d0148ad2.png",
+        "full_page_width": 1440,
+        "full_page_height": 3072,
+        "sha256": "e98b6fe53c7643b0503e379bf0183900f68d28a7f43204e1128ff8a8098a5597"
+      }
+    },
+    {
+      "route": "homepage",
+      "path": "/",
+      "viewport": { "id": "mobile-v1", "width": 390, "height": 844 },
+      "render_id": "render-18ef3015d9f9382b19e4",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/homepage/mobile-v1--render-18ef3015d9f9382b19e4.png",
+        "full_page_width": 657,
+        "full_page_height": 2248,
+        "sha256": "578512decdd90eb4d7bd5f53e015b2ebb09b1a0d9e20ca18351065da275eae30"
+      }
+    },
+    {
+      "route": "collection",
+      "path": "/collections/hydrogen",
+      "viewport": { "id": "desktop-v1", "width": 1440, "height": 900 },
+      "render_id": "render-014d30f1f4c79650f434",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/collection/desktop-v1--render-014d30f1f4c79650f434.png",
+        "full_page_width": 1440,
+        "full_page_height": 2511,
+        "sha256": "4a3c1bff717929b28ec95d31c55fa4b8c6d46fff249a24fcc11de6946d8246d3"
+      }
+    },
+    {
+      "route": "collection",
+      "path": "/collections/hydrogen",
+      "viewport": { "id": "mobile-v1", "width": 390, "height": 844 },
+      "render_id": "render-359ed6c18dcf1048e144",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/collection/mobile-v1--render-359ed6c18dcf1048e144.png",
+        "full_page_width": 390,
+        "full_page_height": 2581,
+        "sha256": "733b01bcb7cdf3654abaae4bcdc5de9922506198d15e530f178a8d2143e4b891"
+      }
+    },
+    {
+      "route": "product",
+      "path": "/products/the-collection-snowboard-hydrogen",
+      "viewport": { "id": "desktop-v1", "width": 1440, "height": 900 },
+      "render_id": "render-db77a32a2abfc9550312",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/product/desktop-v1--render-db77a32a2abfc9550312.png",
+        "full_page_width": 1440,
+        "full_page_height": 3867,
+        "sha256": "fdcd3e93a31ab6acdfa2d6c38b199ee355e07e11356140fa46359dc5f8bb5618"
+      }
+    },
+    {
+      "route": "product",
+      "path": "/products/the-collection-snowboard-hydrogen",
+      "viewport": { "id": "mobile-v1", "width": 390, "height": 844 },
+      "render_id": "render-3a3c0701a5321c141ce3",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/product/mobile-v1--render-3a3c0701a5321c141ce3.png",
+        "full_page_width": 390,
+        "full_page_height": 3665,
+        "sha256": "3f9c57276b1c823236caa4a97f88e62cd3bba798042a7ee0a19a13b4f5049ac0"
+      }
+    },
+    {
+      "route": "cart",
+      "path": "/cart",
+      "viewport": { "id": "desktop-v1", "width": 1440, "height": 900 },
+      "render_id": "render-3ea4a42202c78e315cd6",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/cart/desktop-v1--render-3ea4a42202c78e315cd6.png",
+        "full_page_width": 1440,
+        "full_page_height": 946,
+        "sha256": "140f2144ec63dbcc929664d98bcc9b1fd736bc68f97f6bde1b38ac6512102b7d"
+      }
+    },
+    {
+      "route": "cart",
+      "path": "/cart",
+      "viewport": { "id": "mobile-v1", "width": 390, "height": 844 },
+      "render_id": "render-b61bf1bce4c136852e95",
+      "screenshot": {
+        "artifact_reference": "screenshots/profile.current_calinium.v1/cart/mobile-v1--render-b61bf1bce4c136852e95.png",
+        "full_page_width": 390,
+        "full_page_height": 1048,
+        "sha256": "4aa2ad54ddeb82f275a23586f2c3c386429f41d8c221e00b931d734013928057"
+      }
+    }
+  ],
+  "known_observations": [
+    {
+      "id": "current-calinium-mobile-homepage-horizontal-overflow",
+      "route": "homepage",
+      "viewport": "mobile-v1",
+      "browser_viewport_width": 390,
+      "browser_viewport_height": 844,
+      "full_page_png_width": 657,
+      "classification": "preserved_baseline_observation",
+      "description": "profile.current_calinium.v1 currently produces horizontal overflow on the mobile homepage. Phase B records this observation and does not repair it."
+    }
+  ],
+  "storage": {
+    "screenshot_binaries_tracked": false,
+    "runtime_output_root": "output/storefront-renders/render-request-9a08c43cb2021489f3de",
+    "reproduction_command": "npm run capture:current-calinium -- --execute-development-render --replace"
+  }
+}

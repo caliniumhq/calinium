@@ -1,0 +1,89 @@
+{% liquid
+  assign product_form_product = product
+  assign product_form_variant = selected_variant | default: product_form_product.selected_or_first_available_variant
+  assign product_form_id = 'ProductForm-' | append: section_id
+  assign product_form_quantity_id = 'ProductQuantity-' | append: section_id
+  assign product_form_add_label = 'products.product.add_to_cart' | t
+  assign product_form_sold_out_label = 'products.product.sold_out' | t
+  assign product_form_unavailable_label = 'products.product.unavailable' | t
+  assign product_form_adding_label = 'products.product.add_to_cart_loading' | t
+  assign product_form_success_message = 'products.product.added_to_cart' | t
+  assign product_form_error_message = 'products.product.add_to_cart_error' | t
+  assign product_form_cart_refresh_error_message = 'cart.refresh_error' | t
+  assign product_form_show_price = true
+  assign product_form_show_sku = false
+  assign product_form_show_barcode = false
+  assign product_form_show_inventory = false
+  assign product_form_show_quantity = true
+  assign product_form_show_buy_buttons = true
+  assign product_form_hide_picker = false
+
+  if id_suffix != blank
+    assign product_form_id = product_form_id | append: '-' | append: id_suffix
+    assign product_form_quantity_id = product_form_quantity_id | append: '-' | append: id_suffix
+  endif
+
+  if show_price == false
+    assign product_form_show_price = false
+  endif
+
+  if show_variant_picker == false
+    assign product_form_hide_picker = true
+  endif
+
+  if show_sku
+    assign product_form_show_sku = true
+  endif
+
+  if show_barcode
+    assign product_form_show_barcode = true
+  endif
+
+  if show_inventory
+    assign product_form_show_inventory = true
+  endif
+
+  if show_quantity == false
+    assign product_form_show_quantity = false
+  endif
+
+  if show_buy_buttons == false
+    assign product_form_show_buy_buttons = false
+  endif
+%}
+
+<div
+  class="co-product-form__state"
+  data-product-form
+  data-add-label="{{ product_form_add_label | escape }}"
+  data-sold-out-label="{{ product_form_sold_out_label | escape }}"
+  data-unavailable-label="{{ product_form_unavailable_label | escape }}"
+  data-adding-label="{{ product_form_adding_label | escape }}"
+  data-success-message="{{ product_form_success_message | escape }}"
+  data-error-message="{{ product_form_error_message | escape }}"
+  data-cart-refresh-error-message="{{ product_form_cart_refresh_error_message | escape }}"
+>
+  {% form 'product', product_form_product, id: product_form_id, class: 'co-product-form' %}
+    <div class="co-product-form__content">
+      {% if product_form_show_price %}
+        {% render 'product-form-controls', control: 'price', product: product_form_product, selected_variant: product_form_variant, section_id: section_id, form_context: form %}
+      {% endif %}
+      {% render 'product-form-controls', control: 'variant_picker', product: product_form_product, selected_variant: product_form_variant, section_id: section_id, variant_picker_type: variant_picker_type, hide_picker: product_form_hide_picker %}
+      {% if product_form_show_sku %}
+        {% render 'product-form-controls', control: 'sku', product: product_form_product, selected_variant: product_form_variant, section_id: section_id %}
+      {% endif %}
+      {% if product_form_show_barcode %}
+        {% render 'product-form-controls', control: 'barcode', product: product_form_product, selected_variant: product_form_variant, section_id: section_id %}
+      {% endif %}
+      {% if product_form_show_inventory %}
+        {% render 'product-form-controls', control: 'inventory', product: product_form_product, selected_variant: product_form_variant, low_inventory_threshold: low_inventory_threshold, low_inventory_message: low_inventory_message %}
+      {% endif %}
+      {% if product_form_show_quantity %}
+        {% render 'product-form-controls', control: 'quantity', product: product_form_product, selected_variant: product_form_variant, quantity_id: product_form_quantity_id %}
+      {% endif %}
+      {% if product_form_show_buy_buttons %}
+        {% render 'product-form-controls', control: 'buy_buttons', product: product_form_product, selected_variant: product_form_variant, form_context: form, show_payment_button: show_dynamic_checkout %}
+      {% endif %}
+    </div>
+  {% endform %}
+</div>

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-approved-resource-snapshot.schema.json",
+  "title": "Calinium Approved Block Plan Resource Snapshot",
+  "description": "Immutable, project-scoped runtime-binding snapshot for one Approved Block Plan revision. It carries approved runtime-compatible references without becoming a Shopify template.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "snapshot_id", "revision_id", "plan_id", "plan_revision_id", "organization_id", "project_id", "merchant_scope_id", "approval", "source_revision", "snapshot_checksum", "resources", "created_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "snapshot_id": {"type": "string", "pattern": "^abps_[a-z0-9][a-z0-9_-]*$"},
+    "revision_id": {"type": "string", "pattern": "^abpsr_[a-z0-9][a-z0-9_-]*$"},
+    "plan_id": {"type": "string", "pattern": "^abp_[a-z0-9][a-z0-9_-]*$"},
+    "plan_revision_id": {"type": "string", "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+    "organization_id": {"type": "string", "pattern": "^org_[a-z0-9][a-z0-9_-]*$"},
+    "project_id": {"type": "string", "pattern": "^prj_[a-z0-9][a-z0-9_-]*$"},
+    "merchant_scope_id": {"type": "string", "pattern": "^mrc_[a-z0-9][a-z0-9_-]*$"},
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approval_id", "approval_reference", "approval_revision_id", "approved_at"],
+      "properties": {
+        "approval_id": {"type": "string", "pattern": "^aba_[a-z0-9][a-z0-9_-]*$"},
+        "approval_reference": {"type": "string", "minLength": 1, "maxLength": 160},
+        "approval_revision_id": {"type": "string", "pattern": "^abar_[a-z0-9][a-z0-9_-]*$"},
+        "approved_at": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_revision": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "snapshot_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "resources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resource_type", "approved_revision", "runtime_value", "source_reference", "approval_eligible", "availability_at_snapshot"],
+        "properties": {
+          "resource_type": {"type": "string", "enum": ["shopify_product", "shopify_collection", "shopify_article", "shopify_page", "project_image", "project_video", "external_url", "merchant_fact"]},
+          "approved_revision": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "runtime_value": {"type": "string", "minLength": 1},
+          "source_reference": {"type": "string", "minLength": 1, "maxLength": 1024},
+          "approval_eligible": {"type": "boolean", "const": true},
+          "availability_at_snapshot": {"type": "string", "enum": ["available"]}
+        }
+      }
+    },
+    "created_at": {"type": "string", "minLength": 1}
+  }
+}

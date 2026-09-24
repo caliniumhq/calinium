@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-review-audit-event.schema.json",
+  "title": "Calinium review audit event",
+  "type": "object",
+  "required": ["version", "sequence", "event_id", "recorded_at", "actor_id", "event_type", "payload", "previous_event_hash", "event_hash"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "sequence": {"type": "integer", "minimum": 0},
+    "event_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "recorded_at": {"type": "string", "minLength": 1},
+    "actor_id": {"type": "string", "minLength": 1},
+    "event_type": {"type": "string", "enum": ["session_created", "review_decision_recorded", "state_transition", "approval_manifest_created"]},
+    "payload": {"type": "object"},
+    "previous_event_hash": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "event_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": false
+}

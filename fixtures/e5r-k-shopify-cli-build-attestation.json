@@ -1,0 +1,34 @@
+{
+  "fixture_version": "e5r-k-shopify-cli-build-attestation-v1",
+  "approved_cli_version": "4.6.0",
+  "observed_cli_4_6_0": {
+    "package_name": "@shopify/cli",
+    "package_version": "4.6.0",
+    "binary_class": "project_local_node_modules_bin",
+    "autoupgrade_off": {
+      "exit_status": 0,
+      "stdout": "",
+      "stderr": "Auto-upgrade off. You'll need to run `shopify upgrade` to update manually.",
+      "effective_config": {
+        "autoUpgradeEnabled": false
+      }
+    },
+    "version_flag_output": "@shopify/cli/4.6.0 linux-x64 node-v22.15.0",
+    "version_command_output": "4.6.0"
+  },
+  "failed_e5r_j_build": {
+    "combined_exit_status": 1,
+    "failing_assertion": "exact_full_text_comparison_of_version_flag_output",
+    "legacy_expected_text": "4.6.0"
+  },
+  "preserved_identity": {
+    "project_id": "prj_public-fixture-0001",
+    "merchant_flow_id": "merchant-flow-00000000000000000001",
+    "generation_job_id": "merchant-flow-job-00000000000000000002",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "artifact_checksum": "c2e5dd71a4b06b173f266cc3c5e7cf60aff4c3c9f269b73b372bcf3f66e95b09",
+    "render_job_id": "merchant-flow-job-00000000000000000001",
+    "architecture_profile_id": "profile.editorial_discovery.v1",
+    "design_dna_id": "adna_0989b341020b3def5aac2c7eda0b1b93b9af1aae"
+  }
+}

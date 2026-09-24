@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0",
+  "contract_version": "bounded-repair-plan-v1",
+  "policy": {
+    "policy_id": "calinium_bounded_repair_planning",
+    "policy_version": "bounded-repair-planning-policy-v1",
+    "policy_revision": "bounded-repair-planning-phase-d3a-v1"
+  },
+  "target": {
+    "authoritative_finding_id": "design-finding-f4d218150f4162a33544",
+    "human_decision": "needs_fix",
+    "architecture_profile_id": "profile.current_calinium.v1",
+    "route_id": "homepage",
+    "viewport_id": "mobile-v1",
+    "browser_viewport": {"width": 390, "height": 844},
+    "rule_id": "root_horizontal_overflow",
+    "severity": "high"
+  },
+  "evidence": {
+    "render": {
+      "result_reference": "output/storefront-renders/render-request-75d31f88138d248861b4/results/render-9cfd6df8592c4095bb16.json",
+      "result_checksum": "09a47bb1d0595b00b78e70f03ab8752402ec898acc9de17486bb6870d5bba276",
+      "request_id": "render-request-75d31f88138d248861b4",
+      "render_id": "render-9cfd6df8592c4095bb16",
+      "artifact_id": "theme-artifact-36912ebb3dbeab07089f",
+      "artifact_sha256": "b3712b207b87fd18a23b0baa37baa4ca3d12f727780f2f605e01f69c82d62cab",
+      "comparison_fixture_revision": "comparison-fixture-0c881e4699c1cd3e33b0"
+    },
+    "screenshot": {
+      "reference": "output/storefront-renders/render-request-75d31f88138d248861b4/screenshots/profile.current_calinium.v1/homepage/mobile-v1--render-9cfd6df8592c4095bb16.png",
+      "artifact_reference": "screenshots/profile.current_calinium.v1/homepage/mobile-v1--render-9cfd6df8592c4095bb16.png",
+      "sha256": "578512decdd90eb4d7bd5f53e015b2ebb09b1a0d9e20ca18351065da275eae30",
+      "width": 657,
+      "height": 2248
+    },
+    "d1": {
+      "result_reference": "output/storefront-visual-evaluations/phase-d1-approved-comparison/profile.current_calinium.v1/homepage--mobile-v1/evaluation-result.json",
+      "result_checksum": "502e83881fcf3e32ebc4e8fa6ed1ff8351cbcc4e266e5a771cc2f0c481df3d64",
+      "evaluation_id": "visual-evaluation-c634347d51198ad0fd2a",
+      "finding_id": "visual-finding-fd438111aa5f9aa8d4f6",
+      "calibration_reference": "fixtures/storefront-visual-evaluation-calibration.json",
+      "calibration_sha256": "53c4b3517490b0a3accb247600c27cbe8d7f1117c94ad431486e490a7de91409",
+      "calibration_evaluation_id": "visual-evaluation-86afbb828bf278750895",
+      "calibration_finding_id": "visual-finding-2093852270c8474f3079",
+      "human_review_reference": "fixtures/storefront-visual-human-review-current-mobile-homepage.json",
+      "human_review_sha256": "6e466138ea045512992d17227f2b27e44509a853b962b7e0c089931f5a4f30bf",
+      "finding_lineage": "The saved D1 run and approved calibration use different canonical finding IDs because their request contexts differ; they bind the same render, screenshot, rule, profile, route, viewport, severity, and 390/657/267 geometry."
+    },
+    "d2": {
+      "evaluation_reference": "output/storefront-design-evaluations/phase-d2-5-live-calibration/live-design-evaluation-result.json",
+      "evaluation_id": "design-evaluation-ed8fa37a5aa523c9ff86",
+      "evaluation_checksum": "6b52362e1a1018695ab3864a0866ed9a34406b0eeb48ea2d607abe5e0837b90e",
+      "human_review_reference": "output/storefront-design-evaluations/phase-d2-5-live-calibration/human-review.json",
+      "human_review_id": "design-review-bfc82d288460e1faa29c",
+      "human_review_checksum": "e4f420de93907ab473e9a1ff538cdc8dc3efac2e921ce6fc72f3888ba7eaceb9"
+    },
+    "d2_6": {
+      "reference": "output/storefront-design-evaluations/phase-d2-6-visual-judgment-stabilization/offline-reclassification.json",
+      "checksum": "bfdeb1b9e5f24bd4fbbed1fffe535a2b3c9d29098c3af565884bb86374052f9a",
+      "root_observation_id": "visual-observation-2f44ec2c22ebb11687cf",
+      "root_classification_id": "design-classification-23fdc7db3cbe636bdbd8",
+      "symptom_observation_id": "visual-observation-eb20c279af0d033ff451",
+      "symptom_classification_id": "design-classification-0705eb50abc43fe662f2"
+    },
+    "d2_7": {
+      "reference": "output/storefront-design-evaluations/phase-d2-7-visual-observation-stabilization/limited-live-validation.json",
+      "checksum": "541ece86d34ecfe17910561ee9405d5999c7dc2dcdebd89c39d7fb85d45a14c1",
+      "report_id": "observation-stabilization-report-a4b2cf5ab6d0100f0ffa",
+      "report_checksum": "276d38c73181a394cf78af25228d3ea8e62d7b08e52850247a7bd1b64f074ca7",
+      "root_observation_ids": ["concrete-visual-observation-d571a0d42b1d022e24e7", "concrete-visual-observation-0f88730b154b463abd82"],
+      "reliability_status": "repair_planning_eligible",
+      "repair_planning_consumption_allowed": true,
+      "automatic_repair_allowed": false,
+      "human_review_required": true
+    },
+    "architecture": {
+      "profile_id": "profile.current_calinium.v1",
+      "profile_version": "1.0.0",
+      "selection_revision_id": "architecture-selection-ccbcab2a5f566e2b1b6f",
+      "family_id": "family.responsive_behavior.current_calinium.v1",
+      "provenance_revision": "architecture-classification-context-b84afc0bfc03b6453b62",
+      "registry_bindings": [
+        {"reference": "config/calinium-architecture-families.json", "sha256": "ab52d690acddd1885a51382f1b7b14b83e7419a8ffcf551989b06699e7d44f6e"},
+        {"reference": "config/calinium-architecture-profiles.json", "sha256": "c832b9acde3021721e3dcd3cb33c13c3b669a82807ed2ad904168b8b211c73d9"},
+        {"reference": "config/storefront-render-presenter-evidence.json", "sha256": "55269383803b01ec8fe9addffcdaa477735e52aa90bd6ccff4566252410080a1"}
+      ]
+    }
+  },
+  "downstream_symptom": {
+    "finding_id": "design-finding-fdf6a3b6d99cb8c99f34",
+    "human_decision": "false_positive",
+    "relationship": "symptom_of_root_overflow",
+    "independent_repair_target": false
+  },
+  "root_cause": {
+    "status": "strong_likely_contributor_runtime_confirmation_required",
+    "confidence": "high",
+    "summary": "The Current-only mobile featured-collection swipe presenter creates a 78vw horizontal flex track with negative page gutters. In the approved Shopify capture that track is not bounded at its owning component boundary, so product descendants contribute to the root document width instead of remaining inside the intentional scroller.",
+    "causal_chain": [
+      "The approved 390px mobile viewport produces a stable 657px document width and 267px root overflow.",
+      "The only recorded offscreen descendants are featured product images at approximately 320px and 640px inline offsets inside an intentional scroll context.",
+      "The Homepage enables mobile_swipe and the featured-collection presenter emits the Current mobile-swipe class.",
+      "calinium-sections.css assigns 78vw flex-basis cards, negative page gutters, and overflow-x:auto without the explicit inline-size/max-inline-size/layout-containment boundary used by Editorial Discovery.",
+      "The separate product-row truncation is therefore visible symptom evidence of the page-level containment failure, not another repair target."
+    ],
+    "source_contributors": [
+      {"path": "apps/theme/templates/index.json", "before_sha256": "967f525f3fd3dd4442e02e5da1d474e46bec8678a8f6906597b4564aabe91087", "role": "Homepage composition enables mobile_swipe for the featured collection.", "modification_candidate": false},
+      {"path": "apps/theme/sections/featured-collection.liquid", "before_sha256": "69a54901b9debd8a294afa765be34e23c862a119a065de67dd2a655a6bb695bc", "role": "Presenter emits the mobile-swipe class and product-track structure.", "modification_candidate": false},
+      {"path": "apps/theme/assets/section-featured-collection.css", "before_sha256": "ef997914b2d0ac8d3d6ad3ecd8c1db57e0017cc84bca68282d1542e1048317b2", "role": "Section-local base grid layer; no mobile swipe containment rule.", "modification_candidate": false},
+      {"path": "apps/theme/assets/calinium-sections.css", "before_sha256": "cd40742492b80f3c8029fc6c8c12dcca659827d8adb64f4e1e69d5d346109cf8", "role": "Owning Current mobile-swipe sizing, gutter, overflow, and scroll-snap rules.", "modification_candidate": true},
+      {"path": "apps/theme/assets/component-product-card.css", "role": "Card descendants already allow inline shrinkage; product cards are symptom surfaces, not the root owner.", "modification_candidate": false}
+    ],
+    "minimum_non_mutating_diagnostic": {
+      "required": true,
+      "timing": "before_any_d3b_source_change",
+      "runtime": "same Shopify real-runtime route and 390x844 viewport",
+      "measure": ["documentElement and body scroll/client widths", "computed width, min-inline-size, max-inline-size, overflow-x, contain, margin and padding for featured-collection inner/content/grid", "bounding boxes and scroll widths for the grid and first three items", "nearest ancestor whose scroll width first exceeds its client width", "computed stylesheet source for the active mobile-swipe declarations"],
+      "pass_condition": "The first component boundary contributing beyond 390px is the Current featured-collection mobile swipe track or its immediate content wrapper and the active rule resolves to apps/theme/assets/calinium-sections.css.",
+      "failure_action": "Stop without mutation, mark the contributor uncertain, and revise the proposed plan through a new checksum-bound human review."
+    }
+  },
+  "responsibility": {
+    "classification": "architecture_level",
+    "rationale": "D2.6 classifies the root observation as architecture_level, mobile_adaptation_quality, root_finding. The failure is caused by Current responsive presenter behavior, not merchant content, data, or design tokens."
+  },
+  "ownership": {
+    "architecture_family_id": "family.responsive_behavior.current_calinium.v1",
+    "architecture_family_type": "responsive_behavior",
+    "source_scope": "shared_core_asset_with_current_calinium_specific_selector",
+    "editorial_uses_same_source_rule": false,
+    "blast_radius": "Current Calinium featured collections using mobile_swipe below 48rem; desktop and Editorial Discovery must remain unaffected."
+  },
+  "modification_scope": {
+    "maximum_file_count": 1,
+    "allowed_files": [
+      {
+        "path": "apps/theme/assets/calinium-sections.css",
+        "before_sha256": "cd40742492b80f3c8029fc6c8c12dcca659827d8adb64f4e1e69d5d346109cf8",
+        "why_required": "It owns the exact Current mobile-swipe track sizing and containment behavior implicated by the approved geometry.",
+        "permitted_change": "Only a component-scoped containment correction inside the existing max-width:47.99rem Current featured-collection mobile-swipe rules, conditional on the runtime diagnostic.",
+        "must_remain_untouched": ["all desktop rules", "card width and scroll-snap semantics unless the diagnostic proves they cause containment", "all non-featured-collection selectors", "Editorial Discovery assets and overlays", "global html/body overflow"]
+      }
+    ],
+    "unrelated_refactoring_allowed": false
+  },
+  "intervention": {
+    "type": "component_scoped_responsive_containment",
+    "proposed_change": "Within the existing Current mobile-swipe media query, give the featured-collection content/track an explicit zero-minimum and 100% maximum inline-size boundary plus layout/inline-size containment, preserving overflow-x:auto, 78vw cards, scrolling, and snap behavior.",
+    "rationale": "This constrains the deliberate horizontal track at its owner instead of clipping the page globally, mirrors the containment principle already proven by Editorial Discovery, and preserves product discovery.",
+    "primary_selector": ".co-featured-collection--mobile-swipe .co-featured-collection__grid",
+    "global_overflow_suppression_allowed": false,
+    "conditional_on_runtime_diagnostic": true
+  },
+  "expected_effects": {
+    "visual": "The page remains 390px wide; the intentional product rail stays locally swipeable with a deliberate next-card cue and without page-level blank overflow.",
+    "objective": "documentElement.scrollWidth becomes no greater than 390px plus documented browser rounding tolerance and D1 emits no root_horizontal_overflow finding.",
+    "functional": "Product links, local horizontal scroll, snap positions, touch behavior, and desktop grid behavior continue to work."
+  },
+  "forbidden_scope": ["editorial_discovery", "cart", "typography_redesign", "section_order", "newsletter", "empty_module_suppression", "footer_wrapping", "mobile_header", "product_highlights", "design_dna", "presets", "architecture_selection", "merchant_content", "billing", "deployment", "live_theme_publishing"],
+  "regression_risks": [
+    {"risk": "The local rail could lose the intentional next-card cue or swipe range.", "mitigation": "Verify scrollWidth remains greater than clientWidth, touch scrolling works, and all product links remain reachable."},
+    {"risk": "An overly broad selector could affect desktop or non-featured collection surfaces.", "mitigation": "Keep the change under the existing mobile media query and Current featured-collection selector; require desktop and full-route regression."},
+    {"risk": "Containment could clip badges, focus rings, or product text.", "mitigation": "Fail human review on clipping, crowding, lost visibility, damaged hierarchy, or keyboard/touch reachability."},
+    {"risk": "The apparent contributor could differ in the real runtime cascade.", "mitigation": "Run the specified computed-style diagnostic before any source mutation and stop if it does not confirm this boundary."}
+  ],
+  "acceptance": {
+    "before": {"viewport_width_css_px": 390, "document_width_css_px": 657, "horizontal_overflow_css_px": 267, "d1_rule_id": "root_horizontal_overflow", "d1_severity": "high"},
+    "after": {"maximum_document_width_css_px": 390, "rounding_tolerance_css_px": 1, "root_horizontal_overflow_finding_allowed": false, "product_discovery_functional": true, "visual_failure_conditions": ["clipping", "crowding", "broken_layout", "lost_product_visibility", "damaged_hierarchy", "new_objective_finding"]}
+  },
+  "verification": {
+    "loop": ["apply_human_approved_bounded_repair", "materialize_controlled_artifact", "shopify_real_runtime_render", "capture_same_route_and_viewport", "d1_objective_evaluation", "stabilized_d2_7_observation_evaluation", "before_after_comparison", "checksum_bound_human_review"],
+    "required_checks": ["theme_check", "accessibility", "d1_objective_evaluation", "navigation", "product_links_and_actions", "responsive_behavior", "architecture_provenance", "beta_critical_generation", "stabilized_d2_7_observation_evaluation", "human_visual_review"],
+    "regression_matrix": [
+      {"profile_id": "profile.current_calinium.v1", "route_id": "homepage", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "homepage", "viewport_id": "mobile-v1", "expectation": "root overflow removed; local product discovery preserved"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "collection", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "collection", "viewport_id": "mobile-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "product", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "product", "viewport_id": "mobile-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "cart", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "cart", "viewport_id": "mobile-v1", "expectation": "no regression"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "homepage", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "homepage", "viewport_id": "mobile-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "collection", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "collection", "viewport_id": "mobile-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "product", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "product", "viewport_id": "mobile-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "cart", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "cart", "viewport_id": "mobile-v1", "expectation": "byte-identical"}
+    ],
+    "editorial_byte_identical_expected": true,
+    "human_review_required": true,
+    "automatic_approval_allowed": false
+  },
+  "rollback": {
+    "checkpoint_tag": "core-2-phase-d2-7-complete",
+    "checkpoint_commit": "1000000000000000000000000000000000000009",
+    "boundary": "Only the future approved diff to apps/theme/assets/calinium-sections.css belongs to this repair; D3A planning infrastructure and all prior phase evidence remain outside the repair rollback.",
+    "method": "Create a separate pre-repair checkpoint in D3B and revert only the bounded repair commit if any verification gate fails."
+  },
+  "status": "proposed",
+  "safety": {
+    "human_approval_required": true,
+    "mutation_allowed": false,
+    "automatic_repair_allowed": false,
+    "repair_execution_available": false,
+    "d3b_started": false,
+    "api_calls_required": false
+  },
+  "repair_plan_id": "repair-plan-51818ae4d0b268572081",
+  "repair_plan_checksum": "347949a1448ce135f70ad2309f52fdeec29764fb84d00fa2f94df6b332320eea"
+}

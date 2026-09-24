@@ -1,0 +1,58 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-404.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign main_404_classes = 'co-main-404 co-color-scheme-' | append: section.settings.color_scheme
+  assign main_404_heading_id = 'NotFoundHeading-' | append: section.id
+  assign main_404_search_id = 'NotFoundSearch-' | append: section.id
+  assign main_404_search_submit_label = 'not_found.search_submit' | t
+  assign main_404_home_label = 'not_found.home' | t
+  assign main_404_collections_label = 'not_found.collections' | t
+%}
+
+<section class="{{ main_404_classes }}" aria-labelledby="{{ main_404_heading_id }}">
+  <div class="co-main-404__inner">
+    <h1 id="{{ main_404_heading_id }}" class="co-main-404__heading">{{ 'not_found.title' | t }}</h1>
+    <p class="co-main-404__text">{{ 'not_found.text' | t }}</p>
+
+    <form class="co-main-404__search" action="{{ routes.search_url }}" method="get" role="search">
+      <label class="co-visually-hidden" for="{{ main_404_search_id }}">{{ 'not_found.search_label' | t }}</label>
+      <input id="{{ main_404_search_id }}" type="search" name="q" placeholder="{{ 'not_found.search_placeholder' | t }}">
+      <input type="hidden" name="options[prefix]" value="last">
+      {% render 'button', label: main_404_search_submit_label, type: 'submit', variant: 'primary' %}
+    </form>
+
+    <div class="co-main-404__actions">
+      {% render 'button', label: main_404_home_label, url: routes.root_url, variant: 'secondary' %}
+      {% if section.settings.show_collections_link %}
+        {% render 'button', label: main_404_collections_label, url: routes.collections_url, variant: 'text' %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_404.name",
+  "tag": "section",
+  "class": "co-section-main-404",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["404"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collections_link",
+      "label": "t:sections.main_404.settings.show_collections_link.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main_404.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

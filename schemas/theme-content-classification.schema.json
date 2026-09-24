@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/theme-content-classification.schema.json",
+  "allOf": [{"$ref": "theme-mapping.schema.json#/$defs/metadata"}],
+  "required": ["fields"],
+  "properties": {
+    "fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "allOf": [{"$ref": "theme-mapping.schema.json#/$defs/setting"}],
+        "required": ["field_id", "scope", "section_id", "block_type"],
+        "properties": {
+          "field_id": {"type": "string", "minLength": 3},
+          "scope": {"type": "string", "enum": ["global", "section", "block"]},
+          "section_id": {"type": ["string", "null"]},
+          "block_type": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

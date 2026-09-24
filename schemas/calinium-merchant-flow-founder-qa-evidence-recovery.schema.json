@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-founder-qa-evidence-recovery.schema.json",
+  "title": "Calinium merchant-flow founder QA evidence recovery",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "recovery_id", "recovery_revision", "recovery_checksum", "status", "scope", "review", "evaluation", "corrupted_artifact", "recovered_artifact", "operation", "operator", "source", "safety", "created_at"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-flow-founder-qa-evidence-recovery-v1"},
+    "recovery_id": {"type": "string", "pattern": "^merchant-flow-founder-qa-evidence-recovery-[a-f0-9]{20}$"},
+    "recovery_revision": {"const": "founder-review-evidence-recovery-v1"},
+    "recovery_checksum": {"$ref": "#/$defs/checksum"},
+    "status": {"const": "recovered"},
+    "scope": {
+      "type": "object",
+      "required": ["organization_id", "project_id", "flow_id", "flow_sequence", "flow_checksum", "shop_domain", "shopify_connection_id"],
+      "properties": {
+        "organization_id": {"type": "string", "minLength": 1},
+        "project_id": {"type": "string", "minLength": 1},
+        "flow_id": {"type": "string", "minLength": 1},
+        "flow_sequence": {"type": "integer", "minimum": 0},
+        "flow_checksum": {"$ref": "#/$defs/checksum"},
+        "shop_domain": {"type": "string", "minLength": 1},
+        "shopify_connection_id": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "required": ["id", "checksum", "decision"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "checksum": {"$ref": "#/$defs/checksum"},
+        "decision": {"const": "accepted"}
+      },
+      "additionalProperties": false
+    },
+    "evaluation": {"$ref": "#/$defs/evidenceBinding"},
+    "corrupted_artifact": {
+      "type": "object",
+      "required": ["reference", "storage_sha256", "byte_length", "valid_json_root_length", "trailing_byte_count"],
+      "properties": {
+        "reference": {"type": "string", "pattern": "^output/merchant-flow-storefront-renders/.+/d2-7-human-review(?:-[A-Za-z0-9._-]+)?\\.json$"},
+        "storage_sha256": {"$ref": "#/$defs/checksum"},
+        "byte_length": {"type": "integer", "minimum": 2},
+        "valid_json_root_length": {"type": "integer", "minimum": 2},
+        "trailing_byte_count": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "recovered_artifact": {
+      "type": "object",
+      "required": ["replica_id", "reference", "storage_sha256", "byte_length"],
+      "properties": {
+        "replica_id": {"type": "string", "pattern": "^merchant-flow-founder-qa-replica-[a-f0-9]{20}$"},
+        "reference": {"type": "string", "pattern": "^output/merchant-flow-storefront-renders/.+/d2-7-human-review-recovered-[a-f0-9]{20}\\.json$"},
+        "storage_sha256": {"$ref": "#/$defs/checksum"},
+        "byte_length": {"type": "integer", "minimum": 2}
+      },
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "required": ["idempotency_key", "request_checksum"],
+      "properties": {
+        "idempotency_key": {"type": "string", "minLength": 8, "maxLength": 200},
+        "request_checksum": {"$ref": "#/$defs/checksum"}
+      },
+      "additionalProperties": false
+    },
+    "operator": {
+      "type": "object",
+      "required": ["actor_user_id", "role", "authorization_contract"],
+      "properties": {
+        "actor_user_id": {"type": "string", "minLength": 1},
+        "role": {"enum": ["owner", "administrator"]},
+        "authorization_contract": {"const": "merchant-flow-operator-authorization-v1"}
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["source_revision", "runtime_revision"],
+      "properties": {
+        "source_revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "runtime_revision": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": ["original_artifact_mutated", "founder_decision_applied", "new_d2_7_attempt_created", "provider_call_allowed", "render_call_allowed", "d1_call_allowed", "shopify_write_allowed", "automatic_repair_allowed"],
+      "properties": {
+        "original_artifact_mutated": {"const": false},
+        "founder_decision_applied": {"const": false},
+        "new_d2_7_attempt_created": {"const": false},
+        "provider_call_allowed": {"const": false},
+        "render_call_allowed": {"const": false},
+        "d1_call_allowed": {"const": false},
+        "shopify_write_allowed": {"const": false},
+        "automatic_repair_allowed": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "created_at": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "evidenceBinding": {
+      "type": "object",
+      "required": ["id", "checksum", "reference"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "checksum": {"$ref": "#/$defs/checksum"},
+        "reference": {"type": "string", "pattern": "^output/merchant-flow-storefront-renders/.+/d2-7-evaluation\\.json$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

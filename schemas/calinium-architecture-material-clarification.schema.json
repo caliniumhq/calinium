@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-architecture-material-clarification.schema.json",
+  "title": "Calinium frozen architecture material-clarification provenance",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "originating_selection_outcome_id", "originating_selection_outcome_checksum", "question_id", "question_checksum", "question_topic", "intent_path", "answer_revision", "answer_checksum", "merchant_intent_parent_revision", "merchant_intent_parent_checksum", "store_intelligence_revision", "store_intelligence_checksum", "conversation_revision", "merchant_context_checksum", "rerun_count", "question_allowance_consumed", "second_question_allowed", "raw_answer_stored"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "architecture-material-clarification-v1"},
+    "originating_selection_outcome_id": {"type": "string", "pattern": "^architecture-selection-outcome-[a-f0-9]{20}$"},
+    "originating_selection_outcome_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "question_id": {"type": "string", "pattern": "^architecture-question-[a-f0-9]{20}$"},
+    "question_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "question_topic": {"const": "shopping_mode"},
+    "intent_path": {"const": "storefront.shopping_mode"},
+    "answer_revision": {"type": "string", "pattern": "^architecture-answer-[a-f0-9]{20}$"},
+    "answer_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "merchant_intent_parent_revision": {"type": "string", "pattern": "^merchant-intent-[a-f0-9]{20}$"},
+    "merchant_intent_parent_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "store_intelligence_revision": {"type": ["string", "null"]},
+    "store_intelligence_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "conversation_revision": {"type": "string", "minLength": 1},
+    "merchant_context_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "rerun_count": {"const": 1},
+    "question_allowance_consumed": {"const": true},
+    "second_question_allowed": {"const": false},
+    "raw_answer_stored": {"const": false}
+  },
+  "additionalProperties": false
+}

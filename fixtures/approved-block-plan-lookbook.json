@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "abp_oak-loom-lookbook",
+  "revision_id": "abpr_oak-loom-lookbook-r1",
+  "parent_revision_id": null,
+  "created_at": "2026-08-01T12:00:00.000Z",
+  "store_scope": {
+    "organization_id": "org_oak_loom",
+    "project_id": "prj_oak_loom",
+    "merchant_scope_id": "mrc_oak_loom"
+  },
+  "approval": {
+    "approval_id": "aba_oak_loom_lookbook",
+    "approval_reference": "merchant-approved-lookbook-oak-loom-r1",
+    "approval_status": "approved",
+    "approver_type": "merchant",
+    "approved_at": "2026-08-01T12:00:00.000Z"
+  },
+  "default_locale": "en",
+  "content_entities": {
+    "abpc_oak-loom-feature-rug": {
+      "content_id": "abpc_oak-loom-feature-rug",
+      "content_type": "visual_frame",
+      "localized_values": [
+        {"locale": "en", "field": "title", "value": "The Loom Collection", "value_type": "merchant_approved_text", "approval_id": "aba_oak_loom_lookbook"},
+        {"locale": "en", "field": "text", "value": "Approved editorial detail for Oak & Loom.", "value_type": "merchant_approved_text", "approval_id": "aba_oak_loom_lookbook"},
+        {"locale": "en", "field": "media_ratio", "value": "portrait", "value_type": "merchant_approved_text", "approval_id": "aba_oak_loom_lookbook"}
+      ],
+      "resource_reference_ids": ["abprs_oak-loom-lookbook-primary", "abprs_oak-loom-lookbook-mobile", "abprs_oak-loom-lookbook-product"],
+      "evidence_reference_ids": ["abpe_oak-loom-lookbook"],
+      "provenance": {"source_type": "merchant_approved", "approval_id": "aba_oak_loom_lookbook", "evidence_reference_ids": ["abpe_oak-loom-lookbook"]},
+      "accessibility": {"decorative_media": false, "localized": [{"locale": "en", "alt_text": "Approved Oak & Loom woven-rug editorial image.", "accessible_label": "The Loom Collection"}], "transcript_resource_id": null}
+    },
+    "abpc_oak-loom-care-frame": {
+      "content_id": "abpc_oak-loom-care-frame",
+      "content_type": "visual_frame",
+      "localized_values": [
+        {"locale": "en", "field": "title", "value": "Care and longevity", "value_type": "merchant_approved_text", "approval_id": "aba_oak_loom_lookbook"},
+        {"locale": "en", "field": "media_ratio", "value": "landscape", "value_type": "merchant_approved_text", "approval_id": "aba_oak_loom_lookbook"}
+      ],
+      "resource_reference_ids": ["abprs_oak-loom-lookbook-care-image", "abprs_oak-loom-lookbook-care-collection"],
+      "evidence_reference_ids": ["abpe_oak-loom-lookbook"],
+      "provenance": {"source_type": "merchant_approved", "approval_id": "aba_oak_loom_lookbook", "evidence_reference_ids": ["abpe_oak-loom-lookbook"]},
+      "accessibility": {"decorative_media": false, "localized": [{"locale": "en", "alt_text": "Approved Oak & Loom care editorial image.", "accessible_label": "Care and longevity"}], "transcript_resource_id": null}
+    }
+  },
+  "resource_references": {
+    "abprs_oak-loom-lookbook-primary": {"resource_id": "abprs_oak-loom-lookbook-primary", "resource_type": "project_image", "reference_role": "primary_media", "source_type": "project_asset", "source_reference": "asset_oak_loom_loom_primary", "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111", "approval_id": "aba_oak_loom_lookbook", "checksum_sha256": "1111111111111111111111111111111111111111111111111111111111111111"},
+    "abprs_oak-loom-lookbook-mobile": {"resource_id": "abprs_oak-loom-lookbook-mobile", "resource_type": "project_image", "reference_role": "mobile_media", "source_type": "project_asset", "source_reference": "asset_oak_loom_loom_mobile", "approved_revision": "2222222222222222222222222222222222222222222222222222222222222222", "approval_id": "aba_oak_loom_lookbook", "checksum_sha256": "2222222222222222222222222222222222222222222222222222222222222222"},
+    "abprs_oak-loom-lookbook-product": {"resource_id": "abprs_oak-loom-lookbook-product", "resource_type": "shopify_product", "reference_role": "destination", "source_type": "shopify", "source_reference": "product_oak_loom_loom", "approved_revision": "3333333333333333333333333333333333333333333333333333333333333333", "approval_id": "aba_oak_loom_lookbook", "checksum_sha256": null},
+    "abprs_oak-loom-lookbook-care-image": {"resource_id": "abprs_oak-loom-lookbook-care-image", "resource_type": "project_image", "reference_role": "primary_media", "source_type": "project_asset", "source_reference": "asset_oak_loom_care", "approved_revision": "4444444444444444444444444444444444444444444444444444444444444444", "approval_id": "aba_oak_loom_lookbook", "checksum_sha256": "4444444444444444444444444444444444444444444444444444444444444444"},
+    "abprs_oak-loom-lookbook-care-collection": {"resource_id": "abprs_oak-loom-lookbook-care-collection", "resource_type": "shopify_collection", "reference_role": "destination", "source_type": "shopify", "source_reference": "collection_oak_loom_care", "approved_revision": "5555555555555555555555555555555555555555555555555555555555555555", "approval_id": "aba_oak_loom_lookbook", "checksum_sha256": null}
+  },
+  "evidence_references": {
+    "abpe_oak-loom-lookbook": {"evidence_id": "abpe_oak-loom-lookbook", "evidence_type": "merchant_confirmed_fact", "source_type": "merchant_record", "source_reference": "merchant-lookbook-review-oak-loom-r1", "approved_revision": "6666666666666666666666666666666666666666666666666666666666666666", "approval_id": "aba_oak_loom_lookbook"}
+  },
+  "compositions": [
+    {"composition_id": "abpcp_oak-loom-lookbook-home", "page_role": "homepage", "section_role": "editorial_lookbook", "order": 1, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "supporting", "density": "balanced"}, "block_placements": [
+      {"placement_id": "abpl_oak-loom-lookbook-feature", "content_entity_id": "abpc_oak-loom-feature-rug", "semantic_block_role": "lookbook_frame", "order": 1, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "primary", "density": "balanced"}},
+      {"placement_id": "abpl_oak-loom-lookbook-care", "content_entity_id": "abpc_oak-loom-care-frame", "semantic_block_role": "lookbook_frame", "order": 2, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "supporting", "density": "balanced"}}
+    ]}
+  ],
+  "metadata": {"immutable": true, "source": "merchant_approved", "migration": {"status": "native", "source_revision_id": null, "migration_version": null}}
+}

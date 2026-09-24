@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "items": [
+    {"id":"luxury","name":"Luxury","typography":"luxury_serif","spacing":"luxury","wording":"restrained_precise","cta_tone":"inviting_not_pushy","animation":"luxury","imagery":"luxury","section_selection_bias":["editorial-hero","craftsmanship","materials","founder-story"]},
+    {"id":"confident","name":"Confident","typography":"modern_sans","spacing":"comfortable","wording":"direct_clear","cta_tone":"decisive","animation":"minimal","imagery":"studio","section_selection_bias":["featured-collection","product-carousel","product-highlights","faq"]},
+    {"id":"warm","name":"Warm","typography":"editorial_sans","spacing":"editorial","wording":"human_considered","cta_tone":"welcoming","animation":"luxury","imagery":"lifestyle","section_selection_bias":["story-banner","founder-story","team","newsletter"]},
+    {"id":"minimal","name":"Minimal","typography":"minimal_sans","spacing":"comfortable","wording":"brief_essential","cta_tone":"quiet_clear","animation":"minimal","imagery":"product_first","section_selection_bias":["full-screen-hero","featured-collection","collection-list","rich-text"]},
+    {"id":"friendly","name":"Friendly","typography":"playful_sans","spacing":"comfortable","wording":"plain_warm","cta_tone":"encouraging","animation":"playful","imagery":"lifestyle","section_selection_bias":["icon-row","testimonials","featured-categories","newsletter"]},
+    {"id":"playful","name":"Playful","typography":"playful_sans","spacing":"comfortable","wording":"bright_plain","cta_tone":"encouraging","animation":"playful","imagery":"lifestyle","section_selection_bias":["lookbook","promotion-cards","social-gallery","newsletter"]},
+    {"id":"bold","name":"Bold","typography":"modern_sans","spacing":"compact","wording":"direct_active","cta_tone":"decisive","animation":"expressive","imagery":"outdoor","section_selection_bias":["full-screen-hero","product-carousel","comparison-table","countdown-timer"]},
+    {"id":"technical","name":"Technical","typography":"technical_sans","spacing":"compact","wording":"specific_plain","cta_tone":"task_oriented","animation":"technical","imagery":"technical","section_selection_bias":["product-comparison","product-highlights","faq","collection-tabs"]},
+    {"id":"sophisticated","name":"Sophisticated","typography":"luxury_serif","spacing":"editorial","wording":"measured_refined","cta_tone":"inviting","animation":"luxury","imagery":"editorial","section_selection_bias":["editorial-hero","brand-manifesto","quote-banner","craftsmanship"]},
+    {"id":"traditional","name":"Traditional","typography":"luxury_serif","spacing":"editorial","wording":"grounded_precise","cta_tone":"welcoming","animation":"minimal","imagery":"artisan","section_selection_bias":["brand-timeline","manufacturing-process","materials","awards-certifications"]},
+    {"id":"modern","name":"Modern","typography":"modern_sans","spacing":"comfortable","wording":"clear_current","cta_tone":"clear","animation":"minimal","imagery":"studio","section_selection_bias":["split-hero","editorial-grid","featured-categories","featured-blog"]}
+  ]
+}

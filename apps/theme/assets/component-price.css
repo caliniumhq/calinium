@@ -1,0 +1,39 @@
+/* Reusable monetary-price component. */
+.co-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--co-space-1) var(--co-space-2);
+  color: var(--co-color-text);
+  font-size: var(--co-font-size-body);
+  font-weight: 600;
+  line-height: var(--co-line-height-heading);
+}
+
+.co-price--on-sale .co-price__current {
+  color: var(--co-color-accent);
+}
+
+.co-price__compare {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+  font-weight: var(--co-font-body-weight);
+}
+
+.co-price__badge {
+  padding: var(--co-space-1) var(--co-space-2);
+  border-radius: var(--co-radius-card);
+  background-color: var(--co-color-surface);
+  color: var(--co-color-accent);
+  font-size: var(--co-font-size-small);
+  font-weight: 600;
+  line-height: var(--co-line-height-heading);
+}
+
+.co-price__unit {
+  flex-basis: 100%;
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+  font-weight: var(--co-font-body-weight);
+  line-height: var(--co-line-height-body);
+}

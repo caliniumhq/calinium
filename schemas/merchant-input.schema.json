@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/merchant-input.schema.json",
+  "title": "Calinium Creative Director merchant input",
+  "description": "Facts and preferences a merchant is qualified to provide. This contract deliberately excludes implementation choices.",
+  "type": "object",
+  "required": ["version", "businessName", "businessDescription", "productsOrServices", "targetAudience", "primaryGoal", "countries", "existingStoreUrl", "existingBrand", "preferences"],
+  "properties": {
+    "version": {"type": "string", "const": "1.0"},
+    "businessName": {"type": ["string", "null"]},
+    "businessDescription": {"type": ["string", "null"]},
+    "productsOrServices": {"type": "array", "items": {"type": "string", "minLength": 1}, "maxItems": 20},
+    "targetAudience": {"type": ["string", "null"]},
+    "primaryGoal": {"type": ["string", "null"]},
+    "countries": {"type": "array", "items": {"type": "string", "minLength": 2}, "maxItems": 30},
+    "existingStoreUrl": {"type": ["string", "null"]},
+    "existingBrand": {
+      "type": "object",
+      "required": ["hasLogo", "brandColors", "inspirations", "assets"],
+      "properties": {
+        "hasLogo": {"type": "boolean"},
+        "brandColors": {"type": "array", "items": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}, "maxItems": 8},
+        "inspirations": {"type": "array", "items": {"type": "string", "minLength": 1}, "maxItems": 12},
+        "assets": {"type": "array", "items": {"type": "string", "minLength": 1}, "maxItems": 30}
+      },
+      "additionalProperties": false
+    },
+    "preferences": {
+      "type": "object",
+      "required": ["desiredFeeling", "creativeFreedom", "brandPersonality"],
+      "properties": {
+        "desiredFeeling": {"type": "array", "items": {"type": "string", "minLength": 1}, "maxItems": 8},
+        "creativeFreedom": {"type": "string", "enum": ["low", "medium", "high", "you_decide"]},
+        "brandPersonality": {"type": "array", "items": {"type": "string", "minLength": 1}, "maxItems": 4}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

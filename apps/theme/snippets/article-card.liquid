@@ -1,0 +1,72 @@
+{% liquid
+  assign article_card_article = article
+  assign article_card_show_image = true
+  assign article_card_show_excerpt = true
+  assign article_card_show_author = false
+  assign article_card_show_date = true
+  assign article_card_show_tags = false
+  assign article_card_image_ratio = image_ratio | default: 'landscape'
+  assign article_card_image_loading = image_loading | default: 'lazy'
+  assign article_card_image_sizes = image_sizes | default: '(min-width: 48rem) 33vw, 100vw'
+  assign article_card_image_widths = image_widths | default: '165, 360, 535, 750, 1000'
+  assign article_card_classes = 'co-article-card'
+
+  if show_image == false
+    assign article_card_show_image = false
+  endif
+
+  if show_excerpt == false
+    assign article_card_show_excerpt = false
+  endif
+
+  if show_author
+    assign article_card_show_author = true
+  endif
+
+  if show_date == false
+    assign article_card_show_date = false
+  endif
+
+  if show_tags
+    assign article_card_show_tags = true
+  endif
+
+  if class != blank
+    assign article_card_classes = article_card_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if article_card_article != blank %}
+  <article class="{{ article_card_classes | escape }}">
+    {% if article_card_show_image and article_card_article.image != blank %}
+      <div class="co-article-card__media">
+        {% render 'responsive-image',
+          image: article_card_article.image,
+          loading: article_card_image_loading,
+          sizes: article_card_image_sizes,
+          widths: article_card_image_widths,
+          ratio: article_card_image_ratio,
+          class: 'co-article-card__image'
+        %}
+      </div>
+    {% endif %}
+
+    <div class="co-article-card__content">
+      {% render 'article-meta',
+        article: article_card_article,
+        show_author: article_card_show_author,
+        show_date: article_card_show_date,
+        show_tags: article_card_show_tags,
+        context: 'card'
+      %}
+
+      <h2 class="co-article-card__title">
+        <a href="{{ article_card_article.url | escape }}">{{ article_card_article.title | escape }}</a>
+      </h2>
+
+      {% if article_card_show_excerpt and article_card_article.excerpt_or_content != blank %}
+        <p class="co-article-card__excerpt">{{ article_card_article.excerpt_or_content | strip_html | truncatewords: 30, '…' | escape }}</p>
+      {% endif %}
+    </div>
+  </article>
+{% endif %}

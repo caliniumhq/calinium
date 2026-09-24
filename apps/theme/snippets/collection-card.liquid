@@ -1,0 +1,66 @@
+{% liquid
+  assign collection_card_collection = collection
+  assign collection_card_image = image | default: collection_card_collection.featured_image
+  assign collection_card_show_product_count = false
+  assign collection_card_image_ratio = image_ratio | default: 'portrait'
+  assign collection_card_image_loading = image_loading | default: 'lazy'
+  assign collection_card_image_sizes = image_sizes | default: '(min-width: 48rem) 33vw, 100vw'
+  assign collection_card_image_widths = image_widths | default: '165, 360, 535, 750, 1000'
+  assign collection_card_classes = 'co-collection-card'
+  assign collection_card_title = title | default: collection_card_collection.title
+  assign collection_card_link_label = link_label | default: blank
+  assign collection_card_description = description | default: blank
+  assign collection_card_heading_level = heading_level | default: 'h2'
+  assign collection_card_text_position = text_position | default: 'below'
+  assign collection_card_image_alt = collection_card_image.alt | default: collection_card_collection.title
+
+  if show_product_count
+    assign collection_card_show_product_count = true
+  endif
+
+  if class != blank
+    assign collection_card_classes = collection_card_classes | append: ' ' | append: class
+  endif
+
+  assign collection_card_classes = collection_card_classes | append: ' co-collection-card--text-' | append: collection_card_text_position
+%}
+
+{% if collection_card_collection != blank %}
+  <article class="{{ collection_card_classes | escape }}">
+    <a class="co-collection-card__link" href="{{ collection_card_collection.url | escape }}">
+      {% if collection_card_image != blank %}
+        <div class="co-collection-card__media">
+          {% render 'responsive-image',
+            image: collection_card_image,
+            alt: collection_card_image_alt,
+            loading: collection_card_image_loading,
+            sizes: collection_card_image_sizes,
+            widths: collection_card_image_widths,
+            ratio: collection_card_image_ratio,
+            class: 'co-collection-card__image'
+          %}
+        </div>
+      {% endif %}
+
+      <div class="co-collection-card__content">
+        {% if collection_card_heading_level == 'h3' %}
+          <h3 class="co-collection-card__title">{{ collection_card_title | escape }}</h3>
+        {% else %}
+          <h2 class="co-collection-card__title">{{ collection_card_title | escape }}</h2>
+        {% endif %}
+
+        {% if collection_card_description != blank %}
+          <p class="co-collection-card__description">{{ collection_card_description | strip_html | escape }}</p>
+        {% endif %}
+
+        {% if collection_card_show_product_count %}
+          <p class="co-collection-card__count">{{ 'collections_list.product_count' | t: count: collection_card_collection.products_count }}</p>
+        {% endif %}
+
+        {% if collection_card_link_label != blank %}
+          <span class="co-collection-card__link-label">{{ collection_card_link_label | escape }}</span>
+        {% endif %}
+      </div>
+    </a>
+  </article>
+{% endif %}

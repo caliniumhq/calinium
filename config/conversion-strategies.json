@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "items": [
+    {"id":"luxury","name":"Luxury","cta_density":"low","urgency":"avoid_default_urgency","scarcity":"merchant_verified_only","trust":"materials_and_service_context","reviews":"selective_verified_proof","social_proof":"restrained","storytelling":"high","email_timing":"after_value_context","announcement_usage":"minimal"},
+    {"id":"story_first","name":"Story-first","cta_density":"low_to_medium","urgency":"low","scarcity":"avoid_unverified_scarcity","trust":"origin_process_and_people","reviews":"contextual","social_proof":"contextual","storytelling":"high","email_timing":"after_story_or_resource","announcement_usage":"limited"},
+    {"id":"urgency","name":"Urgency","cta_density":"medium","urgency":"time_bound_and_truthful_only","scarcity":"inventory_or_deadline_verified_only","trust":"clear_terms_and_fulfilment","reviews":"visible_verified_proof","social_proof":"supporting","storytelling":"low_to_medium","email_timing":"clear_opt_in_with_value","announcement_usage":"verified_time_sensitive_messages_only"},
+    {"id":"trust_first","name":"Trust-first","cta_density":"medium","urgency":"low","scarcity":"avoid_default_scarcity","trust":"proof_service_policies_and_facts","reviews":"visible_verified_proof","social_proof":"supporting","storytelling":"medium","email_timing":"after_trust_context","announcement_usage":"service_updates_only"},
+    {"id":"editorial","name":"Editorial","cta_density":"low","urgency":"low","scarcity":"avoid","trust":"craft_and_context","reviews":"secondary","social_proof":"secondary","storytelling":"high","email_timing":"after_editorial_value","announcement_usage":"minimal"},
+    {"id":"product_first","name":"Product-first","cta_density":"medium","urgency":"product_state_only","scarcity":"availability_verified_only","trust":"clear_price_variant_and_delivery","reviews":"visible_when_available","social_proof":"supporting","storytelling":"medium","email_timing":"after_product_discovery","announcement_usage":"functional"},
+    {"id":"education_first","name":"Education-first","cta_density":"low_to_medium","urgency":"low","scarcity":"avoid","trust":"explanations_and_verifiable_evidence","reviews":"supporting","social_proof":"supporting","storytelling":"medium_to_high","email_timing":"after_helpful_resource","announcement_usage":"educational_or_service_only"}
+  ]
+}

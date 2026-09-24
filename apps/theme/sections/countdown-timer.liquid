@@ -1,0 +1,54 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign countdown_classes = 'co-countdown co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign countdown_heading_id = 'CountdownHeading-' | append: section.id
+  assign countdown_end_datetime = section.settings.end_date | append: 'T' | append: section.settings.end_time
+  assign countdown_complete_label = section.settings.completion_message
+  if countdown_complete_label == blank
+    assign countdown_complete_label = 'sections.countdown.complete' | t
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ countdown_classes }}" aria-labelledby="{{ countdown_heading_id }}" data-co-section-behavior data-co-countdown data-end-date="{{ section.settings.end_date | escape }}" data-end-time="{{ section.settings.end_time | escape }}" data-timezone="{{ section.settings.timezone }}" data-completion="{{ section.settings.completion_behavior }}" data-invalid-message="{{ 'sections.countdown.invalid_date' | t | escape }}" {{ section.shopify_attributes }}>
+  <div class="co-countdown__inner co-page-width">
+    {% render 'section-heading', heading: section.settings.heading, description: section.settings.text, id: countdown_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size %}
+    <time class="co-countdown__time" datetime="{{ countdown_end_datetime | escape }}" data-countdown-time>
+      <span class="co-countdown__unit"><strong data-countdown-days>0</strong><span>{{ 'sections.countdown.days' | t }}</span></span>
+      <span class="co-countdown__unit"><strong data-countdown-hours>00</strong><span>{{ 'sections.countdown.hours' | t }}</span></span>
+      <span class="co-countdown__unit"><strong data-countdown-minutes>00</strong><span>{{ 'sections.countdown.minutes' | t }}</span></span>
+      <span class="co-countdown__unit"><strong data-countdown-seconds>00</strong><span>{{ 'sections.countdown.seconds' | t }}</span></span>
+    </time>
+    <p class="co-countdown__completion" data-countdown-message role="status" hidden>{{ countdown_complete_label }}</p>
+    {% if section.settings.button_label != blank and section.settings.button_link != blank %}<div class="co-countdown__action">{% render 'button', label: section.settings.button_label, url: section.settings.button_link, variant: 'primary' %}</div>{% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.countdown_timer.name",
+  "tag": "section",
+  "class": "co-section-countdown-timer",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "A date to remember" },
+    { "type": "richtext", "id": "text", "label": "t:sections.shared.settings.text.label" },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "standard", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "select", "id": "text_alignment", "label": "t:sections.shared.settings.text_alignment.label", "default": "center", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "center", "label": "t:sections.shared.options.center" }] },
+    { "type": "text", "id": "end_date", "label": "t:sections.shared.settings.end_date.label", "info": "t:sections.shared.settings.end_date.info", "placeholder": "2026-12-31" },
+    { "type": "text", "id": "end_time", "label": "t:sections.shared.settings.end_time.label", "info": "t:sections.shared.settings.end_time.info", "default": "23:59", "placeholder": "23:59" },
+    { "type": "select", "id": "timezone", "label": "t:sections.shared.settings.timezone.label", "default": "visitor", "options": [{ "value": "visitor", "label": "t:sections.shared.options.visitor_time" }, { "value": "utc", "label": "t:sections.shared.options.utc" }] },
+    { "type": "select", "id": "completion_behavior", "label": "t:sections.shared.settings.completion_behavior.label", "default": "message", "options": [{ "value": "hide", "label": "t:sections.shared.options.hide" }, { "value": "message", "label": "t:sections.shared.options.show_message" }, { "value": "zero", "label": "t:sections.shared.options.remain_zero" }] },
+    { "type": "text", "id": "completion_message", "label": "t:sections.shared.settings.completion_message.label" },
+    { "type": "text", "id": "button_label", "label": "t:sections.shared.settings.button_label.label" },
+    { "type": "url", "id": "button_link", "label": "t:sections.shared.settings.button_link.label" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [{ "name": "t:sections.countdown_timer.preset" }]
+}
+{% endschema %}

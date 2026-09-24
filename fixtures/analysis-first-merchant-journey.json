@@ -1,0 +1,47 @@
+{
+  "fixture_revision": "analysis-first-merchant-journey-fixture-v1",
+  "project_binding": {
+    "project_id": "project-f1-a-controlled",
+    "organization_id": "organization-f1-a-controlled",
+    "shop": "f1-a-controlled.myshopify.com"
+  },
+  "merchant_context": {
+    "project_id": "project-f1-a-controlled",
+    "store_id": "store-f1-a-controlled",
+    "merchant_id": "merchant-f1-a-controlled"
+  },
+  "session_revision": "creative-director-session-f1-a-v1",
+  "commercial": {
+    "status": "known",
+    "paid_generation_required": true,
+    "revision": "commercial-boundary-f1-a-v1"
+  },
+  "build_eligibility": {
+    "analysis_complete": true,
+    "direction_resolved": true,
+    "architecture_ready": true,
+    "mandatory_fact_resolved": true,
+    "project_shop_authority_valid": true,
+    "resource_content_eligible": true,
+    "commercial_boundary_known": true,
+    "no_conflicting_active_flow": true
+  },
+  "cases": [
+    {"id": "a_confident_visual_story_led", "source_case": "image_led_editorial_store", "inference_only": true, "session_stage": "offer", "expected_stage": "analyzing_store", "expected_briefing": "recommendation_ready", "expected_direction": "visual_story_led", "expected_primary": "build_preview"},
+    {"id": "b_confident_direct_efficient", "source_case": "commerce_dense_store", "inference_only": true, "session_stage": "offer", "expected_stage": "analyzing_store", "expected_briefing": "recommendation_ready", "expected_direction": "direct_efficient", "expected_primary": "build_preview"},
+    {"id": "c_material_ambiguity", "source_case": "ambiguous_store", "session_stage": "offer", "material_question": true, "expected_stage": "analyzing_store", "expected_briefing": "direction_choice_required", "expected_primary": "choose_direction", "expected_option_count": 2},
+    {"id": "d_existing_explicit_visual", "source_case": "explicit_trusted_editorial_direction", "session_stage": "offer", "expected_stage": "analyzing_store", "expected_briefing": "accepted", "expected_direction": "visual_story_led", "expected_primary": "build_preview"},
+    {"id": "e_existing_explicit_direct", "source_case": "commerce_dense_store", "explicit_direction": "current_calinium", "session_stage": "offer", "expected_stage": "analyzing_store", "expected_briefing": "accepted", "expected_direction": "direct_efficient", "expected_primary": "build_preview"},
+    {"id": "f_visual_direction_hard_ineligible", "source_case": "ambiguous_store", "hard_ineligible_direction": "visual_story_led", "session_stage": "offer", "expected_stage": "analyzing_store", "expected_briefing": "recommendation_ready", "expected_direction": "direct_efficient", "expected_option_count": 1, "expected_primary": "build_preview"},
+    {"id": "g_store_intelligence_analyzing", "session_stage": "landing", "expected_stage": "analyzing_store", "expected_briefing": "analyzing", "expected_primary": null},
+    {"id": "h_mandatory_fact_unavailable", "session_stage": "conversation", "essential_question": "products", "expected_stage": "analyzing_store", "expected_briefing": "essential_detail_required", "expected_primary": "provide_essential_detail"},
+    {"id": "i_selection_blocked", "session_stage": "offer", "selection_blocked": true, "expected_stage": "analyzing_store", "expected_briefing": "blocked", "expected_primary": null},
+    {"id": "j_build_in_progress", "source_case": "commerce_dense_store", "session_stage": "generation", "flow_state": "generation_running", "flow_sequence": 8, "expected_stage": "building_storefront", "expected_briefing": "build_in_progress", "expected_primary": null},
+    {"id": "k_retryable_build_failure", "source_case": "commerce_dense_store", "session_stage": "generation", "flow_state": "failed_retryable", "previous_flow_state": "generation_running", "flow_sequence": 9, "failure_category": "generation_failed", "failure_retryable": true, "expected_stage": "building_storefront", "expected_briefing": "accepted", "expected_primary": "retry"},
+    {"id": "l_terminal_failure", "source_case": "commerce_dense_store", "session_stage": "generation", "flow_state": "failed_terminal", "previous_flow_state": "render_qa_running", "flow_sequence": 10, "failure_category": "d2_7_provider_configuration_failed", "failure_retryable": false, "expected_stage": "building_storefront", "expected_briefing": "accepted", "expected_primary": null},
+    {"id": "m_internal_founder_review", "source_case": "commerce_dense_store", "session_stage": "generation", "flow_state": "qa_review_required", "flow_sequence": 11, "expected_stage": "building_storefront", "expected_briefing": "build_in_progress", "expected_primary": null, "expected_headline": "Completing final checks"},
+    {"id": "n_preview_ready", "source_case": "commerce_dense_store", "session_stage": "preview", "flow_state": "preview_ready", "flow_sequence": 12, "expected_stage": "review_preview", "expected_briefing": "preview_ready", "expected_primary": "approve_design"},
+    {"id": "o_legacy_advanced_project", "session_stage": "strategy", "expected_stage": "analyzing_store", "expected_briefing": "analyzing", "expected_primary": null},
+    {"id": "p_completed_theme_action", "source_case": "commerce_dense_store", "session_stage": "finish", "flow_state": "completed", "flow_sequence": 14, "expected_stage": "review_preview", "expected_briefing": "preview_ready", "expected_primary": null, "expected_headline": "Your approved action is complete"}
+  ]
+}

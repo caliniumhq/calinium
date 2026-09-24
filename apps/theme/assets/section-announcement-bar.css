@@ -1,0 +1,74 @@
+/* Header-group announcement messages; readable before any JavaScript loads. */
+.co-announcement-bar {
+  color: var(--co-color-text);
+  background: var(--co-color-background);
+  border-block-end: var(--co-border-width) solid var(--co-color-border);
+}
+
+.co-announcement-bar__inner {
+  padding: var(--co-space-2) var(--co-page-gutter);
+}
+
+.co-announcement-bar__inner.co-page-width {
+  padding-inline: 0;
+}
+
+.co-announcement-bar__messages {
+  display: grid;
+  gap: var(--co-space-1);
+  inline-size: 100%;
+}
+
+.co-announcement-bar__message {
+  min-block-size: 1.5rem;
+  inline-size: 100%;
+}
+
+.co-announcement-bar__link,
+.co-announcement-bar__text {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: none;
+  margin: 0;
+  color: inherit;
+  font-size: var(--co-font-size-small);
+  line-height: var(--co-line-height-body);
+  text-align: inherit;
+}
+
+.co-announcement-bar__link {
+  text-decoration-thickness: var(--co-border-width);
+  text-underline-offset: 0.18em;
+}
+
+.co-announcement-bar[data-announcement-alignment='center'] .co-announcement-bar__messages {
+  text-align: center;
+}
+
+.co-announcement-bar[data-announcement-alignment='left'] .co-announcement-bar__messages {
+  text-align: start;
+}
+
+.co-announcement-bar[data-announcement-alignment='right'] .co-announcement-bar__messages {
+  text-align: end;
+}
+
+.co-announcement-bar[data-announcement-enhanced='true'] .co-announcement-bar__messages {
+  display: block;
+}
+
+.co-announcement-bar[data-announcement-enhanced='true'] .co-announcement-bar__message[hidden] {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .co-announcement-bar--desktop-hidden {
+    display: none;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .co-announcement-bar--mobile-hidden {
+    display: none;
+  }
+}

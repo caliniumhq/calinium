@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "businessName": "Morrow Skin",
+  "businessDescription": "Morrow Skin offers a concise skincare routine built around clear ingredient information and gentle daily use.",
+  "productsOrServices": ["skincare serums", "daily moisturizers"],
+  "targetAudience": "people who want a simple routine and reassurance about ingredients",
+  "primaryGoal": "build trust through ingredient education and improve product discovery",
+  "countries": ["Canada", "United States"],
+  "existingStoreUrl": null,
+  "existingBrand": {
+    "hasLogo": false,
+    "brandColors": [],
+    "inspirations": ["Clear ingredient education", "Calm product presentation"],
+    "assets": ["product photography", "ingredient photography"]
+  },
+  "preferences": {
+    "desiredFeeling": ["clean", "reassuring", "calm"],
+    "creativeFreedom": "high",
+    "brandPersonality": ["warm", "modern"]
+  }
+}

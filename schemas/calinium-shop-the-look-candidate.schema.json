@@ -1,0 +1,10 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://calinium.local/schemas/calinium-shop-the-look-candidate.schema.json",
+  "title":"Calinium Shop the Look Candidate Plan",
+  "description":"Mutable review state for approved scene media and explicit merchant-approved product markers.",
+  "type":"object","additionalProperties":false,
+  "required":["version","status","candidate_version","scene_image_asset_id","mobile_image_asset_id","image_alt_text","decorative_media","products","warnings","updated_at"],
+  "properties":{"version":{"type":"integer","const":1},"status":{"type":"string","enum":["not_required","draft","approved"]},"candidate_version":{"type":"integer","minimum":0},"scene_image_asset_id":{"type":["string","null"],"minLength":1,"maxLength":240},"mobile_image_asset_id":{"type":["string","null"],"minLength":1,"maxLength":240},"image_alt_text":{"type":["string","null"],"maxLength":500},"decorative_media":{"type":"boolean"},"products":{"type":"array","maxItems":6,"items":{"$ref":"#/$defs/product"}},"warnings":{"type":"array","items":{"type":"string","minLength":1,"maxLength":240}},"updated_at":{"type":"string","minLength":1}},
+  "$defs":{"product":{"type":"object","additionalProperties":false,"required":["content_id","placement_id","product_resource_id","x_percent","y_percent","order"],"properties":{"content_id":{"type":"string","pattern":"^abpc_[a-z0-9][a-z0-9_-]*$"},"placement_id":{"type":"string","pattern":"^abpl_[a-z0-9][a-z0-9_-]*$"},"product_resource_id":{"type":"string","minLength":1,"maxLength":240},"x_percent":{"type":"integer","minimum":0,"maximum":100},"y_percent":{"type":"integer","minimum":0,"maximum":100},"order":{"type":"integer","minimum":1}}}}
+}

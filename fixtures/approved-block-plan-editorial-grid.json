@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "abp_oak-loom-editorial",
+  "revision_id": "abpr_oak-loom-editorial-r1",
+  "parent_revision_id": null,
+  "created_at": "2026-07-31T10:00:00.000Z",
+  "store_scope": {
+    "organization_id": "org_oak-loom",
+    "project_id": "prj_oak-loom-theme",
+    "merchant_scope_id": "mrc_oak-loom"
+  },
+  "approval": {
+    "approval_id": "aba_oak-loom-editorial-r1",
+    "approval_reference": "Oak & Loom editorial resources approved for generation",
+    "approval_status": "approved",
+    "approver_type": "merchant",
+    "approved_at": "2026-07-31T10:05:00.000Z"
+  },
+  "default_locale": "en",
+  "content_entities": {
+    "abpc_rug-care-guides": {
+      "content_id": "abpc_rug-care-guides",
+      "content_type": "editorial_story",
+      "localized_values": [
+        {
+          "locale": "en",
+          "field": "title",
+          "value": "Rug care guides",
+          "value_type": "merchant_approved_text",
+          "approval_id": "aba_oak-loom-editorial-r1"
+        },
+        {
+          "locale": "en",
+          "field": "summary",
+          "value": "Care guidance approved by Oak & Loom for its natural-fiber rugs.",
+          "value_type": "merchant_approved_text",
+          "approval_id": "aba_oak-loom-editorial-r1"
+        }
+      ],
+      "resource_reference_ids": ["abprs_rug-care-collection", "abprs_rug-care-image"],
+      "evidence_reference_ids": ["abpe_oak-loom-editorial-approval"],
+      "provenance": {
+        "source_type": "merchant_approved",
+        "approval_id": "aba_oak-loom-editorial-r1",
+        "evidence_reference_ids": ["abpe_oak-loom-editorial-approval"]
+      },
+      "accessibility": {
+        "decorative_media": false,
+        "localized": [
+          {
+            "locale": "en",
+            "alt_text": "A handwoven natural-fiber rug in an Oak & Loom interior setting.",
+            "accessible_label": "Read Oak & Loom rug care guides"
+          }
+        ],
+        "transcript_resource_id": null
+      }
+    },
+    "abpc_natural-fiber-journal": {
+      "content_id": "abpc_natural-fiber-journal",
+      "content_type": "editorial_story",
+      "localized_values": [
+        {
+          "locale": "en",
+          "field": "title",
+          "value": "Natural-fiber journal",
+          "value_type": "merchant_approved_text",
+          "approval_id": "aba_oak-loom-editorial-r1"
+        }
+      ],
+      "resource_reference_ids": ["abprs_natural-fiber-article"],
+      "evidence_reference_ids": ["abpe_oak-loom-editorial-approval"],
+      "provenance": {
+        "source_type": "merchant_approved",
+        "approval_id": "aba_oak-loom-editorial-r1",
+        "evidence_reference_ids": ["abpe_oak-loom-editorial-approval"]
+      }
+    }
+  },
+  "resource_references": {
+    "abprs_rug-care-collection": {
+      "resource_id": "abprs_rug-care-collection",
+      "resource_type": "shopify_collection",
+      "source_type": "shopify",
+      "source_reference": "shr_oak-loom-rug-care-collection",
+      "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111",
+      "approval_id": "aba_oak-loom-editorial-r1",
+      "checksum_sha256": null
+    },
+    "abprs_rug-care-image": {
+      "resource_id": "abprs_rug-care-image",
+      "resource_type": "project_image",
+      "source_type": "project_asset",
+      "source_reference": "ast_oak-loom-rug-care-image",
+      "approved_revision": "2222222222222222222222222222222222222222222222222222222222222222",
+      "approval_id": "aba_oak-loom-editorial-r1",
+      "checksum_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "abprs_natural-fiber-article": {
+      "resource_id": "abprs_natural-fiber-article",
+      "resource_type": "shopify_article",
+      "source_type": "shopify",
+      "source_reference": "shr_oak-loom-natural-fiber-journal",
+      "approved_revision": "4444444444444444444444444444444444444444444444444444444444444444",
+      "approval_id": "aba_oak-loom-editorial-r1",
+      "checksum_sha256": null
+    }
+  },
+  "evidence_references": {
+    "abpe_oak-loom-editorial-approval": {
+      "evidence_id": "abpe_oak-loom-editorial-approval",
+      "evidence_type": "merchant_confirmed_fact",
+      "source_type": "merchant_record",
+      "source_reference": "merchant-editorial-review-oak-loom-r1",
+      "approved_revision": "5555555555555555555555555555555555555555555555555555555555555555",
+      "approval_id": "aba_oak-loom-editorial-r1"
+    }
+  },
+  "compositions": [
+    {
+      "composition_id": "abpcp_homepage-editorial-discovery",
+      "page_role": "homepage",
+      "section_role": "editorial_discovery_grid",
+      "order": 1,
+      "visibility": {
+        "mode": "always",
+        "conditions": []
+      },
+      "presentation_intent": {
+        "emphasis": "supporting",
+        "media_priority": "supporting",
+        "density": "balanced"
+      },
+      "block_placements": [
+        {
+          "placement_id": "abpl_homepage-rug-care-guides",
+          "content_entity_id": "abpc_rug-care-guides",
+          "semantic_block_role": "editorial_story",
+          "order": 1,
+          "visibility": {
+            "mode": "always",
+            "conditions": []
+          },
+          "presentation_intent": {
+            "emphasis": "primary",
+            "media_priority": "supporting",
+            "density": "balanced"
+          }
+        },
+        {
+          "placement_id": "abpl_homepage-natural-fiber-journal",
+          "content_entity_id": "abpc_natural-fiber-journal",
+          "semantic_block_role": "editorial_story",
+          "order": 2,
+          "visibility": {
+            "mode": "conditional",
+            "conditions": [
+              {
+                "scope": "locale",
+                "operator": "equals",
+                "values": ["en"]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "immutable": true,
+    "source": "merchant_approved",
+    "migration": {
+      "status": "native",
+      "source_revision_id": null,
+      "migration_version": null
+    }
+  }
+}

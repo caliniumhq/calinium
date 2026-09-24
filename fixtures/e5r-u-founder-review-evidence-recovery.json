@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "fixture_revision": "e5r-u-founder-review-evidence-recovery-v1",
+  "known_incident": {
+    "root_classification": "REVIEW_ARTIFACT_MALFORMED_AT_CREATION",
+    "original_byte_length": 2733,
+    "valid_json_root_length": 2732,
+    "trailing_byte_hex": "6e",
+    "original_storage_sha256": "b52cbf94cc2a381739f485b3fe4d8d639b0b8b0fdc33454d1d9cab2e6ee38602",
+    "authoritative_review_checksum": "3a09b7f10e5176de7124492a4ae4631a6e7a34d87b069430f33921c4ac690295",
+    "valid_prefix_matches_recorded_checksum": true
+  },
+  "synthetic_case": {
+    "trailing_text": "n",
+    "review": {
+      "schema_version": "1.0",
+      "contract_version": "merchant-flow-founder-qa-review-v1",
+      "review_id": "design-review-e5ru-synthetic",
+      "reviewer": "human",
+      "reviewer_role": "human_reviewer",
+      "decision": "accepted",
+      "finding_decisions": [
+        {
+          "finding_id": "design-finding-e5ru-synthetic",
+          "decision": "accepted",
+          "notes": "Controlled-beta limitation retained."
+        }
+      ],
+      "safety": {
+        "automatic_repair_allowed": false
+      }
+    }
+  }
+}

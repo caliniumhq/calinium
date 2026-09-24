@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "1.0.0",
+  "policy_id": "calinium_storefront_visual_evaluation",
+  "policy_revision": "storefront-visual-evaluation-policy-v1",
+  "evaluator_version": "storefront-visual-evaluator-v1",
+  "observation_revision": "storefront-objective-observation-v1",
+  "thresholds": {
+    "root_horizontal_overflow_px": 1,
+    "element_boundary_tolerance_px": 1,
+    "clipping_tolerance_px": 1,
+    "collision_overlap_ratio": 0.35,
+    "touch_target_minimum_css_px": 24,
+    "maximum_candidates_per_rule": 25
+  },
+  "severity_order": ["blocker", "high", "medium", "low", "info"],
+  "rules": [
+    {"id": "root_horizontal_overflow", "version": "1.0.0", "category": "root_overflow", "severity": "high"},
+    {"id": "element_outside_viewport", "version": "1.0.0", "category": "element_overflow", "severity": "medium"},
+    {"id": "important_content_clipped", "version": "1.0.0", "category": "clipping", "severity": "medium"},
+    {"id": "important_elements_collide", "version": "1.0.0", "category": "collision", "severity": "medium"},
+    {"id": "critical_media_broken", "version": "1.0.0", "category": "media", "severity": "high"},
+    {"id": "touch_target_size_risk", "version": "1.0.0", "category": "target_size", "severity": "medium"},
+    {"id": "major_structure_exceeds_viewport", "version": "1.0.0", "category": "viewport_containment", "severity": "high"},
+    {"id": "important_landmark_missing", "version": "1.0.0", "category": "landmark", "severity": "blocker"},
+    {"id": "product_purchase_interaction_missing", "version": "1.0.0", "category": "purchase_interaction", "severity": "blocker"},
+    {"id": "navigation_interaction_failed", "version": "1.0.0", "category": "navigation_interaction", "severity": "high"},
+    {"id": "architecture_presenter_mismatch", "version": "1.0.0", "category": "architecture_consistency", "severity": "blocker"},
+    {"id": "fatal_runtime_or_resource_issue", "version": "1.0.0", "category": "runtime", "severity": "blocker"},
+    {"id": "detailed_observation_unavailable", "version": "1.0.0", "category": "evidence_completeness", "severity": "info"}
+  ],
+  "diagnostic_allowlist": [
+    {"code": "shopify_origin_trial_cors", "contains_any": ["origin_trials-", "blocked by CORS policy"]},
+    {"code": "shop_pay_preview_frame", "contains_any": ["shop.app/pay/hop", "Refused to frame 'https://shop.app/'", "chrome-error://chromewebdata/"]},
+    {"code": "sandboxed_service_worker", "contains_any": ["Service worker is disabled because the context is sandboxed"]},
+    {"code": "shopify_analytics_preview", "contains_any": ["web-pixels@", "/api/collect", "monorail", "error-analytics-sessions"]}
+  ]
+}

@@ -1,0 +1,37 @@
+/* Clear recovery paths for an unfound route. */
+.co-main-404 {
+  display: grid;
+  min-block-size: min(65vh, 42rem);
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-main-404__inner {
+  display: grid;
+  gap: var(--co-space-5);
+  align-content: center;
+  inline-size: min(100% - (var(--co-page-gutter) * 2), var(--co-content-width));
+  margin-inline: auto;
+}
+
+.co-main-404__search,
+.co-main-404__actions {
+  display: grid;
+  gap: var(--co-space-3);
+}
+
+.co-main-404__actions {
+  justify-items: start;
+}
+
+@media (min-width: 36rem) {
+  .co-main-404__search {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .co-main-404__actions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

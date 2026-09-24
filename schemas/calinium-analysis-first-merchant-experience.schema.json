@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-analysis-first-merchant-experience.schema.json",
+  "title": "Calinium analysis-first merchant-experience capability",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "capability_revision",
+    "analysis_first_merchant_experience_enabled",
+    "activation_scope",
+    "visible_stages",
+    "advanced_mode_available",
+    "chat_is_default",
+    "maximum_material_questions",
+    "automatic_generation_allowed",
+    "automatic_paid_action_allowed",
+    "automatic_theme_action_allowed",
+    "automatic_repair_allowed"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "capability_revision": {"const": "analysis-first-merchant-experience-capability-v1"},
+    "analysis_first_merchant_experience_enabled": {"const": false},
+    "activation_scope": {"const": "disabled"},
+    "visible_stages": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true, "items": {"enum": ["analyzing_store", "building_storefront", "review_preview"]}},
+    "advanced_mode_available": {"const": true},
+    "chat_is_default": {"const": false},
+    "maximum_material_questions": {"const": 1},
+    "automatic_generation_allowed": {"const": false},
+    "automatic_paid_action_allowed": {"const": false},
+    "automatic_theme_action_allowed": {"const": false},
+    "automatic_repair_allowed": {"const": false}
+  },
+  "additionalProperties": false
+}

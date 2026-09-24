@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "fixture_id": "preset-atelier-leather-travel-bags",
+      "compiler_fixture": "ai/compiler/fixtures/valid/luxury-leather-bags.json",
+      "merchant_fixture": "fixtures/leather-travel-bags.json",
+      "content_inventory": {"approved": ["collection_resource", "craft_evidence", "hero_media", "product_collection"], "limited": false, "business_model": "direct_to_consumer"},
+      "expected_preset": "atelier",
+      "expected_alternatives": ["maison", "essential"],
+      "expected_recipe": "luxury_story",
+      "expected_page_blueprints": ["homepage", "about", "product", "collection", "article"],
+      "expected_section_order": ["full-screen-hero", "craftsmanship", "featured-collection", "newsletter"],
+      "expected_omissions": ["founder-story", "testimonials"]
+    },
+    {
+      "fixture_id": "preset-maison-luxury-accessories",
+      "compiler_fixture": "ai/compiler/fixtures/valid/jewelry.json",
+      "merchant_fixture": "fixtures/luxury-accessories.json",
+      "content_inventory": {"approved": ["collection_resource", "premium_hero_media"], "limited": false, "business_model": "direct_to_consumer"},
+      "expected_preset": "maison",
+      "expected_alternatives": ["atelier", "essential"],
+      "expected_recipe": "luxury_story",
+      "expected_page_blueprints": ["homepage", "product", "collection"],
+      "expected_section_order": ["full-screen-hero", "featured-collection", "newsletter"],
+      "expected_omissions": ["lookbook", "testimonials", "founder-story", "craftsmanship"]
+    },
+    {
+      "fixture_id": "preset-gallery-handmade-rugs",
+      "compiler_fixture": "ai/compiler/fixtures/valid/furniture.json",
+      "merchant_fixture": "fixtures/handmade-rugs.json",
+      "content_inventory": {"approved": ["collection_imagery", "editorial_destinations", "lookbook_frames"], "limited": false, "business_model": "direct_to_consumer"},
+      "expected_preset": "gallery",
+      "expected_alternatives": ["atelier", "essential"],
+      "expected_recipe": "editorial_discovery",
+      "expected_page_blueprints": ["homepage", "collection", "article", "about"],
+      "expected_section_order": ["full-screen-hero", "lookbook", "featured-collection", "editorial-grid", "newsletter"],
+      "expected_omissions": ["story-banner"]
+    },
+    {
+      "fixture_id": "preset-ritual-skincare",
+      "compiler_fixture": "ai/compiler/fixtures/valid/beauty.json",
+      "merchant_fixture": "fixtures/skincare-brand.json",
+      "content_inventory": {"approved": ["ingredient_material_facts", "product_collection"], "limited": false, "business_model": "direct_to_consumer"},
+      "expected_preset": "ritual",
+      "expected_alternatives": ["essential"],
+      "expected_recipe": "beauty_discovery",
+      "expected_page_blueprints": ["homepage", "product", "collection", "article"],
+      "expected_section_order": ["full-screen-hero", "materials", "featured-collection", "faq", "newsletter"],
+      "expected_omissions": ["testimonials"]
+    },
+    {
+      "fixture_id": "preset-essential-minimal-content",
+      "compiler_fixture": "ai/compiler/fixtures/valid/electronics.json",
+      "merchant_fixture": "fixtures/minimal-catalog.json",
+      "content_inventory": {"approved": ["product_collection"], "limited": true, "business_model": "direct_to_consumer"},
+      "expected_preset": "essential",
+      "expected_alternatives": ["signal"],
+      "expected_recipe": "beauty_discovery",
+      "expected_page_blueprints": ["homepage", "product", "collection", "contact"],
+      "expected_section_order": ["full-screen-hero", "featured-collection", "newsletter"],
+      "expected_omissions": ["founder-story", "lookbook", "testimonials", "craftsmanship", "manufacturing-process", "materials", "team", "faq"]
+    },
+    {
+      "fixture_id": "preset-signal-digital-product",
+      "compiler_fixture": "ai/compiler/fixtures/valid/digital-products.json",
+      "merchant_fixture": "fixtures/digital-product.json",
+      "content_inventory": {"approved": ["approved_product_name", "approved_value_proposition", "primary_cta_destination", "product_interface_media", "verified_features"], "limited": false, "business_model": "software_subscription"},
+      "expected_preset": "signal",
+      "expected_alternatives": ["essential"],
+      "expected_recipe": "technology_clarity",
+      "expected_page_blueprints": ["homepage", "product", "landing_page", "contact"],
+      "expected_section_order": ["full-screen-hero", "product-highlights", "faq", "newsletter"],
+      "expected_omissions": ["product-carousel", "product-comparison", "testimonials"]
+    }
+  ]
+}

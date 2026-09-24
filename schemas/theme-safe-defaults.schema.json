@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/theme-safe-defaults.schema.json",
+  "allOf": [{"$ref": "theme-mapping.schema.json#/$defs/metadata"}],
+  "required": ["fields"],
+  "properties": {
+    "fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["field_id", "scope", "section_id", "block_type", "classification", "value", "reason", "source"],
+        "properties": {
+          "field_id": {"type": "string", "minLength": 3},
+          "scope": {"type": "string", "enum": ["global", "section", "block"]},
+          "section_id": {"type": ["string", "null"]},
+          "block_type": {"type": ["string", "null"]},
+          "classification": {"type": "string", "enum": ["safe_automatic_default", "merchant_review_required", "merchant_only", "prohibited_automatic_value"]},
+          "value": {},
+          "reason": {"type": "string", "minLength": 1},
+          "source": {"$ref": "theme-mapping.schema.json#/$defs/source"}
+        }
+      }
+    }
+  }
+}

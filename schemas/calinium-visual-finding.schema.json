@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-finding.schema.json",
+  "title": "Calinium Objective Visual Finding",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "finding_id", "evaluation_request_id", "rule_id", "rule_version", "category", "severity", "route_id", "viewport_id", "architecture_profile_id", "evidence", "measured", "expected", "confidence", "reproducibility", "human_review_status"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "visual-finding-v1"},
+    "finding_id": {"type": "string", "pattern": "^visual-finding-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string", "pattern": "^visual-evaluation-request-[a-f0-9]{20}$"},
+    "rule_id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+    "rule_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "category": {"type": "string", "enum": ["root_overflow", "element_overflow", "clipping", "collision", "media", "target_size", "viewport_containment", "landmark", "purchase_interaction", "navigation_interaction", "architecture_consistency", "runtime", "evidence_completeness"]},
+    "severity": {"type": "string", "enum": ["blocker", "high", "medium", "low", "info"]},
+    "route_id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]},
+    "viewport_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "architecture_profile_id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"},
+    "evidence": {"type": "object", "required": ["render_id", "screenshot_reference", "selector", "landmark", "diagnostic_code"], "properties": {"render_id": {"type": "string", "pattern": "^render-[a-f0-9]{20}$"}, "screenshot_reference": {"type": ["string", "null"]}, "selector": {"type": ["string", "null"]}, "landmark": {"type": ["string", "null"]}, "diagnostic_code": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "measured": {"type": "object"},
+    "expected": {"type": "object", "required": ["boundary", "operator", "value", "unit"], "properties": {"boundary": {"type": "string"}, "operator": {"type": "string", "enum": ["equal", "less_than_or_equal", "greater_than_or_equal", "present", "valid", "none"]}, "value": {}, "unit": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "confidence": {"type": "string", "enum": ["high", "medium"]},
+    "reproducibility": {"type": "object", "required": ["render_result_checksum", "policy_revision", "architecture_selection_revision"], "properties": {"render_result_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "policy_revision": {"type": "string", "const": "storefront-visual-evaluation-policy-v1"}, "architecture_selection_revision": {"type": "string", "pattern": "^architecture-selection-[a-f0-9]{20}$"}}, "additionalProperties": false},
+    "human_review_status": {"type": "string", "enum": ["unreviewed", "accepted_with_known_issue", "needs_fix", "false_positive", "deferred"]}
+  },
+  "additionalProperties": false
+}

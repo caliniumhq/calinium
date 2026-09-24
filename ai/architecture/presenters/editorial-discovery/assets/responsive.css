@@ -1,0 +1,61 @@
+/*
+ * Editorial Discovery responsive policy.
+ *
+ * Family-owned safeguards are intentionally narrow: presenter composition,
+ * touch sizing, readable source order, bounded media, and overflow control.
+ */
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] img,
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] video,
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] model-viewer,
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] iframe {
+  max-inline-size: 100%;
+}
+
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] button,
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] a,
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] summary,
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] input,
+[data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] select {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 47.99rem) {
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] button,
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] summary,
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] select,
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] input[type='submit'] {
+    min-block-size: 2.75rem;
+  }
+
+  .co-ed-header__account,
+  .co-ed-header__localization { display: none; }
+  .co-ed-collection-banner__inner,
+  .co-ed-product__layout { grid-template-columns: minmax(0, 1fr); }
+  .co-ed-collection-banner__content { padding-inline: var(--co-page-gutter); }
+  .co-ed-collection-banner__media { order: -1; }
+  .co-ed-collection-banner__heading,
+  .co-ed-product__title { overflow-wrap: anywhere; }
+  .co-ed-product__information { position: static; }
+}
+
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .co-ed-header__desktop-list { gap: var(--co-space-3); }
+  .co-ed-header__desktop-link { max-inline-size: 9rem; }
+  .co-ed-collection-banner__heading { font-size: clamp(2.75rem, 6vw, 4.75rem); }
+  .co-ed-product__layout { grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.8fr); }
+  .co-ed-product__title { font-size: clamp(2.25rem, 5vw, 3.75rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'],
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] *,
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] *::before,
+  [data-calinium-responsive-family='family.responsive_behavior.editorial_discovery.v1'] *::after {
+    scroll-behavior: auto;
+  }
+}

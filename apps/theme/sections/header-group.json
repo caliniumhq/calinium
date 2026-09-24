@@ -1,0 +1,17 @@
+{
+  "type": "header",
+  "name": "t:sections.header.name",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "sticky_header": true,
+        "color_scheme": ""
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

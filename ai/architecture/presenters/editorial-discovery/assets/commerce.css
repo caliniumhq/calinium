@@ -1,0 +1,8 @@
+/* Editorial Discovery product continuations use the selected card family. */
+.co-ed-commerce-section .co-commerce-section__header { display: grid; grid-template-columns: minmax(0, 1fr); max-inline-size: 46rem; }
+.co-ed-commerce-section .co-commerce-recommendation__grid,
+.co-ed-commerce-section .co-recently-viewed__grid { gap: clamp(var(--co-space-4), 4vw, var(--co-space-7)); }
+
+@media (min-width: 48rem) {
+  .co-ed-commerce-section .co-commerce-section__header { margin-inline-start: clamp(var(--co-space-5), 8vw, var(--co-space-9)); }
+}

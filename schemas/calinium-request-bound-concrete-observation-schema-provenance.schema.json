@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-request-bound-concrete-observation-schema-provenance.schema.json",
+  "title": "Calinium Request-Bound Concrete Observation Schema Provenance",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "base_schema_revision", "base_schema_checksum", "request_id", "request_checksum", "cell_count", "ordered_cell_ids", "generated_schema_checksum"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "request-bound-concrete-observation-schema-v1"},
+    "base_schema_revision": {"const": "calinium-live-concrete-observation-output-v1"},
+    "base_schema_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "request_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "request_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "cell_count": {"type": "integer", "minimum": 1, "maximum": 60},
+    "ordered_cell_ids": {"type": "array", "minItems": 1, "maxItems": 60, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 200}},
+    "generated_schema_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": false
+}

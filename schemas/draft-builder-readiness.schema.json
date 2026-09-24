@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/draft-builder-readiness.schema.json",
+  "allOf": [{"$ref": "theme-mapping.schema.json#/$defs/metadata"}],
+  "required": ["decisions"],
+  "properties": {
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["decision_id", "readiness", "explanation", "source"],
+        "properties": {
+          "decision_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "readiness": {"type": "string", "enum": ["YES", "PARTIAL", "NO"]},
+          "explanation": {"type": "string", "minLength": 1},
+          "source": {"$ref": "theme-mapping.schema.json#/$defs/source"}
+        }
+      }
+    }
+  }
+}

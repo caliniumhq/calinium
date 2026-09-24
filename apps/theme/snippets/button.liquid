@@ -1,0 +1,93 @@
+{% liquid
+  assign button_label = label | default: blank
+  assign button_aria_label = aria_label | default: blank
+  assign button_url = url | default: blank
+  assign button_type = type | default: 'button'
+  assign button_variant = variant | default: 'primary'
+  assign button_size = size | default: 'medium'
+  assign button_icon = icon | default: blank
+  assign button_icon_position = icon_position | default: 'start'
+  assign button_icon_size = icon_size | default: 20
+  assign button_classes = 'co-button co-button--' | append: button_variant
+  assign button_classes = button_classes | append: ' co-button--' | append: button_size
+  assign button_rel = rel | default: blank
+  assign can_render_button = false
+  assign has_aria_expanded = false
+
+  if button_label != blank
+    assign can_render_button = true
+  elsif button_icon != blank and button_aria_label != blank
+    assign can_render_button = true
+  endif
+
+  if aria_expanded == true or aria_expanded == false
+    assign has_aria_expanded = true
+  elsif aria_expanded != blank
+    assign has_aria_expanded = true
+  endif
+
+  if button_icon != blank
+    assign button_classes = button_classes | append: ' co-button--with-icon'
+  endif
+
+  if button_label == blank
+    assign button_classes = button_classes | append: ' co-button--icon-only'
+  endif
+
+  if full_width
+    assign button_classes = button_classes | append: ' co-button--full-width'
+  endif
+
+  if class != blank
+    assign button_classes = button_classes | append: ' ' | append: class
+  endif
+
+  if link_target == '_blank' and button_rel == blank
+    assign button_rel = 'noopener noreferrer'
+  endif
+%}
+
+{% if can_render_button %}
+  {% capture button_content %}
+    {% if button_icon != blank and button_icon_position != 'end' %}
+      {% render 'icon', name: button_icon, size: button_icon_size, class: 'co-button__icon' %}
+    {% endif %}
+
+    {% if button_label != blank %}
+      <span class="co-button__label">{{ button_label | escape }}</span>
+    {% endif %}
+
+    {% if button_icon != blank and button_icon_position == 'end' %}
+      {% render 'icon', name: button_icon, size: button_icon_size, class: 'co-button__icon' %}
+    {% endif %}
+  {% endcapture %}
+
+  {% if button_url != blank %}
+    <a
+      class="{{ button_classes | escape }}"
+      href="{{ button_url | escape }}"
+      {% if id != blank %}id="{{ id | escape }}"{% endif %}
+      {% if button_aria_label != blank %}aria-label="{{ button_aria_label | escape }}"{% endif %}
+      {% if aria_controls != blank %}aria-controls="{{ aria_controls | escape }}"{% endif %}
+      {% if has_aria_expanded %}aria-expanded="{{ aria_expanded }}"{% endif %}
+      {% if data_action != blank %}data-action="{{ data_action | escape }}"{% endif %}
+      {% if link_target != blank %}target="{{ link_target | escape }}"{% endif %}
+      {% if button_rel != blank %}rel="{{ button_rel | escape }}"{% endif %}
+      {% if disabled %}aria-disabled="true" tabindex="-1"{% endif %}
+    >{{ button_content }}</a>
+  {% else %}
+    <button
+      class="{{ button_classes | escape }}"
+      type="{{ button_type | escape }}"
+      {% if id != blank %}id="{{ id | escape }}"{% endif %}
+      {% if name != blank %}name="{{ name | escape }}"{% endif %}
+      {% if value != blank %}value="{{ value | escape }}"{% endif %}
+      {% if form != blank %}form="{{ form | escape }}"{% endif %}
+      {% if button_aria_label != blank %}aria-label="{{ button_aria_label | escape }}"{% endif %}
+      {% if aria_controls != blank %}aria-controls="{{ aria_controls | escape }}"{% endif %}
+      {% if has_aria_expanded %}aria-expanded="{{ aria_expanded }}"{% endif %}
+      {% if data_action != blank %}data-action="{{ data_action | escape }}"{% endif %}
+      {% if disabled %}disabled{% endif %}
+    >{{ button_content }}</button>
+  {% endif %}
+{% endif %}

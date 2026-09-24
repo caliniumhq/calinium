@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-analysis-first-merchant-journey.schema.json",
+  "title": "Calinium analysis-first merchant journey",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "project_binding", "capability_binding", "visible_stage", "visible_status", "progress", "required_action", "optional_actions", "advanced_mode_available", "chat_refinement_available", "direction_briefing_available", "preview_ready", "commercial_boundary_pending", "theme_action_authorized", "source_binding", "safety", "checksum"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "analysis-first-merchant-journey-v1"},
+    "project_binding": {"$ref": "#/$defs/projectBinding"},
+    "capability_binding": {"type": "object", "required": ["capability_revision", "enabled", "activation_scope"], "properties": {"capability_revision": {"const": "analysis-first-merchant-experience-capability-v1"}, "enabled": {"const": false}, "activation_scope": {"const": "disabled"}}, "additionalProperties": false},
+    "visible_stage": {"enum": ["analyzing_store", "building_storefront", "review_preview"]},
+    "visible_status": {"type": "object", "required": ["code", "headline", "explanation", "tone", "progress_state"], "properties": {"code": {"enum": ["analyzing", "recommendation_ready", "direction_choice_required", "essential_detail_required", "building", "final_checks", "preview_ready", "merchant_authorization_required", "completed", "needs_attention"]}, "headline": {"type": "string", "minLength": 1}, "explanation": {"type": "string", "minLength": 1}, "tone": {"enum": ["working", "attention", "ready"]}, "progress_state": {"enum": ["working", "action_required", "complete", "blocked"]}}, "additionalProperties": false},
+    "progress": {"type": "object", "required": ["kind", "percent", "time_remaining"], "properties": {"kind": {"enum": ["indeterminate", "action_required", "complete", "blocked"]}, "percent": {"type": "null"}, "time_remaining": {"type": "null"}}, "additionalProperties": false},
+    "required_action": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/action"}]},
+    "optional_actions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+    "advanced_mode_available": {"const": true},
+    "chat_refinement_available": {"type": "boolean"},
+    "direction_briefing_available": {"type": "boolean"},
+    "preview_ready": {"type": "boolean"},
+    "commercial_boundary_pending": {"type": "boolean"},
+    "theme_action_authorized": {"type": "boolean"},
+    "source_binding": {"type": "object", "required": ["authority", "session_stage", "session_revision", "flow_state", "flow_sequence", "flow_checksum", "briefing_id", "briefing_checksum", "source_state_checksum"], "properties": {"authority": {"const": "existing_project_session_merchant_flow"}, "session_stage": {"type": ["string", "null"]}, "session_revision": {"type": ["string", "null"]}, "flow_state": {"type": ["string", "null"]}, "flow_sequence": {"type": ["integer", "null"], "minimum": 0}, "flow_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}, "briefing_id": {"type": "string", "pattern": "^merchant-visual-briefing-[a-f0-9]{20}$"}, "briefing_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "source_state_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "safety": {"type": "object", "required": ["independent_state_machine", "automatic_generation_allowed", "automatic_paid_action_allowed", "automatic_theme_action_allowed", "automatic_repair_allowed", "live_theme_changes_require_separate_authorization", "internal_error_copy_exposed"], "properties": {"independent_state_machine": {"const": false}, "automatic_generation_allowed": {"const": false}, "automatic_paid_action_allowed": {"const": false}, "automatic_theme_action_allowed": {"const": false}, "automatic_repair_allowed": {"const": false}, "live_theme_changes_require_separate_authorization": {"const": true}, "internal_error_copy_exposed": {"const": false}}, "additionalProperties": false},
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "$defs": {
+    "projectBinding": {"type": "object", "required": ["project_id", "organization_id", "shop"], "properties": {"project_id": {"type": "string", "minLength": 1}, "organization_id": {"type": "string", "minLength": 1}, "shop": {"type": ["string", "null"], "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"}}, "additionalProperties": false},
+    "action": {"type": "object", "required": ["action_id", "kind", "label", "available", "requires_explicit_action", "idempotency_key", "backend_contract", "blocker_codes"], "properties": {"action_id": {"enum": ["build_preview", "choose_direction", "provide_essential_detail", "retry", "resume", "approve_design", "request_changes", "compare_current_store", "open_advanced", "contact_support", "adjust_direction", "see_why"]}, "kind": {"enum": ["build_preview", "choose_direction", "provide_essential_detail", "retry", "resume", "approve_design", "request_changes", "compare_current_store", "open_advanced", "contact_support", "adjust_direction", "see_why"]}, "label": {"type": "string", "minLength": 1}, "available": {"type": "boolean"}, "requires_explicit_action": {"const": true}, "idempotency_key": {"type": ["string", "null"]}, "backend_contract": {"type": "string", "minLength": 1}, "blocker_codes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z0-9_]+$"}}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

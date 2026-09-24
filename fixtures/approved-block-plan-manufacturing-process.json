@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "abp_fixture_manufacturing_process",
+  "revision_id": "abpr_fixture_manufacturing_process_r1",
+  "parent_revision_id": null,
+  "created_at": "2026-08-01T12:00:00.000Z",
+  "store_scope": {"organization_id": "org_fixture_manufacturing_process", "project_id": "prj_fixture_manufacturing_process", "merchant_scope_id": "mrc_fixture_manufacturing_process"},
+  "approval": {"approval_id": "aba_fixture_manufacturing_process", "approval_reference": "fixture-approved-manufacturing-process-r1", "approval_status": "approved", "approver_type": "merchant", "approved_at": "2026-08-01T12:00:00.000Z"},
+  "default_locale": "en",
+  "content_entities": {
+    "abpc_fixture_process_preparation": {
+      "content_id": "abpc_fixture_process_preparation",
+      "content_type": "manufacturing_process_stage",
+      "localized_values": [
+        {"locale": "en", "field": "title", "value": "Preparation", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_manufacturing_process"},
+        {"locale": "en", "field": "text", "value": "Fixture-only merchant-approved description of the preparation stage.", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_manufacturing_process"},
+        {"locale": "en", "field": "icon", "value": "settings", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_manufacturing_process"}
+      ],
+      "resource_reference_ids": ["abprs_fixture_process_preparation_image"],
+      "evidence_reference_ids": ["abpe_fixture_process_preparation"],
+      "provenance": {"source_type": "evidence_backed", "approval_id": "aba_fixture_manufacturing_process", "evidence_reference_ids": ["abpe_fixture_process_preparation"]},
+      "accessibility": {"decorative_media": false, "localized": [{"locale": "en", "alt_text": "Approved fixture image of the preparation stage.", "accessible_label": "Preparation"}], "transcript_resource_id": null}
+    },
+    "abpc_fixture_process_packing": {
+      "content_id": "abpc_fixture_process_packing",
+      "content_type": "manufacturing_process_stage",
+      "localized_values": [
+        {"locale": "en", "field": "title", "value": "Packing", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_manufacturing_process"},
+        {"locale": "en", "field": "icon", "value": "package", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_manufacturing_process"}
+      ],
+      "resource_reference_ids": [],
+      "evidence_reference_ids": ["abpe_fixture_process_packing"],
+      "provenance": {"source_type": "evidence_backed", "approval_id": "aba_fixture_manufacturing_process", "evidence_reference_ids": ["abpe_fixture_process_packing"]}
+    }
+  },
+  "resource_references": {
+    "abprs_fixture_process_preparation_image": {"resource_id": "abprs_fixture_process_preparation_image", "resource_type": "project_image", "reference_role": "supporting_media", "source_type": "project_asset", "source_reference": "fixture-asset-process-preparation", "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111", "approval_id": "aba_fixture_manufacturing_process", "checksum_sha256": "1111111111111111111111111111111111111111111111111111111111111111"}
+  },
+  "evidence_references": {
+    "abpe_fixture_process_preparation": {"evidence_id": "abpe_fixture_process_preparation", "evidence_type": "merchant_confirmed_fact", "source_type": "merchant_record", "source_reference": "fixture-only-process-evidence:preparation", "approved_revision": "2222222222222222222222222222222222222222222222222222222222222222", "approval_id": "aba_fixture_manufacturing_process"},
+    "abpe_fixture_process_packing": {"evidence_id": "abpe_fixture_process_packing", "evidence_type": "merchant_confirmed_fact", "source_type": "merchant_record", "source_reference": "fixture-only-process-evidence:packing", "approved_revision": "3333333333333333333333333333333333333333333333333333333333333333", "approval_id": "aba_fixture_manufacturing_process"}
+  },
+  "compositions": [
+    {"composition_id": "abpcp_fixture_process_home", "page_role": "homepage", "section_role": "manufacturing_process", "order": 1, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "supporting", "density": "balanced"}, "block_placements": [
+      {"placement_id": "abpl_fixture_process_preparation", "content_entity_id": "abpc_fixture_process_preparation", "semantic_block_role": "manufacturing_process_step", "order": 1, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "supporting", "density": "balanced"}},
+      {"placement_id": "abpl_fixture_process_packing", "content_entity_id": "abpc_fixture_process_packing", "semantic_block_role": "manufacturing_process_step", "order": 2, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "none", "density": "balanced"}}
+    ]}
+  ],
+  "metadata": {"immutable": true, "source": "merchant_approved", "migration": {"status": "native", "source_revision_id": null, "migration_version": null}}
+}

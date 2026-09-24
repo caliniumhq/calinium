@@ -1,0 +1,56 @@
+{% liquid
+  assign active_filter_results = results
+  assign active_filter_clear_url = clear_url
+  assign active_filter_count = 0
+
+  for filter in active_filter_results.filters
+    if filter.type == 'price_range'
+      if filter.min_value.value != nil or filter.max_value.value != nil
+        assign active_filter_count = active_filter_count | plus: 1
+      endif
+    else
+      assign active_filter_count = active_filter_count | plus: filter.active_values.size
+    endif
+  endfor
+%}
+
+{% if active_filter_count > 0 %}
+  <div class="co-active-filters" data-active-filters>
+    <p class="co-active-filters__label">{{ 'collections.active_filters' | t }}</p>
+
+    <ul class="co-active-filters__list" role="list">
+      {% for filter in active_filter_results.filters %}
+        {% if filter.type == 'price_range' %}
+          {% if filter.min_value.value != nil or filter.max_value.value != nil %}
+            <li>
+              <a class="co-active-filters__link" href="{{ filter.url_to_remove | escape }}">
+                <span>{{ filter.label | escape }}:</span>
+                <span>
+                  {% if filter.min_value.value != nil %}{{ filter.min_value.value | money }}{% else %}{{ 'collections.any_price' | t }}{% endif %}
+                  –
+                  {% if filter.max_value.value != nil %}{{ filter.max_value.value | money }}{% else %}{{ 'collections.any_price' | t }}{% endif %}
+                </span>
+                <span class="co-visually-hidden">{{ 'collections.remove_filter' | t: filter: filter.label }}</span>
+                {% render 'icon', name: 'close', size: 16, class: 'co-active-filters__icon' %}
+              </a>
+            </li>
+          {% endif %}
+        {% else %}
+          {% for value in filter.active_values %}
+            <li>
+              <a class="co-active-filters__link" href="{{ value.url_to_remove | escape }}">
+                <span>{{ filter.label | escape }}: {{ value.label | escape }}</span>
+                <span class="co-visually-hidden">{{ 'collections.remove_filter' | t: filter: value.label }}</span>
+                {% render 'icon', name: 'close', size: 16, class: 'co-active-filters__icon' %}
+              </a>
+            </li>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    {% if active_filter_clear_url != blank %}
+      <a class="co-active-filters__clear" href="{{ active_filter_clear_url | escape }}">{{ 'collections.clear_all' | t }}</a>
+    {% endif %}
+  </div>
+{% endif %}

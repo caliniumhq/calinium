@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "description": "Semantic, deterministic expectations for the current read-only Calinium generator. These fixtures assert only mapped section shells and intentionally omit capabilities with no approved strategy mapping or block-generation path.",
+  "fixtures": [
+    {
+      "fixture_id": "leather-travel-bags",
+      "merchant_fixture": "leather-travel-bags.json",
+      "expected_strategy": "editorial luxury",
+      "expected_compiler_strategy": "luxury_story",
+      "expected_selected_preset": null,
+      "expected_homepage_section_order": [
+        "full-screen-hero",
+        "craftsmanship",
+        "featured-collection",
+        "testimonials",
+        "newsletter"
+      ],
+      "required_sections": [
+        "full-screen-hero",
+        "craftsmanship"
+      ],
+      "forbidden_sections": [
+        "image-mosaic",
+        "quote-banner"
+      ],
+      "required_omissions": [
+        "founder-story",
+        "image-mosaic",
+        "quote-banner"
+      ],
+      "package_assertions": {
+        "valid": true,
+        "theme_check": "passed",
+        "archive_required": true
+      },
+      "read_only_assertions": {
+        "source_theme_unchanged": true,
+        "write_operations": false,
+        "upload": false,
+        "publish": false,
+        "required_scope": "none"
+      },
+      "expected_warnings": {
+        "must_include": [],
+        "must_not_include": []
+      },
+      "expected_failure_category": null,
+      "determinism": {
+        "repeat_runs": 2,
+        "strategy": true,
+        "selected_preset": true,
+        "homepage_section_order": true,
+        "section_identities": true,
+        "stable_ids": true,
+        "settings": true,
+        "generated_configuration": true,
+        "read_only_flags": true
+      }
+    },
+    {
+      "fixture_id": "handmade-rugs",
+      "merchant_fixture": "handmade-rugs.json",
+      "expected_strategy": "heritage editorial",
+      "expected_compiler_strategy": "editorial_discovery",
+      "expected_selected_preset": null,
+      "expected_homepage_section_order": [
+        "full-screen-hero",
+        "lookbook",
+        "story-banner",
+        "featured-collection",
+        "editorial-grid",
+        "newsletter"
+      ],
+      "required_sections": [
+        "lookbook",
+        "editorial-grid"
+      ],
+      "forbidden_sections": [
+        "image-mosaic",
+        "quote-banner"
+      ],
+      "required_omissions": [
+        "image-mosaic",
+        "quote-banner"
+      ],
+      "package_assertions": {
+        "valid": true,
+        "theme_check": "passed",
+        "archive_required": true
+      },
+      "read_only_assertions": {
+        "source_theme_unchanged": true,
+        "write_operations": false,
+        "upload": false,
+        "publish": false,
+        "required_scope": "none"
+      },
+      "expected_warnings": {
+        "must_include": [],
+        "must_not_include": []
+      },
+      "expected_failure_category": null,
+      "determinism": {
+        "repeat_runs": 2,
+        "strategy": true,
+        "selected_preset": true,
+        "homepage_section_order": true,
+        "section_identities": true,
+        "stable_ids": true,
+        "settings": true,
+        "generated_configuration": true,
+        "read_only_flags": true
+      }
+    },
+    {
+      "fixture_id": "skincare-brand",
+      "merchant_fixture": "skincare-brand.json",
+      "expected_strategy": "clean reassurance",
+      "expected_compiler_strategy": "beauty_discovery",
+      "expected_selected_preset": null,
+      "expected_homepage_section_order": [
+        "full-screen-hero",
+        "materials",
+        "featured-collection",
+        "testimonials",
+        "faq",
+        "newsletter"
+      ],
+      "required_sections": [
+        "full-screen-hero",
+        "materials",
+        "featured-collection"
+      ],
+      "forbidden_sections": [
+        "image-mosaic",
+        "quote-banner"
+      ],
+      "required_omissions": [
+        "image-mosaic",
+        "quote-banner"
+      ],
+      "package_assertions": {
+        "valid": true,
+        "theme_check": "passed",
+        "archive_required": true
+      },
+      "read_only_assertions": {
+        "source_theme_unchanged": true,
+        "write_operations": false,
+        "upload": false,
+        "publish": false,
+        "required_scope": "none"
+      },
+      "expected_warnings": {
+        "must_include": [],
+        "must_not_include": []
+      },
+      "expected_failure_category": null,
+      "determinism": {
+        "repeat_runs": 2,
+        "strategy": true,
+        "selected_preset": true,
+        "homepage_section_order": true,
+        "section_identities": true,
+        "stable_ids": true,
+        "settings": true,
+        "generated_configuration": true,
+        "read_only_flags": true
+      }
+    },
+    {
+      "fixture_id": "food-process",
+      "merchant_fixture": "food-process.json",
+      "expected_strategy": "considered commerce",
+      "expected_compiler_strategy": "food_story",
+      "expected_selected_preset": null,
+      "expected_homepage_section_order": [
+        "full-screen-hero",
+        "materials",
+        "manufacturing-process",
+        "featured-collection",
+        "featured-blog",
+        "newsletter"
+      ],
+      "required_sections": [
+        "full-screen-hero",
+        "manufacturing-process"
+      ],
+      "forbidden_sections": [
+        "image-mosaic",
+        "quote-banner"
+      ],
+      "required_omissions": [
+        "image-mosaic",
+        "quote-banner",
+        "craftsmanship"
+      ],
+      "package_assertions": {
+        "valid": true,
+        "theme_check": "passed",
+        "archive_required": true
+      },
+      "read_only_assertions": {
+        "source_theme_unchanged": true,
+        "write_operations": false,
+        "upload": false,
+        "publish": false,
+        "required_scope": "none"
+      },
+      "expected_warnings": {
+        "must_include": [],
+        "must_not_include": []
+      },
+      "expected_failure_category": null,
+      "determinism": {
+        "repeat_runs": 2,
+        "strategy": true,
+        "selected_preset": true,
+        "homepage_section_order": true,
+        "section_identities": true,
+        "stable_ids": true,
+        "settings": true,
+        "generated_configuration": true,
+        "read_only_flags": true
+      }
+    }
+  ]
+}

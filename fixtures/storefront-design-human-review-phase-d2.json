@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "contract_version": "design-human-review-v1",
+  "evaluation_id": "design-evaluation-7ba68e367666ac0c071a",
+  "evaluation_checksum": "1820f7b6cf5a309ca7819bce60ad490c7c4d1d3fc1c60a904321efeda1b2301c",
+  "review_revision": "design-review-revision-814dd40d4f9a4ea2d436",
+  "reviewed_at": "2026-08-14T12:00:00.000Z",
+  "reviewer": {
+    "type": "human",
+    "reference": "phase-d2-approved-controlled-calibration"
+  },
+  "decision": "repair_required",
+  "notes": "Human review accepted five actionable design findings and classified the low-impact mobile PDP convergence as preference only. No repair or mutation is authorized.",
+  "finding_decisions": [
+    {
+      "finding_id": "design-finding-9d036d0d02e595be0fd4",
+      "decision": "needs_fix",
+      "notes": "Accepted as the design impact of the existing D1 objective overflow; repair is deferred to a separately approved phase."
+    },
+    {
+      "finding_id": "design-finding-26690c81058c8a0c01c2",
+      "decision": "needs_fix",
+      "notes": "Accepted from the controlled Current versus Editorial capture review."
+    },
+    {
+      "finding_id": "design-finding-d53ae93946f91f70a0fd",
+      "decision": "needs_fix",
+      "notes": "Accepted from the controlled Current versus Editorial capture review."
+    },
+    {
+      "finding_id": "design-finding-d60fc20b3073f42c00c8",
+      "decision": "needs_fix",
+      "notes": "Accepted from the controlled Current versus Editorial capture review."
+    },
+    {
+      "finding_id": "design-finding-e554ffb9ebc106a6c429",
+      "decision": "needs_fix",
+      "notes": "Accepted from the controlled Current versus Editorial capture review."
+    },
+    {
+      "finding_id": "design-finding-b68be7cc034fa8538af4",
+      "decision": "preference_only",
+      "notes": "A bounded differentiation preference, not a release defect."
+    }
+  ],
+  "review_id": "design-review-e9fa9cc6c47edbfd53bf"
+}

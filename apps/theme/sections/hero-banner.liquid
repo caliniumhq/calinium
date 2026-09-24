@@ -1,0 +1,289 @@
+{% liquid
+  assign hero_image = section.settings.image
+  assign hero_mobile_image = section.settings.mobile_image
+  assign hero_heading_tag = section.settings.heading_tag
+  assign hero_loading = 'lazy'
+  assign hero_fetchpriority = 'auto'
+  assign hero_has_content = false
+  assign hero_has_actions = false
+  assign hero_has_fallback_heading = false
+  assign hero_classes = 'co-hero-banner co-color-scheme-' | append: section.settings.color_scheme
+  assign hero_classes = hero_classes | append: ' co-hero-banner--height-' | append: section.settings.section_height
+  assign hero_classes = hero_classes | append: ' co-hero-banner--content-' | append: section.settings.content_position
+  assign hero_classes = hero_classes | append: ' co-hero-banner--align-' | append: section.settings.content_alignment
+  assign hero_classes = hero_classes | append: ' co-hero-banner--overlay-' | append: section.settings.overlay_strength
+
+  if hero_image == blank and hero_mobile_image != blank
+    assign hero_image = hero_mobile_image
+    assign hero_mobile_image = blank
+  endif
+
+  if section.index == 1
+    assign hero_loading = 'eager'
+    assign hero_fetchpriority = 'high'
+  endif
+
+  if hero_heading_tag == 'h1' and section.index != 1
+    assign hero_heading_tag = 'h2'
+  endif
+
+  if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.text != blank
+    assign hero_has_content = true
+  endif
+
+  if section.settings.button_label_1 != blank and section.settings.button_link_1 != blank
+    assign hero_has_content = true
+    assign hero_has_actions = true
+  endif
+
+  if section.settings.button_label_2 != blank and section.settings.button_link_2 != blank
+    assign hero_has_content = true
+    assign hero_has_actions = true
+  endif
+
+  if request.page_type == 'index' and section.index == 1 and hero_image == blank and hero_has_content == false
+    assign hero_has_content = true
+    assign hero_has_fallback_heading = true
+  endif
+%}
+
+{% if hero_image != blank or hero_has_content %}
+  {% if hero_has_actions %}
+    {{ 'component-button.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+  {% if hero_image != blank %}
+    {{ 'component-image.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+  {{ 'section-hero-banner.css' | asset_url | stylesheet_tag }}
+
+  <section class="{{ hero_classes }}">
+    {% if hero_image != blank %}
+      <div class="co-hero-banner__media">
+        {% render 'responsive-image',
+          image: hero_image,
+          mobile_image: hero_mobile_image,
+          loading: hero_loading,
+          fetchpriority: hero_fetchpriority,
+          sizes: '100vw',
+          widths: '375, 550, 750, 1000, 1500, 2000, 3000',
+          class: 'co-hero-banner__image'
+        %}
+      </div>
+      <div class="co-hero-banner__overlay" aria-hidden="true"></div>
+    {% endif %}
+
+    {% if hero_has_content %}
+      <div class="co-hero-banner__content co-page-width">
+        <div class="co-hero-banner__content-inner">
+          {% if section.settings.eyebrow != blank %}
+            <p class="co-hero-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {% endif %}
+
+          {% if hero_has_fallback_heading %}
+            <h1 class="co-hero-banner__heading">{{ shop.name | escape }}</h1>
+          {% elsif section.settings.heading != blank %}
+            {% case hero_heading_tag %}
+              {% when 'h1' %}
+                <h1 class="co-hero-banner__heading">{{ section.settings.heading }}</h1>
+              {% else %}
+                <h2 class="co-hero-banner__heading">{{ section.settings.heading }}</h2>
+            {% endcase %}
+          {% endif %}
+
+          {% if section.settings.text != blank %}
+            <div class="co-hero-banner__text">{{ section.settings.text }}</div>
+          {% endif %}
+
+          {% if hero_has_actions %}
+            <div class="co-hero-banner__actions">
+              {% if section.settings.button_label_1 != blank and section.settings.button_link_1 != blank %}
+                {% render 'button',
+                  label: section.settings.button_label_1,
+                  url: section.settings.button_link_1,
+                  variant: 'primary',
+                  size: 'large'
+                %}
+              {% endif %}
+
+              {% if section.settings.button_label_2 != blank and section.settings.button_link_2 != blank %}
+                {% render 'button',
+                  label: section.settings.button_label_2,
+                  url: section.settings.button_link_2,
+                  variant: 'secondary',
+                  size: 'large'
+                %}
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:sections.hero_banner.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.hero_banner.settings.image.label",
+      "info": "t:sections.hero_banner.settings.image.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:sections.hero_banner.settings.mobile_image.label",
+      "info": "t:sections.hero_banner.settings.mobile_image.info"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.hero_banner.settings.eyebrow.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.hero_banner.settings.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "t:sections.hero_banner.settings.heading_tag.label",
+      "info": "t:sections.hero_banner.settings.heading_tag.info",
+      "default": "h1",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.hero_banner.settings.heading_tag.options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.hero_banner.settings.heading_tag.options.h2"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.hero_banner.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "t:sections.hero_banner.settings.button_label_1.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "t:sections.hero_banner.settings.button_link_1.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "t:sections.hero_banner.settings.button_label_2.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "t:sections.hero_banner.settings.button_link_2.label"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "t:sections.hero_banner.settings.content_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.hero_banner.settings.content_alignment.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.hero_banner.settings.content_alignment.options.center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "t:sections.hero_banner.settings.content_position.label",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:sections.hero_banner.settings.content_position.options.top"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.hero_banner.settings.content_position.options.center"
+        },
+        {
+          "value": "bottom",
+          "label": "t:sections.hero_banner.settings.content_position.options.bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "overlay_strength",
+      "label": "t:sections.hero_banner.settings.overlay_strength.label",
+      "default": "medium",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.hero_banner.settings.overlay_strength.options.none"
+        },
+        {
+          "value": "low",
+          "label": "t:sections.hero_banner.settings.overlay_strength.options.low"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.hero_banner.settings.overlay_strength.options.medium"
+        },
+        {
+          "value": "high",
+          "label": "t:sections.hero_banner.settings.overlay_strength.options.high"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "t:sections.hero_banner.settings.section_height.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "compact",
+          "label": "t:sections.hero_banner.settings.section_height.options.compact"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.hero_banner.settings.section_height.options.standard"
+        },
+        {
+          "value": "tall",
+          "label": "t:sections.hero_banner.settings.section_height.options.tall"
+        },
+        {
+          "value": "full-screen",
+          "label": "t:sections.hero_banner.settings.section_height.options.full_screen"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.hero_banner.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero_banner.presets.default"
+    }
+  ]
+}
+{% endschema %}

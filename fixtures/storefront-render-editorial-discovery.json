@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "fixture_version": "1.0.0",
+  "fixture_id": "controlled-current-calinium-snowboards-v1",
+  "architecture_profile_id": "profile.editorial_discovery.v1",
+  "generation_fixture": {
+    "fixture_id": "minimal-catalog",
+    "preset_id": "essential",
+    "artifact_reference": "output/storefront-render-artifacts/editorial-discovery-v1/calinium-editorial-discovery-render.zip",
+    "artifact_manifest_reference": "output/storefront-render-artifacts/editorial-discovery-v1/manifest.json",
+    "source_artifact_reference": "output/architecture-profile-themes/editorial-discovery-v1/calinium-editorial-discovery-demo.zip",
+    "source_artifact_manifest_reference": "output/architecture-profile-themes/editorial-discovery-v1/manifest.json"
+  },
+  "target": {
+    "target_id": "controlled-calinium-development-v1",
+    "shop_domain": "calinium-development.myshopify.com",
+    "runtime_mode": "shopify_development_proxy",
+    "expected_theme_role": "development"
+  },
+  "entities": {
+    "collection": {
+      "resource_id": "shr_d679946c-3a0a-4358-8815-5fc9955faef8",
+      "remote_gid": "gid://shopify/Collection/200000000003",
+      "handle": "hydrogen",
+      "source_revision": "14be935588b9922cdd682dfa1a7438f13e5d04f1b2f2e473f60ec756c4ea6cf8",
+      "resolution_source": "controlled_render_fixture"
+    },
+    "product": {
+      "resource_id": "shr_2d1478f2-ea93-423e-ae35-fb0333623775",
+      "remote_gid": "gid://shopify/Product/20000000000001",
+      "handle": "the-collection-snowboard-hydrogen",
+      "source_revision": "ecc2ca261e54697abc06ec02dcccb5eaa5dfec35cddbe61261c0881836a0c9a0",
+      "resolution_source": "controlled_render_fixture"
+    },
+    "primary_image": {
+      "resource_id": "shr_7d52b0f3-9b9c-482b-beaa-fe12346672a3",
+      "remote_gid": "gid://shopify/MediaImage/20000000000002",
+      "runtime_value": "shopify://shop_images/Main_0a40b01b-5021-48c1-80d1-aa8ab4876d3d.jpg",
+      "source_revision": "a340616fefb86dd8578b6b46a20f4d6962fc03ff352ed43bf07151dec92aa70b",
+      "resolution_source": "controlled_render_fixture"
+    },
+    "menu": {
+      "resource_id": "shr_5f1c52e9-5793-4a2c-999a-bd7c47600c69",
+      "remote_gid": "gid://shopify/Menu/200000000004",
+      "handle": "main-menu",
+      "source_revision": "cdde069b27af594eab9230b3383afbda19ecdb57591257f67119c5fd3f756421",
+      "resolution_source": "controlled_render_fixture"
+    }
+  },
+  "runtime_binding_policy": {
+    "version": "controlled-storefront-resource-bindings-v1",
+    "bind": {
+      "image": "primary_image",
+      "desktop_image": "primary_image",
+      "mobile_image": "primary_image",
+      "poster_image": "primary_image",
+      "collection": "collection",
+      "product": "product",
+      "menu": "menu",
+      "link_list": "menu"
+    },
+    "omit_unavailable_optional_kinds": ["article", "blog", "page", "video", "video_url"]
+  },
+  "requested_routes": ["homepage", "collection", "product", "cart"],
+  "requested_viewports": ["desktop-v1", "mobile-v1"],
+  "capture_purpose": "architecture_comparison"
+}

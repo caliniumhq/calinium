@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "registry_version": "1.0.0",
+  "registry_id": "calinium_storefront_render_presenter_evidence",
+  "evidence_revision": "storefront-architecture-evidence-v1",
+  "profiles": [
+    {
+      "profile_id": "profile.current_calinium.v1",
+      "routes": [
+        {
+          "route_id": "homepage",
+          "template_identity": "templates/index.json",
+          "section_identities": ["header", "featured-collection"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header", "selector": "[data-header]"},
+            {"family": "product_card", "presenter_id": "snippet.product_card", "selector": ".co-product-card"}
+          ]
+        },
+        {
+          "route_id": "collection",
+          "template_identity": "templates/collection.json",
+          "section_identities": ["header", "collection-banner", "main-collection-product-grid"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header", "selector": "[data-header]"},
+            {"family": "collection_merchandising", "presenter_id": "section.main_collection_product_grid", "selector": "[data-main-collection]"},
+            {"family": "product_card", "presenter_id": "snippet.product_card", "selector": ".co-product-card"}
+          ]
+        },
+        {
+          "route_id": "product",
+          "template_identity": "templates/product.json",
+          "section_identities": ["header", "main-product"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header", "selector": "[data-header]"},
+            {"family": "product_detail", "presenter_id": "section.main_product", "selector": "[data-main-product]"}
+          ]
+        },
+        {
+          "route_id": "cart",
+          "template_identity": "templates/cart.json",
+          "section_identities": ["header", "main-cart"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header", "selector": "[data-header]"},
+            {"family": "cart", "presenter_id": "section.main_cart", "selector": "[data-main-cart]"}
+          ]
+        }
+      ]
+    },
+    {
+      "profile_id": "profile.editorial_discovery.v1",
+      "routes": [
+        {
+          "route_id": "homepage",
+          "template_identity": "templates/index.json",
+          "section_identities": ["header", "featured-collection"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header.editorial_discovery", "selector": "[data-calinium-presenter='section.header.editorial_discovery']"},
+            {"family": "collection_merchandising", "presenter_id": "section.featured_collection.editorial_discovery", "selector": "[data-calinium-presenter='section.featured_collection.editorial_discovery']"},
+            {"family": "product_card", "presenter_id": "snippet.product_card.editorial_discovery", "selector": "[data-calinium-presenter='snippet.product_card.editorial_discovery']"}
+          ]
+        },
+        {
+          "route_id": "collection",
+          "template_identity": "templates/collection.json",
+          "section_identities": ["header", "collection-banner", "main-collection-product-grid"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header.editorial_discovery", "selector": "[data-calinium-presenter='section.header.editorial_discovery']"},
+            {"family": "collection_merchandising", "presenter_id": "section.collection_banner.editorial_discovery", "selector": "[data-calinium-presenter='section.collection_banner.editorial_discovery']"},
+            {"family": "collection_merchandising", "presenter_id": "section.main_collection_product_grid.editorial_discovery", "selector": "[data-calinium-presenter='section.main_collection_product_grid.editorial_discovery']"},
+            {"family": "product_card", "presenter_id": "snippet.product_card.editorial_discovery", "selector": "[data-calinium-presenter='snippet.product_card.editorial_discovery']"}
+          ]
+        },
+        {
+          "route_id": "product",
+          "template_identity": "templates/product.json",
+          "section_identities": ["header", "main-product"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header.editorial_discovery", "selector": "[data-calinium-presenter='section.header.editorial_discovery']"},
+            {"family": "product_detail", "presenter_id": "section.main_product.editorial_discovery", "selector": "[data-calinium-presenter='section.main_product.editorial_discovery']"}
+          ]
+        },
+        {
+          "route_id": "cart",
+          "template_identity": "templates/cart.json",
+          "section_identities": ["header", "main-cart"],
+          "assertions": [
+            {"family": "header_navigation", "presenter_id": "section.header.editorial_discovery", "selector": "[data-calinium-presenter='section.header.editorial_discovery']"},
+            {"family": "cart", "presenter_id": "section.main_cart", "selector": "[data-main-cart]"}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/merchant-profile.schema.json",
+  "title": "Calinium canonical Merchant Profile",
+  "description": "The approved handoff from the Creative Director to Calinium planning. It records merchant facts, approved creative direction, traceability, and explicitly supplied configuration references; it is not Shopify configuration.",
+  "type": "object",
+  "required": ["version", "profile_id", "source", "business", "audience", "positioning", "brand", "goals", "content", "strategy", "theme", "generation", "traceability", "validation"],
+  "properties": {
+    "version": {"type": "string", "const": "1.0"},
+    "profile_id": {"type": "string", "pattern": "^merchant-profile-[a-z0-9-]+$"},
+    "source": {
+      "type": "object",
+      "required": ["creative_brief_version", "store_strategy_version", "review_version", "creative_brief_status", "store_strategy_status"],
+      "properties": {
+        "creative_brief_version": {"type": "string", "const": "1.0"},
+        "store_strategy_version": {"type": "string", "const": "1.0"},
+        "review_version": {"type": "string", "const": "1.0"},
+        "creative_brief_status": {"type": "string", "const": "approved"},
+        "store_strategy_status": {"type": "string", "const": "approved"}
+      },
+      "additionalProperties": false
+    },
+    "business": {"$ref": "#/$defs/business"},
+    "audience": {"$ref": "#/$defs/audience"},
+    "positioning": {"$ref": "#/$defs/positioning"},
+    "brand": {"$ref": "#/$defs/brand"},
+    "goals": {"$ref": "#/$defs/goals"},
+    "content": {"$ref": "#/$defs/content"},
+    "strategy": {"$ref": "#/$defs/strategy"},
+    "theme": {"$ref": "#/$defs/theme"},
+    "generation": {"$ref": "#/$defs/generation"},
+    "traceability": {"$ref": "#/$defs/traceability"},
+    "validation": {"$ref": "#/$defs/validation"}
+  },
+  "$defs": {
+    "string_array": {"type": "array", "items": {"type": "string"}},
+    "business": {"type": "object", "required": ["name", "summary", "offer", "business_model", "markets"], "properties": {"name": {"type": ["string", "null"]}, "summary": {"type": ["string", "null"]}, "offer": {"$ref": "#/$defs/string_array"}, "business_model": {"type": ["string", "null"]}, "markets": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "audience": {"type": "object", "required": ["primary", "needs", "motivations", "objections"], "properties": {"primary": {"type": ["string", "null"]}, "needs": {"$ref": "#/$defs/string_array"}, "motivations": {"$ref": "#/$defs/string_array"}, "objections": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "positioning": {"type": "object", "required": ["market_position", "value_proposition", "differentiators"], "properties": {"market_position": {"type": ["string", "null"]}, "value_proposition": {"type": ["string", "null"]}, "differentiators": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "brand": {"type": "object", "required": ["personality", "desired_feeling", "existing_assets", "constraints"], "properties": {"personality": {"$ref": "#/$defs/string_array"}, "desired_feeling": {"$ref": "#/$defs/string_array"}, "existing_assets": {"$ref": "#/$defs/string_array"}, "constraints": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "goals": {"type": "object", "required": ["primary", "secondary"], "properties": {"primary": {"type": ["string", "null"]}, "secondary": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "content": {"type": "object", "required": ["available", "missing"], "properties": {"available": {"$ref": "#/$defs/string_array"}, "missing": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "strategy": {
+      "type": "object",
+      "required": ["design_direction", "color_direction", "typography_direction", "homepage", "navigation", "product_page", "collection_page", "motion", "approved_recommendations", "excluded_recommendations"],
+      "properties": {
+        "design_direction": {"$ref": "#/$defs/design_direction"},
+        "color_direction": {"$ref": "#/$defs/color_direction"},
+        "typography_direction": {"$ref": "#/$defs/typography_direction"},
+        "homepage": {"$ref": "#/$defs/homepage"},
+        "navigation": {"$ref": "#/$defs/navigation"},
+        "product_page": {"$ref": "#/$defs/product_page"},
+        "collection_page": {"$ref": "#/$defs/collection_page"},
+        "motion": {"$ref": "#/$defs/motion"},
+        "approved_recommendations": {"type": "array", "items": {"type": "string"}},
+        "excluded_recommendations": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "design_direction": {"type": "object", "required": ["name", "rationale", "traits", "confidence"], "properties": {"name": {"type": "string"}, "rationale": {"type": "string"}, "traits": {"$ref": "#/$defs/string_array"}, "confidence": {"type": "number", "minimum": 0, "maximum": 1}}, "additionalProperties": false},
+    "color_direction": {"type": "object", "required": ["paletteRole", "recommendedColors", "rationale"], "properties": {"paletteRole": {"type": "string"}, "recommendedColors": {"$ref": "#/$defs/string_array"}, "rationale": {"type": "string"}}, "additionalProperties": false},
+    "typography_direction": {"type": "object", "required": ["style", "recommendedRoles", "rationale"], "properties": {"style": {"type": "string"}, "recommendedRoles": {"type": "object", "required": ["headings", "body", "labels"], "properties": {"headings": {"type": "string"}, "body": {"type": "string"}, "labels": {"type": "string"}}, "additionalProperties": false}, "rationale": {"type": "string"}}, "additionalProperties": false},
+    "homepage": {"type": "object", "required": ["objective", "hero", "sections"], "properties": {"objective": {"type": "string"}, "hero": {"type": "object", "required": ["treatment", "rationale"], "properties": {"treatment": {"type": "string"}, "rationale": {"type": "string"}}, "additionalProperties": false}, "sections": {"type": "array", "items": {"type": "object", "required": ["sectionId", "purpose", "rationale", "source"], "properties": {"sectionId": {"type": "string"}, "purpose": {"type": "string"}, "rationale": {"type": "string"}, "source": {"type": "string", "enum": ["existing_strategy_compiler", "creative_director_fallback"]}}, "additionalProperties": false}}}, "additionalProperties": false},
+    "navigation": {"type": "object", "required": ["primaryItems", "recommendMegaMenu", "rationale"], "properties": {"primaryItems": {"$ref": "#/$defs/string_array"}, "recommendMegaMenu": {"type": "boolean"}, "rationale": {"type": "string"}}, "additionalProperties": false},
+    "product_page": {"type": "object", "required": ["galleryStyle", "purchaseExperience", "trustElements"], "properties": {"galleryStyle": {"type": "string"}, "purchaseExperience": {"type": "string"}, "trustElements": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "collection_page": {"type": "object", "required": ["layout", "filters", "sorting"], "properties": {"layout": {"type": "string"}, "filters": {"$ref": "#/$defs/string_array"}, "sorting": {"type": "string"}}, "additionalProperties": false},
+    "motion": {"type": "object", "required": ["level", "principles"], "properties": {"level": {"type": "string"}, "principles": {"$ref": "#/$defs/string_array"}}, "additionalProperties": false},
+    "theme": {
+      "type": "object",
+      "required": ["compiler_context", "implementation_constraints"],
+      "properties": {
+        "compiler_context": {
+          "type": "object",
+          "required": ["industry", "personality", "design_language", "color_strategy", "image_strategy", "content_density", "conversion_strategy", "blueprint", "homepage_recipe"],
+          "properties": {
+            "industry": {"type": ["string", "null"]}, "personality": {"type": ["string", "null"]}, "design_language": {"type": ["string", "null"]}, "color_strategy": {"type": ["string", "null"]}, "image_strategy": {"type": ["string", "null"]}, "content_density": {"type": ["string", "null"]}, "conversion_strategy": {"type": ["string", "null"]}, "blueprint": {"type": ["string", "null"]}, "homepage_recipe": {"type": ["string", "null"]}
+          },
+          "additionalProperties": false
+        },
+        "implementation_constraints": {"$ref": "#/$defs/string_array"}
+      },
+      "additionalProperties": false
+    },
+    "generation": {
+      "type": "object",
+      "required": ["status", "approval_reference", "approved_at", "merchant_references", "asset_references", "completed_confirmations", "resolved_empty_fields"],
+      "properties": {
+        "status": {"type": "string", "enum": ["awaiting_configuration", "ready_for_generation", "blocked"]},
+        "approval_reference": {"type": ["string", "null"]},
+        "approved_at": {"type": ["string", "null"]},
+        "merchant_references": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean", "null"]}},
+        "asset_references": {"type": "object", "additionalProperties": {"type": "string"}},
+        "completed_confirmations": {"$ref": "#/$defs/string_array"},
+        "resolved_empty_fields": {"$ref": "#/$defs/string_array"}
+      },
+      "additionalProperties": false
+    },
+    "trace_entry": {"type": "object", "required": ["path", "source", "source_id"], "properties": {"path": {"type": "string"}, "source": {"type": "string", "enum": ["creative_brief", "merchant_correction", "approved_store_strategy", "merchant_configuration"]}, "source_id": {"type": "string"}}, "additionalProperties": false},
+    "compiler_industry_resolution_provenance": {"type": "object", "required": ["contract_version", "resolver_revision", "status", "compiler_profile_id", "resolution_source", "reason_code", "strength", "fallback_from_profile_id"], "properties": {"contract_version": {"type": "string", "const": "compiler-supported-industry-resolution-v1"}, "resolver_revision": {"type": "integer", "const": 1}, "status": {"type": "string", "enum": ["supported_profile", "generic_supported_fallback", "unresolved_blocking"]}, "compiler_profile_id": {"type": ["string", "null"], "pattern": "^[a-z0-9_]+$"}, "resolution_source": {"type": "string"}, "reason_code": {"type": "string", "pattern": "^[a-z0-9_]+$"}, "strength": {"type": "string", "enum": ["high", "medium", "low", "unresolved"]}, "fallback_from_profile_id": {"type": ["string", "null"], "pattern": "^[a-z0-9_]+$"}}, "additionalProperties": false},
+    "traceability": {"type": "object", "required": ["confirmed_fields", "applied_corrections", "approved_recommendations", "excluded_recommendations", "compiler_context_source"], "properties": {"confirmed_fields": {"type": "array", "items": {"$ref": "#/$defs/trace_entry"}}, "applied_corrections": {"type": "array", "items": {"$ref": "#/$defs/trace_entry"}}, "approved_recommendations": {"type": "array", "items": {"$ref": "#/$defs/trace_entry"}}, "excluded_recommendations": {"type": "array", "items": {"$ref": "#/$defs/trace_entry"}}, "compiler_context_source": {"type": "string"}, "compiler_industry_resolution": {"$ref": "#/$defs/compiler_industry_resolution_provenance"}}, "additionalProperties": false},
+    "validation": {"type": "object", "required": ["valid", "warnings"], "properties": {"valid": {"type": "boolean", "const": true}, "warnings": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

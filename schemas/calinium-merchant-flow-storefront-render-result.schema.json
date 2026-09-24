@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-storefront-render-result.schema.json",
+  "title": "Calinium Merchant Flow Storefront Render Result",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "render_id", "request_id", "render_revision", "status", "rendered_at", "architecture", "generation", "route", "viewport", "runtime", "browser", "final_url", "screenshot", "readiness", "architecture_evidence", "browser_observations", "deterministic_validation", "provenance", "error"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "merchant-flow-storefront-render-result-v1"},
+    "render_id": {"type": "string", "pattern": "^merchant-render-[a-f0-9]{20}$"},
+    "request_id": {"type": "string", "pattern": "^merchant-render-request-[a-f0-9]{20}$"},
+    "render_revision": {"type": "string", "const": "merchant-flow-storefront-render-v1"},
+    "status": {"type": "string", "enum": ["passed", "failed"]},
+    "rendered_at": {"type": "string", "format": "date-time"},
+    "architecture": {"$ref": "calinium-storefront-render-request.schema.json#/properties/architecture"},
+    "generation": {"$ref": "calinium-merchant-flow-storefront-render-request.schema.json#/properties/generation"},
+    "route": {"$ref": "calinium-storefront-render-request.schema.json#/properties/routes/items"},
+    "viewport": {"$ref": "calinium-storefront-render-request.schema.json#/properties/viewports/items"},
+    "runtime": {"$ref": "calinium-storefront-render-result.schema.json#/properties/runtime"},
+    "browser": {"$ref": "calinium-storefront-render-result.schema.json#/properties/browser"},
+    "final_url": {"type": ["string", "null"]},
+    "screenshot": {"$ref": "calinium-storefront-render-result.schema.json#/properties/screenshot"},
+    "readiness": {"$ref": "calinium-storefront-render-result.schema.json#/properties/readiness"},
+    "architecture_evidence": {"$ref": "calinium-storefront-render-result.schema.json#/properties/architecture_evidence"},
+    "objective_observations": {"$ref": "calinium-storefront-objective-observation.schema.json"},
+    "browser_observations": {"$ref": "calinium-storefront-render-result.schema.json#/properties/browser_observations"},
+    "deterministic_validation": {"$ref": "calinium-storefront-render-result.schema.json#/properties/deterministic_validation"},
+    "provenance": {
+      "type": "object",
+      "required": ["source_kind", "flow_id", "flow_sequence", "flow_checksum", "artifact_sha256", "manifest_sha256", "request_checksum", "route_binding_revision", "capture_policy_revision", "runtime_configuration_revision"],
+      "properties": {
+        "source_kind": {"type": "string", "const": "paid_merchant_generation"},
+        "flow_id": {"type": "string"},
+        "flow_sequence": {"type": "integer", "minimum": 0},
+        "flow_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "artifact_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "request_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "route_binding_revision": {"type": "string", "pattern": "^merchant-route-binding-[a-f0-9]{20}$"},
+        "capture_policy_revision": {"type": "string", "const": "storefront-capture-policy-v1"},
+        "runtime_configuration_revision": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "error": {"type": ["object", "null"]}
+  },
+  "additionalProperties": false
+}

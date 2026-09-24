@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "fixture_id": "e5r-l-release-6-runtime-state-boundary",
+  "runtime_state_revision": "shopify-cli-runtime-state-v1",
+  "approved_cli_version": "4.6.0",
+  "release_6_blocker": {
+    "error_code": "EACCES",
+    "attempted_path": "/home/node/.config/shopify-cli-theme-conf-nodejs",
+    "lifecycle_point": "theme configuration initialization before authoritative inventory output",
+    "network_required_to_reproduce": false
+  },
+  "path_classes": {
+    "required_writable": [
+      "XDG_CONFIG_HOME",
+      "XDG_CACHE_HOME",
+      "XDG_STATE_HOME",
+      "XDG_DATA_HOME",
+      "TMPDIR"
+    ],
+    "immutable": [
+      "project source",
+      "package.json",
+      "package-lock.json",
+      "node_modules/@shopify/cli",
+      "project-local Shopify executable",
+      "build-time auto-upgrade policy"
+    ],
+    "credential_sensitive": [
+      "Theme Access environment credential",
+      "Shopify ID token",
+      "Admin API token",
+      "application secret",
+      "authorization header"
+    ]
+  },
+  "preserved_identity": {
+    "project_id": "prj_public-fixture-0001",
+    "merchant_flow_id": "merchant-flow-00000000000000000001",
+    "generation_job_id": "merchant-flow-job-00000000000000000002",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "artifact_checksum": "c2e5dd71a4b06b173f266cc3c5e7cf60aff4c3c9f269b73b372bcf3f66e95b09",
+    "render_job_id": "merchant-flow-job-00000000000000000001",
+    "render_job_state": "retryable",
+    "architecture_profile_id": "profile.editorial_discovery.v1",
+    "design_dna_id": "adna_0989b341020b3def5aac2c7eda0b1b93b9af1aae"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-approval-manifest.schema.json",
+  "title": "Calinium review approval manifest",
+  "description": "Immutable deployment-readiness record derived from an approved review session. It does not deploy a theme.",
+  "type": "object",
+  "required": ["version", "engine_version", "session_id", "generation_id", "approval_event_id", "approved_at", "approved_by", "deployment_eligibility", "workspace_fingerprint", "audit_head", "traceability", "validation"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "engine_version": {"type": "string", "const": "1.0.0"},
+    "session_id": {"type": "string", "minLength": 1},
+    "generation_id": {"type": "string", "minLength": 1},
+    "approval_event_id": {"type": "string", "minLength": 1},
+    "approved_at": {"type": "string", "minLength": 1},
+    "approved_by": {"type": "string", "minLength": 1},
+    "deployment_eligibility": {"type": "object", "required": ["eligible", "status", "reasons"], "properties": {"eligible": {"type": "boolean"}, "status": {"type": "string", "enum": ["not_ready", "ready_for_deployment"]}, "reasons": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "workspace_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "audit_head": {"type": "object", "required": ["sequence", "event_hash"], "properties": {"sequence": {"type": "integer", "minimum": 0}, "event_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "traceability": {"$ref": "calinium-review-session.schema.json#/$defs/traceability"},
+    "validation": {"$ref": "calinium-review-session.schema.json#/$defs/status"}
+  },
+  "additionalProperties": false
+}

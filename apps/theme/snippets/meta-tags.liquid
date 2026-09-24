@@ -1,0 +1,53 @@
+{% liquid
+  assign meta_title = page_title | default: shop.name
+  assign meta_description = page_description | default: shop.description
+  assign social_image = page_image
+  assign social_type = 'website'
+
+  if request.page_type == 'product' and product.featured_image != blank
+    assign social_image = product.featured_image
+  elsif request.page_type == 'article'
+    assign social_type = 'article'
+
+    if article.image != blank
+      assign social_image = article.image
+    endif
+  elsif request.page_type == 'collection' and collection.image != blank
+    assign social_image = collection.image
+  endif
+%}
+
+<link rel="canonical" href="{{ canonical_url }}">
+<title>{{ meta_title }}{% unless meta_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
+
+{% if meta_description != blank %}
+  <meta name="description" content="{{ meta_description | escape }}">
+{% endif %}
+
+{% if request.page_type == 'search' %}
+  <meta name="robots" content="noindex,follow">
+{% endif %}
+
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ meta_title | escape }}">
+<meta property="og:type" content="{{ social_type }}">
+
+{% if meta_description != blank %}
+  <meta property="og:description" content="{{ meta_description | escape }}">
+{% endif %}
+
+{% if social_image != blank %}
+  <meta property="og:image" content="{{ social_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="{{ social_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:card" content="summary_large_image">
+{% else %}
+  <meta name="twitter:card" content="summary">
+{% endif %}
+
+<meta name="twitter:title" content="{{ meta_title | escape }}">
+
+{% if meta_description != blank %}
+  <meta name="twitter:description" content="{{ meta_description | escape }}">
+{% endif %}

@@ -1,0 +1,152 @@
+{
+  "fixture_version": "e5r-o-d2-7-failure-retry-claim-integrity-v1",
+  "historical_attempt_5": {
+    "flow_id": "merchant-flow-00000000000000000001",
+    "job_id": "merchant-flow-job-00000000000000000001",
+    "job_attempt": 5,
+    "request_id": "merchant-flow-d2-7-request-00000000000000000001",
+    "started_at": "2026-09-01T13:13:40.400Z",
+    "failed_at": "2026-09-01T13:14:28.498Z",
+    "persisted_job_status": "retryable",
+    "persisted_failure_category": "shopify_render_failed",
+    "render_capture_cells_passed": 8,
+    "render_capture_cells_total": 8,
+    "d1_status": "passed",
+    "d1_finding_count": 0,
+    "d2_7_evaluation_artifact_exists": false,
+    "provider_detail_availability": "not_retained",
+    "causal_conclusion": "historical_detail_unavailable"
+  },
+  "request_binding": {
+    "request_id": "merchant-flow-d2-7-request-00000000000000000001",
+    "request_checksum": "1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "provider": {
+    "interface_version": "merchant-flow-d2-7-provider-v1",
+    "provider_id": "calinium-openai-responses-merchant-concrete-observation",
+    "provider_version": "1.0.0",
+    "provider_kind": "live_multimodal",
+    "provider_revision": "openai-live-design-evaluation-gpt-5-6-sol-v1",
+    "model_id": "gpt-5.6-sol",
+    "model_configuration_revision": "merchant-flow-d2-7-model-configuration-v1"
+  },
+  "evidence_binding": {
+    "flow_id": "merchant-flow-00000000000000000001",
+    "project_id": "prj_public-fixture-0001",
+    "organization_id": "organization-e5r-o-test",
+    "job_id": "merchant-flow-job-00000000000000000001",
+    "job_attempt": 5,
+    "artifact_id": "theme-artifact-e5r-o-test",
+    "artifact_checksum": "2222222222222222222222222222222222222222222222222222222222222222",
+    "evidence_directory_reference": "output/merchant-flow-e5r-o/attempt-5",
+    "render_request_id": "merchant-flow-render-request-e5r-o",
+    "render_request_checksum": "3333333333333333333333333333333333333333333333333333333333333333",
+    "render_checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+    "render_result_ids": [
+      "render-homepage-desktop",
+      "render-homepage-mobile",
+      "render-collection-desktop",
+      "render-collection-mobile",
+      "render-product-desktop",
+      "render-product-mobile",
+      "render-cart-desktop",
+      "render-cart-mobile"
+    ],
+    "route_ids": ["homepage", "collection", "product", "cart"],
+    "viewport_ids": ["desktop-v1", "mobile-v1"],
+    "d1_evidence_id": "merchant-flow-d1-evaluation-e5r-o",
+    "d1_evidence_checksum": "5555555555555555555555555555555555555555555555555555555555555555",
+    "d1_policy_revision": "storefront-visual-evaluation-policy-v1",
+    "runtime_configuration_revision": "merchant-flow-controlled-beta-runtime-v1",
+    "render_target_configuration_revision": "merchant-flow-controlled-render-targets-v1",
+    "development_shop": "calinium-example.myshopify.com",
+    "development_theme_id": "100000000006",
+    "deployed_source_revision": "2000000000000000000000000000000000000006"
+  },
+  "provider_cases": [
+    {
+      "id": "authentication_401",
+      "error": {"code": "live_design_authentication_failed", "status": 401, "attempts": 1},
+      "expected": {"stage": "provider_http", "category": "d2_7_provider_authentication_failed", "failure_class": "authentication_failed", "retryable": false, "http_status": 401}
+    },
+    {
+      "id": "access_403",
+      "error": {"code": "live_design_authentication_failed", "status": 403, "attempts": 1},
+      "expected": {"stage": "provider_http", "category": "d2_7_provider_access_failed", "failure_class": "access_rejected", "retryable": false, "http_status": 403}
+    },
+    {
+      "id": "ambiguous_429",
+      "error": {"code": "live_design_rate_limited", "status": 429, "attempts": 3, "retryCount": 2},
+      "expected": {"stage": "provider_http", "category": "d2_7_provider_rate_or_quota_limited", "failure_class": "rate_or_quota_limited", "retryable": false, "http_status": 429}
+    },
+    {
+      "id": "proven_rate_limit_429",
+      "error": {"code": "live_design_rate_limited", "status": 429, "providerCode": "rate_limit_exceeded", "providerType": "requests", "attempts": 3, "retryCount": 2},
+      "expected": {"stage": "provider_http", "category": "d2_7_provider_rate_limited", "failure_class": "rate_limited", "retryable": true, "http_status": 429, "provider_error_code": "rate_limit_exceeded"}
+    },
+    {
+      "id": "proven_quota_429",
+      "error": {"code": "live_design_rate_limited", "status": 429, "providerCode": "insufficient_quota", "providerType": "billing", "attempts": 1},
+      "expected": {"stage": "provider_http", "category": "d2_7_provider_quota_failed", "failure_class": "quota_or_billing_failed", "retryable": false, "http_status": 429, "provider_error_code": "insufficient_quota"}
+    },
+    {
+      "id": "provider_500",
+      "error": {"code": "live_design_provider_unavailable", "status": 500, "attempts": 3, "retryCount": 2},
+      "expected": {"stage": "provider_http", "category": "d2_7_provider_unavailable", "failure_class": "provider_unavailable", "retryable": true, "http_status": 500}
+    },
+    {
+      "id": "provider_503",
+      "error": {"code": "live_design_provider_unavailable", "status": 503, "attempts": 3, "retryCount": 2},
+      "expected": {"stage": "provider_http", "category": "d2_7_provider_unavailable", "failure_class": "provider_unavailable", "retryable": true, "http_status": 503}
+    },
+    {
+      "id": "timeout",
+      "error": {"code": "live_design_timeout", "attempts": 3, "retryCount": 2},
+      "expected": {"stage": "provider_transport", "category": "d2_7_provider_timeout", "failure_class": "timeout", "retryable": true, "http_status": null}
+    },
+    {
+      "id": "network",
+      "error": {"code": "live_design_network_failure", "attempts": 3, "retryCount": 2},
+      "expected": {"stage": "provider_transport", "category": "d2_7_provider_network_failed", "failure_class": "network_failure", "retryable": true, "http_status": null}
+    },
+    {
+      "id": "malformed_response",
+      "error": {"code": "live_design_malformed_http_response", "status": 200, "attempts": 1},
+      "expected": {"stage": "response_decode", "category": "d2_7_response_invalid", "failure_class": "malformed_http_response", "retryable": false, "http_status": 200}
+    },
+    {
+      "id": "schema_mismatch",
+      "error": {"name": "DesignEvaluationContractError", "attempts": 1},
+      "expected": {"stage": "schema_validation", "category": "d2_7_schema_validation_failed", "failure_class": "schema_validation_failed", "retryable": false, "http_status": null}
+    },
+    {
+      "id": "unknown",
+      "error": {"name": "Error", "attempts": 1},
+      "expected": {"stage": "unknown", "category": "d2_7_unknown_provider_failure", "failure_class": "unknown_provider_failure", "retryable": false, "http_status": null}
+    }
+  ],
+  "retry_claim_expectations": {
+    "single_action_resume_operations": 1,
+    "single_action_job_claims": 1,
+    "historical_attempt": 5,
+    "authorized_attempt": 6,
+    "lease_recovery_increments_attempt": false,
+    "automatic_retry_allowed": false,
+    "automatic_repair_allowed": false
+  },
+  "evidence_reuse_expectations": {
+    "d2_7_only_resume": {"capture_calls": 0, "d1_calls": 0, "provider_calls": 1},
+    "accepted_evaluation_reuse": {"capture_calls": 0, "d1_calls": 0, "provider_calls": 0},
+    "tampered_binding_rejected_before_provider": true
+  },
+  "safety": {
+    "openai_calls": 0,
+    "shopify_calls": 0,
+    "render_calls": 0,
+    "theme_mutations": 0,
+    "fixture_fallback_used": false,
+    "approved_replay_used": false,
+    "automatic_retry_allowed": false,
+    "automatic_repair_allowed": false
+  }
+}

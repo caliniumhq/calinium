@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "capability_revision": "analysis-first-merchant-experience-capability-v1",
+  "analysis_first_merchant_experience_enabled": false,
+  "activation_scope": "disabled",
+  "visible_stages": [
+    "analyzing_store",
+    "building_storefront",
+    "review_preview"
+  ],
+  "advanced_mode_available": true,
+  "chat_is_default": false,
+  "maximum_material_questions": 1,
+  "automatic_generation_allowed": false,
+  "automatic_paid_action_allowed": false,
+  "automatic_theme_action_allowed": false,
+  "automatic_repair_allowed": false
+}

@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "base_fixture": "approved-block-plan-editorial-grid.json",
+  "description": "Each case applies one isolated deterministic patch to the valid Approved Block Plan fixture.",
+  "cases": [
+    {
+      "case_id": "missing-plan-approval",
+      "purpose": "An Approved Block Plan cannot omit its immutable approval record.",
+      "payload": {"operations": [{"op": "remove", "path": "/approval"}]},
+      "expected_category": "approval",
+      "expected_path": "approval"
+    },
+    {
+      "case_id": "partial-approval-state",
+      "purpose": "Partially approved workflow state cannot appear inside an approved plan.",
+      "payload": {"operations": [{"op": "replace", "path": "/approval/approval_status", "value": "partially_approved"}]},
+      "expected_category": "approval",
+      "expected_path": "approval.approval_status"
+    },
+    {
+      "case_id": "duplicate-content-identity",
+      "purpose": "Two map entries cannot claim the same canonical content identity.",
+      "payload": {"operations": [{"op": "replace", "path": "/content_entities/abpc_natural-fiber-journal/content_id", "value": "abpc_rug-care-guides"}]},
+      "expected_category": "identity",
+      "expected_path": "content_entities"
+    },
+    {
+      "case_id": "duplicate-placement-identity",
+      "purpose": "Two placements cannot claim the same canonical placement identity.",
+      "payload": {"operations": [{"op": "replace", "path": "/compositions/0/block_placements/1/placement_id", "value": "abpl_homepage-rug-care-guides"}]},
+      "expected_category": "identity",
+      "expected_path": "block_placements"
+    },
+    {
+      "case_id": "missing-referenced-content",
+      "purpose": "A block placement must resolve its content entity.",
+      "payload": {"operations": [{"op": "replace", "path": "/compositions/0/block_placements/1/content_entity_id", "value": "abpc_missing-story"}]},
+      "expected_category": "reference",
+      "expected_path": "content_entity_id"
+    },
+    {
+      "case_id": "missing-referenced-resource",
+      "purpose": "A content entity must resolve every resource reference.",
+      "payload": {"operations": [{"op": "replace", "path": "/content_entities/abpc_rug-care-guides/resource_reference_ids/0", "value": "abprs_missing-resource"}]},
+      "expected_category": "reference",
+      "expected_path": "resource_reference_ids"
+    },
+    {
+      "case_id": "invalid-content-entity-type",
+      "purpose": "Content entities must use a supported semantic type.",
+      "payload": {"operations": [{"op": "replace", "path": "/content_entities/abpc_rug-care-guides/content_type", "value": "runtime_story_block"}]},
+      "expected_category": "content_type",
+      "expected_path": "content_type"
+    },
+    {
+      "case_id": "invalid-resource-type",
+      "purpose": "Resource references must use a supported typed source.",
+      "payload": {"operations": [{"op": "replace", "path": "/resource_references/abprs_rug-care-collection/resource_type", "value": "shopify_theme_template"}]},
+      "expected_category": "resource_type",
+      "expected_path": "resource_type"
+    },
+    {
+      "case_id": "invalid-locale-shape",
+      "purpose": "Localized content must use a valid language tag.",
+      "payload": {"operations": [{"op": "replace", "path": "/content_entities/abpc_rug-care-guides/localized_values/0/locale", "value": "english"}]},
+      "expected_category": "locale",
+      "expected_path": "locale"
+    },
+    {
+      "case_id": "missing-placement-order",
+      "purpose": "Every block placement must retain explicit merchant-approved order.",
+      "payload": {"operations": [{"op": "remove", "path": "/compositions/0/block_placements/0/order"}]},
+      "expected_category": "ordering",
+      "expected_path": "order"
+    },
+    {
+      "case_id": "duplicate-placement-order",
+      "purpose": "A semantic section cannot have two placements at the same order.",
+      "payload": {"operations": [{"op": "replace", "path": "/compositions/0/block_placements/1/order", "value": 1}]},
+      "expected_category": "ordering",
+      "expected_path": "block_placements"
+    },
+    {
+      "case_id": "prohibited-runtime-section-id",
+      "purpose": "Runtime section identities cannot leak into theme-agnostic composition.",
+      "payload": {"operations": [{"op": "add", "path": "/compositions/0/section_id", "value": "editorial-grid"}]},
+      "expected_category": "prohibited_field",
+      "expected_path": "section_id"
+    },
+    {
+      "case_id": "prohibited-runtime-block-type",
+      "purpose": "Runtime block types cannot appear in a semantic block placement.",
+      "payload": {"operations": [{"op": "add", "path": "/compositions/0/block_placements/0/block_type", "value": "story"}]},
+      "expected_category": "prohibited_field",
+      "expected_path": "block_type"
+    },
+    {
+      "case_id": "prohibited-runtime-settings",
+      "purpose": "Theme settings cannot be stored on an approved content entity.",
+      "payload": {"operations": [{"op": "add", "path": "/content_entities/abpc_rug-care-guides/settings", "value": {"heading_size": "large"}}]},
+      "expected_category": "prohibited_field",
+      "expected_path": "settings"
+    },
+    {
+      "case_id": "prohibited-generated-block-id",
+      "purpose": "Generated block IDs cannot become canonical placement identities.",
+      "payload": {"operations": [{"op": "add", "path": "/compositions/0/block_placements/0/block_id", "value": "calinium_b_2b701d9daac9c8e6cfe2"}]},
+      "expected_category": "prohibited_field",
+      "expected_path": "block_id"
+    },
+    {
+      "case_id": "review-comments-inside-plan",
+      "purpose": "Review discussion belongs to a review workflow record, not the approved plan.",
+      "payload": {"operations": [{"op": "add", "path": "/metadata/review_comments", "value": ["Please adjust the copy."]}]},
+      "expected_category": "prohibited_field",
+      "expected_path": "review_comments"
+    },
+    {
+      "case_id": "ai-confidence-inside-plan",
+      "purpose": "AI confidence is proposal metadata, not approved merchant content.",
+      "payload": {"operations": [{"op": "add", "path": "/content_entities/abpc_rug-care-guides/ai_confidence", "value": 0.91}]},
+      "expected_category": "prohibited_field",
+      "expected_path": "ai_confidence"
+    },
+    {
+      "case_id": "mutable-workspace-path",
+      "purpose": "Package and workspace paths cannot appear in an approved plan.",
+      "payload": {"operations": [{"op": "add", "path": "/metadata/workspace_path", "value": "output/generation-run-oak-loom"}]},
+      "expected_category": "prohibited_field",
+      "expected_path": "workspace_path"
+    },
+    {
+      "case_id": "missing-evidence-reference",
+      "purpose": "Evidence-backed content must resolve all evidence references.",
+      "payload": {"operations": [{"op": "replace", "path": "/content_entities/abpc_rug-care-guides/evidence_reference_ids/0", "value": "abpe_missing-evidence"}]},
+      "expected_category": "reference",
+      "expected_path": "evidence_reference_ids"
+    },
+    {
+      "case_id": "self-referential-parent-revision",
+      "purpose": "A revision cannot name itself as its parent.",
+      "payload": {"operations": [{"op": "replace", "path": "/parent_revision_id", "value": "abpr_oak-loom-editorial-r1"}]},
+      "expected_category": "immutability",
+      "expected_path": "parent_revision_id"
+    }
+  ]
+}

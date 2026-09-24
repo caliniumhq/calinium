@@ -1,0 +1,135 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign main_blog_classes = 'co-main-blog co-color-scheme-' | append: section.settings.color_scheme
+  assign main_blog_heading_id = 'BlogHeading-' | append: section.id
+%}
+
+<section class="{{ main_blog_classes }}" aria-labelledby="{{ main_blog_heading_id }}">
+  <div class="co-main-blog__inner co-page-width">
+    <header class="co-main-blog__header">
+      <h1 id="{{ main_blog_heading_id }}" class="co-main-blog__heading">{{ blog.title | escape }}</h1>
+
+      {% if section.settings.description != blank %}
+        <div class="co-main-blog__description">{{ section.settings.description }}</div>
+      {% endif %}
+    </header>
+
+    {% paginate blog.articles by section.settings.articles_per_page %}
+      {% if blog.articles_count > 0 %}
+        <ul class="co-main-blog__grid" role="list">
+          {% for article in blog.articles %}
+            <li>
+              {% render 'article-card',
+                article: article,
+                show_image: section.settings.show_image,
+                show_excerpt: section.settings.show_excerpt,
+                show_author: section.settings.show_author,
+                show_date: section.settings.show_date,
+                show_tags: section.settings.show_tags,
+                image_ratio: section.settings.image_ratio,
+                image_loading: 'lazy',
+                image_sizes: '(min-width: 72rem) 25vw, (min-width: 48rem) 50vw, 100vw',
+                image_widths: '165, 360, 535, 750, 1000'
+              %}
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% render 'pagination', paginate: paginate %}
+      {% else %}
+        <div class="co-main-blog__empty" role="status">
+          <p>{{ 'blogs.empty' | t }}</p>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_blog.name",
+  "tag": "section",
+  "class": "co-section-main-blog",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["blog"]
+  },
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.main_blog.settings.description.label",
+      "info": "t:sections.main_blog.settings.description.info"
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "t:sections.main_blog.settings.articles_per_page.label",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:sections.main_blog.settings.show_image.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "t:sections.main_blog.settings.show_excerpt.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:sections.main_blog.settings.show_author.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "t:sections.main_blog.settings.show_date.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:sections.main_blog.settings.show_tags.label",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.main_blog.settings.image_ratio.label",
+      "default": "landscape",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.main_blog.settings.image_ratio.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main_blog.settings.image_ratio.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.main_blog.settings.image_ratio.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main_blog.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

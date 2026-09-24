@@ -1,0 +1,74 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{% liquid
+  assign founder_heading_id = 'FounderStoryHeading-' | append: section.id
+  assign founder_classes = 'co-founder-story co-brand-story-section co-color-scheme-' | append: section.settings.color_scheme
+  assign founder_classes = founder_classes | append: ' co-founder-story--image-' | append: section.settings.image_position
+  assign founder_classes = founder_classes | append: ' co-founder-story--' | append: section.settings.layout
+%}
+{% render 'section-spacing', section: section %}
+<section class="{{ founder_classes }}"{% if section.settings.heading != blank %} aria-labelledby="{{ founder_heading_id }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-founder-story__inner{% if section.settings.layout == 'contained' %} co-page-width{% endif %}">
+    <div class="co-founder-story__layout">
+      <div class="co-founder-story__media">
+        {% if section.settings.image != blank %}
+          {% render 'responsive-image', image: section.settings.image, mobile_image: section.settings.mobile_image, loading: 'lazy', sizes: '(min-width: 48rem) 50vw, 100vw', widths: '375, 550, 750, 1000, 1500', ratio: 'portrait', class: 'co-founder-story__portrait' %}
+        {% elsif request.design_mode %}
+          <div class="co-brand-story-section__placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+        {% endif %}
+      </div>
+      <div class="co-founder-story__content co-brand-story-section__content">
+        {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.text, id: founder_heading_id, level: 'h2', alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-brand-story-section__header' %}
+        {% if section.settings.quote != blank %}<blockquote class="co-brand-story-section__quote">{{ section.settings.quote | escape }}</blockquote>{% endif %}
+        {% if section.settings.signature_image != blank %}
+          {% render 'responsive-image', image: section.settings.signature_image, alt: '', loading: 'lazy', sizes: '10rem', widths: '80, 160, 240, 320', ratio: 'natural', fit: 'contain', class: 'co-founder-story__signature' %}
+        {% endif %}
+        {% if section.blocks.size > 0 %}
+          <div class="co-founder-story__achievements" role="list">
+            {% for block in section.blocks %}
+              <article class="co-founder-story__achievement" role="listitem" {{ block.shopify_attributes }}>
+                {% if block.settings.achievement_icon != 'none' %}<span class="co-founder-story__achievement-icon">{% render 'icon', icon: block.settings.achievement_icon, size: 22, decorative: true %}</span>{% endif %}
+                <div>{% if block.settings.heading != blank %}<h3>{{ block.settings.heading }}</h3>{% endif %}{% if block.settings.text != blank %}{% render 'rich-text', content: block.settings.text %}{% endif %}</div>
+              </article>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if section.settings.button_label != blank and section.settings.button_link != blank %}<div class="co-brand-story-section__actions">{% render 'button', label: section.settings.button_label, url: section.settings.button_link, variant: 'primary' %}</div>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.founder_story.name",
+  "tag": "section",
+  "class": "co-section-founder-story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "t:sections.founder_story.settings.portrait.label" },
+    { "type": "image_picker", "id": "mobile_image", "label": "t:sections.shared.settings.mobile_image.label", "info": "t:sections.shared.settings.mobile_image.info" },
+    { "type": "text", "id": "eyebrow", "label": "t:sections.shared.settings.eyebrow.label" },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "Founder story" },
+    { "type": "richtext", "id": "text", "label": "t:sections.founder_story.settings.biography.label" },
+    { "type": "textarea", "id": "quote", "label": "t:sections.shared.settings.quote.label" },
+    { "type": "image_picker", "id": "signature_image", "label": "t:sections.founder_story.settings.signature_image.label" },
+    { "type": "text", "id": "button_label", "label": "t:sections.shared.settings.button_label.label" },
+    { "type": "url", "id": "button_link", "label": "t:sections.shared.settings.button_link.label" },
+    { "type": "select", "id": "image_position", "label": "t:sections.founder_story.settings.image_position.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "right", "label": "t:sections.shared.options.right" }] },
+    { "type": "select", "id": "layout", "label": "t:sections.shared.settings.layout.label", "default": "contained", "options": [{ "value": "contained", "label": "t:sections.founder_story.settings.layout.options.contained" }, { "value": "full-width", "label": "t:sections.founder_story.settings.layout.options.full_width" }] },
+    { "type": "select", "id": "text_alignment", "label": "t:sections.shared.settings.text_alignment.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "center", "label": "t:sections.shared.options.center" }] },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "large", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [{ "type": "achievement", "name": "t:sections.founder_story.blocks.achievement", "settings": [
+    { "type": "select", "id": "achievement_icon", "label": "t:sections.shared.settings.icon.label", "default": "star", "options": [{ "value": "none", "label": "t:sections.shared.options.none" }, { "value": "star", "label": "t:sections.shared.options.star" }, { "value": "medal", "label": "t:sections.shared.options.medal" }, { "value": "award", "label": "t:sections.shared.options.award" }, { "value": "sparkle", "label": "t:sections.shared.options.sparkle" }] },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label" },
+    { "type": "richtext", "id": "text", "label": "t:sections.shared.settings.text.label" }
+  ] }],
+  "max_blocks": 6,
+  "presets": [{ "name": "t:sections.founder_story.preset" }]
+}
+{% endschema %}

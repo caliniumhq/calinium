@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-custom-theme-input-snapshot.schema.json",
+  "title": "Calinium Custom Theme Purchased Input Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "snapshot_id", "order_id", "project_id", "created_at", "creative_brief", "store_strategy", "review", "resource_plan", "generation_context", "approved_block_plan_transport", "approved_preset_revision", "architecture_selection_revision", "merchant_intent", "store_intelligence", "generation_approval_binding", "approved_shopify_resources", "source_theme", "price", "approval_timestamps", "checksum"],
+  "properties": {
+    "version": {"enum": [2, 3]},
+    "snapshot_id": {"type": "string", "pattern": "^cts_[A-Za-z0-9_-]+$"},
+    "order_id": {"type": "string", "pattern": "^cto_[A-Za-z0-9_-]+$"},
+    "project_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "creative_brief": {"type": "object"},
+    "store_strategy": {"type": "object"},
+    "review": {"type": "object"},
+    "resource_plan": {"type": "object"},
+    "generation_context": {"type": "object"},
+    "content_plan_eligibility": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["policy_version", "revision_id", "checksum", "effective_composition_checksum", "stage_resolution_reference", "effective_composition", "targets"],
+      "properties": {
+        "policy_version": {"const": "content-plan-eligibility-v1"},
+        "revision_id": {"type": "string", "pattern": "^cpe_[a-f0-9]{32}$"},
+        "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "effective_composition_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "stage_resolution_reference": {"type": ["string", "null"], "pattern": "^cpsr_[a-f0-9]{24}$"},
+        "effective_composition": {"$ref": "calinium-content-plan-eligibility.schema.json#/$defs/effectiveComposition"},
+        "targets": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"$ref": "#/$defs/contentPlanTargetBinding"}}
+      }
+    },
+    "approved_block_plan_transport": {"type": ["object", "null"], "properties": {"plan_revision": {"type": "object"}, "resource_snapshot": {"type": "object"}, "provenance": {"type": "object"}}, "additionalProperties": false},
+    "approved_preset_revision": {"type": ["object", "null"]},
+    "approved_resource_set_revision": {"type": ["object", "null"]},
+    "approved_recommendation_revision": {"type": ["object", "null"]},
+    "approved_design_dna_revision": {"type": ["object", "null"]},
+    "architecture_selection_revision": {"$ref": "calinium-architecture-selection.schema.json"},
+    "merchant_intent": {"$ref": "calinium-merchant-intent.schema.json"},
+    "store_intelligence": {"$ref": "calinium-store-intelligence-contract.schema.json"},
+    "generation_approval_binding": {"type": "object", "additionalProperties": false, "required": ["approval_reference", "approved_at", "approved_block_plan", "approved_preset", "architecture_selection"], "properties": {"approval_reference": {"type": "string", "minLength": 1}, "approved_at": {"type": "string", "format": "date-time"}, "approved_block_plan": {"type": ["object", "null"]}, "approved_preset": {"type": ["object", "null"]}, "approved_resource_set": {"$ref": "#/$defs/revisionBinding"}, "approved_recommendation": {"$ref": "#/$defs/revisionBinding"}, "approved_design_dna": {"$ref": "#/$defs/revisionBinding"}, "architecture_selection": {"$ref": "calinium-generated-theme.schema.json#/$defs/architectureProvenance"}, "content_plan_eligibility": {"$ref": "#/$defs/nullableContentPlanBinding"}}},
+    "approved_shopify_resources": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["resource_id", "resource_type", "source_revision"], "properties": {"resource_id": {"type": "string", "minLength": 1}, "resource_type": {"type": "string", "minLength": 1}, "source_revision": {"type": "string", "minLength": 1}, "runtime_value": {"type": "string", "minLength": 1}}}},
+    "source_theme": {"type": "object", "additionalProperties": false, "required": ["id", "version", "checksum", "file_count"], "properties": {"id": {"const": "calinium-one"}, "version": {"type": "string", "minLength": 1}, "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "file_count": {"type": "integer", "minimum": 1}}},
+    "price": {"type": "object", "additionalProperties": false, "required": ["catalog_version", "product_code", "display_name", "billing_type", "price_version", "currency", "amount_cents", "environment"], "properties": {"catalog_version": {"type": "string", "minLength": 3}, "product_code": {"type": "string", "minLength": 3}, "display_name": {"type": "string", "minLength": 3}, "billing_type": {"const": "one_time"}, "price_version": {"type": "string", "minLength": 2}, "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}, "amount_cents": {"type": "integer", "minimum": 1}, "environment": {"enum": ["development", "test", "staging", "production"]}}},
+    "approval_timestamps": {"type": "object", "additionalProperties": false, "required": ["creative_brief", "brand_blueprint", "store_strategy", "resource_plan"], "properties": {"creative_brief": {"type": "string", "format": "date-time"}, "brand_blueprint": {"type": "string", "format": "date-time"}, "store_strategy": {"type": "string", "format": "date-time"}, "resource_plan": {"type": "string", "format": "date-time"}}},
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"version": {"const": 3}}, "required": ["version"]},
+      "then": {
+        "required": ["content_plan_eligibility", "approved_block_plan_transport", "approved_preset_revision", "architecture_selection_revision", "merchant_intent", "store_intelligence", "generation_approval_binding"],
+        "properties": {
+          "content_plan_eligibility": {"$ref": "#/$defs/contentPlanBinding"},
+          "generation_approval_binding": {
+            "required": ["content_plan_eligibility"],
+            "properties": {"content_plan_eligibility": {"$ref": "#/$defs/contentPlanBinding"}}
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "revisionBinding": {"type": ["object", "null"], "additionalProperties": false, "required": ["revision_id", "candidate_revision_id", "approval_checksum"], "properties": {"revision_id": {"type": "string", "minLength": 1}, "candidate_revision_id": {"type": "string", "minLength": 1}, "approval_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}},
+    "contentPlanTargetBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_key", "module_id", "eligibility_state", "actionable", "blocked", "actor", "reason"],
+      "properties": {
+        "target_key": {"$ref": "calinium-content-plan-eligibility.schema.json#/$defs/targetKey"},
+        "module_id": {"$ref": "calinium-content-plan-eligibility.schema.json#/$defs/moduleId"},
+        "eligibility_state": {"enum": ["action_required", "ready_from_authoritative_content", "not_required_omitted_by_policy", "not_required_not_selected", "blocked_critical_confirmation", "unresolved_review_required"]},
+        "actionable": {"type": "boolean"},
+        "blocked": {"type": "boolean"},
+        "actor": {"enum": ["system_policy", "merchant", "operator"]},
+        "reason": {"enum": ["preserved_merchant_or_approved_content_requires_review", "critical_resource_confirmation_required", "resource_eligibility_unresolved", "approved_content_provenance_missing", "unsupported_effective_placement", "omitted_by_policy", "merchant_omitted", "module_not_selected_in_effective_composition", "approved_content_plan_available", "selected_module_requires_content_work"]}
+      }
+    },
+    "contentPlanBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_version", "revision_id", "checksum", "effective_composition_checksum", "stage_resolution_reference", "effective_composition", "targets"],
+      "properties": {
+        "policy_version": {"const": "content-plan-eligibility-v1"},
+        "revision_id": {"type": "string", "pattern": "^cpe_[a-f0-9]{32}$"},
+        "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "effective_composition_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "stage_resolution_reference": {"type": ["string", "null"], "pattern": "^cpsr_[a-f0-9]{24}$"},
+        "effective_composition": {"$ref": "calinium-content-plan-eligibility.schema.json#/$defs/effectiveComposition"},
+        "targets": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"$ref": "#/$defs/contentPlanTargetBinding"}}
+      }
+    },
+    "nullableContentPlanBinding": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["policy_version", "revision_id", "checksum", "effective_composition_checksum", "stage_resolution_reference", "effective_composition", "targets"],
+      "properties": {
+        "policy_version": {"const": "content-plan-eligibility-v1"},
+        "revision_id": {"type": "string", "pattern": "^cpe_[a-f0-9]{32}$"},
+        "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "effective_composition_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "stage_resolution_reference": {"type": ["string", "null"], "pattern": "^cpsr_[a-f0-9]{24}$"},
+        "effective_composition": {"$ref": "calinium-content-plan-eligibility.schema.json#/$defs/effectiveComposition"},
+        "targets": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"$ref": "#/$defs/contentPlanTargetBinding"}}
+      }
+    }
+  }
+}

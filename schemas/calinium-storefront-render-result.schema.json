@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-storefront-render-result.schema.json",
+  "title": "Calinium Storefront Render Result",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "render_id", "request_id", "render_revision", "status", "rendered_at", "architecture", "generation", "route", "viewport", "runtime", "browser", "final_url", "screenshot", "readiness", "browser_observations", "deterministic_validation", "provenance", "error"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "storefront-render-result-v1"},
+    "render_id": {"type": "string", "pattern": "^render-[a-f0-9]{20}$"},
+    "request_id": {"type": "string", "pattern": "^render-request-[a-f0-9]{20}$"},
+    "render_revision": {"type": "string", "const": "storefront-render-v1"},
+    "status": {"type": "string", "enum": ["passed", "failed"]},
+    "rendered_at": {"type": "string", "minLength": 1},
+    "architecture": {"$ref": "calinium-storefront-render-request.schema.json#/properties/architecture"},
+    "generation": {"$ref": "calinium-storefront-render-request.schema.json#/properties/generation"},
+    "route": {"$ref": "calinium-storefront-render-request.schema.json#/properties/routes/items"},
+    "viewport": {"$ref": "calinium-storefront-render-request.schema.json#/properties/viewports/items"},
+    "runtime": {
+      "type": "object",
+      "required": ["mode", "shop_domain", "theme_id", "theme_role", "remote_preview_url", "local_proxy_origin"],
+      "properties": {
+        "mode": {"type": "string", "const": "shopify_development_proxy"},
+        "shop_domain": {"type": "string"},
+        "theme_id": {"type": "string"},
+        "theme_role": {"type": "string", "enum": ["development", "unpublished"]},
+        "remote_preview_url": {"type": ["string", "null"]},
+        "local_proxy_origin": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "browser": {
+      "type": "object",
+      "required": ["engine", "automation", "automation_version", "browser_version"],
+      "properties": {
+        "engine": {"type": "string", "const": "chromium"},
+        "automation": {"type": "string", "const": "playwright"},
+        "automation_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "browser_version": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "final_url": {"type": ["string", "null"]},
+    "screenshot": {
+      "type": ["object", "null"],
+      "required": ["artifact_reference", "sha256", "bytes", "width", "height", "full_page"],
+      "properties": {
+        "artifact_reference": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "full_page": {"type": "boolean", "const": true}
+      },
+      "additionalProperties": false
+    },
+    "readiness": {
+      "type": "object",
+      "required": ["strategy_version", "ready", "document_complete", "landmarks_ready", "fonts_ready", "images_ready", "layout_stable", "reduced_motion", "autoplay_normalized", "lazy_content_exercised", "conditions"],
+      "properties": {
+        "strategy_version": {"type": "string", "const": "storefront-readiness-v1"},
+        "ready": {"type": "boolean"},
+        "document_complete": {"type": "boolean"},
+        "landmarks_ready": {"type": "boolean"},
+        "fonts_ready": {"type": "boolean"},
+        "images_ready": {"type": "boolean"},
+        "layout_stable": {"type": "boolean"},
+        "reduced_motion": {"type": "boolean"},
+        "autoplay_normalized": {"type": "boolean"},
+        "lazy_content_exercised": {"type": "boolean"},
+        "conditions": {"type": "array", "items": {"type": "object"}}
+      },
+      "additionalProperties": false
+    },
+    "architecture_evidence": {
+      "type": ["object", "null"],
+      "required": ["evidence_revision", "profile_id", "profile_version", "selection_revision_id", "route_id", "template_identity", "section_identities", "rendered_section_identities", "artifact_structure_verified", "selected_families", "assertions", "valid"],
+      "properties": {
+        "evidence_revision": {"type": "string", "const": "storefront-architecture-evidence-v1"},
+        "profile_id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"},
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "selection_revision_id": {"type": "string", "pattern": "^architecture-selection-[a-f0-9]{20}$"},
+        "route_id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]},
+        "template_identity": {"type": "string", "pattern": "^templates/[a-z0-9_-]+\\.json$"},
+        "section_identities": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z0-9-]+$"}},
+        "rendered_section_identities": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z0-9-]+$"}},
+        "artifact_structure_verified": {"type": "boolean", "const": true},
+        "selected_families": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["family", "family_id", "family_version", "presenter_ids"],
+            "properties": {
+              "family": {"type": "string"},
+              "family_id": {"type": "string", "pattern": "^family\\.[a-z0-9_]+\\.[a-z0-9_]+\\.v[0-9]+$"},
+              "family_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+              "presenter_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+            },
+            "additionalProperties": false
+          }
+        },
+        "assertions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["family", "family_id", "family_version", "presenter_id", "selector", "matched_count", "passed"],
+            "properties": {
+              "family": {"type": "string"},
+              "family_id": {"type": "string"},
+              "family_version": {"type": "string"},
+              "presenter_id": {"type": "string"},
+              "selector": {"type": "string"},
+              "matched_count": {"type": "integer", "minimum": 0},
+              "passed": {"type": "boolean"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "valid": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "browser_observations": {
+      "type": "object",
+      "required": ["http_status", "console_errors", "page_errors", "failed_resources", "http_failures"],
+      "properties": {
+        "http_status": {"type": ["integer", "null"]},
+        "console_errors": {"type": "array", "items": {"type": "object"}},
+        "page_errors": {"type": "array", "items": {"type": "object"}},
+        "failed_resources": {"type": "array", "items": {"type": "object"}},
+        "http_failures": {"type": "array", "items": {"type": "object"}}
+      },
+      "additionalProperties": false
+    },
+    "objective_observations": {"$ref": "calinium-storefront-objective-observation.schema.json"},
+    "deterministic_validation": {
+      "type": "object",
+      "required": ["valid", "checks"],
+      "properties": {
+        "valid": {"type": "boolean"},
+        "checks": {"type": "array", "minItems": 1, "items": {"type": "object"}}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["capture_purpose", "entity", "artifact_sha256", "request_checksum", "comparison_fixture_revision", "capture_policy_revision"],
+      "properties": {
+        "capture_purpose": {"type": "string"},
+        "entity": {"type": ["object", "null"]},
+        "artifact_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "request_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "comparison_fixture_revision": {"type": "string", "pattern": "^comparison-fixture-[a-f0-9]{20}$"},
+        "capture_policy_revision": {"type": "string", "const": "storefront-capture-policy-v1"}
+      },
+      "additionalProperties": false
+    },
+    "error": {"type": ["object", "null"]}
+  },
+  "additionalProperties": false
+}

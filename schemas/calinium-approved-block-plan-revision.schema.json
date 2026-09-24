@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-approved-block-plan-revision.schema.json",
+  "title": "Calinium Approved Block Plan Revision",
+  "description": "Immutable, project-scoped persistence record for one fully approved Approved Block Plan revision. The complete theme-agnostic plan remains the authoritative content payload.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "plan_id", "revision_id", "schema_version", "parent_revision_id", "organization_id", "project_id", "merchant_scope_id", "approval", "approved_at", "plan_checksum", "resource_snapshot_id", "resource_snapshot_revision_id", "plan", "created_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "plan_id": {"type": "string", "pattern": "^abp_[a-z0-9][a-z0-9_-]*$"},
+    "revision_id": {"type": "string", "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+    "schema_version": {"type": "string", "const": "1.0"},
+    "parent_revision_id": {"type": ["string", "null"], "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+    "organization_id": {"type": "string", "pattern": "^org_[a-z0-9][a-z0-9_-]*$"},
+    "project_id": {"type": "string", "pattern": "^prj_[a-z0-9][a-z0-9_-]*$"},
+    "merchant_scope_id": {"type": "string", "pattern": "^mrc_[a-z0-9][a-z0-9_-]*$"},
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approval_id", "approval_reference", "approval_revision_id", "approved_at"],
+      "properties": {
+        "approval_id": {"type": "string", "pattern": "^aba_[a-z0-9][a-z0-9_-]*$"},
+        "approval_reference": {"type": "string", "minLength": 1, "maxLength": 160},
+        "approval_revision_id": {"type": "string", "pattern": "^abar_[a-z0-9][a-z0-9_-]*$"},
+        "approved_at": {"type": "string", "minLength": 1}
+      }
+    },
+    "approved_at": {"type": "string", "minLength": 1},
+    "plan_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "resource_snapshot_id": {"type": "string", "pattern": "^abps_[a-z0-9][a-z0-9_-]*$"},
+    "resource_snapshot_revision_id": {"type": "string", "pattern": "^abpsr_[a-z0-9][a-z0-9_-]*$"},
+    "plan": {"type": "object"},
+    "created_at": {"type": "string", "minLength": 1}
+  }
+}

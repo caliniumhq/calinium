@@ -1,0 +1,43 @@
+/* Reusable product media component. */
+.co-product-media {
+  scroll-margin-block-start: var(--co-space-5);
+}
+
+.co-product-media__frame {
+  display: grid;
+  min-block-size: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--co-radius-media);
+  background-color: var(--co-color-surface);
+}
+
+.co-product-media__frame > * {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.co-product-media__frame .co-image,
+.co-product-media__frame .co-image__frame,
+.co-product-media__frame .co-image__media {
+  block-size: 100%;
+}
+
+.co-product-media__frame .co-image {
+  border-radius: 0;
+}
+
+.co-product-media__frame .co-image__media,
+.co-product-media__video,
+.co-product-media__external-video,
+.co-product-media__model,
+.co-product-media__fallback {
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+  object-fit: contain;
+}
+
+.co-product-media__model {
+  background-color: var(--co-color-surface);
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-preview-provenance-recovery.schema.json",
+  "title": "Calinium Merchant Flow Preview Provenance Recovery",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "resolver_revision", "recovery_id", "recovery_checksum", "status", "organization_id", "project_id", "connection_id", "canonical_shop", "flow", "artifact", "render", "qa", "target", "source_provenance", "preview_reference", "recovery", "operator", "created_at"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-flow-preview-provenance-recovery-v1"},
+    "resolver_revision": {"const": "merchant-flow-preview-provenance-recovery-resolver-v1"},
+    "recovery_id": {"type": "string", "pattern": "^merchant-flow-preview-provenance-recovery-[a-f0-9]{20}$"},
+    "recovery_checksum": {"$ref": "#/$defs/checksum"},
+    "status": {"const": "legacy_source_unavailable_recovered"},
+    "organization_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "connection_id": {"type": "string", "minLength": 1},
+    "canonical_shop": {"$ref": "#/$defs/shop"},
+    "flow": {"type": "object", "required": ["flow_id", "sequence", "checksum"], "properties": {"flow_id": {"type": "string", "minLength": 1}, "sequence": {"type": "integer", "minimum": 0}, "checksum": {"$ref": "#/$defs/checksum"}}, "additionalProperties": false},
+    "artifact": {"type": "object", "required": ["artifact_id", "checksum"], "properties": {"artifact_id": {"type": "string", "pattern": "^theme-artifact-[a-f0-9]{20}$"}, "checksum": {"$ref": "#/$defs/checksum"}}, "additionalProperties": false},
+    "render": {
+      "type": "object",
+      "required": ["request_id", "request_checksum", "evidence_id", "evidence_checksum", "render_revision", "result_ids", "checksum", "source_theme_unchanged"],
+      "properties": {
+        "request_id": {"type": "string", "pattern": "^merchant-render-request-[a-f0-9]{20}$"},
+        "request_checksum": {"$ref": "#/$defs/checksum"},
+        "evidence_id": {"type": "string", "pattern": "^merchant-render-manifest-[a-f0-9]{20}$"},
+        "evidence_checksum": {"$ref": "#/$defs/checksum"},
+        "render_revision": {"const": "merchant-flow-storefront-render-v1"},
+        "result_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^merchant-render-[a-f0-9]{20}$"}},
+        "checksum": {"$ref": "#/$defs/checksum"},
+        "source_theme_unchanged": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "qa": {
+      "type": "object",
+      "required": ["d1", "d2_7", "founder_review"],
+      "properties": {
+        "d1": {"$ref": "#/$defs/evidence"},
+        "d2_7": {"$ref": "#/$defs/evidence"},
+        "founder_review": {"type": "object", "required": ["review_id", "review_checksum", "decision"], "properties": {"review_id": {"type": "string", "minLength": 1}, "review_checksum": {"$ref": "#/$defs/checksum"}, "decision": {"const": "accepted"}}, "additionalProperties": false}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["shop_domain", "theme_id", "main_theme_id_at_recovery", "main_theme_excluded", "theme_role", "runtime_mode", "runtime_configuration_revision", "render_target_configuration_revision"],
+      "properties": {
+        "shop_domain": {"$ref": "#/$defs/shop"},
+        "theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+        "main_theme_id_at_recovery": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+        "main_theme_excluded": {"const": true},
+        "theme_role": {"const": "development"},
+        "runtime_mode": {"const": "shopify_development_proxy"},
+        "runtime_configuration_revision": {"type": "string", "minLength": 1},
+        "render_target_configuration_revision": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "source_provenance": {
+      "type": "object",
+      "required": ["artifact_source_revision_status", "artifact_source_revision", "historical_render_source_revision_status", "historical_render_source_revision", "binding_source_revision", "recovery_source_revision"],
+      "properties": {
+        "artifact_source_revision_status": {"enum": ["exact", "unavailable_legacy"]},
+        "artifact_source_revision": {"oneOf": [{"$ref": "#/$defs/source"}, {"type": "null"}]},
+        "historical_render_source_revision_status": {"const": "unavailable_legacy"},
+        "historical_render_source_revision": {"type": "null"},
+        "binding_source_revision": {"$ref": "#/$defs/source"},
+        "recovery_source_revision": {"$ref": "#/$defs/source"}
+      },
+      "additionalProperties": false
+    },
+    "preview_reference": {"type": "object", "required": ["kind", "url", "lifecycle", "issued_from"], "properties": {"kind": {"const": "shopify_theme_preview_url"}, "url": {"type": "string", "format": "uri", "pattern": "^https://"}, "lifecycle": {"const": "stable_while_target_exists"}, "issued_from": {"const": "validated_legacy_render_evidence"}}, "additionalProperties": false},
+    "recovery": {"type": "object", "required": ["reason", "evidence_policy", "idempotency_key"], "properties": {"reason": {"const": "historical_render_source_revision_not_provable"}, "evidence_policy": {"const": "checksum_bound_legacy_evidence_without_source_substitution"}, "idempotency_key": {"$ref": "#/$defs/checksum"}}, "additionalProperties": false},
+    "operator": {"type": "object", "required": ["actor_user_id", "role", "explicitly_allowlisted"], "properties": {"actor_user_id": {"type": "string", "minLength": 1}, "role": {"enum": ["owner", "administrator"]}, "explicitly_allowlisted": {"const": true}}, "additionalProperties": false},
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "shop": {"type": "string", "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.myshopify\\.com$"},
+    "evidence": {"type": "object", "required": ["evidence_id", "evidence_checksum", "status"], "properties": {"evidence_id": {"type": "string", "minLength": 1}, "evidence_checksum": {"$ref": "#/$defs/checksum"}, "status": {"type": "string", "minLength": 1}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

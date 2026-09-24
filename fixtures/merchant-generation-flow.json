@@ -1,0 +1,42 @@
+{
+  "fixture_revision": "merchant-generation-flow-fixture-v1",
+  "controlled_cases": {
+    "direct_current": "commerce_dense_store",
+    "direct_editorial": "image_led_editorial_store",
+    "ambiguous": "ambiguous_store"
+  },
+  "identity": {
+    "project_id": "project-e3-controlled",
+    "organization_id": "organization-e3-controlled",
+    "conversation_revision": "conversation-e3-controlled-v1",
+    "store_context": {"connection_id": "shopify-connection-e3-controlled", "shop": "controlled.example.myshopify.com"}
+  },
+  "timestamps": [
+    "2026-08-17T12:00:00.000Z", "2026-08-17T12:00:01.000Z", "2026-08-17T12:00:02.000Z", "2026-08-17T12:00:03.000Z",
+    "2026-08-17T12:00:04.000Z", "2026-08-17T12:00:05.000Z", "2026-08-17T12:00:06.000Z", "2026-08-17T12:00:07.000Z",
+    "2026-08-17T12:00:08.000Z", "2026-08-17T12:00:09.000Z", "2026-08-17T12:00:10.000Z", "2026-08-17T12:00:11.000Z",
+    "2026-08-17T12:00:12.000Z", "2026-08-17T12:00:13.000Z", "2026-08-17T12:00:14.000Z", "2026-08-17T12:00:15.000Z"
+  ],
+  "design_dna": {"revision_id": "design-dna-e3-controlled-v1", "engine_version": "design-dna-v1"},
+  "composition": {"revision_id": "composition-e3-controlled-v1", "content_eligibility_revision": "theme-generator-content-eligibility-v1"},
+  "paid_identity_pending": {"order_id": "custom-theme-order-e3-controlled", "purchase_intent_checksum": "1111111111111111111111111111111111111111111111111111111111111111", "snapshot_id": null, "snapshot_checksum": null},
+  "paid_identity_frozen": {"order_id": "custom-theme-order-e3-controlled", "purchase_intent_checksum": "1111111111111111111111111111111111111111111111111111111111111111", "snapshot_id": "custom-theme-snapshot-e3-controlled", "snapshot_checksum": "2222222222222222222222222222222222222222222222222222222222222222"},
+  "generation_id": "generation-e3-controlled-v1",
+  "artifact": {"artifact_id": "theme-artifact-e3-controlled", "reference": "output/e3-controlled/theme.zip", "checksum": "3333333333333333333333333333333333333333333333333333333333333333", "generation_id": "generation-e3-controlled-v1"},
+  "qa_passed": {
+    "status": "passed", "render_revision": "storefront-render-v1", "render_result_ids": ["render-e3-desktop", "render-e3-mobile"], "render_checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+    "d1": {"status": "passed", "evidence_id": "visual-evaluation-e3-controlled", "evidence_checksum": "5555555555555555555555555555555555555555555555555555555555555555"},
+    "d2_7": {"status": "passed", "evidence_id": "observation-stabilization-e3-controlled", "evidence_checksum": "6666666666666666666666666666666666666666666666666666666666666666"},
+    "human_review_required": false
+  },
+  "qa_review_required": {
+    "status": "review_required", "render_revision": "storefront-render-v1", "render_result_ids": ["render-e3-review-mobile"], "render_checksum": "7777777777777777777777777777777777777777777777777777777777777777",
+    "d1": {"status": "passed", "evidence_id": "visual-evaluation-e3-review", "evidence_checksum": "8888888888888888888888888888888888888888888888888888888888888888"},
+    "d2_7": {"status": "review_required", "evidence_id": "observation-e3-review", "evidence_checksum": "9999999999999999999999999999999999999999999999999999999999999999"},
+    "human_review_required": true
+  },
+  "qa_human_review_needs_fix": {"review_id": "design-review-e3-controlled", "checksum": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "decision": "needs_fix", "repair_class": "responsive_layout"},
+  "approved_repair_resolution": {
+    "repair_class": "responsive_layout", "status": "human_approved", "evidence_id": "repair-human-review-08cc6d9450ca3d8ddf8f", "evidence_checksum": "fb505adc0beac29b8abf542266c0f63f2408cf894ea5dd4aca610eafa372cffe", "human_approved": true, "post_repair_qa_passed": true, "automatic_execution": false
+  }
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    {% render 'meta-tags' %}
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {{ 'tokens.css' | asset_url | stylesheet_tag }}
+
+    <style>
+      {{ settings.type_body_font | font_face: font_display: 'swap' }}
+      {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+
+      :root {
+        --co-font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        --co-font-body-style: {{ settings.type_body_font.style }};
+        --co-font-body-weight: {{ settings.type_body_font.weight }};
+        --co-font-heading-family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+        --co-font-heading-style: {{ settings.type_heading_font.style }};
+        --co-font-heading-weight: {{ settings.type_heading_font.weight }};
+        --co-type-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+        --co-type-heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+        --co-line-height-body: {{ settings.body_line_height }};
+        --co-line-height-heading: {{ settings.heading_line_height }};
+        --co-letter-spacing-heading: {{ settings.heading_letter_spacing }};
+        --co-button-text-transform: {{ settings.button_text_transform }};
+        --co-logo-width: {{ settings.logo_width }}px;
+        --co-page-width: {{ settings.page_width }}px;
+        --co-content-width: {{ settings.content_width }}px;
+        --co-page-gutter: {{ settings.mobile_gutter }}px;
+        --co-section-spacing: {{ settings.section_spacing }}px;
+        --co-grid-gap: {{ settings.grid_gap }}px;
+        --co-radius-button: {{ settings.button_radius }}px;
+        --co-radius-card: {{ settings.card_radius }}px;
+        --co-radius-media: {{ settings.media_radius }}px;
+        --co-radius-input: {{ settings.input_radius }}px;
+        --co-motion-duration: {% if settings.enable_motion %}{{ settings.motion_duration }}ms{% else %}0ms{% endif %};
+      }
+
+      @media (min-width: 48rem) {
+        :root {
+          --co-page-gutter: {{ settings.desktop_gutter }}px;
+        }
+      }
+
+      {% for scheme in settings.color_schemes %}
+        .co-color-scheme-{{ scheme.id }} {
+          --co-color-background: {{ scheme.settings.background }};
+          --co-color-background-gradient: {{ scheme.settings.background_gradient | default: 'none' }};
+          --co-color-surface: {{ scheme.settings.surface }};
+          --co-color-text: {{ scheme.settings.text }};
+          --co-color-text-muted: {{ scheme.settings.text_muted }};
+          --co-color-button: {{ scheme.settings.button }};
+          --co-color-button-label: {{ scheme.settings.button_label }};
+          --co-color-secondary-button: {{ scheme.settings.secondary_button }};
+          --co-color-secondary-button-label: {{ scheme.settings.secondary_button_label }};
+          --co-color-border: {{ scheme.settings.border }};
+          --co-color-accent: {{ scheme.settings.accent }};
+        }
+      {% endfor %}
+    </style>
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'component-primitives.css' | asset_url | stylesheet_tag }}
+    {{ 'section-editorial-pack.css' | asset_url | stylesheet_tag }}
+    {{ 'section-commerce-pack.css' | asset_url | stylesheet_tag }}
+    {{ 'section-brand-storytelling-pack.css' | asset_url | stylesheet_tag }}
+    {{ 'calinium-sections.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'global.js' | asset_url }}" type="module"></script>
+    <script src="{{ 'calinium-sections.js' | asset_url }}" type="module"></script>
+
+    {% if request.page_type == 'product' and product != blank %}
+      {% render 'structured-data-product', product: product %}
+    {% elsif request.page_type == 'article' and article != blank %}
+      {% render 'structured-data-article', article: article %}
+    {% endif %}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="co-color-scheme-{{ settings.default_color_scheme.id | default: 'scheme-1' }}">
+    <a class="co-skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% section 'cart-drawer' %}
+
+    <div class="co-visually-hidden" aria-live="polite" aria-atomic="true" data-global-status></div>
+  </body>
+</html>

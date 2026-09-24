@@ -1,0 +1,48 @@
+{% liquid
+  assign product_media = media
+  assign product_media_loading = loading | default: 'lazy'
+  assign product_media_fetchpriority = fetchpriority | default: 'auto'
+  assign product_media_sizes = sizes | default: '100vw'
+  assign product_media_widths = widths | default: '375, 550, 750, 1000, 1500, 2000'
+  assign product_media_classes = 'co-product-media'
+
+  if class != blank
+    assign product_media_classes = product_media_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if product_media != blank %}
+  <li
+    id="ProductMedia-{{ section_id }}-{{ product_media.id }}"
+    class="{{ product_media_classes | escape }}"
+    data-product-media
+    data-media-id="{{ product_media.id }}"
+    data-media-label="Product media {{ position | default: 1 }}"
+    {% if product_media.preview_image != blank %}data-media-preview-url="{{ product_media.preview_image | image_url: width: 1600 }}"{% endif %}
+    tabindex="-1"
+  >
+    <div class="co-product-media__frame">
+      {% case product_media.media_type %}
+        {% when 'image' %}
+          {% render 'responsive-image',
+            image: product_media,
+            alt: product_media.alt,
+            loading: product_media_loading,
+            fetchpriority: product_media_fetchpriority,
+            sizes: product_media_sizes,
+            widths: product_media_widths,
+            fit: 'contain',
+            class: 'co-product-media__image'
+          %}
+        {% when 'video' %}
+          {{ product_media | video_tag: controls: true, preload: 'metadata', class: 'co-product-media__video' }}
+        {% when 'external_video' %}
+          {{ product_media | external_video_tag: class: 'co-product-media__external-video' }}
+        {% when 'model' %}
+          {{ product_media | model_viewer_tag: class: 'co-product-media__model' }}
+        {% else %}
+          {{ product_media | media_tag: class: 'co-product-media__fallback' }}
+      {% endcase %}
+    </div>
+  </li>
+{% endif %}

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "items": [
+    {"id":"minimal","name":"Minimal","duration_range_ms":[150,200],"easing":"theme_standard","stagger":"none_or_subtle","motion_amount":"low","hover_philosophy":"state_clarity_only","scroll_philosophy":"avoid_nonessential_reveal","reduced_motion_fallback":"disable_nonessential_motion"},
+    {"id":"luxury","name":"Luxury","duration_range_ms":[200,300],"easing":"theme_standard","stagger":"subtle","motion_amount":"low","hover_philosophy":"slow_restrained_feedback","scroll_philosophy":"single_subtle_content_entry","reduced_motion_fallback":"disable_transforms_and_autoplay"},
+    {"id":"expressive","name":"Expressive","duration_range_ms":[200,350],"easing":"theme_standard","stagger":"short_sequence","motion_amount":"medium","hover_philosophy":"clear_feedback_without_layout_shift","scroll_philosophy":"limited_story_reveals","reduced_motion_fallback":"static_final_state"},
+    {"id":"technical","name":"Technical","duration_range_ms":[150,220],"easing":"theme_standard","stagger":"none","motion_amount":"low","hover_philosophy":"functional_state_change","scroll_philosophy":"avoid_motion_unless_navigation_requires_it","reduced_motion_fallback":"static_controls"},
+    {"id":"playful","name":"Playful","duration_range_ms":[180,280],"easing":"theme_standard","stagger":"small_sequence","motion_amount":"medium","hover_philosophy":"friendly_feedback_without_bounce_dependency","scroll_philosophy":"limited_opt_in_reveals","reduced_motion_fallback":"static_final_state"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "compiler_version": "1.0.0",
+  "merchant_summary": {
+    "business_name": "Invalid fixture"
+  },
+  "validation_report": {
+    "valid": false,
+    "errors": ["Fixture intentionally omits required strategy fields."],
+    "warnings": []
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-analysis-first-direction-choice.schema.json",
+  "title": "Calinium analysis-first direction-choice request",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "choice_request_id", "briefing_binding", "question_binding", "options", "selection_rule", "adapter", "safety", "checksum"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "analysis-first-direction-choice-v1"},
+    "choice_request_id": {"type": "string", "pattern": "^analysis-first-direction-choice-[a-f0-9]{20}$"},
+    "briefing_binding": {"type": "object", "required": ["briefing_id", "briefing_checksum"], "properties": {"briefing_id": {"type": "string", "pattern": "^merchant-visual-briefing-[a-f0-9]{20}$"}, "briefing_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "question_binding": {"type": "object", "required": ["question_id", "question_checksum", "selection_outcome_id", "selection_outcome_checksum", "intent_path", "conversation_revision", "merchant_context_checksum"], "properties": {"question_id": {"type": "string", "pattern": "^architecture-question-[a-f0-9]{20}$"}, "question_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "selection_outcome_id": {"type": "string", "pattern": "^architecture-selection-outcome-[a-f0-9]{20}$"}, "selection_outcome_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "intent_path": {"const": "storefront.shopping_mode"}, "conversation_revision": {"type": "string", "minLength": 1}, "merchant_context_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "options": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"type": "object", "required": ["direction_id", "title", "description"], "properties": {"direction_id": {"enum": ["visual_story_led", "direct_efficient"]}, "title": {"enum": ["Visual & story-led", "Direct & efficient"]}, "description": {"enum": ["Immersive imagery, editorial layouts, and discovery through storytelling.", "Clear product access, practical navigation, and faster browsing."]}}, "additionalProperties": false}},
+    "selection_rule": {"type": "object", "required": ["minimum", "maximum", "exactly_one_required"], "properties": {"minimum": {"const": 1}, "maximum": {"const": 1}, "exactly_one_required": {"const": true}}, "additionalProperties": false},
+    "adapter": {"type": "object", "required": ["topic", "answer_contract", "child_merchant_intent_required", "architecture_rerun_count", "second_question_allowed"], "properties": {"topic": {"const": "shopping_mode"}, "answer_contract": {"const": "architecture-material-answer-v1"}, "child_merchant_intent_required": {"const": true}, "architecture_rerun_count": {"const": 1}, "second_question_allowed": {"const": false}}, "additionalProperties": false},
+    "safety": {"type": "object", "required": ["raw_merchant_text_required", "writes_profile_id", "bypasses_e2", "begins_generation"], "properties": {"raw_merchant_text_required": {"const": false}, "writes_profile_id": {"const": false}, "bypasses_e2": {"const": false}, "begins_generation": {"const": false}}, "additionalProperties": false},
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": false
+}

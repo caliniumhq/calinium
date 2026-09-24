@@ -1,0 +1,41 @@
+{
+  "fixture_version": "e5r-r-request-bound-d2-7-schema-semantic-completion-v1",
+  "historical_attempt": {
+    "logical_attempt": 7,
+    "status": "terminal",
+    "failure_category": "d2_7_semantic_validation_failed",
+    "failure_id": "merchant-flow-d2-7-failure-6801a9404c396d1bc610",
+    "failure_checksum": "bc3828498d09ae1a8533e238c305cfc0f7f1d9284bca201999f128c10ba68370",
+    "mutated_by_e5r_r": false
+  },
+  "request_bound_contract": {
+    "contract_version": "request-bound-concrete-observation-schema-v1",
+    "merchant_cell_count": 6,
+    "historical_calibration_cell_count": 12,
+    "alternate_cell_count": 4,
+    "maximum_semantic_attempts": 2,
+    "semantic_cell_coverage_remains_authoritative": true
+  },
+  "retained_evidence": {
+    "project_id": "prj_public-fixture-0001",
+    "flow_id": "merchant-flow-00000000000000000001",
+    "job_id": "merchant-flow-job-00000000000000000001",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "d1_evaluation_id": "merchant-flow-d1-evaluation-00000000000000000001",
+    "d2_7_parent_request_id": "merchant-flow-d2-7-request-00000000000000000001",
+    "render_capture_count": 8,
+    "d1_status": "passed",
+    "d1_finding_count": 0
+  },
+  "safety": {
+    "attempt_8_created": false,
+    "historical_attempt_mutated": false,
+    "openai_calls": 0,
+    "shopify_calls": 0,
+    "shopify_writes": 0,
+    "theme_mutations": 0,
+    "deployment_changes": 0,
+    "automatic_retry_allowed": false,
+    "automatic_repair_allowed": false
+  }
+}

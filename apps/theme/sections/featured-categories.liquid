@@ -1,0 +1,342 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign categories_heading_id = 'FeaturedCategoriesHeading-' | append: section.id
+  assign categories_classes = 'co-featured-categories co-commerce-section co-commerce-section--align-' | append: section.settings.text_alignment
+  assign categories_classes = categories_classes | append: ' co-featured-categories--' | append: section.settings.text_style
+  assign categories_classes = categories_classes | append: ' co-color-scheme-' | append: section.settings.color_scheme
+  if section.settings.featured_first
+    assign categories_classes = categories_classes | append: ' co-featured-categories--featured-first'
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ categories_classes }}" style="--co-category-desktop-columns: {{ section.settings.columns_desktop }}; --co-category-mobile-columns: {{ section.settings.columns_mobile }};" {% if section.settings.heading != blank %}aria-labelledby="{{ categories_heading_id }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.description, id: categories_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-commerce-section__header' %}
+    {% if section.blocks.size > 0 %}
+      <div class="co-featured-categories__grid" role="list">
+        {% for block in section.blocks %}
+          {% liquid
+            assign category_url = block.settings.link
+            assign category_title = block.settings.heading
+            assign category_text = block.settings.text
+            assign category_image = block.settings.image
+            if category_url == blank and block.settings.collection != blank
+              assign category_url = block.settings.collection.url
+            endif
+            if category_title == blank and block.settings.collection != blank
+              assign category_title = block.settings.collection.title
+            endif
+            if category_image == blank and block.settings.collection != blank
+              assign category_image = block.settings.collection.featured_image
+            endif
+            if category_url == blank and block.settings.page != blank
+              assign category_url = block.settings.page.url
+            endif
+            if category_title == blank and block.settings.page != blank
+              assign category_title = block.settings.page.title
+            endif
+            if category_text == blank and block.settings.page != blank
+              assign category_text = block.settings.page.content | strip_html | truncate: 120
+            endif
+          %}
+          <article class="co-featured-categories__item" role="listitem" {{ block.shopify_attributes }}>
+            {% capture category_content %}
+              {% if category_image != blank %}<div class="co-featured-categories__media">{% render 'responsive-image', image: category_image, loading: 'lazy', sizes: '(min-width: 48rem) 25vw, 50vw', widths: '240, 360, 535, 750, 1000', ratio: section.settings.image_ratio, class: 'co-featured-categories__image' %}</div>{% endif %}
+              <div class="co-featured-categories__content">
+                {% if block.settings.category_icon != 'none' %}<span class="co-featured-categories__icon">{% render 'icon', icon: block.settings.category_icon, size: 22, decorative: true %}</span>{% endif %}
+                {% if category_title != blank %}<h3 class="co-featured-categories__title">{{ category_title | strip_html | escape }}</h3>{% endif %}
+                {% if category_text != blank %}<p class="co-featured-categories__text">{{ category_text | strip_html | escape }}</p>{% endif %}
+              </div>
+            {% endcapture %}
+            {% if category_url != blank %}<a class="co-featured-categories__link" href="{{ category_url }}">{{ category_content }}</a>{% else %}{{ category_content }}{% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% elsif request.design_mode %}
+      <p class="co-commerce-section__empty">{{ 'sections.featured_categories.empty' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.featured_categories.name",
+  "tag": "section",
+  "class": "co-section-featured-categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.shared.settings.eyebrow.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.shared.settings.heading.label",
+      "default": "Featured categories"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.shared.settings.description.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.shared.settings.heading_size.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.shared.options.small"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.shared.options.standard"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.shared.options.large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shared.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shared.options.center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.featured_categories.settings.columns_desktop.label",
+      "default": "4",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:sections.featured_categories.settings.columns_mobile.label",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.shared.options.one"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.shared.options.two"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "t:sections.featured_categories.settings.text_style.label",
+      "default": "below",
+      "options": [
+        {
+          "value": "below",
+          "label": "t:sections.shared.options.below"
+        },
+        {
+          "value": "overlay",
+          "label": "t:sections.shared.options.overlay"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.shared.settings.image_ratio.label",
+      "default": "square",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.shared.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.shared.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.shared.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "featured_first",
+      "label": "t:sections.featured_categories.settings.featured_first.label",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.shared.settings.desktop_top_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.shared.settings.desktop_bottom_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "t:sections.shared.settings.mobile_top_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "t:sections.shared.settings.mobile_bottom_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "t:sections.featured_categories.blocks.category_name",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.shared.settings.collection.label"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "t:sections.featured_categories.settings.category_page.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.shared.settings.link.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.shared.settings.image.label"
+        },
+        {
+          "type": "select",
+          "id": "category_icon",
+          "label": "t:sections.shared.settings.icon.label",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.shared.options.none"
+            },
+            {
+              "value": "tag",
+              "label": "t:sections.shared.options.tag"
+            },
+            {
+              "value": "gift",
+              "label": "t:sections.shared.options.gift"
+            },
+            {
+              "value": "sparkle",
+              "label": "t:sections.shared.options.sparkle"
+            },
+            {
+              "value": "leaf",
+              "label": "t:sections.shared.options.leaf"
+            },
+            {
+              "value": "home",
+              "label": "t:sections.shared.options.home"
+            },
+            {
+              "value": "diamond",
+              "label": "t:sections.shared.options.diamond"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.shared.settings.heading.label"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.shared.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.featured_categories.preset",
+      "blocks": [
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        },
+        {
+          "type": "category"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

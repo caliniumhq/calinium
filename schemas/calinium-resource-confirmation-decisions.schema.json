@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-resource-confirmation-decisions.schema.json",
+  "title": "Calinium resource confirmation decisions",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policy_version", "policy_revision_id", "policy_checksum", "items", "revision_id", "checksum"],
+  "properties": {
+    "policy_version": {"const": "resource-confirmation-eligibility-v1"},
+    "policy_revision_id": {"type": "string", "pattern": "^rce_[a-f0-9]{32}$"},
+    "policy_checksum": {"$ref": "#/$defs/checksum"},
+    "revision_id": {"type": "string", "pattern": "^rcd_[a-f0-9]{32}$"},
+    "checksum": {"$ref": "#/$defs/checksum"},
+    "items": {"type": "array", "items": {"$ref": "#/$defs/item"}}
+  },
+  "$defs": {
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "actor": {"type": ["object", "null"], "additionalProperties": false, "required": ["type", "user_id"], "properties": {"type": {"enum": ["merchant", "system"]}, "user_id": {"type": ["string", "null"]}}},
+    "provenance": {"$ref": "calinium-resource-confirmation-eligibility.schema.json#/$defs/provenance"},
+    "item": {
+      "type": "object", "additionalProperties": false,
+      "required": ["item_id", "confirmation_id", "classification", "state", "actor", "decided_at", "policy_item_checksum", "provenance", "checksum"],
+      "properties": {
+        "item_id": {"type": "string", "pattern": "^rci_[a-f0-9]{24}$"},
+        "confirmation_id": {"type": "string", "minLength": 1},
+        "classification": {"enum": ["auto_verifiable", "merchant_confirmation_required", "optional_omittable", "critical_confirmation_required", "unresolved_review_required"]},
+        "state": {"enum": ["verified_automatically", "awaiting_confirmation", "merchant_confirmed", "omitted_by_policy", "merchant_omitted", "unresolved_review_required"]},
+        "actor": {"$ref": "#/$defs/actor"},
+        "decided_at": {"type": ["string", "null"], "format": "date-time"},
+        "policy_item_checksum": {"$ref": "#/$defs/checksum"},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "checksum": {"$ref": "#/$defs/checksum"}
+      }
+    }
+  }
+}

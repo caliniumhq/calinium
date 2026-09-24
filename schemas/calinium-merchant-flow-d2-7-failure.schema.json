@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-d2-7-failure.schema.json",
+  "title": "Calinium Merchant Flow D2.7 Sanitized Failure Evidence",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "contract_version",
+    "failure_id",
+    "checksum",
+    "status",
+    "occurred_at",
+    "stage",
+    "classification",
+    "request",
+    "provider",
+    "transport",
+    "processing",
+    "operation",
+    "binding",
+    "historical_projection",
+    "safety"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-flow-d2-7-failure-v1"},
+    "failure_id": {"type": "string", "pattern": "^merchant-flow-d2-7-failure-[a-f0-9]{20}$"},
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "status": {"const": "failed"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "stage": {
+      "enum": [
+        "provider_initialization",
+        "provider_configuration",
+        "provider_transport",
+        "provider_http",
+        "response_decode",
+        "structured_output_parse",
+        "schema_validation",
+        "semantic_validation",
+        "evaluation_contract",
+        "unknown",
+        "historical_unknown"
+      ]
+    },
+    "classification": {
+      "type": "object",
+      "required": ["category", "failure_class", "retryable", "retry_policy"],
+      "properties": {
+        "category": {
+          "enum": [
+            "d2_7_provider_client_initialization_failed",
+            "d2_7_provider_configuration_failed",
+            "d2_7_provider_authentication_failed",
+            "d2_7_provider_access_failed",
+            "d2_7_provider_rate_limited",
+            "d2_7_provider_quota_failed",
+            "d2_7_provider_rate_or_quota_limited",
+            "d2_7_provider_timeout",
+            "d2_7_provider_network_failed",
+            "d2_7_provider_unavailable",
+            "d2_7_provider_rejected",
+            "d2_7_response_invalid",
+            "d2_7_schema_validation_failed",
+            "d2_7_semantic_validation_failed",
+            "d2_7_evaluation_failed",
+            "d2_7_unknown_provider_failure"
+          ]
+        },
+        "failure_class": {
+          "enum": [
+            "provider_client_initialization_failed",
+            "credentials_missing",
+            "network_unavailable",
+            "authentication_failed",
+            "access_rejected",
+            "rate_limited",
+            "quota_or_billing_failed",
+            "rate_or_quota_limited",
+            "request_too_large",
+            "provider_unavailable",
+            "provider_rejected",
+            "timeout",
+            "network_failure",
+            "malformed_http_response",
+            "incomplete_response",
+            "provider_refusal",
+            "missing_output",
+            "malformed_structured_output",
+            "schema_validation_failed",
+            "schema_semantic_contract_mismatch",
+            "semantic_validation_failed",
+            "evaluation_contract_failed",
+            "unknown_provider_failure",
+            "historical_detail_unavailable"
+          ]
+        },
+        "retryable": {"type": ["boolean", "null"]},
+        "retry_policy": {
+          "enum": [
+            "source_remediation_required",
+            "bounded_provider_retry_exhausted_manual_resume_allowed",
+            "configuration_change_required",
+            "capacity_or_billing_review_required",
+            "not_retryable",
+            "operator_review_required",
+            "historical_unknown_requires_review"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "request": {
+      "type": "object",
+      "required": ["request_id", "request_checksum"],
+      "properties": {
+        "request_id": {"type": "string", "pattern": "^merchant-flow-d2-7-request-[a-f0-9]{20}$"},
+        "request_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "provider": {
+      "type": "object",
+      "required": ["interface_version", "provider_id", "provider_version", "provider_kind", "provider_revision", "model_id", "model_configuration_revision"],
+      "properties": {
+        "interface_version": {"type": "string", "minLength": 1, "maxLength": 120},
+        "provider_id": {"type": "string", "minLength": 1, "maxLength": 160},
+        "provider_version": {"type": "string", "minLength": 1, "maxLength": 80},
+        "provider_kind": {"const": "live_multimodal"},
+        "provider_revision": {"type": "string", "minLength": 1, "maxLength": 160},
+        "model_id": {"type": "string", "minLength": 1, "maxLength": 120},
+        "model_configuration_revision": {"type": ["string", "null"], "minLength": 1, "maxLength": 160}
+      },
+      "additionalProperties": false
+    },
+    "transport": {
+      "type": "object",
+      "required": ["http_status", "response_received", "timeout", "network_failure", "provider_error_code", "provider_error_type"],
+      "properties": {
+        "http_status": {"type": ["integer", "null"], "minimum": 100, "maximum": 599},
+        "response_received": {"type": ["boolean", "null"]},
+        "timeout": {"type": ["boolean", "null"]},
+        "network_failure": {"type": ["boolean", "null"]},
+        "provider_error_code": {"type": ["string", "null"], "pattern": "^[a-z][a-z0-9_.:-]{0,79}$"},
+        "provider_error_type": {"type": ["string", "null"], "pattern": "^[a-z][a-z0-9_.:-]{0,79}$"}
+      },
+      "additionalProperties": false
+    },
+    "processing": {
+      "type": "object",
+      "required": ["parse_failure", "schema_validation_failure", "semantic_validation_failure"],
+      "properties": {
+        "parse_failure": {"type": ["boolean", "null"]},
+        "schema_validation_failure": {"type": ["boolean", "null"]},
+        "semantic_validation_failure": {"type": ["boolean", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "required": ["attempt_id", "attempt_sequence", "attempts", "retry_count"],
+      "properties": {
+        "attempt_id": {"type": "string", "pattern": "^merchant-flow-d2-7-attempt-[a-f0-9]{20}$"},
+        "attempt_sequence": {"type": "integer", "minimum": 1},
+        "attempts": {"type": "integer", "minimum": 0},
+        "retry_count": {"type": "integer", "minimum": 0},
+        "semantic_attempts": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["provider_attempt_id", "semantic_attempt", "transport_attempts", "response_received", "structured_output_parse", "schema_validation", "semantic_validation", "first_semantic_rule_id", "diagnostic_counts", "completeness_retry_requested", "latency_ms", "usage"],
+            "properties": {
+              "provider_attempt_id": {"type": "string", "pattern": "^merchant-flow-d2-7-provider-attempt-[a-f0-9]{20}$"},
+              "semantic_attempt": {"type": "integer", "minimum": 1, "maximum": 2},
+              "transport_attempts": {"type": "integer", "minimum": 0},
+              "response_received": {"type": "boolean"},
+              "structured_output_parse": {"enum": ["passed", "failed", "not_reached"]},
+              "schema_validation": {"enum": ["passed", "failed", "not_reached"]},
+              "semantic_validation": {"enum": ["passed", "failed", "not_reached"]},
+              "first_semantic_rule_id": {"type": ["string", "null"], "pattern": "^[a-z][a-z0-9_.:-]{0,79}$"},
+              "diagnostic_counts": {
+                "type": "object",
+                "required": ["missing_cell_count", "duplicate_cell_count", "unknown_cell_count", "missing_objective_finding_count", "unknown_objective_finding_count", "contradicted_objective_finding_count"],
+                "properties": {
+                  "missing_cell_count": {"type": "integer", "minimum": 0},
+                  "duplicate_cell_count": {"type": "integer", "minimum": 0},
+                  "unknown_cell_count": {"type": "integer", "minimum": 0},
+                  "missing_objective_finding_count": {"type": "integer", "minimum": 0},
+                  "unknown_objective_finding_count": {"type": "integer", "minimum": 0},
+                  "contradicted_objective_finding_count": {"type": "integer", "minimum": 0}
+                },
+                "additionalProperties": false
+              },
+              "completeness_retry_requested": {"type": "boolean"},
+              "latency_ms": {"type": ["integer", "null"], "minimum": 0},
+              "usage": {
+                "oneOf": [
+                  {"type": "null"},
+                  {
+                    "type": "object",
+                    "required": ["input_tokens", "output_tokens", "total_tokens"],
+                    "properties": {
+                      "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+                      "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+                      "total_tokens": {"type": ["integer", "null"], "minimum": 0}
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "binding": {
+      "type": "object",
+      "required": [
+        "flow_id",
+        "project_id",
+        "organization_id",
+        "job_id",
+        "job_attempt",
+        "artifact_id",
+        "artifact_checksum",
+        "evidence_directory_reference",
+        "render_request_id",
+        "render_request_checksum",
+        "render_checksum",
+        "render_result_ids",
+        "route_ids",
+        "viewport_ids",
+        "d1_evidence_id",
+        "d1_evidence_checksum",
+        "d1_policy_revision",
+        "runtime_configuration_revision",
+        "render_target_configuration_revision",
+        "development_shop",
+        "development_theme_id",
+        "deployed_source_revision"
+      ],
+      "properties": {
+        "flow_id": {"type": "string", "minLength": 1, "maxLength": 160},
+        "project_id": {"type": "string", "minLength": 1, "maxLength": 160},
+        "organization_id": {"type": "string", "minLength": 1, "maxLength": 160},
+        "job_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 160},
+        "job_attempt": {"type": ["integer", "null"], "minimum": 1},
+        "artifact_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "artifact_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "evidence_directory_reference": {"type": "string", "pattern": "^output/(?:[^/]+/)*[^/]+$", "maxLength": 500},
+        "render_request_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "render_request_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "render_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "render_result_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 200}},
+        "route_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["homepage", "collection", "product", "cart"]}},
+        "viewport_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 80}},
+        "d1_evidence_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "d1_evidence_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "d1_policy_revision": {"type": "string", "minLength": 1, "maxLength": 160},
+        "runtime_configuration_revision": {"type": "string", "minLength": 1, "maxLength": 160},
+        "render_target_configuration_revision": {"type": "string", "minLength": 1, "maxLength": 160},
+        "development_shop": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"},
+        "development_theme_id": {"type": "string", "minLength": 1, "maxLength": 80},
+        "deployed_source_revision": {"type": ["string", "null"], "minLength": 1, "maxLength": 160}
+      },
+      "additionalProperties": false
+    },
+    "historical_projection": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["source_attempt", "persisted_job_status", "persisted_failure_category", "provider_detail_availability"],
+          "properties": {
+            "source_attempt": {"type": "integer", "minimum": 1},
+            "persisted_job_status": {"enum": ["retryable", "terminal", "failed", "unknown"]},
+            "persisted_failure_category": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,79}$"},
+            "provider_detail_availability": {"const": "not_retained"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "raw_provider_response_persisted",
+        "provider_message_persisted",
+        "provider_headers_persisted",
+        "prompt_payload_persisted",
+        "credentials_persisted",
+        "stack_trace_persisted",
+        "fixture_fallback_used",
+        "approved_replay_used",
+        "automatic_retry_allowed",
+        "automatic_repair_allowed",
+        "shopify_write_allowed"
+      ],
+      "properties": {
+        "raw_provider_response_persisted": {"const": false},
+        "provider_message_persisted": {"const": false},
+        "provider_headers_persisted": {"const": false},
+        "prompt_payload_persisted": {"const": false},
+        "credentials_persisted": {"const": false},
+        "stack_trace_persisted": {"const": false},
+        "fixture_fallback_used": {"const": false},
+        "approved_replay_used": {"const": false},
+        "automatic_retry_allowed": {"const": false},
+        "automatic_repair_allowed": {"const": false},
+        "shopify_write_allowed": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "description": "Isolated invalid generator-validation scenarios. Each case exercises one failure reason and must never create a read-only package.",
+  "fixtures": [
+    {
+      "fixture_id": "blocked-draft-readiness",
+      "handler": "blocked_draft_readiness",
+      "expected_failure_phase": "generator approval gate",
+      "expected_error_category": "draft_readiness",
+      "expected_error_family": "Draft readiness must be Ready",
+      "generation_permitted": false,
+      "package_creation_permitted": false
+    },
+    {
+      "fixture_id": "duplicate-mapped-section",
+      "handler": "duplicate_mapped_section",
+      "expected_failure_phase": "draft section resolution",
+      "expected_error_category": "duplicate_section",
+      "expected_error_family": "mapping contains duplicate section",
+      "generation_permitted": false,
+      "package_creation_permitted": false
+    },
+    {
+      "fixture_id": "unknown-section-identity",
+      "handler": "unknown_section_identity",
+      "expected_failure_phase": "draft section resolution",
+      "expected_error_category": "unknown_section",
+      "expected_error_family": "is not installed in theme-section-capabilities.json",
+      "generation_permitted": false,
+      "package_creation_permitted": false
+    },
+    {
+      "fixture_id": "invalid-section-enum",
+      "handler": "invalid_section_enum",
+      "expected_failure_phase": "section setting generation",
+      "expected_error_category": "invalid_enum",
+      "expected_error_family": "has a value outside its documented accepted values",
+      "generation_permitted": false,
+      "package_creation_permitted": false
+    },
+    {
+      "fixture_id": "unapproved-generation-request",
+      "handler": "unapproved_generation_request",
+      "expected_failure_phase": "generator approval gate",
+      "expected_error_category": "approval",
+      "expected_error_family": "A positive approval object is required",
+      "generation_permitted": false,
+      "package_creation_permitted": false
+    }
+  ]
+}

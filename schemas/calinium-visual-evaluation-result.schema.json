@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-evaluation-result.schema.json",
+  "title": "Calinium Visual Evaluation Result",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "evaluation_id", "evaluation_request_id", "status", "request", "findings", "summary", "quality_gate", "annotation", "error"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "visual-evaluation-result-v1"},
+    "evaluation_id": {"type": "string", "pattern": "^visual-evaluation-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string", "pattern": "^visual-evaluation-request-[a-f0-9]{20}$"},
+    "status": {"type": "string", "enum": ["evaluated", "failed"]},
+    "request": {"$ref": "calinium-visual-evaluation-request.schema.json"},
+    "findings": {"type": "array", "items": {"$ref": "calinium-visual-finding.schema.json"}},
+    "summary": {"type": "object", "required": ["total", "blocker", "high", "medium", "low", "info", "unreviewed"], "properties": {"total": {"type": "integer", "minimum": 0}, "blocker": {"type": "integer", "minimum": 0}, "high": {"type": "integer", "minimum": 0}, "medium": {"type": "integer", "minimum": 0}, "low": {"type": "integer", "minimum": 0}, "info": {"type": "integer", "minimum": 0}, "unreviewed": {"type": "integer", "minimum": 0}}, "additionalProperties": false},
+    "quality_gate": {"$ref": "#/$defs/qualityGate"},
+    "annotation": {"type": "object", "required": ["supported", "required", "authoritative_screenshot_modified", "derived_artifact_reference"], "properties": {"supported": {"type": "boolean"}, "required": {"type": "boolean", "const": false}, "authoritative_screenshot_modified": {"type": "boolean", "const": false}, "derived_artifact_reference": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "error": {"type": ["object", "null"]}
+  },
+  "$defs": {
+    "qualityGate": {"type": "object", "required": ["status", "policy_revision", "automatic_repair_allowed", "human_review_required", "reason_codes"], "properties": {"status": {"type": "string", "enum": ["pass", "pass_with_review", "fail_review_required"]}, "policy_revision": {"type": "string", "const": "storefront-visual-evaluation-policy-v1"}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "human_review_required": {"type": "boolean"}, "reason_codes": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9_]+$"}}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

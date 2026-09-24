@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "1.0.0",
+  "policy_id": "calinium_storefront_design_evaluation",
+  "policy_revision": "storefront-design-evaluation-policy-v1",
+  "provider_interface_version": "storefront-design-provider-v1",
+  "evaluator_version": "storefront-design-evaluator-v1",
+  "required_repeat_runs": 2,
+  "dimensions": [
+    {"id": "visual_hierarchy", "version": "1.0.0"},
+    {"id": "spacing_and_rhythm", "version": "1.0.0"},
+    {"id": "typographic_hierarchy", "version": "1.0.0"},
+    {"id": "image_media_dominance", "version": "1.0.0"},
+    {"id": "composition", "version": "1.0.0"},
+    {"id": "product_discovery", "version": "1.0.0"},
+    {"id": "pdp_communication", "version": "1.0.0"},
+    {"id": "navigation_header_clarity", "version": "1.0.0"},
+    {"id": "mobile_adaptation_quality", "version": "1.0.0"},
+    {"id": "design_dna_coherence", "version": "1.0.0"},
+    {"id": "perceived_polish", "version": "1.0.0"},
+    {"id": "architecture_differentiation", "version": "1.0.0"}
+  ],
+  "judgments": ["strong", "acceptable", "concern", "not_assessable"],
+  "importance": ["high", "medium", "low", "note"],
+  "confidence": ["high", "medium", "low"],
+  "responsibilities": ["architecture_level", "design_token_level", "composition_level", "merchant_content_level", "data_quality_level", "uncertain"],
+  "recommendation_categories": ["hierarchy", "spacing_rhythm", "typography", "media_treatment", "composition", "content_omission", "product_discovery", "pdp_communication", "navigation_clarity", "responsive_adaptation", "design_dna", "polish", "architecture_differentiation"],
+  "review_decisions": ["accepted", "needs_fix", "false_positive", "preference_only", "merchant_content_issue", "deferred"],
+  "gate_statuses": ["approved", "approved_with_notes", "repair_recommended", "repair_required", "review_required"],
+  "automatic_repair_allowed": false,
+  "single_numeric_score_allowed": false
+}

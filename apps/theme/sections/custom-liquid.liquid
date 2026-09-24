@@ -1,0 +1,32 @@
+{% liquid
+  assign custom_liquid_classes = 'co-custom-liquid co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  if section.settings.full_width
+    assign custom_liquid_classes = custom_liquid_classes | append: ' co-custom-liquid--full-width'
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ custom_liquid_classes }}" {{ section.shopify_attributes }}>
+  <div class="co-custom-liquid__inner{% unless section.settings.full_width %} co-page-width{% endunless %}">
+    {{ section.settings.custom_liquid }}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.custom_liquid.name",
+  "tag": "section",
+  "class": "co-section-custom-liquid",
+  "settings": [
+    { "type": "liquid", "id": "custom_liquid", "label": "t:sections.shared.settings.custom_liquid.label" },
+    { "type": "checkbox", "id": "full_width", "label": "t:sections.shared.settings.full_width.label", "default": false },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "presets": [{ "name": "t:sections.custom_liquid.preset" }]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-architecture-material-question.schema.json",
+  "title": "Calinium architecture material-question request",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "question_id", "topic", "intent_path", "stage", "prompt", "choices", "status", "answer_status", "allowance", "originating_selection", "conversation_revision", "merchant_context_checksum", "created_at", "raw_conversation_text_stored", "checksum"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "architecture-material-question-v1"},
+    "question_id": {"type": "string", "pattern": "^architecture-question-[a-f0-9]{20}$"},
+    "topic": {"const": "shopping_mode"},
+    "intent_path": {"const": "storefront.shopping_mode"},
+    "stage": {"const": "brand"},
+    "prompt": {"type": "string", "minLength": 1},
+    "choices": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "object", "required": ["value", "label"], "properties": {"value": {"enum": ["image_led", "information_led"]}, "label": {"type": "string", "minLength": 1}}, "additionalProperties": false}},
+    "status": {"const": "awaiting_answer"},
+    "answer_status": {"const": "unanswered"},
+    "allowance": {"type": "object", "required": ["maximum_questions", "question_number", "consumed"], "properties": {"maximum_questions": {"const": 1}, "question_number": {"const": 1}, "consumed": {"const": true}}, "additionalProperties": false},
+    "originating_selection": {"type": "object", "required": ["outcome_id", "outcome_checksum", "selection_engine_version", "policy_revision", "store_intelligence_revision", "store_intelligence_checksum", "merchant_intent_revision", "merchant_intent_checksum"], "properties": {"outcome_id": {"type": "string", "pattern": "^architecture-selection-outcome-[a-f0-9]{20}$"}, "outcome_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "selection_engine_version": {"const": "architecture-selection-v2"}, "policy_revision": {"const": "architecture-selection-policy-v1"}, "store_intelligence_revision": {"type": ["string", "null"]}, "store_intelligence_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "merchant_intent_revision": {"type": "string", "pattern": "^merchant-intent-[a-f0-9]{20}$"}, "merchant_intent_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "conversation_revision": {"type": "string", "minLength": 1},
+    "merchant_context_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "raw_conversation_text_stored": {"const": false},
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": false
+}

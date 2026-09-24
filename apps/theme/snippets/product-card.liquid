@@ -1,0 +1,252 @@
+{% comment %}
+  Calinium's canonical reusable product card.
+
+  See README.md for the supported API. Legacy arguments `show_availability`,
+  `enable_quick_add`, and `text_alignment` remain supported for saved sections.
+{% endcomment %}
+
+{% liquid
+  assign product_card_product = product
+  assign product_card_primary_image = product_card_product.featured_media.preview_image | default: product_card_product.featured_image
+  assign product_card_secondary_image = product_card_product.media[1].preview_image
+  assign product_card_selected_variant = product_card_product.selected_or_first_available_variant
+  assign product_card_image_ratio = image_ratio | default: 'portrait'
+  assign product_card_placeholder_ratio = product_card_image_ratio
+  assign product_card_image_loading = image_loading | default: 'lazy'
+  assign product_card_image_fetchpriority = image_fetchpriority | default: 'auto'
+  assign product_card_image_sizes = image_sizes | default: '50vw'
+  assign product_card_image_widths = image_widths | default: '165, 360, 535, 750, 1000'
+  assign product_card_alignment = card_alignment | default: text_alignment | default: 'left'
+  assign product_card_classes = 'co-product-card co-product-card--align-' | append: product_card_alignment
+  assign product_card_show_vendor = false
+  assign product_card_show_rating = false
+  assign product_card_show_secondary_image = false
+  assign product_card_show_compare_at_price = true
+  assign product_card_show_sale_badge = true
+  assign product_card_show_sold_out_badge = true
+  assign product_card_show_inventory = false
+  assign product_card_show_unit_price = true
+  assign product_card_show_swatches = false
+  assign product_card_new_badge_tag = new_badge_tag | default: '' | strip
+  assign product_card_new_badge_label = new_badge_label | default: 'New' | strip
+  assign product_card_limited_badge_tag = limited_badge_tag | default: '' | strip
+  assign product_card_limited_badge_label = limited_badge_label | default: 'Limited' | strip
+  assign product_card_has_new_tag = false
+  assign product_card_has_limited_tag = false
+  assign product_card_enable_quick_view_hook = false
+  assign product_card_enable_wishlist_hook = false
+  assign product_card_quick_add_requested = false
+  assign product_card_quick_add_mode = 'none'
+  assign product_card_rating = product_card_product.metafields.reviews.rating.value
+  assign product_card_rating_count = product_card_product.metafields.reviews.rating_count
+  assign product_card_is_on_sale = false
+  assign product_card_show_badges = false
+  assign product_card_price_item = blank
+  assign product_card_image_alt = product_card_primary_image.alt | default: product_card_product.title
+  assign product_card_choose_options_label = 'products.product.choose_options' | t
+  assign product_card_current_price_label = current_price_label
+  assign product_card_compare_at_price_label = compare_at_price_label
+  assign product_card_from_label = from_label
+
+  if product_card_current_price_label == blank
+    assign product_card_current_price_label = 'products.product.price' | t
+  endif
+  if product_card_compare_at_price_label == blank
+    assign product_card_compare_at_price_label = 'products.product.compare_at_price' | t
+  endif
+  if product_card_from_label == blank
+    assign product_card_from_label = 'products.product.from' | t
+  endif
+
+  if product_card_image_ratio == 'adapt'
+    assign product_card_image_ratio = 'natural'
+  endif
+  if product_card_placeholder_ratio == 'adapt' or product_card_placeholder_ratio == 'natural'
+    assign product_card_placeholder_ratio = 'square'
+  endif
+
+  if show_vendor
+    assign product_card_show_vendor = true
+  endif
+  if show_rating and product_card_rating != blank
+    assign product_card_show_rating = true
+  endif
+  if show_secondary_image and product_card_secondary_image != blank
+    assign product_card_show_secondary_image = true
+  endif
+  if show_compare_at_price == false
+    assign product_card_show_compare_at_price = false
+  endif
+  if show_sale_badge == false
+    assign product_card_show_sale_badge = false
+  endif
+  if show_sold_out_badge == false or show_availability == false
+    assign product_card_show_sold_out_badge = false
+  endif
+  if show_inventory
+    assign product_card_show_inventory = true
+  endif
+  if show_swatches
+    assign product_card_show_swatches = true
+  endif
+  if show_new_badge and product_card_new_badge_tag != blank and product_card_product.tags contains product_card_new_badge_tag
+    assign product_card_has_new_tag = true
+  endif
+  if show_limited_badge and product_card_limited_badge_tag != blank and product_card_product.tags contains product_card_limited_badge_tag
+    assign product_card_has_limited_tag = true
+  endif
+  if enable_quick_view_hook
+    assign product_card_enable_quick_view_hook = true
+  endif
+  if enable_wishlist_hook
+    assign product_card_enable_wishlist_hook = true
+  endif
+  if show_unit_price == false
+    assign product_card_show_unit_price = false
+  endif
+  if show_quick_add or enable_quick_add
+    assign product_card_quick_add_requested = true
+  endif
+
+  if product_card_product.compare_at_price > product_card_product.price
+    assign product_card_is_on_sale = true
+  endif
+
+  unless product_card_product.price_varies
+    assign product_card_price_item = product_card_selected_variant
+  endunless
+
+  if product_card_show_sold_out_badge and product_card_product.available == false
+    assign product_card_show_badges = true
+  elsif product_card_show_sale_badge and product_card_is_on_sale and product_card_product.available
+    assign product_card_show_badges = true
+  elsif product_card_has_new_tag or product_card_has_limited_tag
+    assign product_card_show_badges = true
+  endif
+
+  if product_card_quick_add_requested and product_card_product.available
+    if product_card_product.has_only_default_variant
+      assign product_card_quick_add_mode = 'single-variant'
+    else
+      assign product_card_quick_add_mode = 'product-link'
+    endif
+  endif
+
+  if product_card_show_secondary_image
+    assign product_card_classes = product_card_classes | append: ' co-product-card--has-secondary-image'
+  endif
+  if product_card_primary_image == blank
+    assign product_card_classes = product_card_classes | append: ' co-product-card--has-placeholder-image'
+  endif
+  if product_card_quick_add_mode != 'none'
+    assign product_card_classes = product_card_classes | append: ' co-product-card--has-quick-add'
+  endif
+  if class != blank
+    assign product_card_classes = product_card_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if product_card_product != blank %}
+  <article class="{{ product_card_classes | escape }}"{% if product_card_enable_quick_view_hook %} data-quick-view-product-url="{{ product_card_product.url | escape }}"{% endif %}{% if product_card_enable_wishlist_hook %} data-wishlist-product-handle="{{ product_card_product.handle | escape }}"{% endif %}>
+    <a class="co-product-card__link" href="{{ product_card_product.url | escape }}">
+      <div class="co-product-card__media">
+        {% if product_card_primary_image != blank %}
+          {% render 'responsive-image',
+            image: product_card_primary_image,
+            alt: product_card_image_alt,
+            loading: product_card_image_loading,
+            fetchpriority: product_card_image_fetchpriority,
+            sizes: product_card_image_sizes,
+            widths: product_card_image_widths,
+            ratio: product_card_image_ratio,
+            class: 'co-product-card__image'
+          %}
+          {% if product_card_show_secondary_image %}
+            <div class="co-product-card__secondary-image" aria-hidden="true">
+              {% render 'responsive-image', image: product_card_secondary_image, alt: '', loading: 'lazy', sizes: product_card_image_sizes, widths: product_card_image_widths, ratio: product_card_image_ratio, class: 'co-product-card__image' %}
+            </div>
+          {% endif %}
+        {% else %}
+          <div class="co-image co-image--ratio-{{ product_card_placeholder_ratio }} co-product-card__placeholder" aria-hidden="true">
+            <div class="co-image__frame">{{ 'product-1' | placeholder_svg_tag: 'co-product-card__placeholder-svg' }}</div>
+          </div>
+        {% endif %}
+
+        {% if product_card_show_badges %}
+          <div class="co-product-card__badges">
+            {% if product_card_show_sold_out_badge and product_card_product.available == false %}
+              <span class="co-product-card__badge co-product-card__badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+            {% elsif product_card_show_sale_badge and product_card_is_on_sale %}
+              <span class="co-product-card__badge co-product-card__badge--sale">{{ 'products.product.sale' | t }}</span>
+            {% endif %}
+            {% if product_card_has_new_tag %}<span class="co-product-card__badge co-product-card__badge--new">{{ product_card_new_badge_label | escape }}</span>{% endif %}
+            {% if product_card_has_limited_tag %}<span class="co-product-card__badge co-product-card__badge--limited">{{ product_card_limited_badge_label | escape }}</span>{% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="co-product-card__details">
+        {% if product_card_show_vendor and product_card_product.vendor != blank %}
+          <p class="co-product-card__vendor">{{ product_card_product.vendor | escape }}</p>
+        {% endif %}
+
+        <h3 class="co-product-card__title">{{ product_card_product.title | escape }}</h3>
+
+        {% render 'price',
+          product: product_card_product,
+          item: product_card_price_item,
+          show_currency: show_currency,
+          show_compare_at_price: product_card_show_compare_at_price,
+          show_unit_price: product_card_show_unit_price,
+          from_label: product_card_from_label,
+          current_price_label: product_card_current_price_label,
+          compare_at_price_label: product_card_compare_at_price_label
+        %}
+
+        {% if product_card_show_swatches %}
+          {% assign product_card_swatch_count = 0 %}
+          {% capture product_card_swatches %}
+            {% for option in product_card_product.options_with_values %}
+              {% for option_value in option.values %}
+                {% if option_value.swatch != blank and product_card_swatch_count < 6 %}
+                  {% assign product_card_swatch_count = product_card_swatch_count | plus: 1 %}
+                  <span class="co-product-card__swatch" title="{{ option_value | escape }}"{% if option_value.swatch.color != blank %} style="--co-product-card-swatch: {{ option_value.swatch.color }};"{% endif %}>
+                    {% if option_value.swatch.image != blank %}<img src="{{ option_value.swatch.image | image_url: width: 48 }}" alt="" width="24" height="24" loading="lazy">{% endif %}
+                  </span>
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          {% endcapture %}
+          {% if product_card_swatch_count > 0 %}<span class="co-product-card__swatches" aria-label="{{ 'products.product.swatch_count' | t: count: product_card_swatch_count | escape }}">{{ product_card_swatches }}</span>{% endif %}
+        {% endif %}
+
+        {% if product_card_show_rating %}
+          <p class="co-product-card__rating" aria-label="{{ 'products.product.rating_label' | t: rating: product_card_rating.rating, scale: product_card_rating.scale_max | escape }}">
+            <span aria-hidden="true">★</span>
+            <span aria-hidden="true">{{ product_card_rating.rating | round: 1 }} / {{ product_card_rating.scale_max }}</span>
+            {% if product_card_rating_count != blank %}
+              <span class="co-visually-hidden">{{ 'products.product.review_count' | t: count: product_card_rating_count }}</span>
+            {% endif %}
+          </p>
+        {% endif %}
+
+        {% if product_card_show_inventory %}
+          <div class="co-product-card__inventory">
+            {% render 'product-inventory', variant: product_card_selected_variant %}
+          </div>
+        {% endif %}
+      </div>
+    </a>
+
+    {% case product_card_quick_add_mode %}
+      {% when 'single-variant' %}
+        <div class="co-product-card__quick-add">
+          {% render 'product-form', product: product_card_product, section_id: section_id, id_suffix: product_card_product.id, show_price: false, show_sku: false, show_inventory: false, show_quantity: false, variant_picker_type: 'dropdown', show_payment_button: false %}
+        </div>
+      {% when 'product-link' %}
+        <div class="co-product-card__quick-add">
+          {% render 'button', label: product_card_choose_options_label, url: product_card_product.url, variant: 'secondary', full_width: true, class: 'co-product-card__quick-add-link' %}
+        </div>
+    {% endcase %}
+  </article>
+{% endif %}

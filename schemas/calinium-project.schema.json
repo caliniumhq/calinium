@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-project.schema.json",
+  "title": "Calinium project",
+  "description": "The durable unit of merchant work. It owns interview sessions and Merchant Profile revisions.",
+  "type": "object",
+  "required": ["version", "id", "organization_id", "workspace_id", "name", "business_name", "country", "icon", "status", "created_by_user_id", "created_at", "updated_at", "current_merchant_profile_id"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^prj_[a-z0-9-]+$"},
+    "organization_id": {"type": "string", "pattern": "^org_[a-z0-9-]+$"},
+    "workspace_id": {"type": "string", "pattern": "^wsp_[a-z0-9-]+$"},
+    "name": {"type": "string", "minLength": 1},
+    "business_name": {"type": "string", "minLength": 1},
+    "country": {"type": "string", "pattern": "^[A-Z]{2}$"},
+    "website_url": {"type": ["string", "null"]},
+    "shopify_store_url": {"type": ["string", "null"]},
+    "icon": {"type": ["string", "null"]},
+    "status": {"type": "string", "enum": ["active", "archived"]},
+    "created_by_user_id": {"type": "string", "pattern": "^usr_[a-z0-9-]+$"},
+    "created_at": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "minLength": 1},
+    "current_merchant_profile_id": {"type": ["string", "null"], "pattern": "^mpr_[a-z0-9-]+$"}
+  },
+  "additionalProperties": false
+}

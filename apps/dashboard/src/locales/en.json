@@ -1,0 +1,390 @@
+{
+  "app": {
+    "name": "Calinium Dashboard",
+    "loading": "Loading your interview…",
+    "retry": "Try again",
+    "unexpected_error": "We could not complete that action. Your saved answers have not been changed.",
+    "runtime_error_eyebrow": "Calinium needs a moment",
+    "runtime_error_title": "This page could not finish loading.",
+    "runtime_error_description": "Your project and approvals are safe. Refresh Calinium to continue.",
+    "runtime_error_retry": "Refresh Calinium"
+  },
+  "embedded_auth": {
+    "eyebrow": "Calinium for Shopify",
+    "title": "Opening your creative workspace",
+    "description": "Calinium is securely confirming your Shopify session.",
+    "retry": "Try again"
+  },
+  "welcome": {
+    "eyebrow": "Calinium Dashboard",
+    "title": "Welcome to Calinium",
+    "description": "Let’s design your Shopify store together.",
+    "time": "Estimated time: 8–12 minutes",
+    "start": "Start interview",
+    "resume": "Resume saved interview",
+    "resume_detail": "You have an interview in progress.",
+    "exit": "Return to project"
+  },
+  "progress": {
+    "label": "Interview progress",
+    "step": "Step {current} of {total}",
+    "complete": "{percent}% complete",
+    "remaining_one": "About 1 minute remaining",
+    "remaining_many": "About {minutes} minutes remaining"
+  },
+  "navigation": {
+    "previous": "Previous",
+    "next": "Continue",
+    "review": "Review your answers",
+    "skip": "Skip optional questions",
+    "save_exit": "Save and exit",
+    "cancel": "Cancel interview",
+    "edit": "Edit",
+    "back_to_interview": "Return to interview"
+  },
+  "autosave": {
+    "saving": "Saving…",
+    "saved": "Saved just now",
+    "saved_at": "Saved {time}",
+    "error": "Changes need attention before they can be saved.",
+    "idle": "Autosave is ready"
+  },
+  "question": {
+    "required": "Required",
+    "optional": "Optional",
+    "choose_one": "Choose one option",
+    "choose_all": "Choose all that apply",
+    "yes": "Yes",
+    "no": "No",
+    "add_tag": "Add",
+    "tag_placeholder": "Add an item",
+    "remove_tag": "Remove {tag}",
+    "not_available": "Not available",
+    "upload_placeholder": "A file can be provided later.",
+    "image_placeholder": "An image can be provided later.",
+    "currency_hint": "Enter an amount without a currency symbol.",
+    "color_picker": "{question} colour picker",
+    "input_error": "Check this answer"
+  },
+  "summary": {
+    "eyebrow": "Review",
+    "title": "Review your store brief",
+    "description": "Confirm that these merchant-provided details are correct before Calinium creates a Merchant Profile.",
+    "profile_title": "Merchant Profile preview",
+    "confirm": "Confirm and create Merchant Profile",
+    "confirmation_title": "Create Merchant Profile?",
+    "confirmation_description": "This confirms your interview summary. Calinium will generate a Merchant Profile only; it will not generate a strategy or change your Shopify theme.",
+    "confirm_action": "Create Merchant Profile",
+    "dismiss": "Keep editing"
+  },
+  "completion": {
+    "eyebrow": "Complete",
+    "title": "Your Merchant Profile is ready",
+    "description": "Your confirmed profile is ready for the next approved Calinium workflow. No storefront strategy has been generated.",
+    "profile": "View Merchant Profile",
+    "start_over": "Start a new interview",
+    "return_to_project": "Return to project"
+  },
+  "cancel": {
+    "title": "Cancel this interview?",
+    "description": "Cancelling marks this local interview session as abandoned. It cannot be resumed.",
+    "confirm": "Cancel interview",
+    "dismiss": "Keep working"
+  },
+  "validation": {
+    "step_incomplete": "Complete the required answers in this step before continuing.",
+    "summary_incomplete": "Complete all required interview answers before reviewing your summary.",
+    "generic": "Review the highlighted answers."
+  },
+  "sidebar": {
+    "label": "Interview steps",
+    "current": "Current step"
+  },
+  "profile": {
+    "brand": "Brand",
+    "industry": "Industry",
+    "audience": "Audience",
+    "style": "Style",
+    "goals": "Goals"
+  },
+  "auth": {
+    "eyebrow": "Calinium",
+    "create_title": "Create your workspace",
+    "create_description": "Start a secure, private home for every brand you build with Calinium.",
+    "sign_in_title": "Welcome back",
+    "sign_in_description": "Sign in to continue with your projects and saved work.",
+    "full_name": "Your name",
+    "organization_name": "Organization name",
+    "email": "Email address",
+    "password": "Password",
+    "password_hint": "Use at least 12 characters.",
+    "create_action": "Create account",
+    "sign_in_action": "Sign in",
+    "working": "Working…",
+    "has_account": "Already have an account?",
+    "new_account": "New to Calinium?"
+  },
+  "shell": {
+    "wordmark": "Calinium",
+    "primary_navigation": "Dashboard navigation",
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "settings": "Settings",
+    "sign_out": "Sign out",
+    "account_for": "Account for {name}"
+  },
+  "home": {
+    "eyebrow": "Workspace",
+    "title": "Good to see you, {name}",
+    "description": "Every project keeps its interview, Merchant Profile, and future storefront work together.",
+    "create_project": "Create project",
+    "projects": "Projects",
+    "interviews": "Interviews in progress",
+    "profiles": "Merchant Profiles",
+    "recent_interviews": "Recent interviews",
+    "recent_profiles": "Merchant Profiles",
+    "interview_in_progress": "In progress",
+    "interview_complete": "Complete",
+    "recent_activity": "Recent activity",
+    "view_all": "View all",
+    "empty_projects": "Create the first project for this workspace.",
+    "empty_activity": "Your workspace activity will appear here.",
+    "empty_interviews": "Start an interview from a project to see it here.",
+    "empty_profiles": "Confirmed Merchant Profiles will appear here."
+  },
+  "project_form": {
+    "eyebrow": "New project",
+    "title": "Begin with the brand",
+    "description": "A project is the durable home for one business, its interview, Merchant Profile, and future approved work.",
+    "name": "Project name",
+    "business_name": "Business name",
+    "country": "Country code",
+    "website": "Website (optional)",
+    "shopify": "Shopify store (optional)",
+    "icon": "Project icon",
+    "icon_choice": "Use {icon} as the project icon",
+    "cancel": "Cancel",
+    "create": "Create project",
+    "creating": "Creating…"
+  },
+  "project": {
+    "ready": "Ready",
+    "locked": "Locked",
+    "design": "Design with Calinium",
+    "design_description": "Continue the Creative Director conversation and review your storefront direction.",
+    "start_designing": "Start Designing",
+    "interview": "Merchant Interview",
+    "profile": "Merchant Profile",
+    "assets": "Assets",
+    "strategy": "Strategy",
+    "theme": "Theme",
+    "resume_interview": "Resume interview",
+    "start_interview": "Start interview",
+    "view_profile": "View Merchant Profile",
+    "profile_pending": "Complete the interview to create a Merchant Profile.",
+    "assets_placeholder": "Brand assets will be collected in the next approved phase.",
+    "assets_description": "Upload and manage the approved source assets for this project.",
+    "open_assets": "Open Asset Library",
+    "locked_description": "This workflow is intentionally unavailable in the current phase.",
+    "activity": "Project activity",
+    "empty_activity": "Project activity will appear here."
+  },
+  "settings": {
+    "eyebrow": "Settings",
+    "title": "Account and workspace",
+    "description": "Manage the identity and preferences used by this Calinium workspace.",
+    "profile": "Profile",
+    "organization": "Organization",
+    "organization_name": "Organization name",
+    "preferences": "Preferences",
+    "locale": "Language",
+    "english": "English",
+    "security": "Security",
+    "security_description": "Email and password sign-in is active. Additional sign-in methods will be added through the authentication provider boundary.",
+    "shopify": "Shopify connections",
+    "shopify_description": "Shopify connection is intentionally unavailable in this phase.",
+    "save": "Save changes",
+    "saved": "Your changes have been saved."
+  },
+  "activity": {
+    "account_created": "Account created",
+    "project_created": "Project created",
+    "interview_created": "Interview started",
+    "interview_resumed": "Interview resumed",
+    "interview_progress_saved": "Interview progress saved",
+    "merchant_profile_created": "Merchant Profile created",
+    "interview_abandoned": "Interview cancelled",
+    "asset_uploaded": "Asset uploaded",
+    "asset_removed": "Asset removed",
+    "asset_metadata_updated": "Asset metadata updated",
+    "logo_palette_extracted": "Logo colour suggestions generated",
+    "shopify_file_categorized": "Shopify file categorized",
+    "website_reference_updated": "Website reference updated",
+    "shopify_store_reference_updated": "Shopify store reference updated",
+    "colors_confirmed": "Brand colours confirmed",
+    "typography_updated": "Typography preferences updated",
+    "inspiration_reference_updated": "Inspiration references updated",
+    "competitor_reference_updated": "Competitor references updated",
+    "creative_director_started": "Creative Director conversation started",
+    "creative_director_restarted": "Creative Director conversation restarted",
+    "creative_director_message_saved": "Creative Director conversation updated",
+    "creative_director_understanding_revised": "Business understanding revised",
+    "creative_brief_prepared": "Brand Blueprint prepared",
+    "creative_brief_approved": "Brand Blueprint approved",
+    "creative_brief_revision_requested": "Brand Blueprint revision requested",
+    "store_strategy_recommendation_reviewed": "Store Strategy recommendation reviewed",
+    "store_strategy_approved": "Store Strategy approved",
+    "store_resources_updated": "Store Resources updated",
+    "storefront_generation_blocked": "Storefront generation is waiting for resources",
+    "storefront_generated_for_review": "Storefront generated for review",
+    "creative_director_stage_viewed": "Creative Director stage updated",
+    "shopify_connection_started": "Shopify connection started",
+    "shopify_connection_completed": "Shopify store connected",
+    "shopify_connection_assigned": "Shopify store added to this project",
+    "shopify_project_bound": "Project connected to this Shopify store",
+    "shopify_connection_disconnected": "Shopify store disconnected",
+    "shopify_resources_synchronized": "Shopify resources refreshed",
+    "shopify_resource_approved": "Shopify resource approved",
+    "shopify_resource_rejected": "Shopify resource not approved",
+    "shopify_resource_approval_revoked": "Shopify resource approval removed",
+    "shopify_preview_ready": "Shopify preview prepared",
+    "shopify_preview_failed": "Shopify preview needs attention",
+    "custom_theme_purchase_started": "Custom theme purchase started",
+    "custom_theme_purchase_resumed": "Custom theme purchase resumed",
+    "custom_theme_payment_confirmed": "Custom theme payment confirmed",
+    "custom_theme_generation_started": "Custom theme package preparation started",
+    "custom_theme_generation_ready": "Custom theme package ready",
+    "custom_theme_generation_failed": "Custom theme package needs attention"
+  },
+  "assets": {
+    "eyebrow": "Project assets",
+    "title": "Asset Library",
+    "description": "Secure, project-scoped source files for this merchant. Files remain private to this workspace.",
+    "upload_asset": "Upload asset",
+    "choose_file": "Choose file",
+    "replace_logo": "Replace logo",
+    "uploading": "Uploading…",
+    "uploaded": "Uploaded",
+    "logo_preview": "Uploaded logo preview",
+    "logo_upload_hint": "PNG, JPEG, and WebP files are accepted. SVG files are intentionally not accepted.",
+    "filter_label": "Filter assets by type",
+    "open": "Open",
+    "remove": "Remove",
+    "edit_details": "Edit details",
+    "display_title": "Display title",
+    "alt_text": "Alt text",
+    "notes": "Notes",
+    "save_details": "Save details",
+    "saving": "Saving…",
+    "details_saved": "Asset details saved.",
+    "status_ready": "Ready for use",
+    "referenced_by_profile": "Referenced by a confirmed Merchant Profile",
+    "shopify_files_eyebrow": "Connected Shopify files",
+    "shopify_files_title": "Available from your Shopify store",
+    "shopify_files_description": "These are real files discovered from the connected store. Categorize and approve only the files Calinium may use.",
+    "shopify_file": "Shopify file",
+    "shopify_image": "Image from your Shopify Files",
+    "shopify_video": "Video from your Shopify Files",
+    "shopify_file_unavailable": "This file is no longer available from Shopify.",
+    "category": "Use this file as",
+    "categories": { "unclassified": "Choose a use", "logo": "Logo", "hero": "Hero image", "product": "Product image", "lifestyle": "Lifestyle image", "campaign": "Campaign image", "other": "Other reference" },
+    "category_saved": "File category saved.",
+    "approval_saved": "This Shopify file is approved for the Resource Plan.",
+    "rejection_saved": "This Shopify file will not be used.",
+    "approval_removed": "Approval removed.",
+    "approve_for_plan": "Approve for Resource Plan",
+    "remove_approval": "Remove approval",
+    "do_not_use": "Do not use",
+    "approved_for_plan": "Approved for the Resource Plan",
+    "review_before_use": "Categorize and approve this file before Calinium can use it.",
+    "uploaded_assets": "Uploaded project assets",
+    "empty": "No assets match this filter yet.",
+    "back_to_project": "Return to project",
+    "delete_title": "Remove this asset?",
+    "delete_description": "This removes the stored file and marks its asset record as deleted.",
+    "delete_profile_warning": "A confirmed Merchant Profile references this asset. Removing it preserves the profile trace but makes the file unavailable. Continue only if that is intended.",
+    "delete_confirm": "Remove asset",
+    "removed_with_profile_warning": "The asset was removed. A confirmed profile still records its historical reference."
+  },
+  "asset_types": {
+    "all": "All assets", "logo": "Logo", "alternate_logo": "Alternate logo", "favicon": "Favicon", "brand_guidelines": "Brand guidelines", "font_reference": "Font reference", "product_image": "Product image", "lifestyle_image": "Lifestyle image", "campaign_image": "Campaign image", "video": "Video", "inspiration_screenshot": "Inspiration screenshot", "competitor_screenshot": "Competitor screenshot", "miscellaneous_reference": "Reference"
+  },
+  "colors": {
+    "primary": "Primary", "secondary": "Secondary", "accent": "Accent", "background": "Background", "text": "Text",
+    "extract": "Extract from logo", "extracting": "Extracting…", "extraction_note": "Suggestions are generated locally from a supported PNG logo. Select one to approve it; nothing is applied automatically.", "suggestions_label": "Suggested logo colours", "logo_required": "Upload and select a PNG logo before extracting colours.",
+    "text_background": "Text on background", "button_primary": "Button text on primary", "primary_background": "Primary on background", "acceptable": "Acceptable", "caution": "Caution", "failing": "Fails AA guidance"
+  },
+  "references": {
+    "entry": "Reference {number}", "add": "Add reference", "remove": "Remove", "name": "Name", "url": "Website URL", "reason": "Why it is useful", "traits": "Visual traits (comma separated)", "relationship": "Market relationship", "screenshot": "Optional screenshot", "screenshot_added": "Screenshot added"
+  },
+  "profile_view": {
+    "eyebrow": "Merchant Profile", "description": "A merchant-friendly record of confirmed business and brand context. Strategy generation remains unavailable in this phase.", "edit": "Edit interview", "business": "Business", "industry": "Industry", "stage": "Business stage", "model": "Business model", "outcomes": "Desired outcomes", "existing_presence": "Existing presence", "website": "Website", "shopify": "Shopify store", "brand_direction": "Brand direction", "freedom": "Creative freedom", "colors": "Colours", "typography": "Typography", "assets": "Existing assets", "view_assets": "View Asset Library", "inspiration": "Inspiration", "competitors": "Competitors", "not_provided": "Not provided", "raw_json": "Developer: view raw JSON", "back_to_project": "Return to project"
+  },
+  "creative_director": {
+    "landing": {
+      "eyebrow": "Calinium Creative Director",
+      "title": "A storefront designed around your business.",
+      "description": "Tell Calinium what makes your business distinct. We’ll recommend a considered storefront direction for you to review.",
+      "start": "Start Designing",
+      "browse": "Browse Premium Themes",
+      "continue_title": "Continue designing",
+      "themes_eyebrow": "Need something ready today?",
+      "themes_title": "Premium themes",
+      "themes_description": "Calinium One is available as a premium Shopify theme while the tailored storefront journey is being prepared."
+    },
+    "progress": { "label": "Storefront design progress" },
+    "stages": {
+      "conversation": "Conversation", "understanding": "Understanding", "blueprint": "Brand Blueprint", "strategy": "Store Strategy", "resources": "Store Resources", "offer": "Your theme", "generation": "Generation", "delivery": "Delivery", "preview": "Preview", "finish": "Finish"
+    },
+    "actions": {
+      "continue": "Continue", "continue_later": "Continue later", "back": "Back", "restart": "Restart conversation", "edit": "Edit", "revise": "Revise", "request_revision": "Request revision", "approve": "Approve", "approve_strategy": "Approve Store Strategy", "reject": "Reject", "save": "Save", "cancel": "Cancel", "regenerate": "Regenerate"
+    },
+    "common": { "not_known": "Not confirmed yet", "calinium_will_recommend": "Calinium will recommend this after learning a little more." },
+    "status": {
+      "pending": "Pending", "paid": "Paid", "staging_authorized": "Staging authorized — no charge", "failed": "Needs attention", "cancelled": "Cancelled", "refunded": "Refunded", "declined": "Declined", "expired": "Expired", "invalid": "Needs attention", "approved": "Approved", "rejected": "Rejected", "revision_requested": "Revision requested", "not_connected": "Not connected", "not_started": "Not started", "queued": "Queued", "specification_building": "Preparing specification", "package_generating": "Preparing package", "validating": "Validating", "generation_failed": "Generation needs attention", "validation_failed": "Validation needs attention", "blocked": "Blocked", "running": "In progress", "awaiting_resources": "Waiting for resources", "generated_for_review": "Ready for review", "ready_for_review": "Ready for review", "preview_unavailable": "Preview needs attention", "not_available": "Not available", "sync_required": "Ready to refresh", "synchronizing": "Refreshing", "ready": "Ready", "degraded": "Needs attention", "reauthorization_required": "Reconnect needed", "disconnected": "Disconnected", "revoked": "No longer approved", "unavailable": "Unavailable", "deleted": "No longer available", "stale": "Changed since approval"
+    },
+    "conversation": {
+      "eyebrow": "A short conversation", "title": "Let’s begin with your business.", "description": "One question at a time. You can pause whenever you need to.", "starting": "Starting your conversation…", "calinium": "Calinium", "you": "You", "thinking": "Calinium is considering your answer", "message_label": "Your answer", "placeholder": "Write your answer…", "unknown": "I don't know", "decide": "You decide"
+    },
+    "understanding": {
+      "eyebrow": "Understanding", "title": "Here’s what I understood.", "description": "Review the essentials before Calinium prepares your Brand Blueprint.", "business": "Business", "audience": "Audience", "goals": "Goals", "brand": "Brand", "products": "Products", "positioning": "Positioning", "summary": "Summary", "ready": "This is enough context for Calinium to prepare a useful Brand Blueprint.", "missing": "A few essential details are still needed before Calinium can prepare a useful Brand Blueprint.", "create_blueprint": "Prepare my Brand Blueprint"
+    },
+    "blueprint": {
+      "eyebrow": "Brand Blueprint", "title": "A considered picture of your business.", "description": "This is Calinium’s working understanding—not a final decision. Edit anything that does not feel right.", "business": "Business", "audience": "Audience", "brand": "Brand", "goals": "Goals", "content": "Content", "assumptions": "Assumptions", "unknowns": "Still to learn", "confidence": "How complete this feels", "confidence_value": "{value}% of the critical business context is confirmed.", "approval_title": "Does this feel right?", "approval_body": "Approve the Brand Blueprint and Calinium will recommend the best storefront direction for your business."
+    },
+    "approval": { "pending": "Ready for your review", "approved": "Approved", "rejected": "Revision requested", "revision_requested": "Revision requested" },
+    "strategy": {
+      "eyebrow": "Store Strategy", "title": "A storefront direction designed for your business.", "description": "These are recommendations. Keep what feels right and ask Calinium to revisit what does not.", "homepage": "Homepage", "navigation": "Navigation", "typography": "Text style", "colors": "Color direction", "product_pages": "Product pages", "collections": "Collections", "motion": "Motion", "recommendations": "Key recommendations", "your_note": "Your note:", "revision_label": "What would you like to change?", "approval_title": "Ready to move forward?", "approval_body": "Once you approve this Store Strategy, Calinium will ask only for the real resources it needs. No storefront is generated yet.", "areas": { "design": "Design direction", "homepage": "Homepage", "color": "Color direction", "typography": "Text style" }
+    },
+    "resources": {
+      "eyebrow": "Store Resources", "title": "Choose the real materials Calinium can use.", "description": "Calinium only works with resources you approve. Nothing is invented or pulled from your Shopify store automatically.", "strategy_reconciled": "Your approved Store Strategy changed what Calinium needs. Please review these choices and save again before continuing.", "field_label": "{section} {kind}", "selection_needed": "Still needed: {items}.", "validation_summary": "Calinium still needs the following approved resources:", "blocker_detail": "{label}: {detail}", "required_asset": "Required brand asset", "section": { "editorial_hero": "Hero", "craftsmanship": "Craftsmanship", "featured_collection": "Featured collection" }, "field_kind": { "image": "imagery", "video": "video", "collection": "collection", "product": "product", "menu": "navigation", "asset": "asset" }, "shopify": { "eyebrow": "Shopify", "title": "Connect your Shopify store", "description": "Connect a store only when you are ready to review the specific catalog and theme resources Calinium may use.", "connect_title": "Connect your Shopify store", "connect_description": "Calinium will ask Shopify only for the catalog, navigation, files, markets, and theme information needed to prepare your storefront. You choose what Calinium may use.", "domain": "Your Shopify store address", "connect": "Connect Shopify", "connected_title": "Shopify store connected", "last_sync": "Last refreshed {time}", "not_synced": "Resources have not been refreshed yet.", "missing_permissions": "This connection needs additional Shopify permission before it can be used.", "check": "Check connection", "refresh": "Refresh resources", "reconnect": "Reconnect Shopify", "disconnect": "Disconnect", "sync_before_approval": "Refresh this Shopify store before reviewing what Calinium can use.", "empty_resources": "Shopify did not return any resources to review yet.", "review_title": "Review what Calinium may use", "review_description": "Approve only the products, collections, navigation, media, and preview target that belong in this storefront.", "available": "Available", "unavailable": "No longer available", "approve": "Approve", "reject": "Do not use", "revoke": "Remove approval", "no_resource_counts": "No Shopify resources are available yet." }, "assets": { "title": "Your brand assets", "description": "Upload or review the images, video, and documents Calinium may use.", "open": "Open Asset Library" }, "requests": "What Calinium needs", "request_description": "For {section}", "request_count": "Needed across {count} parts of your storefront.", "choose_asset": "Choose an approved asset", "choose_resource": "Choose an approved resource", "no_asset": "Choose a resource", "keep_empty": "Keep this optional item empty", "approval_note": "Saving confirms only the resources you have chosen. Calinium will keep anything else unresolved.", "save": "Save my resource choices", "required_assets": "Required brand assets", "asset_needed": "Calinium needs an approved asset before this storefront can be prepared.", "kind": { "product": "Products", "collection": "Collections", "menu": "Navigation", "image": "Images", "video": "Video", "content": "Store content", "confirmation": "Your confirmation", "file": "Shopify media", "product_media": "Product media", "theme": "Preview target" }, "kind_help": { "product": "Connect and approve products before selecting them.", "collection": "Connect and approve collections before selecting them.", "menu": "Connect and approve navigation before selecting it.", "content": "This content remains available for review when a supported source is connected.", "confirmation": "Calinium will keep this decision for the next review." }
+    },
+    "generation": {
+      "eyebrow": "Generation", "title": "Preparing your storefront.", "description": "Calinium only reports work that has actually completed. You can return to resources at any time.", "action": "Generate storefront", "working": "Preparing storefront…", "return_resources": "Return to Store Resources", "stages": { "preparing": "Preparing your storefront", "configuration": "Creating your storefront structure", "accessibility": "Reviewing accessibility", "storefront": "Preparing the review package", "resource_review": "Waiting for approved resources", "validation": "Checking approved inputs" }
+    },
+    "offer": {
+      "eyebrow": "Your custom storefront", "title": "Review your custom theme.", "description": "This package is based only on the direction and resources you approved.", "summary_label": "Custom theme summary", "price": "Custom theme price", "price_unavailable": "Price is available after setup", "price_note": "Payment is required before package generation begins.", "direction": "Creative direction", "resources": "Approved resources", "resources_count": "{count} selected resources", "output": "What you’ll receive", "output_default": "A validated Shopify theme ZIP for manual installation.", "pages_sections": "Planned pages and sections", "needs_attention": "A few items need your attention", "return_resources": "Return to Store Resources", "purchase": "Purchase and Generate Theme", "confirm_development_payment": "Confirm development payment and generate", "confirm_staging_validation": "Authorize staging generation — no Shopify charge", "staging_no_charge": "LEGACY_EXAMPLE staging validation — no Shopify charge", "verify_shopify_payment": "Check Shopify approval", "awaiting_shopify_approval": "Awaiting your approval in Shopify. Calinium will verify payment before preparing anything.", "verifying_shopify_payment": "Verifying your Shopify approval…", "resume_generation": "Resume generation", "ready": "Your theme is ready", "payment_unavailable": "Payment is not available in this environment yet.", "notice": "Calinium will prepare a downloadable storefront package. It will not modify or publish your Shopify theme automatically.", "working": "Preparing your order…", "loading": "Checking the approved storefront inputs…", "failure_stage": "Where this stopped: {stage}"
+    },
+    "delivery": {
+      "eyebrow": "Your theme package", "title": "Your custom storefront is ready.", "description": "Download the validated package when you are ready to install it in Shopify.", "validation": "Package validation", "validation_passed": "The package completed Calinium’s configured validation checks.", "validation_needs_attention": "The package needs attention before it can be installed.", "downloads": "Downloads", "download_theme": "Download Shopify theme ZIP", "download_specification": "Download theme specification", "download_validation": "Download validation report", "not_ready": "This package is not ready to download yet.", "installation": "Install it manually in Shopify", "install_step_one": "Download the Shopify theme ZIP.", "install_step_two": "In Shopify, add the ZIP as a new unpublished theme.", "install_step_three": "Review the theme before choosing whether to publish it.", "notice": "Calinium has not modified or published your Shopify theme. Download and install the generated package when you are ready.", "return_offer": "Return to your theme"
+    },
+    "preview": {
+      "eyebrow": "Preview", "title": "Your storefront is ready for review.", "description": "Review the generated storefront package before any deployment can begin.", "note": "A live Shopify preview becomes available only after the separate, approved development-theme deployment workflow. Nothing has been deployed from this dashboard.", "open_shopify": "Open Shopify preview", "shopify_unavailable": "A Shopify preview is not available yet. Calinium has not changed your live store.", "approve": "Approve for review", "views": { "homepage": "Homepage", "collection": "Collections", "product": "Product page", "cart": "Cart", "navigation": "Navigation", "footer": "Footer" }, "view_descriptions": { "homepage": "The first impression and storytelling flow.", "collection": "Clear ways to discover the catalog.", "product": "A focused purchase experience.", "cart": "A calm final review before purchase.", "navigation": "A clear path through the storefront.", "footer": "Essential information and useful next steps." }
+    },
+    "finish": { "eyebrow": "Ready for review", "title": "Your storefront direction is ready.", "description": "The generated package is ready for Calinium’s separate review workflow. Deployment remains blocked until that approval process is complete.", "return": "Return to project" }
+  },
+  "shopify_live": {
+    "permissions": "Permissions",
+    "permissions_granted": "{count} permissions confirmed",
+    "permissions_pending": "Permissions not confirmed yet",
+    "connection_health": "Connection",
+    "webhooks": "Store updates",
+    "admin_api_version": "Catalog connection version",
+    "webhook_api_version": "Store update version",
+    "last_sync_issue": "Last refresh issue",
+    "sync_needs_attention": "The last refresh needs attention. You can try again when Shopify is available.",
+    "health": { "healthy": "Healthy", "partial": "Needs attention", "missing_scopes": "Needs permission", "invalid": "Reconnect needed", "unreachable": "Temporarily unavailable", "synchronizing": "Refreshing", "disconnected": "Disconnected", "uninstalled": "App removed", "unknown": "Checking" },
+    "webhook": { "received": "Updates connected", "not_received": "Waiting for an update" },
+    "preview_eligibility": { "eligible": "Available for a future read-only preview", "ineligible-main-theme": "Your live theme is never used for preview", "ineligible-demo-theme": "This demo theme cannot be used", "ineligible-processing": "This theme is still processing", "ineligible-processing-failed": "This theme did not finish processing", "ineligible-unsupported-theme": "This theme is not a supported preview target", "missing-theme": "This theme is no longer available", "missing-scope": "Theme information needs permission", "disconnected-store": "Reconnect Shopify to check this theme" }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-shopify-billing-purchase.schema.json",
+  "title": "Calinium Shopify One-Time Billing Purchase",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "order_id", "provider", "provider_purchase_id", "provider_status", "confirmation_url_status", "amount_cents", "currency", "test_mode", "idempotency_key", "created_at", "updated_at"],
+  "properties": {
+    "version": {"const": 1},
+    "id": {"type": "string", "pattern": "^ctb_[A-Za-z0-9_-]+$"},
+    "order_id": {"type": "string", "pattern": "^cto_[A-Za-z0-9_-]+$"},
+    "provider": {"enum": ["shopify_admin_graphql_one_time", "development_simulator", "staging_validation_no_charge"]},
+    "provider_purchase_id": {"type": ["string", "null"], "minLength": 1},
+    "provider_status": {"type": "string", "minLength": 1, "maxLength": 48},
+    "confirmation_url": {"type": ["string", "null"], "format": "uri"},
+    "confirmation_url_status": {"enum": ["not_required", "issued", "visited", "expired", "unavailable"]},
+    "amount_cents": {"type": "integer", "minimum": 1},
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "test_mode": {"type": "boolean"},
+    "idempotency_key": {"type": "string", "minLength": 1, "maxLength": 180},
+    "raw_event_digest": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "verified_at": {"type": ["string", "null"], "format": "date-time"},
+    "cancelled_at": {"type": ["string", "null"], "format": "date-time"},
+    "refunded_at": {"type": ["string", "null"], "format": "date-time"},
+    "failure_reason": {"type": ["string", "null"], "maxLength": 1000},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-lookbook-candidate.schema.json",
+  "title": "Calinium Lookbook Candidate Plan",
+  "description": "Mutable, project-scoped merchant review state for Lookbook. It is not an Approved Block Plan revision and cannot be consumed by generation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status", "candidate_version", "frames", "warnings", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "status": {"type": "string", "enum": ["not_required", "draft", "approved"]},
+    "candidate_version": {"type": "integer", "minimum": 0},
+    "frames": {"type": "array", "maxItems": 6, "items": {"$ref": "#/$defs/frame"}},
+    "warnings": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 240}},
+    "updated_at": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content_id", "placement_id", "image_asset_id", "mobile_image_asset_id", "title", "text", "destination", "media_ratio", "image_alt_text", "accessible_label", "decorative_media", "order"],
+      "properties": {
+        "content_id": {"type": "string", "pattern": "^abpc_[a-z0-9][a-z0-9_-]*$"},
+        "placement_id": {"type": "string", "pattern": "^abpl_[a-z0-9][a-z0-9_-]*$"},
+        "image_asset_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 240},
+        "mobile_image_asset_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 240},
+        "title": {"type": "string", "maxLength": 240},
+        "text": {"type": "string", "maxLength": 1200},
+        "destination": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "resource_id"],
+          "properties": {
+            "type": {"type": ["string", "null"], "enum": ["shopify_product", "shopify_collection", null]},
+            "resource_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 240}
+          }
+        },
+        "media_ratio": {"type": "string", "enum": ["portrait", "landscape"]},
+        "image_alt_text": {"type": ["string", "null"], "maxLength": 500},
+        "accessible_label": {"type": ["string", "null"], "maxLength": 500},
+        "decorative_media": {"type": "boolean"},
+        "order": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}

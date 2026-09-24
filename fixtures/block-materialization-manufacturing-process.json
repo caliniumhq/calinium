@@ -1,0 +1,10 @@
+{
+  "resource_snapshot": {
+    "snapshot_id": "abps_fixture_manufacturing_process_r1",
+    "approval": {"approval_id": "aba_fixture_manufacturing_process"},
+    "resources": {
+      "abprs_fixture_process_preparation_image": {"resource_type": "project_image", "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111", "runtime_value": "dashboard://fixture-assets/process-preparation"}
+    }
+  },
+  "expected": {"block_count": 2, "block_orders": ["abpl_fixture_process_preparation", "abpl_fixture_process_packing"]}
+}

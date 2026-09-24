@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-design-dimension-assessment.schema.json",
+  "title": "Calinium Design Dimension Assessment",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "assessment_id", "evaluation_request_id", "dimension", "dimension_version", "scope", "judgment", "importance", "confidence", "summary", "rationale", "evidence_cell_ids", "context_basis"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "design-dimension-assessment-v1"},
+    "assessment_id": {"type": "string", "pattern": "^design-assessment-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string"},
+    "dimension": {"type": "string", "enum": ["visual_hierarchy", "spacing_and_rhythm", "typographic_hierarchy", "image_media_dominance", "composition", "product_discovery", "pdp_communication", "navigation_header_clarity", "mobile_adaptation_quality", "design_dna_coherence", "perceived_polish", "architecture_differentiation"]},
+    "dimension_version": {"type": "string", "const": "1.0.0"},
+    "scope": {"type": "object", "required": ["level", "profile_ids", "route_ids", "viewport_ids"], "properties": {"level": {"type": "string", "enum": ["per_cell", "route_pair", "architecture", "controlled_comparison"]}, "profile_ids": {"type": "array", "items": {"type": "string"}}, "route_ids": {"type": "array", "items": {"type": "string"}}, "viewport_ids": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "judgment": {"type": "string", "enum": ["strong", "acceptable", "concern", "not_assessable"]},
+    "importance": {"type": "string", "enum": ["high", "medium", "low", "note"]},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "summary": {"type": "string", "minLength": 1, "maxLength": 500},
+    "rationale": {"type": "string", "minLength": 1, "maxLength": 1200},
+    "evidence_cell_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "context_basis": {"type": "array", "items": {"type": "string", "enum": ["screenshot", "route_purpose", "architecture_intent", "preset", "design_dna", "merchant_intent", "store_intelligence", "catalog", "objective_evaluation"]}}
+  },
+  "additionalProperties": false
+}

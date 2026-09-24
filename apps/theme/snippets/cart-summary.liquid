@@ -1,0 +1,116 @@
+{% liquid
+  assign cart_summary_cart = cart
+  assign cart_summary_context = context | default: 'page'
+  assign cart_summary_show_note = false
+  assign cart_summary_show_update = false
+  assign cart_summary_show_dynamic_checkout = false
+  assign cart_summary_show_payment_icons = false
+  assign cart_summary_show_secure_checkout = false
+  assign cart_summary_note_id = note_id | default: 'CartNote'
+  assign cart_summary_shipping_threshold = shipping_threshold | default: 0 | plus: 0
+  assign cart_summary_shipping_threshold_amount = cart_summary_shipping_threshold | times: 100
+  assign cart_summary_shipping_remaining = cart_summary_shipping_threshold_amount | minus: cart_summary_cart.total_price
+  assign cart_summary_tax_message = blank
+  assign cart_summary_update_label = 'cart.update' | t
+  assign cart_summary_checkout_label = 'cart.checkout' | t
+
+  if show_note
+    assign cart_summary_show_note = true
+  endif
+
+  if show_update
+    assign cart_summary_show_update = true
+  endif
+
+  if show_dynamic_checkout
+    assign cart_summary_show_dynamic_checkout = true
+  endif
+
+  if show_payment_icons
+    assign cart_summary_show_payment_icons = true
+  endif
+
+  if show_secure_checkout
+    assign cart_summary_show_secure_checkout = true
+  endif
+
+  if cart_summary_cart.taxes_included and cart_summary_cart.requires_shipping
+    assign cart_summary_tax_message = 'cart.taxes_included_shipping_at_checkout' | t
+  elsif cart_summary_cart.taxes_included
+    assign cart_summary_tax_message = 'cart.taxes_included' | t
+  elsif cart_summary_cart.requires_shipping
+    assign cart_summary_tax_message = 'cart.taxes_shipping_at_checkout' | t
+  else
+    assign cart_summary_tax_message = 'cart.taxes_at_checkout' | t
+  endif
+%}
+
+<div class="co-cart-summary co-cart-summary--{{ cart_summary_context | escape }}">
+  {% if cart_summary_show_note %}
+    <details class="co-cart-summary__note">
+      <summary class="co-cart-summary__note-summary">{{ 'cart.order_note' | t }}</summary>
+      <div class="co-cart-summary__note-content">
+        <label for="{{ cart_summary_note_id | escape }}">{{ 'cart.note_label' | t }}</label>
+        <textarea id="{{ cart_summary_note_id | escape }}" name="note">{{ cart_summary_cart.note | escape }}</textarea>
+      </div>
+    </details>
+  {% endif %}
+
+  <dl class="co-cart-summary__totals">
+    <div class="co-cart-summary__row">
+      <dt>{{ 'cart.subtotal' | t }}</dt>
+      <dd>{{ cart_summary_cart.items_subtotal_price | money }}</dd>
+    </div>
+
+    {% if cart_summary_cart.cart_level_discount_applications.size > 0 %}
+      {% for discount_application in cart_summary_cart.cart_level_discount_applications %}
+        <div class="co-cart-summary__row co-cart-summary__row--discount">
+          <dt>{{ discount_application.title | escape }}</dt>
+          <dd>−{{ discount_application.total_allocated_amount | money }}</dd>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="co-cart-summary__row co-cart-summary__row--total">
+      <dt>{{ 'cart.total' | t }}</dt>
+      <dd>{{ cart_summary_cart.total_price | money }}</dd>
+    </div>
+  </dl>
+
+  {% if cart_summary_shipping_threshold > 0 and cart_summary_cart.requires_shipping %}
+    <p class="co-cart-summary__shipping" data-cart-shipping-progress>
+      {% if cart_summary_shipping_remaining > 0 %}
+        {% assign cart_summary_shipping_remaining_money = cart_summary_shipping_remaining | money %}
+        {{ 'cart.free_shipping_remaining' | t: amount: cart_summary_shipping_remaining_money }}
+      {% else %}
+        {{ 'cart.free_shipping_qualified' | t }}
+      {% endif %}
+    </p>
+  {% endif %}
+
+  <p class="co-cart-summary__notice">{{ cart_summary_tax_message }}</p>
+
+  {% if cart_summary_show_secure_checkout %}
+    <p class="co-cart-summary__secure" data-cart-secure-checkout>{{ 'cart.secure_checkout' | t }}</p>
+  {% endif %}
+
+  <div class="co-cart-summary__actions">
+    {% if cart_summary_show_update %}
+      {% render 'button', label: cart_summary_update_label, type: 'submit', name: 'update', variant: 'secondary', full_width: true, data_action: 'cart-update' %}
+    {% endif %}
+
+    {% render 'button', label: cart_summary_checkout_label, type: 'submit', name: 'checkout', variant: 'primary', full_width: true %}
+
+    {% if cart_summary_show_dynamic_checkout and additional_checkout_buttons %}
+      <div class="co-cart-summary__dynamic-checkout">{{ content_for_additional_checkout_buttons }}</div>
+    {% endif %}
+  </div>
+
+  {% if cart_summary_show_payment_icons and shop.enabled_payment_types.size > 0 %}
+    <ul class="co-cart-summary__payment-icons" role="list" aria-label="{{ 'cart.payment_methods' | t }}">
+      {% for payment_type in shop.enabled_payment_types %}
+        <li>{{ payment_type | payment_type_svg_tag }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

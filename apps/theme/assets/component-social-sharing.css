@@ -1,0 +1,28 @@
+/* Ordinary, script-free article sharing links. */
+.co-social-sharing,
+.co-social-sharing__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--co-space-3);
+  align-items: center;
+}
+
+.co-social-sharing {
+  padding-block-start: var(--co-space-5);
+  border-block-start: var(--co-border-width) solid var(--co-color-border);
+}
+
+.co-social-sharing__heading {
+  font-weight: 600;
+}
+
+.co-social-sharing__list {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+}
+
+.co-social-sharing__list a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: calc(var(--co-space-6) + var(--co-space-3));
+}

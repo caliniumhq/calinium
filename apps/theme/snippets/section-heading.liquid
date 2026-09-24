@@ -1,0 +1,42 @@
+{% liquid
+  assign section_heading_eyebrow = eyebrow | default: blank
+  assign section_heading_title = heading | default: blank
+  assign section_heading_description = description | default: blank
+  assign section_heading_id = id | default: blank
+  assign section_heading_level = level | default: 'h2'
+  assign section_heading_alignment = alignment | default: 'left'
+  assign section_heading_size = size | default: 'standard'
+  assign section_heading_classes = 'co-section-heading co-section-heading--align-' | append: section_heading_alignment
+  assign section_heading_classes = section_heading_classes | append: ' co-section-heading--size-' | append: section_heading_size
+
+  if divider
+    assign section_heading_classes = section_heading_classes | append: ' co-section-heading--with-divider'
+  endif
+
+  if class != blank
+    assign section_heading_classes = section_heading_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if section_heading_eyebrow != blank or section_heading_title != blank or section_heading_description != blank %}
+  <header class="{{ section_heading_classes | escape }}">
+    {% if section_heading_eyebrow != blank %}
+      <p class="co-section-heading__eyebrow">{{ section_heading_eyebrow | escape }}</p>
+    {% endif %}
+
+    {% if section_heading_title != blank %}
+      {% case section_heading_level %}
+        {% when 'h1' %}
+          <h1{% if section_heading_id != blank %} id="{{ section_heading_id | escape }}"{% endif %} class="co-section-heading__title">{{ section_heading_title }}</h1>
+        {% when 'h3' %}
+          <h3{% if section_heading_id != blank %} id="{{ section_heading_id | escape }}"{% endif %} class="co-section-heading__title">{{ section_heading_title }}</h3>
+        {% else %}
+          <h2{% if section_heading_id != blank %} id="{{ section_heading_id | escape }}"{% endif %} class="co-section-heading__title">{{ section_heading_title }}</h2>
+      {% endcase %}
+    {% endif %}
+
+    {% if section_heading_description != blank %}
+      <div class="co-section-heading__description">{{ section_heading_description }}</div>
+    {% endif %}
+  </header>
+{% endif %}

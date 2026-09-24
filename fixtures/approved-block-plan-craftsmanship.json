@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "abp_fixture_craftsmanship",
+  "revision_id": "abpr_fixture_craftsmanship_r1",
+  "parent_revision_id": null,
+  "created_at": "2026-08-01T12:00:00.000Z",
+  "store_scope": {"organization_id": "org_fixture_craftsmanship", "project_id": "prj_fixture_craftsmanship", "merchant_scope_id": "mrc_fixture_craftsmanship"},
+  "approval": {"approval_id": "aba_fixture_craftsmanship", "approval_reference": "fixture-approved-craftsmanship-r1", "approval_status": "approved", "approver_type": "merchant", "approved_at": "2026-08-01T12:00:00.000Z"},
+  "default_locale": "en",
+  "content_entities": {
+    "abpc_fixture_edge_finishing": {
+      "content_id": "abpc_fixture_edge_finishing",
+      "content_type": "craftsmanship_evidence",
+      "localized_values": [
+        {"locale": "en", "field": "title", "value": "Edge finishing", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_craftsmanship"},
+        {"locale": "en", "field": "text", "value": "Fixture-only merchant evidence: each approved edge is finished after construction.", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_craftsmanship"},
+        {"locale": "en", "field": "icon", "value": "settings", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_craftsmanship"}
+      ],
+      "resource_reference_ids": ["abprs_fixture_craftsmanship_edge_image"],
+      "evidence_reference_ids": ["abpe_fixture_craftsmanship_edge"],
+      "provenance": {"source_type": "evidence_backed", "approval_id": "aba_fixture_craftsmanship", "evidence_reference_ids": ["abpe_fixture_craftsmanship_edge"]},
+      "accessibility": {"decorative_media": false, "localized": [{"locale": "en", "alt_text": "Approved fixture photograph of an edge-finishing detail.", "accessible_label": "Edge finishing"}], "transcript_resource_id": null}
+    },
+    "abpc_fixture_hardware_check": {
+      "content_id": "abpc_fixture_hardware_check",
+      "content_type": "craftsmanship_evidence",
+      "localized_values": [
+        {"locale": "en", "field": "title", "value": "Hardware check", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_craftsmanship"},
+        {"locale": "en", "field": "icon", "value": "diamond", "value_type": "merchant_approved_text", "approval_id": "aba_fixture_craftsmanship"}
+      ],
+      "resource_reference_ids": [],
+      "evidence_reference_ids": ["abpe_fixture_craftsmanship_hardware"],
+      "provenance": {"source_type": "evidence_backed", "approval_id": "aba_fixture_craftsmanship", "evidence_reference_ids": ["abpe_fixture_craftsmanship_hardware"]}
+    }
+  },
+  "resource_references": {
+    "abprs_fixture_craftsmanship_edge_image": {"resource_id": "abprs_fixture_craftsmanship_edge_image", "resource_type": "project_image", "reference_role": "supporting_media", "source_type": "project_asset", "source_reference": "fixture-asset-craftsmanship-edge", "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111", "approval_id": "aba_fixture_craftsmanship", "checksum_sha256": "1111111111111111111111111111111111111111111111111111111111111111"}
+  },
+  "evidence_references": {
+    "abpe_fixture_craftsmanship_edge": {"evidence_id": "abpe_fixture_craftsmanship_edge", "evidence_type": "merchant_confirmed_fact", "source_type": "merchant_record", "source_reference": "fixture-only-craftsmanship-evidence:edge-finishing", "approved_revision": "2222222222222222222222222222222222222222222222222222222222222222", "approval_id": "aba_fixture_craftsmanship"},
+    "abpe_fixture_craftsmanship_hardware": {"evidence_id": "abpe_fixture_craftsmanship_hardware", "evidence_type": "merchant_confirmed_fact", "source_type": "merchant_record", "source_reference": "fixture-only-craftsmanship-evidence:hardware-check", "approved_revision": "3333333333333333333333333333333333333333333333333333333333333333", "approval_id": "aba_fixture_craftsmanship"}
+  },
+  "compositions": [
+    {"composition_id": "abpcp_fixture_craftsmanship_home", "page_role": "homepage", "section_role": "craftsmanship_evidence", "order": 1, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "supporting", "density": "balanced"}, "block_placements": [
+      {"placement_id": "abpl_fixture_craftsmanship_edge", "content_entity_id": "abpc_fixture_edge_finishing", "semantic_block_role": "craftsmanship_step", "order": 1, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "supporting", "density": "balanced"}},
+      {"placement_id": "abpl_fixture_craftsmanship_hardware", "content_entity_id": "abpc_fixture_hardware_check", "semantic_block_role": "craftsmanship_step", "order": 2, "visibility": {"mode": "always", "conditions": []}, "presentation_intent": {"emphasis": "supporting", "media_priority": "none", "density": "balanced"}}
+    ]}
+  ],
+  "metadata": {"immutable": true, "source": "merchant_approved", "migration": {"status": "native", "source_revision_id": null, "migration_version": null}}
+}

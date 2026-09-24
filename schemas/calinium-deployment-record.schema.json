@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-deployment-record.schema.json",
+  "title": "Calinium development-theme deployment record",
+  "type": "object",
+  "required": ["version", "adapter_version", "deployment_id", "deployment_timestamp", "deployment_reason", "package", "target", "uploaded_files", "validation", "preview", "traceability", "status"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "adapter_version": {"type": "string", "const": "1.0.0"},
+    "deployment_id": {"type": "string", "pattern": "^deployment-[a-z0-9-]+$"},
+    "deployment_timestamp": {"type": "string", "minLength": 1},
+    "deployment_reason": {"type": "string", "minLength": 1},
+    "package": {"$ref": "#/$defs/package"},
+    "target": {"$ref": "#/$defs/target"},
+    "uploaded_files": {"type": "array", "minItems": 1, "items": {"$ref": "calinium-deployment-package.schema.json#/$defs/file"}},
+    "validation": {"$ref": "calinium-review-session.schema.json#/$defs/status"},
+    "preview": {"$ref": "#/$defs/preview"},
+    "traceability": {"$ref": "calinium-review-session.schema.json#/$defs/traceability"},
+    "status": {"type": "string", "enum": ["deployed_to_development_theme", "validation_failed"]}
+  },
+  "$defs": {
+    "package": {"type": "object", "required": ["package_id", "workspace_fingerprint", "approval_manifest_hash"], "properties": {"package_id": {"type": "string", "minLength": 1}, "workspace_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "approval_manifest_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "target": {"type": "object", "required": ["store", "theme_id", "theme_name", "role", "created"], "properties": {"store": {"type": "string", "minLength": 1}, "theme_id": {"type": ["string", "integer"]}, "theme_name": {"type": "string", "minLength": 1}, "role": {"type": "string", "enum": ["unpublished", "development"]}, "created": {"type": "boolean"}}, "additionalProperties": false},
+    "preview": {"type": "object", "required": ["url", "report_path"], "properties": {"url": {"type": "string", "minLength": 1}, "report_path": {"type": "string", "minLength": 1}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

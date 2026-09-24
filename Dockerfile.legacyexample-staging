@@ -1,0 +1,23 @@
+FROM node:22.15.0-bookworm-slim
+
+ARG CALINIUM_BUILD_SOURCE_REVISION=0000000000000000000000000000000000000000
+ENV NODE_ENV=production
+ENV CALINIUM_BUILD_SOURCE_REVISION=${CALINIUM_BUILD_SOURCE_REVISION}
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+WORKDIR /app
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates gosu zip unzip \
+  && rm -rf /var/lib/apt/lists/* \
+  && npm install --global @shopify/cli@4.6.0
+
+COPY --chown=node:node . .
+RUN npm ci --include=dev \
+  && npx playwright install --with-deps chromium \
+  && chmod -R a+rX /ms-playwright \
+  && npm ci --include=dev --prefix apps/dashboard \
+  && npm run build --prefix apps/dashboard \
+  && npm prune --omit=dev --prefix apps/dashboard \
+  && mkdir -p /app/output
+
+ENTRYPOINT ["/bin/sh", "/app/scripts/start-legacyexample-staging.sh"]

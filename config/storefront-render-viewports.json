@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "registry_version": "1.0.0",
+  "registry_id": "calinium_storefront_render_viewports",
+  "viewports": [
+    {
+      "id": "desktop-v1",
+      "label": "Desktop",
+      "width": 1440,
+      "height": 900,
+      "device_scale_factor": 1,
+      "is_mobile": false,
+      "has_touch": false
+    },
+    {
+      "id": "mobile-v1",
+      "label": "Mobile",
+      "width": 390,
+      "height": 844,
+      "device_scale_factor": 1,
+      "is_mobile": true,
+      "has_touch": true
+    }
+  ]
+}

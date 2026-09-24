@@ -1,0 +1,60 @@
+{
+  "fixture_revision": "automatic-architecture-selection-fixture-v1",
+  "policy_revision": "architecture-selection-policy-v1",
+  "cases": [
+    {
+      "id": "image_led_editorial_store",
+      "store": {"products": 24, "variants": 30, "collections": 4, "menus": 1, "links": 8, "product_media": 96, "usable_images": 96},
+      "intent": {"shopping_mode": "image_led", "discovery_priority": "discovery", "storytelling_emphasis": "high", "navigation_priority": "minimal", "product_density": "restrained"},
+      "expected": {"status": "selected", "profile_id": "profile.editorial_discovery.v1"}
+    },
+    {
+      "id": "commerce_dense_store",
+      "store": {"products": 600, "variants": 4200, "collections": 60, "menus": 6, "links": 140, "product_media": 900, "usable_images": 900},
+      "intent": {"shopping_mode": "information_led", "discovery_priority": "efficiency", "storytelling_emphasis": "low", "navigation_priority": "prominent", "product_density": "dense"},
+      "expected": {"status": "selected", "profile_id": "profile.current_calinium.v1"}
+    },
+    {
+      "id": "strong_imagery_complex_catalog",
+      "store": {"products": 600, "variants": 3600, "collections": 45, "menus": 5, "links": 100, "product_media": 2400, "usable_images": 2400},
+      "intent": {"shopping_mode": "image_led", "discovery_priority": "discovery", "storytelling_emphasis": "balanced", "navigation_priority": "prominent", "product_density": "dense"},
+      "expected": {"status": "selected", "profile_id": "profile.current_calinium.v1"}
+    },
+    {
+      "id": "weak_media_store",
+      "store": {"products": 50, "variants": 100, "collections": 8, "menus": 2, "links": 25, "product_media": 10, "usable_images": 10},
+      "intent": {"discovery_priority": "balanced", "storytelling_emphasis": "low"},
+      "expected": {"status": "selected", "profile_id": "profile.current_calinium.v1"}
+    },
+    {
+      "id": "ambiguous_store",
+      "store": {"products": 100, "variants": 300, "collections": 10, "menus": 2, "links": 30, "product_media": 150, "usable_images": 150},
+      "intent": {},
+      "expected": {"status": "material_question_required", "question_topic": "shopping_mode"}
+    },
+    {
+      "id": "missing_intent_strong_inference",
+      "store": {"products": 700, "variants": 4900, "collections": 70, "menus": 7, "links": 180, "product_media": 1050, "usable_images": 1050},
+      "intent": {},
+      "expected": {"status": "selected", "profile_id": "profile.current_calinium.v1"}
+    },
+    {
+      "id": "explicit_trusted_editorial_direction",
+      "store": {"products": 80, "variants": 160, "collections": 8, "menus": 2, "links": 24, "product_media": 160, "usable_images": 160},
+      "intent": {"architecture_direction": "editorial_discovery"},
+      "expected": {"status": "selected", "profile_id": "profile.editorial_discovery.v1"}
+    },
+    {
+      "id": "invalid_explicit_profile",
+      "store": {"products": 30, "variants": 30, "collections": 3, "menus": 1, "links": 8, "product_media": 90, "usable_images": 90},
+      "intent": {},
+      "explicit_profile_id": "profile.unregistered.v9",
+      "expected": {"status": "error", "error": "ArchitectureSelectionError"}
+    }
+  ],
+  "controlled_proof": {
+    "merchant_store_a": "commerce_dense_store",
+    "merchant_store_b": "image_led_editorial_store",
+    "merchant_store_c": "ambiguous_store"
+  }
+}

@@ -1,0 +1,22 @@
+{% liquid
+  assign spinner_size = size | default: 20
+  assign spinner_class = 'co-loading-spinner'
+
+  if class != blank
+    assign spinner_class = spinner_class | append: ' ' | append: class
+  endif
+%}
+
+<span
+  class="{{ spinner_class | escape }}"
+  {% if label != blank %}
+    role="status"
+  {% else %}
+    aria-hidden="true"
+  {% endif %}
+>
+  {% render 'icon', name: 'spinner', size: spinner_size, class: 'co-loading-spinner__icon' %}
+  {% if label != blank %}
+    <span class="co-visually-hidden">{{ label | escape }}</span>
+  {% endif %}
+</span>

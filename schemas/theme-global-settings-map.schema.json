@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/theme-global-settings-map.schema.json",
+  "allOf": [{"$ref": "theme-mapping.schema.json#/$defs/metadata"}],
+  "required": ["global_settings"],
+  "properties": {
+    "global_settings": {"type": "array", "minItems": 1, "items": {"$ref": "theme-mapping.schema.json#/$defs/setting"}}
+  }
+}

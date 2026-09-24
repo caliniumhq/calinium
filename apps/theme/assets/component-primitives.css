@@ -1,0 +1,51 @@
+/* Calinium composition primitives. These classes are opt-in and do not alter existing sections. */
+.co-primitive-rich-text > * + * { margin-block-start: var(--co-space-3); }
+.co-primitive-rich-text--align-center { text-align: center; }
+.co-primitive-rich-text--align-right { text-align: end; }
+
+.co-primitive-icon-text { display: inline-flex; gap: var(--co-space-2); align-items: center; }
+.co-primitive-icon-text--icon-end { flex-direction: row-reverse; }
+.co-primitive-icon-text__icon { flex: 0 0 auto; color: var(--co-color-accent); }
+
+.co-primitive-feature-item,
+.co-primitive-timeline-item,
+.co-primitive-testimonial-item { display: grid; gap: var(--co-space-3); align-content: start; }
+.co-primitive-feature-item__icon,
+.co-primitive-timeline-item__icon,
+.co-primitive-statistic__icon { display: inline-flex; color: var(--co-color-accent); }
+.co-primitive-feature-item__heading,
+.co-primitive-timeline-item__heading { font-size: var(--co-font-size-h5); }
+.co-primitive-feature-item__action,
+.co-primitive-testimonial-item__action { margin-block-start: var(--co-space-1); }
+
+.co-primitive-statistic { display: grid; gap: var(--co-space-2); }
+.co-primitive-statistic__value { margin: 0; font-family: var(--co-font-heading-family); font-size: var(--co-font-size-h3); font-style: var(--co-font-heading-style); font-weight: var(--co-font-heading-weight); line-height: var(--co-line-height-heading); }
+.co-primitive-statistic__label { font-weight: 600; }
+.co-primitive-statistic__description { margin: 0; color: var(--co-color-text-muted); }
+
+.co-primitive-logo-item { display: grid; min-block-size: calc(var(--co-space-8) + var(--co-space-4)); place-items: center; }
+.co-primitive-logo-item__link { display: grid; inline-size: 100%; place-items: center; }
+.co-primitive-logo-item__media .co-image { background: transparent; border-radius: 0; }
+.co-primitive-logo-item__media .co-image__media { max-block-size: var(--co-space-8); object-fit: contain; }
+.co-primitive-logo-item__name { color: var(--co-color-text-muted); font-weight: 600; text-align: center; }
+
+.co-primitive-testimonial-item__rating { display: inline-flex; gap: var(--co-space-1); color: var(--co-color-accent); }
+.co-primitive-testimonial-item__star.is-empty { opacity: 0.3; }
+.co-primitive-testimonial-item__quote { font-family: var(--co-font-heading-family); font-size: var(--co-font-size-h5); font-style: var(--co-font-heading-style); line-height: var(--co-line-height-heading); }
+.co-primitive-testimonial-item__author { display: flex; gap: var(--co-space-3); align-items: center; }
+.co-primitive-testimonial-item__avatar .co-image { inline-size: var(--co-space-7); border-radius: 50%; }
+.co-primitive-testimonial-item__name { display: block; font-style: normal; font-weight: 600; }
+.co-primitive-testimonial-item__role { display: block; color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+
+.co-primitive-timeline-item__eyebrow { color: var(--co-color-text-muted); font-size: var(--co-font-size-small); letter-spacing: .08em; text-transform: uppercase; }
+.co-primitive-media-item { display: grid; gap: var(--co-space-2); }
+.co-primitive-media-item__caption { color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+
+.co-primitive-hotspot-item { position: absolute; inset-inline-start: var(--co-hotspot-inline); inset-block-start: var(--co-hotspot-block); transform: translate(-50%, -50%); }
+.co-primitive-hotspot-item__trigger,
+.co-primitive-hotspot-item__marker { display: grid; inline-size: 2rem; block-size: 2rem; place-items: center; border: var(--co-border-width) solid var(--co-color-border); border-radius: 50%; background: var(--co-color-surface); color: var(--co-color-text); }
+.co-primitive-hotspot-item__trigger { cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  .co-primitive-hotspot-item { transition: none; }
+}

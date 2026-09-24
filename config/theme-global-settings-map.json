@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "catalog_version": 1,
+  "compatible_compiler_versions": [
+    "1.0.0"
+  ],
+  "catalog_id": "theme_global_settings_map",
+  "description": "Generated from apps/theme/config/settings_schema.json. Every entry retains its source setting ID and group.",
+  "global_settings": [
+    {
+      "setting_id": "body_line_height",
+      "setting_type": "select",
+      "default_value": "1.6",
+      "accepted_values": {
+        "kind": "options",
+        "values": [
+          "1.5",
+          "1.6",
+          "1.7"
+        ]
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "body_line_height",
+        "group": "t:settings_schema.typography.name"
+      }
+    },
+    {
+      "setting_id": "body_scale",
+      "setting_type": "range",
+      "default_value": 100,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 90,
+        "maximum": 120,
+        "step": 5,
+        "unit": "%"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "body_scale",
+        "group": "t:settings_schema.typography.name"
+      }
+    },
+    {
+      "setting_id": "button_radius",
+      "setting_type": "range",
+      "default_value": 2,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 0,
+        "maximum": 32,
+        "step": 2,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "button_radius",
+        "group": "t:settings_schema.shape.name"
+      }
+    },
+    {
+      "setting_id": "button_text_transform",
+      "setting_type": "select",
+      "default_value": "none",
+      "accepted_values": {
+        "kind": "options",
+        "values": [
+          "none",
+          "uppercase"
+        ]
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "button_text_transform",
+        "group": "t:settings_schema.shape.name"
+      }
+    },
+    {
+      "setting_id": "card_radius",
+      "setting_type": "range",
+      "default_value": 2,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 0,
+        "maximum": 32,
+        "step": 2,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "card_radius",
+        "group": "t:settings_schema.shape.name"
+      }
+    },
+    {
+      "setting_id": "color_schemes",
+      "setting_type": "color_scheme_group",
+      "default_value": null,
+      "accepted_values": {
+        "kind": "theme_color_scheme_group"
+      },
+      "ai_configurable": false,
+      "merchant_configurable": true,
+      "merchant_review_required": true,
+      "merchant_only": false,
+      "safety_level": "merchant_confirmation_required",
+      "classification_rationale": "The setting has no existing semantic metadata and is held for merchant confirmation.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "color_schemes",
+        "group": "t:settings_schema.colors.name"
+      }
+    },
+    {
+      "setting_id": "content_width",
+      "setting_type": "range",
+      "default_value": 720,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 480,
+        "maximum": 900,
+        "step": 20,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "content_width",
+        "group": "t:settings_schema.layout.name"
+      }
+    },
+    {
+      "setting_id": "default_color_scheme",
+      "setting_type": "color_scheme",
+      "default_value": "scheme-1",
+      "accepted_values": {
+        "kind": "theme_color_scheme"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "default_color_scheme",
+        "group": "t:settings_schema.colors.name"
+      }
+    },
+    {
+      "setting_id": "desktop_gutter",
+      "setting_type": "range",
+      "default_value": 48,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 24,
+        "maximum": 96,
+        "step": 4,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "desktop_gutter",
+        "group": "t:settings_schema.layout.name"
+      }
+    },
+    {
+      "setting_id": "enable_motion",
+      "setting_type": "checkbox",
+      "default_value": true,
+      "accepted_values": {
+        "kind": "boolean",
+        "values": [
+          true,
+          false
+        ]
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "enable_motion",
+        "group": "t:settings_schema.motion.name"
+      }
+    },
+    {
+      "setting_id": "favicon",
+      "setting_type": "image_picker",
+      "default_value": null,
+      "accepted_values": {
+        "kind": "image_picker"
+      },
+      "ai_configurable": false,
+      "merchant_configurable": true,
+      "merchant_review_required": true,
+      "merchant_only": true,
+      "safety_level": "merchant_only",
+      "classification_rationale": "Shopify resource and media selection depends on real merchant-owned assets or records.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "favicon",
+        "group": "t:settings_schema.brand.name"
+      }
+    },
+    {
+      "setting_id": "grid_gap",
+      "setting_type": "range",
+      "default_value": 24,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 12,
+        "maximum": 48,
+        "step": 4,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "grid_gap",
+        "group": "t:settings_schema.layout.name"
+      }
+    },
+    {
+      "setting_id": "heading_letter_spacing",
+      "setting_type": "select",
+      "default_value": "-0.02em",
+      "accepted_values": {
+        "kind": "options",
+        "values": [
+          "-0.02em",
+          "0em",
+          "0.04em"
+        ]
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "heading_letter_spacing",
+        "group": "t:settings_schema.typography.name"
+      }
+    },
+    {
+      "setting_id": "heading_line_height",
+      "setting_type": "select",
+      "default_value": "1.1",
+      "accepted_values": {
+        "kind": "options",
+        "values": [
+          "1",
+          "1.1",
+          "1.2"
+        ]
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "heading_line_height",
+        "group": "t:settings_schema.typography.name"
+      }
+    },
+    {
+      "setting_id": "heading_scale",
+      "setting_type": "range",
+      "default_value": 110,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 90,
+        "maximum": 140,
+        "step": 5,
+        "unit": "%"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "heading_scale",
+        "group": "t:settings_schema.typography.name"
+      }
+    },
+    {
+      "setting_id": "input_radius",
+      "setting_type": "range",
+      "default_value": 2,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 0,
+        "maximum": 24,
+        "step": 2,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "input_radius",
+        "group": "t:settings_schema.shape.name"
+      }
+    },
+    {
+      "setting_id": "logo",
+      "setting_type": "image_picker",
+      "default_value": null,
+      "accepted_values": {
+        "kind": "image_picker"
+      },
+      "ai_configurable": false,
+      "merchant_configurable": true,
+      "merchant_review_required": true,
+      "merchant_only": true,
+      "safety_level": "merchant_only",
+      "classification_rationale": "Shopify resource and media selection depends on real merchant-owned assets or records.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "logo",
+        "group": "t:settings_schema.brand.name"
+      }
+    },
+    {
+      "setting_id": "logo_width",
+      "setting_type": "range",
+      "default_value": 144,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 60,
+        "maximum": 280,
+        "step": 4,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "logo_width",
+        "group": "t:settings_schema.brand.name"
+      }
+    },
+    {
+      "setting_id": "media_radius",
+      "setting_type": "range",
+      "default_value": 2,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 0,
+        "maximum": 32,
+        "step": 2,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "media_radius",
+        "group": "t:settings_schema.shape.name"
+      }
+    },
+    {
+      "setting_id": "mobile_gutter",
+      "setting_type": "range",
+      "default_value": 16,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 12,
+        "maximum": 32,
+        "step": 2,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "mobile_gutter",
+        "group": "t:settings_schema.layout.name"
+      }
+    },
+    {
+      "setting_id": "motion_duration",
+      "setting_type": "range",
+      "default_value": 200,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 100,
+        "maximum": 400,
+        "step": 50,
+        "unit": "ms"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "motion_duration",
+        "group": "t:settings_schema.motion.name"
+      }
+    },
+    {
+      "setting_id": "page_width",
+      "setting_type": "range",
+      "default_value": 1280,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 960,
+        "maximum": 1600,
+        "step": 20,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "page_width",
+        "group": "t:settings_schema.layout.name"
+      }
+    },
+    {
+      "setting_id": "section_spacing",
+      "setting_type": "range",
+      "default_value": 80,
+      "accepted_values": {
+        "kind": "range",
+        "minimum": 32,
+        "maximum": 160,
+        "step": 8,
+        "unit": "px"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "section_spacing",
+        "group": "t:settings_schema.layout.name"
+      }
+    },
+    {
+      "setting_id": "type_body_font",
+      "setting_type": "font_picker",
+      "default_value": "assistant_n4",
+      "accepted_values": {
+        "kind": "shopify_font_picker"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "type_body_font",
+        "group": "t:settings_schema.typography.name"
+      }
+    },
+    {
+      "setting_id": "type_heading_font",
+      "setting_type": "font_picker",
+      "default_value": "playfair_display_n4",
+      "accepted_values": {
+        "kind": "shopify_font_picker"
+      },
+      "ai_configurable": true,
+      "merchant_configurable": true,
+      "merchant_review_required": false,
+      "merchant_only": false,
+      "safety_level": "safe_to_generate",
+      "classification_rationale": "This is a bounded presentation setting defined by the current Shopify schema.",
+      "source": {
+        "file": "apps/theme/config/settings_schema.json",
+        "setting_id": "type_heading_font",
+        "group": "t:settings_schema.typography.name"
+      }
+    }
+  ]
+}

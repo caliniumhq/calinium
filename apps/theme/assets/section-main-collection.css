@@ -1,0 +1,43 @@
+/* Canonical collection composition. Native Shopify forms remain usable without JavaScript. */
+.co-main-collection { padding-block: var(--co-section-spacing); color: var(--co-color-text); background: var(--co-color-background-gradient), var(--co-color-background); }
+.co-main-collection__inner { display: grid; gap: var(--co-space-6); }
+.co-main-collection__description > * + * { margin-block-start: var(--co-space-3); }
+.co-main-collection__form, .co-main-collection__content { display: grid; gap: var(--co-space-4); }
+.co-main-collection__layout { display: grid; gap: var(--co-space-5); }
+.co-main-collection__filter-panel { display: grid; gap: var(--co-space-3); min-inline-size: 0; }
+.co-main-collection__filter-panel-heading h3 { margin: 0; font-size: var(--co-font-size-h5); }
+.co-main-collection__toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--co-space-3); align-items: end; }
+.co-main-collection__count { margin: 0; color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+.co-main-collection__mobile-filter-button { justify-self: start; min-block-size: calc(var(--co-space-6) + var(--co-space-3)); padding-inline: var(--co-space-3); border: var(--co-border-width) solid var(--co-color-border); border-radius: var(--co-radius-button); color: inherit; background: transparent; font: inherit; font-weight: 600; }
+.co-main-collection__submit { justify-self: start; }
+.co-main-collection__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--co-grid-gap); }
+.co-main-collection--mobile-columns-1 .co-main-collection__grid { grid-template-columns: minmax(0, 1fr); }
+.co-main-collection__empty { display: grid; justify-items: start; gap: var(--co-space-3); padding-block: var(--co-space-7); color: var(--co-color-text-muted); }
+.co-main-collection__empty-link { color: var(--co-color-accent); }
+.co-main-collection__filter-dialog { inline-size: min(100% - var(--co-space-5), 32rem); max-inline-size: 32rem; max-block-size: min(100% - var(--co-space-5), 48rem); padding: 0; border: 0; color: var(--co-color-text); background: var(--co-color-background); }
+.co-main-collection__filter-dialog::backdrop { background: rgb(0 0 0 / 0.45); }
+.co-main-collection__filter-dialog-inner { display: grid; max-block-size: inherit; overflow: auto; padding: var(--co-space-5); }
+.co-main-collection__filter-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: var(--co-space-3); margin-block-end: var(--co-space-4); }
+.co-main-collection__filter-dialog-header h2 { margin: 0; font-size: var(--co-font-size-h4); }
+.co-main-collection__filter-dialog-close { display: inline-grid; place-items: center; flex: 0 0 auto; inline-size: calc(var(--co-space-6) + var(--co-space-3)); block-size: calc(var(--co-space-6) + var(--co-space-3)); padding: 0; border: var(--co-border-width) solid var(--co-color-border); border-radius: 50%; color: inherit; background: transparent; }
+.co-main-collection__load-more { display: none; margin-inline: auto; }
+.co-main-collection__pagination-sentinel { display: block; block-size: 1px; }
+.co-main-collection[data-collection-enhanced='true'] [data-progressive-pagination] .co-pagination { display: none; }
+.co-main-collection[data-collection-enhanced='true'] [data-progressive-pagination] .co-main-collection__load-more { display: inline-flex; }
+
+@media (max-width: 47.99rem) {
+  .co-main-collection[data-collection-enhanced='true'] .co-main-collection__layout > .co-main-collection__filter-panel { display: none; }
+}
+
+@media (min-width: 48rem) {
+  .co-main-collection__toolbar { grid-template-columns: minmax(0, 1fr) auto; }
+  .co-main-collection--filters-sidebar .co-main-collection__layout { grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr); align-items: start; }
+  .co-main-collection--filters-sidebar[data-collection-sticky-filters='true'] .co-main-collection__filter-panel { position: sticky; inset-block-start: var(--co-space-5); max-block-size: calc(100vh - var(--co-space-7)); overflow: auto; }
+  .co-main-collection--filters-toolbar .co-main-collection__filter-panel { grid-column: 1 / -1; }
+  .co-main-collection--desktop-columns-2 .co-main-collection__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .co-main-collection--desktop-columns-3 .co-main-collection__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .co-main-collection--desktop-columns-4 .co-main-collection__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .co-main-collection--desktop-columns-5 .co-main-collection__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) { .co-main-collection__filter-dialog { scroll-behavior: auto; } }

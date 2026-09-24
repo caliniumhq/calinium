@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-editorial-grid-candidate.schema.json",
+  "title": "Calinium Editorial Grid Candidate Plan",
+  "description": "Mutable, project-scoped merchant review state. It is not an Approved Block Plan revision and cannot be consumed by generation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status", "candidate_version", "plan_id", "parent_revision_id", "approved_revision_id", "approved_resource_snapshot_revision_id", "stories", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "status": {"type": "string", "enum": ["not_required", "draft", "approved"]},
+    "candidate_version": {"type": "integer", "minimum": 0},
+    "plan_id": {"type": ["string", "null"], "pattern": "^abp_[a-z0-9][a-z0-9_-]*$"},
+    "parent_revision_id": {"type": ["string", "null"], "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+    "approved_revision_id": {"type": ["string", "null"], "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+    "approved_resource_snapshot_revision_id": {"type": ["string", "null"], "pattern": "^abpsr_[a-z0-9][a-z0-9_-]*$"},
+    "stories": {"type": "array", "maxItems": 8, "items": {"$ref": "#/$defs/story"}},
+    "warnings": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 240}},
+    "updated_at": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "story": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content_id", "placement_id", "title", "eyebrow", "excerpt", "destination", "image_asset_id", "image_alt_text", "order"],
+      "properties": {
+        "content_id": {"type": "string", "pattern": "^abpc_[a-z0-9][a-z0-9_-]*$"},
+        "placement_id": {"type": "string", "pattern": "^abpl_[a-z0-9][a-z0-9_-]*$"},
+        "title": {"type": "string", "maxLength": 240},
+        "eyebrow": {"type": "string", "maxLength": 120},
+        "excerpt": {"type": "string", "maxLength": 1200},
+        "destination": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "resource_id"],
+          "properties": {
+            "type": {"type": "string", "const": "shopify_collection"},
+            "resource_id": {"type": "string", "minLength": 1, "maxLength": 240}
+          }
+        },
+        "image_asset_id": {"type": ["string", "null"], "minLength": 1, "maxLength": 240},
+        "image_alt_text": {"type": ["string", "null"], "maxLength": 500},
+        "order": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}

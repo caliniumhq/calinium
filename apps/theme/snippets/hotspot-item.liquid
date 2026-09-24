@@ -1,0 +1,26 @@
+{% liquid
+  assign hotspot_label = label | default: blank
+  assign hotspot_url = url | default: link | default: blank
+  assign hotspot_panel_id = panel_id | default: blank
+  assign hotspot_horizontal_position = horizontal_position | default: 50
+  assign hotspot_vertical_position = vertical_position | default: 50
+  assign hotspot_class = 'co-primitive-hotspot-item'
+  assign hotspot_icon = icon | default: 'plus'
+  assign hotspot_icon_size = icon_size | default: 16
+
+  if class != blank
+    assign hotspot_class = hotspot_class | append: ' ' | append: class
+  endif
+%}
+
+{% if hotspot_label != blank %}
+  <span class="{{ hotspot_class | escape }}" style="--co-hotspot-inline: {{ hotspot_horizontal_position | escape }}%; --co-hotspot-block: {{ hotspot_vertical_position | escape }}%;">
+    {% if hotspot_url != blank %}
+      <a class="co-primitive-hotspot-item__trigger" href="{{ hotspot_url | escape }}" aria-label="{{ hotspot_label | escape }}">{% render 'icon', icon: hotspot_icon, size: hotspot_icon_size, decorative: true %}</a>
+    {% elsif hotspot_panel_id != blank %}
+      <button class="co-primitive-hotspot-item__trigger" type="button" aria-label="{{ hotspot_label | escape }}" aria-controls="{{ hotspot_panel_id | escape }}" aria-expanded="false" data-hotspot-trigger>{% render 'icon', icon: hotspot_icon, size: hotspot_icon_size, decorative: true %}</button>
+    {% else %}
+      <span class="co-primitive-hotspot-item__marker" role="img" aria-label="{{ hotspot_label | escape }}">{% render 'icon', icon: hotspot_icon, size: hotspot_icon_size, decorative: true %}</span>
+    {% endif %}
+  </span>
+{% endif %}

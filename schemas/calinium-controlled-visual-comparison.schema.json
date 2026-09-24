@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-controlled-visual-comparison.schema.json",
+  "title": "Calinium Controlled Visual Comparison",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "comparison_id", "comparison_type", "route_id", "component", "left_scope", "right_scope", "source_observation_ids", "source_observation_checksums", "conclusion", "evidence_summary", "architecture_provenance_revision", "confidence", "human_review_required"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "controlled-visual-comparison-v1"},
+    "comparison_id": {"type": "string", "pattern": "^controlled-visual-comparison-[a-f0-9]{20}$"},
+    "comparison_type": {"type": "string", "enum": ["cross_viewport", "cross_profile"]},
+    "route_id": {"type": "string"},
+    "component": {"type": "string"},
+    "left_scope": {"type": "object"},
+    "right_scope": {"type": "object"},
+    "source_observation_ids": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+    "source_observation_checksums": {"type": "array", "minItems": 2, "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+    "conclusion": {"type": "string"},
+    "evidence_summary": {"type": "string", "minLength": 1},
+    "architecture_provenance_revision": {"type": "string"},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "human_review_required": {"type": "boolean", "const": true}
+  },
+  "additionalProperties": false
+}

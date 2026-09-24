@@ -1,0 +1,13 @@
+{
+  "fixture_revision": "merchant-flow-beta-operations-fixture-v1",
+  "controlled_target": {"shop": "controlled-beta.myshopify.com", "theme_id": "gid://shopify/OnlineStoreTheme/200", "theme_role": "development", "is_live": false},
+  "forbidden_target": {"shop": "controlled-beta.myshopify.com", "theme_id": "gid://shopify/OnlineStoreTheme/100", "theme_role": "main", "is_live": true},
+  "other_shop_target": {"shop": "other-beta.myshopify.com", "theme_id": "gid://shopify/OnlineStoreTheme/300", "theme_role": "unpublished", "is_live": false},
+  "flows": {
+    "direct_current": "commerce_dense_store",
+    "direct_editorial": "image_led_editorial_store",
+    "ambiguous": "ambiguous_store"
+  },
+  "failures": ["generation_worker_failure", "render_failure", "qa_worker_interruption"],
+  "expected": {"api_calls": 0, "automatic_repair_allowed": false, "automatic_publish_allowed": false, "live_theme_changes": 0}
+}

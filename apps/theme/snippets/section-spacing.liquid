@@ -1,0 +1,20 @@
+{%- liquid
+  assign section_spacing_top = section.settings.padding_top | default: 80
+  assign section_spacing_bottom = section.settings.padding_bottom | default: 80
+  assign section_spacing_mobile_top = section.settings.mobile_padding_top | default: 48
+  assign section_spacing_mobile_bottom = section.settings.mobile_padding_bottom | default: 48
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --co-section-padding-top: {{ section_spacing_top }}px;
+    --co-section-padding-bottom: {{ section_spacing_bottom }}px;
+  }
+
+  @media (max-width: 47.99rem) {
+    #shopify-section-{{ section.id }} {
+      --co-section-padding-top: {{ section_spacing_mobile_top }}px;
+      --co-section-padding-bottom: {{ section_spacing_mobile_bottom }}px;
+    }
+  }
+{% endstyle %}

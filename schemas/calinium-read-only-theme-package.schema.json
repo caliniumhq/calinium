@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-read-only-theme-package.schema.json",
+  "title": "Calinium read-only theme package",
+  "type": "object",
+  "required": ["version", "generation_id", "package_type", "theme_specification", "base_theme", "workspace", "archive", "generated_files", "validation_report", "source_theme_modified", "shopify_operations"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "generation_id": {"type": "string", "pattern": "^generation-run-[a-z0-9-]+$"},
+    "package_type": {"type": "string", "const": "read_only_calinium_one_theme"},
+    "theme_specification": {"type": "string", "const": "manifests/theme-specification.json"},
+    "base_theme": {
+      "type": "object",
+      "required": ["id", "source_checksum", "source_file_count"],
+      "properties": {
+        "id": {"type": "string", "const": "calinium-one"},
+        "source_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "source_file_count": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "architecture_runtime": {"$ref": "#/$defs/architectureRuntime"},
+    "workspace": {"type": "string", "const": "storefront-theme"},
+    "archive": {
+      "type": "object",
+      "required": ["path", "sha256", "compressed_bytes", "entries"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^exports/.+\\.zip$"},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "compressed_bytes": {"type": "integer", "minimum": 1},
+        "entries": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "generated_files": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "validation_report": {"type": "string", "const": "reports/theme-package-validation.json"},
+    "source_theme_modified": {"type": "boolean", "const": false},
+    "shopify_operations": {
+      "type": "object",
+      "required": ["write_operations", "upload", "publish", "required_scope"],
+      "properties": {
+        "write_operations": {"type": "boolean", "const": false},
+        "upload": {"type": "boolean", "const": false},
+        "publish": {"type": "boolean", "const": false},
+        "required_scope": {"type": "string", "const": "none"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "selectedFamily": {
+      "type": "object",
+      "required": ["family", "family_id", "family_version", "presenters"],
+      "properties": {
+        "family": {"type": "string", "enum": ["header_navigation", "product_card", "collection_merchandising", "product_detail", "cart", "responsive_behavior"]},
+        "family_id": {"type": "string", "pattern": "^family\\.[a-z_]+\\.[a-z0-9_]+\\.v[0-9]+$"},
+        "family_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "presenters": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "architectureRuntime": {
+      "type": "object",
+      "required": ["application_version", "profile_id", "profile_version", "selection_revision_id", "applied", "selected_families", "overlays", "application_revision_id"],
+      "properties": {
+        "application_version": {"type": "string", "const": "architecture-runtime-v1"},
+        "profile_id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"},
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "selection_revision_id": {"type": "string", "pattern": "^architecture-selection-[a-f0-9]{20}$"},
+        "applied": {"type": "boolean"},
+        "selected_families": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"$ref": "#/$defs/selectedFamily"}},
+        "overlays": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["family", "family_id", "presenter_ids", "source", "target", "sha256"],
+            "properties": {
+              "family": {"type": "string"},
+              "family_id": {"type": "string"},
+              "presenter_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+              "source": {"type": "string", "pattern": "^ai/architecture/presenters/[a-z0-9-]+/(assets|sections|snippets)/[a-z0-9._-]+$"},
+              "target": {"type": "string", "pattern": "^(assets|sections|snippets)/[a-z0-9._-]+$"},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "application_revision_id": {"type": "string", "pattern": "^architecture-runtime-[a-f0-9]{20}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

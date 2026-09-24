@@ -1,0 +1,23 @@
+{% liquid
+  assign icon_text_icon = icon | default: name | default: blank
+  assign icon_text_value = text | default: blank
+  assign icon_text_size = icon_size | default: 20
+  assign icon_text_position = icon_position | default: 'start'
+  assign icon_text_class = 'co-primitive-icon-text co-primitive-icon-text--icon-' | append: icon_text_position
+
+  if class != blank
+    assign icon_text_class = icon_text_class | append: ' ' | append: class
+  endif
+%}
+
+{% if icon_text_icon != blank or icon_text_value != blank %}
+  <span class="{{ icon_text_class | escape }}">
+    {% if icon_text_icon != blank and icon_text_position != 'end' %}
+      {% render 'icon', icon: icon_text_icon, size: icon_text_size, decorative: decorative, label: icon_label, class: 'co-primitive-icon-text__icon' %}
+    {% endif %}
+    {% if icon_text_value != blank %}<span class="co-primitive-icon-text__content">{{ icon_text_value }}</span>{% endif %}
+    {% if icon_text_icon != blank and icon_text_position == 'end' %}
+      {% render 'icon', icon: icon_text_icon, size: icon_text_size, decorative: decorative, label: icon_label, class: 'co-primitive-icon-text__icon' %}
+    {% endif %}
+  </span>
+{% endif %}

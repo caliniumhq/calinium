@@ -1,0 +1,161 @@
+{% liquid
+  assign cart_item = item
+  assign cart_item_context = context | default: 'page'
+  assign cart_item_image_loading = image_loading | default: 'lazy'
+  assign cart_item_image_sizes = image_sizes | default: '25vw'
+  assign cart_item_image_widths = image_widths | default: '165, 360, 535, 750'
+  assign cart_item_unit_compare_price = cart_item.variant.compare_at_price
+  assign cart_item_state_message = blank
+  assign cart_item_remove_label = 'cart.remove_item' | t: title: cart_item.product.title
+  assign cart_item_price_label = 'cart.item_price' | t
+  assign cart_item_compare_at_price_label = 'products.product.compare_at_price' | t
+  assign cart_item_unit_price_label = 'products.product.unit_price' | t
+  assign cart_item_line_total_label = 'cart.line_total' | t
+  assign cart_item_loading_label = 'general.loading' | t
+  assign cart_item_quantity_id = 'CartQuantity-' | append: cart_item_context | append: '-' | append: cart_item.index
+  assign cart_item_quantity_name = 'updates[' | append: cart_item.key | append: ']'
+  assign cart_item_quantity_label = 'products.product.quantity' | t
+
+  if cart_item.original_price > cart_item.final_price
+    assign cart_item_unit_compare_price = cart_item.original_price
+  endif
+
+  if cart_item.product == blank
+    assign cart_item_state_message = 'products.product.unavailable' | t
+  elsif cart_item.variant != blank and cart_item.variant.available == false
+    assign cart_item_state_message = 'products.product.sold_out' | t
+  endif
+%}
+
+<article
+  class="co-cart-item co-cart-item--{{ cart_item_context | escape }}"
+  data-cart-line-item
+  data-cart-line-key="{{ cart_item.key | escape }}"
+>
+  {% if cart_item.image != blank %}
+    <div class="co-cart-item__media">
+      {% render 'responsive-image',
+        image: cart_item.image,
+        link: cart_item.url,
+        link_label: cart_item.product.title,
+        loading: cart_item_image_loading,
+        sizes: cart_item_image_sizes,
+        widths: cart_item_image_widths,
+        ratio: 'square',
+        class: 'co-cart-item__image'
+      %}
+    </div>
+  {% endif %}
+
+  <div class="co-cart-item__details">
+    {% if cart_item.url != blank %}
+      <a class="co-cart-item__title" href="{{ cart_item.url | escape }}">{{ cart_item.product.title | default: cart_item.title | escape }}</a>
+    {% else %}
+      <p class="co-cart-item__title">{{ cart_item.product.title | default: cart_item.title | escape }}</p>
+    {% endif %}
+
+    {% unless cart_item.product.has_only_default_variant %}
+      <dl class="co-cart-item__options">
+        {% for option in cart_item.options_with_values %}
+          <div>
+            <dt>{{ option.name | escape }}</dt>
+            <dd>{{ option.value | escape }}</dd>
+          </div>
+        {% endfor %}
+      </dl>
+    {% endunless %}
+
+    {% if cart_item.selling_plan_allocation != blank %}
+      <p class="co-cart-item__selling-plan">{{ cart_item.selling_plan_allocation.selling_plan.name | escape }}</p>
+    {% endif %}
+
+    {% if cart_item.properties.size > 0 %}
+      <dl class="co-cart-item__properties">
+        {% for property in cart_item.properties %}
+          {% liquid
+            assign property_key = property.first
+            assign property_value = property.last
+            assign property_key_prefix = property_key | slice: 0
+          %}
+          {% if property_value != blank and property_key_prefix != '_' %}
+            <div>
+              <dt>{{ property_key | escape }}</dt>
+              <dd>
+                {% if property_value contains '/uploads/' %}
+                  <a href="{{ property_value | escape }}">{{ property_value | split: '/' | last | escape }}</a>
+                {% else %}
+                  {{ property_value | escape }}
+                {% endif %}
+              </dd>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    <div class="co-cart-item__unit-price">
+      {% render 'price',
+        price: cart_item.final_price,
+        compare_at_price: cart_item_unit_compare_price,
+        unit_price: cart_item.unit_price,
+        unit_price_measurement: cart_item.unit_price_measurement,
+        current_price_label: cart_item_price_label,
+        compare_at_price_label: cart_item_compare_at_price_label,
+        unit_price_label: cart_item_unit_price_label
+      %}
+    </div>
+
+    {% if cart_item.line_level_discount_allocations.size > 0 %}
+      <ul class="co-cart-item__discounts" role="list">
+        {% for discount_allocation in cart_item.line_level_discount_allocations %}
+          <li>{{ discount_allocation.discount_application.title | escape }} −{{ discount_allocation.amount | money }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if cart_item.error_message != blank %}
+      <p class="co-cart-item__message co-cart-item__message--error" role="alert">{{ cart_item.error_message | escape }}</p>
+    {% elsif cart_item_state_message != blank %}
+      <p class="co-cart-item__message">{{ cart_item_state_message }}</p>
+    {% endif %}
+  </div>
+
+  <div class="co-cart-item__controls">
+    <div class="co-cart-item__quantity">
+      {% render 'quantity-input',
+        variant: cart_item.variant,
+        id: cart_item_quantity_id,
+        name: cart_item_quantity_name,
+        value: cart_item.quantity,
+        label: cart_item_quantity_label,
+        cart_line_key: cart_item.key,
+        visually_hidden_label: true
+      %}
+    </div>
+
+    {% if cart_item.url_to_remove != blank %}
+      <a
+        class="co-cart-item__remove"
+        href="{{ cart_item.url_to_remove | escape }}"
+        aria-label="{{ cart_item_remove_label | escape }}"
+        data-cart-remove
+        data-cart-line-key="{{ cart_item.key | escape }}"
+      >{{ 'cart.remove' | t }}</a>
+    {% endif %}
+
+    <span class="co-cart-item__spinner" data-cart-item-spinner hidden>
+      {% render 'loading-spinner', label: cart_item_loading_label %}
+    </span>
+
+    <div class="co-cart-item__line-total">
+      <span class="co-visually-hidden">{{ cart_item_line_total_label }}: </span>
+      {% render 'price',
+        price: cart_item.final_line_price,
+        compare_at_price: cart_item.original_line_price,
+        current_price_label: cart_item_line_total_label,
+        compare_at_price_label: cart_item_compare_at_price_label,
+        show_unit_price: false
+      %}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-interview-session.schema.json",
+  "title": "Calinium merchant interview session",
+  "description": "Serializable, versioned merchant-intent session. A host application may persist this record; the interview engine itself does not select a storage provider or write Shopify data.",
+  "type": "object",
+  "required": ["version", "engine_version", "session_id", "interview_id", "catalog_version", "status", "created_at", "updated_at", "answers", "visible_question_ids", "confirmed_summary", "summary", "merchant_profile", "events"],
+  "properties": {
+    "version": {"type": "integer", "const": 1, "description": "Session schema version."},
+    "engine_version": {"type": "string", "enum": ["1.0.0", "1.1.0"], "description": "Merchant Interview engine version. Older sessions migrate on resume."},
+    "session_id": {"type": "string", "pattern": "^merchant-interview-[a-z0-9-]+$", "description": "Stable session identifier."},
+    "interview_id": {"type": "string", "const": "merchant-interview-v1", "description": "Question catalog identity."},
+    "catalog_version": {"type": "string", "enum": ["1.0.0", "1.1.0"], "description": "Question catalog version used to collect answers. Older sessions migrate on resume."},
+    "status": {"type": "string", "enum": ["in_progress", "completed", "abandoned"], "description": "Lifecycle state."},
+    "created_at": {"type": "string", "minLength": 1, "description": "Explicit creation timestamp supplied by the host."},
+    "updated_at": {"type": "string", "minLength": 1, "description": "Explicit latest-update timestamp supplied by the host."},
+    "answers": {"type": "object", "description": "Question ID to raw answer mapping. Question-specific validation is performed by the engine."},
+    "visible_question_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}, "description": "Deterministically resolved visible questions at the latest session state."},
+    "confirmed_summary": {"type": "boolean", "description": "Merchant confirmation gate required before completion."},
+    "summary": {"type": ["object", "null"], "description": "Readable pre-strategy summary, populated only on successful completion."},
+    "merchant_profile": {"type": ["object", "null"], "description": "Canonical profile generated on completion; separately validated against calinium-merchant-profile.schema.json."},
+    "events": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/event"}, "description": "Ordered lifecycle events for host audit and resume behavior."}
+  },
+  "$defs": {
+    "event": {
+      "type": "object",
+      "required": ["event_id", "at", "type"],
+      "properties": {
+        "event_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$", "description": "Stable event identifier."},
+        "at": {"type": "string", "minLength": 1, "description": "Explicit host-supplied event timestamp."},
+        "type": {"type": "string", "enum": ["session_created", "catalog_migrated", "progress_saved", "session_resumed", "summary_confirmed", "session_completed", "session_abandoned"], "description": "Lifecycle event type."},
+        "details": {"type": "object", "description": "Non-sensitive operational event details."}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

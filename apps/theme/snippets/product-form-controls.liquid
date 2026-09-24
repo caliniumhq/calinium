@@ -1,0 +1,118 @@
+{% liquid
+  assign product_form_control = control
+  assign product_form_control_product = product
+  assign product_form_control_variant = selected_variant | default: product_form_control_product.selected_or_first_available_variant
+  assign product_form_control_section_id = section_id
+  assign product_form_control_form = form_context
+  assign product_form_control_price_label = 'products.product.price' | t
+  assign product_form_control_compare_label = 'products.product.compare_at_price' | t
+  assign product_form_control_from_label = 'products.product.from' | t
+  assign product_form_control_unit_price_label = 'products.product.unit_price' | t
+  assign product_form_control_sku_label = 'products.product.sku' | t
+  assign product_form_control_barcode_label = 'products.product.barcode' | t
+  assign product_form_control_add_label = 'products.product.add_to_cart' | t
+  assign product_form_control_sold_out_label = 'products.product.sold_out' | t
+  assign product_form_control_unavailable_label = 'products.product.unavailable' | t
+  assign product_form_control_adding_label = 'products.product.add_to_cart_loading' | t
+  assign product_form_control_submit_label = product_form_control_add_label
+  assign product_form_control_submit_disabled = false
+
+  if product_form_control_variant == blank
+    assign product_form_control_submit_label = product_form_control_unavailable_label
+    assign product_form_control_submit_disabled = true
+  elsif product_form_control_variant.available == false
+    assign product_form_control_submit_label = product_form_control_sold_out_label
+    assign product_form_control_submit_disabled = true
+  endif
+%}
+
+{% case product_form_control %}
+  {% when 'price' %}
+    <div class="co-product-form__price" data-product-price-region>
+      {% if product_form_control_variant != blank %}
+        {% render 'price', item: product_form_control_variant, from_label: product_form_control_from_label, current_price_label: product_form_control_price_label, compare_at_price_label: product_form_control_compare_label, unit_price_label: product_form_control_unit_price_label %}
+      {% endif %}
+    </div>
+    {% for variant in product_form_control_product.variants %}
+      <template data-product-price-template data-variant-id="{{ variant.id }}">
+        {% render 'price', item: variant, from_label: product_form_control_from_label, current_price_label: product_form_control_price_label, compare_at_price_label: product_form_control_compare_label, unit_price_label: product_form_control_unit_price_label %}
+      </template>
+    {% endfor %}
+
+  {% when 'variant_picker' %}
+    {% if product_form_control_product.has_only_default_variant or hide_picker %}
+      <input
+        type="hidden"
+        name="id"
+        value="{{ product_form_control_variant.id }}"
+        data-product-variant-id
+        data-variant-available="{{ product_form_control_variant.available }}"
+        data-variant-media-id="{% if product_form_control_variant.featured_media != blank %}{{ product_form_control_variant.featured_media.id }}{% endif %}"
+        data-variant-display-price="{{ product_form_control_variant.price | money | escape }}"
+        data-variant-title="{{ product_form_control_variant.title | escape }}"
+        data-quantity-min="{{ product_form_control_variant.quantity_rule.min }}"
+        data-quantity-max="{% if product_form_control_variant.quantity_rule.max != blank %}{{ product_form_control_variant.quantity_rule.max }}{% endif %}"
+        data-quantity-increment="{{ product_form_control_variant.quantity_rule.increment }}"
+      >
+    {% else %}
+      {% render 'variant-picker', product: product_form_control_product, selected_variant: product_form_control_variant, picker_type: variant_picker_type, section_id: product_form_control_section_id %}
+    {% endif %}
+
+  {% when 'sku' %}
+    <div class="co-product-form__sku" data-product-sku-region {% if product_form_control_variant.sku == blank %}hidden{% endif %}>
+      {% if product_form_control_variant.sku != blank %}
+        <p><span class="co-product-form__sku-label">{{ product_form_control_sku_label }}:</span> {{ product_form_control_variant.sku | escape }}</p>
+      {% endif %}
+    </div>
+    {% for variant in product_form_control_product.variants %}
+      <template data-product-sku-template data-variant-id="{{ variant.id }}">
+        {% if variant.sku != blank %}
+          <p><span class="co-product-form__sku-label">{{ product_form_control_sku_label }}:</span> {{ variant.sku | escape }}</p>
+        {% endif %}
+      </template>
+    {% endfor %}
+
+  {% when 'barcode' %}
+    <div class="co-product-form__barcode" data-product-barcode-region {% if product_form_control_variant.barcode == blank %}hidden{% endif %}>
+      {% if product_form_control_variant.barcode != blank %}
+        <p><span class="co-product-form__sku-label">{{ product_form_control_barcode_label }}:</span> {{ product_form_control_variant.barcode | escape }}</p>
+      {% endif %}
+    </div>
+    {% for variant in product_form_control_product.variants %}
+      <template data-product-barcode-template data-variant-id="{{ variant.id }}">
+        {% if variant.barcode != blank %}
+          <p><span class="co-product-form__sku-label">{{ product_form_control_barcode_label }}:</span> {{ variant.barcode | escape }}</p>
+        {% endif %}
+      </template>
+    {% endfor %}
+
+  {% when 'inventory' %}
+    <div class="co-product-form__inventory" data-product-inventory-region>
+      {% render 'product-inventory', variant: product_form_control_variant, low_inventory_threshold: low_inventory_threshold, low_inventory_message: low_inventory_message %}
+    </div>
+    {% for variant in product_form_control_product.variants %}
+      <template data-product-inventory-template data-variant-id="{{ variant.id }}">
+        {% render 'product-inventory', variant: variant, low_inventory_threshold: low_inventory_threshold, low_inventory_message: low_inventory_message %}
+      </template>
+    {% endfor %}
+    <template data-product-inventory-template data-variant-id="unavailable">
+      {% render 'product-inventory', availability_state: 'unavailable' %}
+    </template>
+
+  {% when 'quantity' %}
+    {% render 'quantity-input', variant: product_form_control_variant, id: quantity_id %}
+
+  {% when 'buy_buttons' %}
+    {% if product_form_control_form.errors %}
+      <div class="co-product-form__errors" role="alert">{{ product_form_control_form.errors | default_errors }}</div>
+    {% endif %}
+    <div class="co-product-form__feedback" data-product-form-message role="status" hidden></div>
+    <div class="co-product-form__submit-group">
+      {% render 'button', label: product_form_control_submit_label, type: 'submit', variant: 'primary', full_width: true, disabled: product_form_control_submit_disabled, class: 'co-product-form__submit', data_action: 'product-form-submit' %}
+      <span class="co-product-form__spinner" data-product-form-spinner hidden>{% render 'loading-spinner', label: product_form_control_adding_label %}</span>
+      {% if show_payment_button %}
+        <div class="co-product-form__payment-button">{{ product_form_control_form | payment_button }}</div>
+      {% endif %}
+    </div>
+    <a class="co-product-form__cart-link" href="{{ routes.cart_url }}" data-product-form-cart-link hidden>{{ 'products.product.view_cart' | t }}</a>
+{% endcase %}

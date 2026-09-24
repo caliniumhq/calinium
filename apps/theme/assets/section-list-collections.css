@@ -1,0 +1,40 @@
+/* Responsive collection-list grid composition. */
+.co-main-list-collections {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-main-list-collections__inner,
+.co-main-list-collections__grid,
+.co-main-list-collections__empty {
+  display: grid;
+  gap: var(--co-space-5);
+}
+
+.co-main-list-collections__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.co-main-list-collections--mobile-columns-1 .co-main-list-collections__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.co-main-list-collections__empty {
+  inline-size: min(100%, var(--co-content-width));
+  padding-block: var(--co-space-7);
+}
+
+@media (min-width: 48rem) {
+  .co-main-list-collections--desktop-columns-2 .co-main-list-collections__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .co-main-list-collections--desktop-columns-3 .co-main-list-collections__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .co-main-list-collections--desktop-columns-4 .co-main-list-collections__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

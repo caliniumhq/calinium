@@ -1,0 +1,237 @@
+{
+  "schema_version": "1.0",
+  "contract_version": "approved-bounded-repair-plan-v1",
+  "phase": "D3A.2",
+  "policy": {
+    "policy_id": "calinium_bounded_repair_planning",
+    "policy_version": "bounded-repair-planning-policy-v1",
+    "policy_revision": "bounded-repair-planning-phase-d3a-v1"
+  },
+  "target": {
+    "authoritative_finding_id": "design-finding-f4d218150f4162a33544",
+    "human_decision": "needs_fix",
+    "architecture_profile_id": "profile.current_calinium.v1",
+    "route_id": "homepage",
+    "viewport_id": "mobile-v1",
+    "browser_viewport": {"width": 390, "height": 844},
+    "rule_id": "root_horizontal_overflow",
+    "severity": "high"
+  },
+  "evidence": {
+    "d1": {
+      "result_reference": "output/storefront-visual-evaluations/phase-d1-approved-comparison/profile.current_calinium.v1/homepage--mobile-v1/evaluation-result.json",
+      "file_sha256": "634be4e6d7678e144c43a3c98a39f60d9eb335d3be797adb490cc1dc9db2a075",
+      "evaluation_id": "visual-evaluation-c634347d51198ad0fd2a",
+      "finding_id": "visual-finding-fd438111aa5f9aa8d4f6"
+    },
+    "human_design_review": {
+      "reference": "output/storefront-design-evaluations/phase-d2-5-live-calibration/human-review.json",
+      "file_sha256": "07315aefcb26cf692f91e7c0a8f120085990e051a430b41e28b39aa2e8ac7134",
+      "review_id": "design-review-bfc82d288460e1faa29c",
+      "checksum": "e4f420de93907ab473e9a1ff538cdc8dc3efac2e921ce6fc72f3888ba7eaceb9"
+    },
+    "section_isolation": {
+      "reference": "output/storefront-repair-executions/phase-d3a-1-root-overflow-isolation/root-overflow-isolation.json",
+      "sha256": "c4ad94ac43cb7a7b2406b6b0a96ffb29a96e8dd44bab35329f8327abc80b28aa",
+      "isolation_id": "root-overflow-isolation-1e22182b7b686d92fab8",
+      "isolation_checksum": "5288312d9b4748ad2903115532f4b4ac8700dc55886746cba20c89be5285ce97"
+    },
+    "descendant_isolation": {
+      "reference": "output/storefront-repair-executions/phase-d3a-1-root-overflow-isolation/exact-descendant-isolation.json",
+      "sha256": "c98d4a5c8a0025c9ae0b4926acc791ce2b461aa85df7968663794316f7b888ff",
+      "isolation_id": "root-overflow-descendant-isolation-ae88fc576dbe19218004",
+      "isolation_checksum": "288699915a22caf67c7a0ac0886053ff968f6d8df8d3ad15d682e4e37303ce61"
+    },
+    "d3a_1_candidate": {
+      "reference": "output/storefront-repair-executions/phase-d3a-1-root-overflow-isolation/proposed-repair-plan.json",
+      "sha256": "86c68af5eb539d27583a91e68115c367a38935bb76d7c4e1fce3fed1630669c3",
+      "repair_plan_id": "repair-plan-candidate-6a3df91a1ad95f706b50",
+      "repair_plan_checksum": "1ff98e1b02a42821cefb59732562f69d759259753ea2f6874ad9c69338205d88"
+    }
+  },
+  "confirmed_root_cause": {
+    "status": "confirmed",
+    "confidence": "high",
+    "runtime_selector": ".co-featured-collection__item:nth-child(3) .co-price__current > .co-visually-hidden",
+    "geometry": {
+      "position": "absolute",
+      "left_css_px": 656.375,
+      "right_css_px": 657.375,
+      "width_css_px": 1,
+      "document_scroll_width_css_px": 657
+    },
+    "containing_block_before": "body",
+    "mechanism": "The absolutely positioned accessible current-price label in the third offscreen Current mobile-swipe card resolves body as its containing block. Its 657.375px right edge escapes the intentional local rail and produces the 657px root scroll width.",
+    "decisive_neutralizations": [
+      "third_card_price_label_display_none:657_to_390",
+      "grid_price_visually_hidden_display_none:657_to_390",
+      "grid_position_relative:657_to_390",
+      "grid_contain_layout:657_to_390"
+    ],
+    "negative_controls": [
+      "third_card_image_display_none:657",
+      "third_card_visible_price_only_display_none:657",
+      "grid_max_inline_size:657",
+      "grid_zero_min_inline_size:657",
+      "grid_contain_inline_size:657",
+      "grid_overflow_hidden:657",
+      "grid_pseudos_disabled:657"
+    ],
+    "contributor_count": "one_parent_child_containing_block_relationship"
+  },
+  "ownership": {
+    "primary_architecture_family_id": "family.responsive_behavior.current_calinium.v1",
+    "supporting_architecture_family_id": "family.product_card.current_calinium.v1",
+    "shared_primitives_unchanged": ["snippet.price", "snippet.product_card", "utility.co_visually_hidden"],
+    "profile_specific_boundary": ".co-featured-collection--mobile-swipe .co-featured-collection__grid under max-width:47.99rem",
+    "editorial_discovery_targeted": false
+  },
+  "supersession": {
+    "rejected_plan": {
+      "reference": "plans/core-2-phase-d3a-current-mobile-homepage-overflow.json",
+      "file_sha256": "e65b22ecfaf40d1a506608d6b50380269c81dd7dbe0830ee516f7f569266ed93",
+      "repair_plan_id": "repair-plan-51818ae4d0b268572081",
+      "repair_plan_checksum": "347949a1448ce135f70ad2309f52fdeec29764fb84d00fa2f94df6b332320eea",
+      "status": "rejected_after_diagnostic",
+      "reason": "The first real-runtime diagnostic showed that the 390/977px featured-collection rail already operated as an intentional local scroller; its sizing hypothesis did not explain the root width and could not authorize mutation.",
+      "immutable": true
+    }
+  },
+  "human_approval": {
+    "source_kind": "explicit_human_instruction",
+    "decision": "approved_for_bounded_execution",
+    "reviewer_role": "human_reviewer",
+    "approved_candidate_id": "repair-plan-candidate-6a3df91a1ad95f706b50",
+    "approved_candidate_checksum": "1ff98e1b02a42821cefb59732562f69d759259753ea2f6874ad9c69338205d88",
+    "approved_intervention": "position: relative",
+    "approved_file": "apps/theme/assets/calinium-sections.css",
+    "approved_on": "2026-08-14",
+    "final_review_after_execution_required": true,
+    "approval_id": "repair-plan-approval-fa0bdfac9ef58cecb410",
+    "approval_checksum": "f5766da54d3b411091ef2b896c85c569ff8f621e147565df7e22dbf917daaf15"
+  },
+  "modification_scope": {
+    "maximum_file_count": 1,
+    "allowed_files": [
+      {
+        "path": "apps/theme/assets/calinium-sections.css",
+        "before_sha256": "cd40742492b80f3c8029fc6c8c12dcca659827d8adb64f4e1e69d5d346109cf8",
+        "permitted_change": "Add only position: relative to the existing Current mobile featured-collection swipe grid rule.",
+        "must_remain_untouched": ["all other declarations", "all desktop rules", "all non-featured-collection selectors", "Editorial Discovery overlays", "global html/body overflow"]
+      }
+    ],
+    "unrelated_refactoring_allowed": false
+  },
+  "intervention": {
+    "type": "component_scoped_containing_block_boundary",
+    "primary_selector": ".co-featured-collection--mobile-swipe .co-featured-collection__grid",
+    "declaration": "position: relative",
+    "purpose": "Make the Current mobile rail the containing block for absolutely positioned accessible descendants without changing their semantics or the rail layout.",
+    "minimum_diff_only": true,
+    "additional_containment_allowed": false,
+    "global_overflow_suppression_allowed": false,
+    "stop_if_insufficient": true
+  },
+  "accessibility_invariants": [
+    "visually_hidden_price_label_present",
+    "accessible_price_semantics_preserved",
+    "global_accessibility_utility_unchanged"
+  ],
+  "forbidden_scope": [
+    "editorial_discovery",
+    "cart",
+    "typography_redesign",
+    "section_order",
+    "newsletter",
+    "empty_module_suppression",
+    "footer_wrapping",
+    "mobile_header",
+    "product_highlights",
+    "design_dna",
+    "presets",
+    "architecture_selection",
+    "merchant_content",
+    "billing",
+    "deployment",
+    "live_theme_publishing",
+    "visually_hidden_utility",
+    "accessible_price_label",
+    "base_css",
+    "price_liquid",
+    "product_card_liquid",
+    "featured_collection_liquid",
+    "global_overflow_suppression"
+  ],
+  "acceptance": {
+    "before": {
+      "viewport_width_css_px": 390,
+      "document_width_css_px": 657,
+      "horizontal_overflow_css_px": 267,
+      "d1_rule_id": "root_horizontal_overflow"
+    },
+    "after": {
+      "maximum_document_width_css_px": 390,
+      "rounding_tolerance_css_px": 1,
+      "root_horizontal_overflow_finding_allowed": false
+    },
+    "functional": {
+      "local_horizontal_scroll_required": true,
+      "card_width_architecture": "78vw",
+      "snap_required": true,
+      "all_products_reachable": true,
+      "product_links_and_actions_required": true,
+      "accessible_price_label_required": true,
+      "clipping_based_fix_allowed": false
+    }
+  },
+  "verification": {
+    "target_first": true,
+    "d1_target_required": true,
+    "functional_rail_required": true,
+    "accessible_price_label_required": true,
+    "full_16_cell_render_required": true,
+    "full_16_cell_d1_required": true,
+    "editorial_byte_identical_expected": true,
+    "stabilized_d2_7_after_deterministic_pass": true,
+    "human_final_review_required": true,
+    "automatic_approval_allowed": false,
+    "regression_matrix": [
+      {"profile_id": "profile.current_calinium.v1", "route_id": "homepage", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "homepage", "viewport_id": "mobile-v1", "expectation": "root overflow removed; accessible label and local rail preserved"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "collection", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "collection", "viewport_id": "mobile-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "product", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "product", "viewport_id": "mobile-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "cart", "viewport_id": "desktop-v1", "expectation": "no regression"},
+      {"profile_id": "profile.current_calinium.v1", "route_id": "cart", "viewport_id": "mobile-v1", "expectation": "no regression"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "homepage", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "homepage", "viewport_id": "mobile-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "collection", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "collection", "viewport_id": "mobile-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "product", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "product", "viewport_id": "mobile-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "cart", "viewport_id": "desktop-v1", "expectation": "byte-identical"},
+      {"profile_id": "profile.editorial_discovery.v1", "route_id": "cart", "viewport_id": "mobile-v1", "expectation": "byte-identical"}
+    ]
+  },
+  "rollback": {
+    "approved_baseline_tag": "core-2-phase-d3a-complete",
+    "approved_baseline_commit": "1000000000000000000000000000000000000003",
+    "pre_execution_checkpoint_tag": "core-2-phase-d3a-1-complete",
+    "pre_execution_checkpoint_commit_resolution": "resolve_tag_at_d3b_preflight",
+    "boundary": "A future approved D3B execution may change only the one allowed declaration in apps/theme/assets/calinium-sections.css.",
+    "failure_action": "Stop and restore the allowed file to the exact pre-execution checkpoint state; do not attempt a second repair without new human approval."
+  },
+  "status": "approved_for_bounded_execution",
+  "safety": {
+    "bounded_execution_human_approved": true,
+    "automatic_repair_allowed": false,
+    "human_final_review_required": true,
+    "source_mutation_in_d3a_2_allowed": false,
+    "repair_executed": false,
+    "d3b_started": false,
+    "openai_api_calls_required": false
+  },
+  "repair_plan_id": "repair-plan-14559b4e96bcc7f1c602",
+  "repair_plan_checksum": "c10cf167b9b00dd3c7e4fc731273723ef2d2cc3155da8de12655a2625f7802d0"
+}

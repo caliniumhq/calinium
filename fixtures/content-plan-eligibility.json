@@ -1,0 +1,216 @@
+{
+  "fixture_version": "e5r-e-release-40-stale-content-plan-v1",
+  "description": "Sanitized controlled fixture for the release-40 omission-aware content-plan blocker.",
+  "sanitization": {
+    "production_project_identifiers_removed": true,
+    "production_shop_domain_removed": true,
+    "merchant_content_removed": true,
+    "credentials_present": false
+  },
+  "release_state": {
+    "deployment_release": 40,
+    "source_revision": "2000000000000000000000000000000000000002",
+    "observed_at": "2026-08-20T00:00:00.000Z",
+    "scope": {
+      "project_id": "prj_controlled_release_40_fixture",
+      "session_project_id": "prj_controlled_release_40_fixture",
+      "shop": "controlled-release-40.myshopify.com",
+      "approved_shop": "controlled-release-40.myshopify.com",
+      "session_revision": "session-revision-release-40",
+      "expected_session_revision": "session-revision-release-40"
+    },
+    "store_resources_approval": {
+      "approval_reference": "merchant-resource-approval-sanitized-release-40",
+      "status": "ready_for_generation",
+      "authoritative": true,
+      "must_be_reused": true
+    },
+    "resource_inventory_summary": {
+      "total": 25,
+      "verified_automatically": 1,
+      "omitted_by_policy": 24,
+      "merchant_action_count": 0
+    },
+    "merchant_intent": {
+      "revision_id": "merchant-intent-sanitized-release-40",
+      "shopping_mode": "information_led",
+      "must_remain_unchanged": true
+    },
+    "store_intelligence": {
+      "revision_id": "store-intelligence-sanitized-release-40",
+      "status": "pinned",
+      "must_remain_unchanged": true
+    },
+    "approved_preset": {
+      "revision_id": "approved-preset-sanitized-release-40",
+      "composition": {
+        "homepage": {
+          "sections": [
+            "hero",
+            "featured-collection",
+            "craftsmanship",
+            "newsletter"
+          ]
+        },
+        "productPage": {
+          "sections": []
+        },
+        "collectionPage": {
+          "sections": []
+        },
+        "standardPage": {
+          "sections": []
+        }
+      }
+    },
+    "resource_plan": {
+      "status": "ready",
+      "fields": [],
+      "groups": [],
+      "required_assets": [],
+      "required_confirmations": [
+        "review:verification:craftsmanship:craft_context"
+      ],
+      "blocker": null,
+      "confirmation_eligibility": {
+        "policy_version": "resource-confirmation-eligibility-v1",
+        "derivation_revision": "resource-confirmation-derivation-v1",
+        "input_checksum": "4607970d7a348685c1249932e4eacaa9d19d7034bbba10be19e239479a3b1a84",
+        "classified_at": "2026-08-20T00:00:00.000Z",
+        "items": [
+          {
+            "item_id": "rci_46379f9c767836021d2fc36f",
+            "confirmation_id": "review:verification:craftsmanship:craft_context",
+            "category": "factual_verification",
+            "requested_claim": "Use verified craft context evidence.",
+            "source_section": "craftsmanship",
+            "nature": "factual",
+            "expected_source": "merchant_or_authoritative_store_evidence",
+            "classification": "optional_omittable",
+            "policy_state": "omitted_by_policy",
+            "current_confirmation_state": "not_confirmed",
+            "current_blocking_reason": null,
+            "shopify_evidence_status": "not_available",
+            "omission_technically_possible": true,
+            "omission_scope": "module",
+            "omission_target": "craftsmanship",
+            "dependent_modules": [
+              "craftsmanship"
+            ],
+            "authoritative_provenance": null,
+            "merchant_state_copy": "Optional — not included",
+            "classified_at": "2026-08-20T00:00:00.000Z",
+            "checksum": "41e6f421d21fe6af23a33f8507c572fd609b956ec1820991858e16ec03bd49f9"
+          }
+        ],
+        "summary": {
+          "total": 1,
+          "counts": {
+            "auto_verifiable": 0,
+            "merchant_confirmation_required": 0,
+            "optional_omittable": 1,
+            "critical_confirmation_required": 0,
+            "unresolved_review_required": 0
+          },
+          "merchant_action_count": 0,
+          "omitted_section_ids": [
+            "craftsmanship"
+          ],
+          "omitted_field_refs": []
+        },
+        "revision_id": "rce_6bc4fb695e1a592726974d66c813bf68",
+        "checksum": "6bc4fb695e1a592726974d66c813bf68a0cf0793e698a8538eed73d183776119"
+      }
+    },
+    "generation_context": {
+      "status": "ready_for_generation",
+      "approval_reference": "merchant-resource-approval-sanitized-release-40",
+      "resource_confirmation_decisions": {
+        "policy_version": "resource-confirmation-eligibility-v1",
+        "policy_revision_id": "rce_6bc4fb695e1a592726974d66c813bf68",
+        "policy_checksum": "6bc4fb695e1a592726974d66c813bf68a0cf0793e698a8538eed73d183776119",
+        "items": [
+          {
+            "item_id": "rci_46379f9c767836021d2fc36f",
+            "confirmation_id": "review:verification:craftsmanship:craft_context",
+            "classification": "optional_omittable",
+            "state": "omitted_by_policy",
+            "actor": {
+              "type": "system",
+              "user_id": null
+            },
+            "decided_at": "2026-08-20T00:00:00.000Z",
+            "policy_item_checksum": "41e6f421d21fe6af23a33f8507c572fd609b956ec1820991858e16ec03bd49f9",
+            "provenance": {
+              "source_type": "resource_confirmation_policy",
+              "source_identity": "rce_6bc4fb695e1a592726974d66c813bf68",
+              "source_revision": "6bc4fb695e1a592726974d66c813bf68a0cf0793e698a8538eed73d183776119",
+              "extracted_value": {
+                "omission_scope": "module",
+                "omission_target": "craftsmanship"
+              },
+              "derivation_revision": "resource-confirmation-derivation-v1",
+              "confidence": 1,
+              "verified_at": "2026-08-20T00:00:00.000Z",
+              "checksum": "e5509c5e2d0093b54b294457d17231a04e7cc48c270e7ac4181c7aa1727cf1e7"
+            },
+            "checksum": "c35e1fe03b48d919ef087f1058623545cba48bc44be8edc822d42b2f8fae87d8"
+          }
+        ],
+        "revision_id": "rcd_3c1a3b62ae39279cc926454993d12860",
+        "checksum": "3c1a3b62ae39279cc926454993d1286099acb2b0cc0a3605f9b2c35cb2c9be8a"
+      }
+    },
+    "expected_effective_strategy": {
+      "homepage": {
+        "sections": [
+          "hero",
+          "featured-collection",
+          "newsletter"
+        ]
+      },
+      "productPage": {
+        "sections": []
+      },
+      "collectionPage": {
+        "sections": []
+      },
+      "standardPage": {
+        "sections": []
+      }
+    },
+    "stale_content_plan": {
+      "version": 1,
+      "status": "not_required",
+      "candidate_version": 0,
+      "stories": [],
+      "warnings": [],
+      "craftsmanship": {
+        "status": "draft",
+        "candidate_version": 1,
+        "steps": [],
+        "warnings": [],
+        "updated_at": "2026-08-20T00:00:00.000Z"
+      }
+    },
+    "before": {
+      "content_plan_stage": "content-plan",
+      "quick_start_actionable_count": 1,
+      "advanced_content_plan_action_count": 0,
+      "merchant_generation_flow": null,
+      "merchant_flow_eligible": false
+    },
+    "expected_after": {
+      "craftsmanship_candidate_status": "not_required",
+      "craftsmanship_candidate_version": 2,
+      "craftsmanship_eligibility_state": "not_required_omitted_by_policy",
+      "actionable_count": 0,
+      "blocked_count": 0,
+      "quick_start_actionable_count": 0,
+      "advanced_merchant_state": "optional_not_included",
+      "stage": "offer",
+      "stage_resolution_status": "resolved",
+      "merchant_flow_eligible": true
+    }
+  }
+}

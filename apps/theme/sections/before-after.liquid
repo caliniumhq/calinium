@@ -1,0 +1,54 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign before_after_classes = 'co-before-after co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign before_after_classes = before_after_classes | append: ' co-before-after--width-' | append: section.settings.desktop_width
+  assign before_after_heading_id = 'BeforeAfterHeading-' | append: section.id
+  assign before_after_range_id = 'BeforeAfterRange-' | append: section.id
+  assign before_after_label_id = 'BeforeAfterLabel-' | append: section.id
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ before_after_classes }}" {% if section.settings.heading != blank %}aria-labelledby="{{ before_after_heading_id }}"{% endif %} data-co-section-behavior data-co-before-after style="--co-before-after-position: {{ section.settings.initial_position }}%;" {{ section.shopify_attributes }}>
+  <div class="co-before-after__inner co-page-width">
+    {% render 'section-heading', heading: section.settings.heading, description: section.settings.description, id: before_after_heading_id, alignment: 'center', size: section.settings.heading_size %}
+    <div class="co-before-after__media" data-before-after-media>
+      {% if section.settings.before_image != blank %}{% render 'responsive-image', image: section.settings.before_image, alt: section.settings.before_image.alt, loading: 'lazy', sizes: '(min-width: 48rem) 70vw, 100vw', widths: '375, 550, 750, 1000, 1500, 2000', ratio: section.settings.aspect_ratio, class: 'co-before-after__before' %}{% else %}<div class="co-before-after__placeholder">{{ 'lifestyle-1' | placeholder_svg_tag }}</div>{% endif %}
+      <div class="co-before-after__after" data-before-after-after>
+        {% if section.settings.after_image != blank %}{% render 'responsive-image', image: section.settings.after_image, alt: section.settings.after_image.alt, loading: 'lazy', sizes: '(min-width: 48rem) 70vw, 100vw', widths: '375, 550, 750, 1000, 1500, 2000', ratio: section.settings.aspect_ratio, class: 'co-before-after__after-image' %}{% else %}<div class="co-before-after__placeholder">{{ 'lifestyle-2' | placeholder_svg_tag }}</div>{% endif %}
+      </div>
+      <span class="co-before-after__label co-before-after__label--before">{{ section.settings.before_label | escape }}</span>
+      <span class="co-before-after__label co-before-after__label--after">{{ section.settings.after_label | escape }}</span>
+      <label class="co-visually-hidden" for="{{ before_after_range_id }}">{{ 'sections.before_after.control_label' | t }}</label>
+      <input id="{{ before_after_range_id }}" class="co-before-after__range" type="range" min="0" max="100" value="{{ section.settings.initial_position }}" data-before-after-range aria-describedby="{{ before_after_label_id }}">
+      <span id="{{ before_after_label_id }}" class="co-visually-hidden">{{ 'sections.before_after.control_description' | t }}</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.before_after.name",
+  "tag": "section",
+  "class": "co-section-before-after",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "See the difference" },
+    { "type": "richtext", "id": "description", "label": "t:sections.shared.settings.description.label" },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "standard", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "image_picker", "id": "before_image", "label": "t:sections.shared.settings.before_image.label" },
+    { "type": "image_picker", "id": "after_image", "label": "t:sections.shared.settings.after_image.label" },
+    { "type": "text", "id": "before_label", "label": "t:sections.shared.settings.before_label.label", "default": "Before" },
+    { "type": "text", "id": "after_label", "label": "t:sections.shared.settings.after_label.label", "default": "After" },
+    { "type": "range", "id": "initial_position", "label": "t:sections.shared.settings.initial_position.label", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "select", "id": "aspect_ratio", "label": "t:sections.shared.settings.aspect_ratio.label", "default": "landscape", "options": [{ "value": "square", "label": "t:sections.shared.options.square" }, { "value": "portrait", "label": "t:sections.shared.options.portrait" }, { "value": "landscape", "label": "t:sections.shared.options.landscape" }] },
+    { "type": "select", "id": "desktop_width", "label": "t:sections.shared.settings.desktop_width.label", "default": "standard", "options": [{ "value": "narrow", "label": "t:sections.shared.options.narrow" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "wide", "label": "t:sections.shared.options.wide" }] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [{ "name": "t:sections.before_after.preset" }]
+}
+{% endschema %}

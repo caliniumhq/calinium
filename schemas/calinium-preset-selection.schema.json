@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-preset-selection.schema.json",
+  "title": "Calinium Preset Selection Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "candidate_version", "status", "recommended_preset_id", "selected_preset_id", "preset_version", "selection_source", "recommendation_reasons", "alternatives", "compatibility", "fallback", "strategy_revision", "target_theme", "updated_at"],
+  "properties": {
+    "version": {"const": 1},
+    "candidate_version": {"type": "integer", "minimum": 1},
+    "status": {"enum": ["draft", "approved"]},
+    "recommended_preset_id": {"type": "string", "minLength": 1},
+    "selected_preset_id": {"type": "string", "minLength": 1},
+    "preset_version": {"type": "string", "minLength": 1},
+    "selection_source": {"enum": ["creative_director_recommendation", "merchant_selection", "industry_recommendation", "safe_fallback"]},
+    "recommendation_reasons": {"type": "array", "items": {"type": "string", "minLength": 1}, "maxItems": 4},
+    "alternatives": {"type": "array", "maxItems": 2, "items": {"type": "object", "additionalProperties": false, "required": ["preset_id", "preset_version", "differences"], "properties": {"preset_id": {"type": "string"}, "preset_version": {"type": "string"}, "differences": {"type": "array", "items": {"type": "string"}, "maxItems": 3}}}},
+    "compatibility": {"type": "object", "additionalProperties": false, "required": ["compatible", "industry", "business_model", "personality", "design_language", "recipe", "reasons"], "properties": {"compatible": {"type": "boolean"}, "industry": {"type": "boolean"}, "business_model": {"type": "boolean"}, "personality": {"type": "boolean"}, "design_language": {"type": "boolean"}, "recipe": {"type": "boolean"}, "target_theme": {"type": "boolean"}, "content_ready": {"type": "boolean"}, "missing_required_content": {"type": "array", "items": {"type": "string"}}, "reasons": {"type": "array", "items": {"type": "string"}}}},
+    "fallback": {"type": ["object", "null"], "additionalProperties": false, "required": ["from_preset_id", "to_preset_id", "reason"], "properties": {"from_preset_id": {"type": "string"}, "to_preset_id": {"type": "string"}, "reason": {"type": "string"}}},
+    "strategy_revision": {"type": "string", "minLength": 1},
+    "target_theme": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"const": "calinium-one"}, "version": {"type": "string", "minLength": 1}}},
+    "approved_revision_id": {"type": ["string", "null"]},
+    "updated_at": {"type": "string", "format": "date-time"}
+  }
+}

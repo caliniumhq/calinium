@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-live-design-calibration-report.schema.json",
+  "title": "Calinium Live Design Evaluation Calibration Report",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "report_id", "status", "comparison_fixture_revision", "comparison_key", "live_evaluation_id", "human_calibration", "human_review", "repeat_consistency", "human_agreement", "objective_consistency", "hallucination_diagnostics", "operational_summary", "review_requirement", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "live-design-calibration-report-v1"},
+    "report_id": {"type": "string", "pattern": "^live-design-calibration-[a-f0-9]{20}$"},
+    "status": {"type": "string", "enum": ["human_review_required", "reviewed", "failed"]},
+    "comparison_fixture_revision": {"type": "string"},
+    "comparison_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "live_evaluation_id": {"type": "string"},
+    "human_calibration": {"type": "object"},
+    "human_review": {"type": ["object", "null"]},
+    "repeat_consistency": {"type": "object"},
+    "human_agreement": {"type": "object"},
+    "objective_consistency": {"type": "object"},
+    "hallucination_diagnostics": {"type": "object"},
+    "operational_summary": {"type": "object"},
+    "review_requirement": {"type": "object"},
+    "safety": {"type": "object", "required": ["fixture_fallback_used", "automatic_mutation_allowed", "automatic_repair_allowed", "shopify_write_allowed"], "properties": {"fixture_fallback_used": {"type": "boolean", "const": false}, "automatic_mutation_allowed": {"type": "boolean", "const": false}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "shopify_write_allowed": {"type": "boolean", "const": false}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

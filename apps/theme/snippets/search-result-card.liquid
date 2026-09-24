@@ -1,0 +1,55 @@
+{% liquid
+  assign search_result = result
+  assign search_result_classes = 'co-search-result-card'
+  assign search_result_type_label = blank
+  assign search_result_type = result_type | default: search_result.object_type
+  assign search_result_image = search_result.image
+  assign search_result_content = search_result.excerpt_or_content | default: search_result.content
+  assign search_result_image_loading = image_loading | default: 'lazy'
+  assign search_result_image_sizes = image_sizes | default: '25vw'
+  assign search_result_image_widths = image_widths | default: '165, 360, 535, 750'
+  assign search_result_image_ratio = image_ratio | default: 'landscape'
+
+  case search_result_type
+    when 'article'
+      assign search_result_type_label = 'search.article' | t
+    when 'page'
+      assign search_result_type_label = 'search.page' | t
+  endcase
+
+  if class != blank
+    assign search_result_classes = search_result_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if search_result != blank %}
+  <article class="{{ search_result_classes | escape }}">
+    <a class="co-search-result-card__link" href="{{ search_result.url | escape }}">
+      {% if search_result_image != blank %}
+        <div class="co-search-result-card__media">
+          {% render 'responsive-image',
+            image: search_result_image,
+            alt: search_result_image.alt,
+            loading: search_result_image_loading,
+            sizes: search_result_image_sizes,
+            widths: search_result_image_widths,
+            ratio: search_result_image_ratio,
+            class: 'co-search-result-card__image'
+          %}
+        </div>
+      {% endif %}
+
+      <div class="co-search-result-card__details">
+        {% if search_result_type_label != blank %}
+          <p class="co-search-result-card__type">{{ search_result_type_label }}</p>
+        {% endif %}
+
+        <h3 class="co-search-result-card__title">{{ search_result.title | escape }}</h3>
+
+        {% if search_result_content != blank %}
+          <p class="co-search-result-card__excerpt">{{ search_result_content | strip_html | truncatewords: 24 }}</p>
+        {% endif %}
+      </div>
+    </a>
+  </article>
+{% endif %}

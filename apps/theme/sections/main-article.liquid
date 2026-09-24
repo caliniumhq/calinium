@@ -1,0 +1,256 @@
+{% if section.settings.show_featured_image and article.image != blank %}
+  {{ 'component-image.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{% if section.settings.show_comments and article.comments_enabled? %}
+  {{ 'component-button.css' | asset_url | stylesheet_tag }}
+  {{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{% if section.settings.show_social_sharing %}
+  {{ 'component-social-sharing.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{{ 'section-main-article.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign main_article_classes = 'co-main-article co-color-scheme-' | append: section.settings.color_scheme
+  assign main_article_heading_id = 'ArticleHeading-' | append: section.id
+  assign main_article_comments_id = 'ArticleComments-' | append: section.id
+  assign main_article_comment_form_id = 'ArticleCommentForm-' | append: section.id
+  assign main_article_comment_errors_id = 'ArticleCommentErrors-' | append: section.id
+  assign main_article_comment_required_id = 'ArticleCommentRequired-' | append: section.id
+  assign main_article_comment_author_id = 'ArticleCommentAuthor-' | append: section.id
+  assign main_article_comment_email_id = 'ArticleCommentEmail-' | append: section.id
+  assign main_article_comment_body_id = 'ArticleCommentBody-' | append: section.id
+  assign main_article_comment_author_error_id = 'ArticleCommentAuthorError-' | append: section.id
+  assign main_article_comment_email_error_id = 'ArticleCommentEmailError-' | append: section.id
+  assign main_article_comment_body_error_id = 'ArticleCommentBodyError-' | append: section.id
+  assign main_article_comment_submit_label = 'articles.comment_submit' | t
+%}
+
+<article class="{{ main_article_classes }}" aria-labelledby="{{ main_article_heading_id }}">
+  <div class="co-main-article__inner co-page-width">
+    <header class="co-main-article__header">
+      <h1 id="{{ main_article_heading_id }}" class="co-main-article__heading">{{ article.title | escape }}</h1>
+
+      {% render 'article-meta',
+        article: article,
+        show_author: section.settings.show_author,
+        show_date: section.settings.show_date,
+        show_tags: section.settings.show_tags,
+        context: 'article'
+      %}
+
+      {% if section.settings.show_featured_image and article.image != blank %}
+        <div class="co-main-article__featured-image">
+          {% render 'responsive-image',
+            image: article.image,
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '(min-width: 80rem) 80rem, 100vw',
+            widths: '535, 750, 1000, 1500, 2000',
+            ratio: 'natural',
+            class: 'co-main-article__image'
+          %}
+        </div>
+      {% endif %}
+    </header>
+
+    <div class="co-main-article__content rte">{{ article.content }}</div>
+
+    {% if section.settings.show_social_sharing %}
+      {% render 'social-sharing', article: article, share_url: canonical_url %}
+    {% endif %}
+
+    {% if section.settings.show_comments and article.comments_enabled? %}
+      <section id="{{ main_article_comments_id }}" class="co-main-article__comments" aria-labelledby="{{ main_article_comments_id }}-heading">
+        <h2 id="{{ main_article_comments_id }}-heading">{{ 'articles.comments_heading' | t }} <span class="co-visually-hidden">({{ 'articles.comments' | t: count: article.comments_count }})</span></h2>
+
+        {% paginate article.comments by 20 %}
+          {% if article.comments_count > 0 %}
+            <ul class="co-main-article__comment-list" role="list">
+              {% for comment in article.comments %}
+                <li>
+                  <article class="co-main-article__comment">
+                    <header>
+                      <h3>{{ comment.author | escape }}</h3>
+                      <p class="co-main-article__comment-meta"><time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">{{ comment.created_at | date: format: 'short' }}</time></p>
+                    </header>
+                    <div class="co-main-article__comment-content">{{ comment.content | escape | newline_to_br }}</div>
+                  </article>
+                </li>
+              {% endfor %}
+            </ul>
+
+            {% render 'pagination', paginate: paginate %}
+          {% endif %}
+        {% endpaginate %}
+
+        {% form 'new_comment', article, id: main_article_comment_form_id, class: 'co-main-article__comment-form' %}
+          {% liquid
+            assign main_article_comment_author_describedby = main_article_comment_required_id
+            assign main_article_comment_email_describedby = main_article_comment_required_id
+            assign main_article_comment_body_describedby = main_article_comment_required_id
+
+            if form.errors contains 'author'
+              assign main_article_comment_author_describedby = main_article_comment_author_describedby | append: ' ' | append: main_article_comment_author_error_id
+            endif
+
+            if form.errors contains 'email'
+              assign main_article_comment_email_describedby = main_article_comment_email_describedby | append: ' ' | append: main_article_comment_email_error_id
+            endif
+
+            if form.errors contains 'body'
+              assign main_article_comment_body_describedby = main_article_comment_body_describedby | append: ' ' | append: main_article_comment_body_error_id
+            endif
+          %}
+
+          <h3>{{ 'articles.leave_comment' | t }}</h3>
+
+          {% if form.posted_successfully? %}
+            <p class="co-main-article__comment-status" role="status">
+              {% if article.moderated? %}
+                {{ 'articles.comment_success_moderated' | t }}
+              {% else %}
+                {{ 'articles.comment_success' | t }}
+              {% endif %}
+            </p>
+          {% endif %}
+
+          {% if form.errors %}
+            <div id="{{ main_article_comment_errors_id }}" class="co-main-article__comment-errors" role="alert">
+              <p>{{ 'articles.comment_error_summary' | t }}</p>
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          <p id="{{ main_article_comment_required_id }}" class="co-main-article__comment-meta"><span aria-hidden="true">*</span> {{ 'articles.required_fields' | t }}</p>
+
+          <div class="co-main-article__comment-field">
+            <label for="{{ main_article_comment_author_id }}">{{ 'articles.comment_name' | t }} <span aria-hidden="true">*</span></label>
+            <input
+              id="{{ main_article_comment_author_id }}"
+              type="text"
+              name="comment[author]"
+              value="{{ form.author | escape }}"
+              autocomplete="name"
+              aria-describedby="{{ main_article_comment_author_describedby }}"
+              {% if form.errors contains 'author' %}aria-invalid="true"{% endif %}
+              required
+            >
+            {% if form.errors contains 'author' %}
+              <p id="{{ main_article_comment_author_error_id }}" class="co-main-article__comment-field-error"><span class="co-visually-hidden">{{ 'articles.comment_name' | t }}: </span>{{ form.errors.messages['author'] | escape }}</p>
+            {% endif %}
+          </div>
+
+          <div class="co-main-article__comment-field">
+            <label for="{{ main_article_comment_email_id }}">{{ 'articles.comment_email' | t }} <span aria-hidden="true">*</span></label>
+            <input
+              id="{{ main_article_comment_email_id }}"
+              type="email"
+              name="comment[email]"
+              value="{{ form.email | escape }}"
+              autocomplete="email"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-describedby="{{ main_article_comment_email_describedby }}"
+              {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+              required
+            >
+            {% if form.errors contains 'email' %}
+              <p id="{{ main_article_comment_email_error_id }}" class="co-main-article__comment-field-error"><span class="co-visually-hidden">{{ 'articles.comment_email' | t }}: </span>{{ form.errors.messages['email'] | escape }}</p>
+            {% endif %}
+          </div>
+
+          <div class="co-main-article__comment-field">
+            <label for="{{ main_article_comment_body_id }}">{{ 'articles.comment_body' | t }} <span aria-hidden="true">*</span></label>
+            <textarea
+              id="{{ main_article_comment_body_id }}"
+              name="comment[body]"
+              aria-describedby="{{ main_article_comment_body_describedby }}"
+              {% if form.errors contains 'body' %}aria-invalid="true"{% endif %}
+              required
+            >{{ form.body | escape }}</textarea>
+            {% if form.errors contains 'body' %}
+              <p id="{{ main_article_comment_body_error_id }}" class="co-main-article__comment-field-error"><span class="co-visually-hidden">{{ 'articles.comment_body' | t }}: </span>{{ form.errors.messages['body'] | escape }}</p>
+            {% endif %}
+          </div>
+
+          <div class="co-main-article__comment-actions">
+            {% render 'button', label: main_article_comment_submit_label, type: 'submit', variant: 'primary' %}
+          </div>
+        {% endform %}
+      </section>
+    {% endif %}
+
+    {% if blog.previous_article != blank or blog.next_article != blank %}
+      <nav class="co-main-article__navigation" aria-label="{{ 'articles.article_navigation' | t }}">
+        <div class="co-main-article__navigation-previous">
+          {% if blog.previous_article != blank %}
+            <a href="{{ blog.previous_article.url | escape }}"><span class="co-visually-hidden">{{ 'articles.previous_article' | t }}: </span>{{ blog.previous_article.title | escape }}</a>
+          {% endif %}
+        </div>
+        <div class="co-main-article__navigation-next">
+          {% if blog.next_article != blank %}
+            <a href="{{ blog.next_article.url | escape }}"><span class="co-visually-hidden">{{ 'articles.next_article' | t }}: </span>{{ blog.next_article.title | escape }}</a>
+          {% endif %}
+        </div>
+      </nav>
+    {% endif %}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "t:sections.main_article.name",
+  "tag": "section",
+  "class": "co-section-main-article",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["article"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "t:sections.main_article.settings.show_featured_image.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:sections.main_article.settings.show_author.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "t:sections.main_article.settings.show_date.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:sections.main_article.settings.show_tags.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments",
+      "label": "t:sections.main_article.settings.show_comments.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_sharing",
+      "label": "t:sections.main_article.settings.show_social_sharing.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main_article.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

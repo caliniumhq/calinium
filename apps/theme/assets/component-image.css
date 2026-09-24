@@ -1,0 +1,62 @@
+/* Reusable responsive image component. */
+.co-image {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--co-radius-media);
+  background-color: var(--co-color-surface);
+}
+
+.co-image__link {
+  display: block;
+  color: inherit;
+}
+
+.co-image__frame {
+  overflow: hidden;
+}
+
+.co-image__picture {
+  display: block;
+}
+
+.co-image__media {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+.co-image--ratio-square .co-image__frame {
+  aspect-ratio: 1;
+}
+
+.co-image--ratio-portrait .co-image__frame {
+  aspect-ratio: 3 / 4;
+}
+
+.co-image--ratio-landscape .co-image__frame {
+  aspect-ratio: 4 / 3;
+}
+
+.co-image--ratio-wide .co-image__frame {
+  aspect-ratio: 16 / 9;
+}
+
+.co-image--ratio-square .co-image__media,
+.co-image--ratio-portrait .co-image__media,
+.co-image--ratio-landscape .co-image__media,
+.co-image--ratio-wide .co-image__media {
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.co-image--fit-contain .co-image__media {
+  object-fit: contain;
+}
+
+.co-image__caption {
+  padding: var(--co-space-3) var(--co-space-4);
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+  line-height: var(--co-line-height-body);
+}

@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-generation-flow.schema.json",
+  "title": "Calinium Core 2.0 merchant generation flow",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "flow_id", "project_id", "organization_id", "conversation_revision", "store_context", "store_context_checksum", "state", "sequence", "created_at", "updated_at", "commercial", "context", "design_dna", "composition", "paid_identity", "generation", "artifact", "render_qa", "repair", "operator_provenance", "cancellation", "merchant_action", "failure", "history", "safety", "checksum"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-generation-flow-v2"},
+    "flow_id": {"type": "string", "pattern": "^merchant-flow-[a-f0-9]{20}$"},
+    "project_id": {"type": "string", "minLength": 1},
+    "organization_id": {"type": "string", "minLength": 1},
+    "conversation_revision": {"type": "string", "minLength": 1},
+    "store_context": {
+      "type": "object",
+      "required": ["project_id", "organization_id", "connection_id", "shop"],
+      "properties": {
+        "project_id": {"type": "string", "minLength": 1},
+        "organization_id": {"type": "string", "minLength": 1},
+        "connection_id": {"type": ["string", "null"]},
+        "shop": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "store_context_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "state": {"$ref": "#/$defs/state"},
+    "sequence": {"type": "integer", "minimum": 0},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "commercial": {
+      "type": "object",
+      "required": ["paid_generation_required", "duplicate_charge_allowed"],
+      "properties": {"paid_generation_required": {"type": "boolean"}, "duplicate_charge_allowed": {"const": false}},
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "required": ["store_intelligence", "merchant_intent", "selection_outcome", "question_request", "answer", "architecture_selection"],
+      "properties": {
+        "store_intelligence": {"oneOf": [{"type": "null"}, {"$ref": "calinium-store-intelligence-contract.schema.json"}]},
+        "merchant_intent": {"oneOf": [{"type": "null"}, {"$ref": "calinium-merchant-intent.schema.json"}]},
+        "selection_outcome": {"oneOf": [{"type": "null"}, {"$ref": "calinium-architecture-selection-outcome.schema.json"}]},
+        "question_request": {"oneOf": [{"type": "null"}, {"$ref": "calinium-architecture-material-question.schema.json"}]},
+        "answer": {"oneOf": [{"type": "null"}, {"$ref": "calinium-architecture-material-answer.schema.json"}]},
+        "architecture_selection": {"oneOf": [{"type": "null"}, {"$ref": "calinium-architecture-selection.schema.json"}]}
+      },
+      "additionalProperties": false
+    },
+    "design_dna": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/revisionBinding"}]},
+    "composition": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/revisionBinding"}]},
+    "paid_identity": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["order_id", "purchase_intent_checksum", "snapshot_id", "snapshot_checksum"],
+          "properties": {
+            "order_id": {"type": "string", "minLength": 1},
+            "purchase_intent_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "snapshot_id": {"type": ["string", "null"]},
+            "snapshot_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "generation": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["generation_id", "status"], "properties": {"generation_id": {"type": "string", "minLength": 1}, "status": {"enum": ["running", "interrupted", "completed"]}}, "additionalProperties": false}
+      ]
+    },
+    "artifact": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "required": ["artifact_id", "reference", "checksum", "generation_id"], "properties": {"artifact_id": {"type": "string", "minLength": 1}, "reference": {"type": "string", "minLength": 1}, "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "generation_id": {"type": "string", "minLength": 1}, "controlled_runtime_binding": {"$ref": "#/$defs/controlledRuntimeBinding"}}, "additionalProperties": false}
+      ]
+    },
+    "target_succession": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["succession_id", "succession_checksum", "prior_target_theme_id", "successor_target_theme_id", "successor_binding_checksum", "successor_job_id"],
+          "properties": {
+            "succession_id": {"type": "string", "pattern": "^merchant-flow-render-target-succession-[a-f0-9]{20}$"},
+            "succession_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "prior_target_theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+            "successor_target_theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+            "successor_binding_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "successor_job_id": {"type": "string", "pattern": "^merchant-flow-job-[a-f0-9]{20}$"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "render_qa": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["status", "render_revision", "render_result_ids", "render_checksum", "d1", "d2_7", "human_review_required"],
+          "properties": {
+            "status": {"enum": ["passed", "review_required", "repair_required", "failed"]},
+            "render_revision": {"type": "string", "minLength": 1},
+            "render_result_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+            "render_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "preview_binding": {"$ref": "calinium-merchant-flow-preview-binding.schema.json"},
+            "d1": {"$ref": "#/$defs/gateBinding"},
+            "d2_7": {"$ref": "#/$defs/gateBinding"},
+            "d2_7_failure": {
+              "oneOf": [
+                {"type": "null"},
+                {"$ref": "calinium-merchant-flow-d2-7-failure.schema.json"}
+              ]
+            },
+            "legacy_lineage_resolution": {
+              "oneOf": [
+                {"type": "null"},
+                {"$ref": "calinium-controlled-beta-d2-7-legacy-lineage-resolution.schema.json"}
+              ]
+            },
+            "human_review_required": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "terminal_recovery": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "calinium-merchant-flow-d2-7-terminal-recovery.schema.json"}
+      ]
+    },
+    "repair": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["repair_class", "status", "evidence_id", "evidence_checksum", "human_approved", "post_repair_qa_passed", "automatic_execution"],
+          "properties": {
+            "repair_class": {"enum": ["responsive_layout", "generated_content_eligibility"]},
+            "status": {"enum": ["review_required", "human_approved", "declined", "failed"]},
+            "evidence_id": {"type": "string", "minLength": 1},
+            "evidence_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "human_approved": {"type": "boolean"},
+            "post_repair_qa_passed": {"type": "boolean"},
+            "automatic_execution": {"const": false}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "operator_provenance": {
+      "type": "object",
+      "required": ["qa_review", "repair_resolution"],
+      "properties": {
+        "qa_review": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["operation_id", "actor_user_id", "evaluation", "review", "decision", "at"],
+              "properties": {
+                "operation_id": {"type": "string", "minLength": 1},
+                "actor_user_id": {"type": "string", "minLength": 1},
+                "evaluation": {"$ref": "#/$defs/evidenceBinding"},
+                "review": {"$ref": "#/$defs/evidenceBinding"},
+                "decision": {"enum": ["accepted", "needs_fix"]},
+                "at": {"type": "string", "format": "date-time"}
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "repair_resolution": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["operation_id", "actor_user_id", "repair_plan", "plan_approval", "repair_execution", "post_repair_qa", "final_human_review", "final_state", "status", "at"],
+              "properties": {
+                "operation_id": {"type": "string", "minLength": 1},
+                "actor_user_id": {"type": "string", "minLength": 1},
+                "repair_plan": {"$ref": "#/$defs/evidenceBinding"},
+                "plan_approval": {"$ref": "#/$defs/evidenceBinding"},
+                "repair_execution": {"$ref": "#/$defs/evidenceBinding"},
+                "post_repair_qa": {"$ref": "#/$defs/evidenceBinding"},
+                "final_human_review": {"$ref": "#/$defs/evidenceBinding"},
+                "final_state": {"$ref": "#/$defs/evidenceBinding"},
+                "status": {"enum": ["human_approved", "declined", "failed"]},
+                "at": {"type": "string", "format": "date-time"}
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "cancellation": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["operation_id", "actor_user_id", "reason_code", "requested_at"],
+          "properties": {
+            "operation_id": {"type": "string", "minLength": 1},
+            "actor_user_id": {"type": "string", "minLength": 1},
+            "reason_code": {"enum": ["operator_requested", "support_abort", "safety_abort"]},
+            "requested_at": {"type": "string", "format": "date-time"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "merchant_action": {
+      "type": "object",
+      "required": ["authorized", "authorized_at", "operation_completed", "operation_reference"],
+      "properties": {
+        "authorized": {"type": "boolean"},
+        "authorized_at": {"type": ["string", "null"], "format": "date-time"},
+        "operation_completed": {"type": "boolean"},
+        "operation_reference": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "failure": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["category", "retryable", "message"],
+          "properties": {
+            "category": {"enum": ["stale_provenance", "store_intelligence_unavailable", "architecture_selection_failed", "unresolved_merchant_answer", "generation_failed", "artifact_failed", "shopify_render_failed", "qa_failed", "d2_7_provider_configuration_failed", "d2_7_provider_authentication_failed", "d2_7_provider_access_failed", "d2_7_provider_rate_limited", "d2_7_provider_quota_failed", "d2_7_provider_rate_or_quota_limited", "d2_7_provider_timeout", "d2_7_provider_network_failed", "d2_7_provider_unavailable", "d2_7_provider_rejected", "d2_7_response_invalid", "d2_7_schema_validation_failed", "d2_7_semantic_validation_failed", "d2_7_evaluation_failed", "d2_7_unknown_provider_failure", "review_required", "repair_declined", "repair_failed", "merchant_action_not_authorized", "authorization_required", "merchant_flow_live_theme_target_forbidden", "merchant_flow_shop_target_mismatch", "controlled_beta_target_verification_failed"]},
+            "retryable": {"type": "boolean"},
+            "message": {"type": "string", "minLength": 1, "maxLength": 1000}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "history": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/history"}},
+    "safety": {
+      "type": "object",
+      "required": ["automatic_repair_allowed", "live_theme_mutation_allowed", "automatic_publish_allowed", "merchant_ui_redesign", "maximum_material_questions", "repair_classes"],
+      "properties": {
+        "automatic_repair_allowed": {"const": false},
+        "live_theme_mutation_allowed": {"const": false},
+        "automatic_publish_allowed": {"const": false},
+        "merchant_ui_redesign": {"const": false},
+        "maximum_material_questions": {"const": 1},
+        "repair_classes": {"type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true, "items": {"enum": ["responsive_layout", "generated_content_eligibility"]}}
+      },
+      "additionalProperties": false
+    },
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "$defs": {
+    "state": {"enum": ["intake_ready", "store_intelligence_ready", "merchant_intent_ready", "architecture_selection_running", "awaiting_material_answer", "architecture_frozen", "design_dna_ready", "composition_ready", "generation_running", "artifact_ready", "render_qa_running", "qa_review_required", "repair_review_required", "preview_ready", "merchant_action_required", "completed", "failed_retryable", "failed_terminal", "cancelled"]},
+    "revisionBinding": {"type": "object", "required": ["revision_id", "checksum"], "properties": {"revision_id": {"type": "string", "minLength": 1}, "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "evidenceBinding": {"type": "object", "required": ["id", "checksum"], "properties": {"id": {"type": "string", "minLength": 1}, "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "controlledRuntimeBinding": {
+      "type": "object",
+      "required": ["schema_version", "binding_revision", "runtime_configuration_revision", "render_target_configuration_revision", "project_id", "organization_id", "connection_id", "shop_domain", "theme_id", "expected_theme_role", "artifact_id", "artifact_checksum", "binding_checksum"],
+      "properties": {
+        "schema_version": {"const": "2.0"},
+        "binding_revision": {"const": "merchant-flow-controlled-render-binding-v1"},
+        "runtime_configuration_revision": {"type": "string", "minLength": 1},
+        "render_target_configuration_revision": {"type": "string", "minLength": 1},
+        "project_id": {"type": "string", "minLength": 1},
+        "organization_id": {"type": "string", "minLength": 1},
+        "connection_id": {"type": "string", "minLength": 1},
+        "shop_domain": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"},
+        "theme_id": {"type": "string", "minLength": 1},
+        "expected_theme_role": {"const": "development"},
+        "artifact_id": {"type": "string", "minLength": 1},
+        "artifact_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "binding_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "gateBinding": {"type": "object", "required": ["status", "evidence_id", "evidence_checksum"], "properties": {"status": {"enum": ["passed", "review_required", "failed", "not_required"]}, "evidence_id": {"type": ["string", "null"]}, "evidence_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "history": {"type": "object", "required": ["sequence", "from_state", "to_state", "event", "at"], "properties": {"sequence": {"type": "integer", "minimum": 0}, "from_state": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/state"}]}, "to_state": {"$ref": "#/$defs/state"}, "event": {"type": "string", "minLength": 1}, "at": {"type": "string", "format": "date-time"}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

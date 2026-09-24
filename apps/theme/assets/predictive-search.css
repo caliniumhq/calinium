@@ -1,0 +1,46 @@
+/* Search suggestions enhancement layered over the native search form. */
+.co-main-search__predictive-results {
+  position: absolute;
+  z-index: var(--co-z-overlay);
+  inset-block-start: calc(100% + var(--co-space-2));
+  inset-inline: 0;
+  max-block-size: min(70vh, 38rem);
+  overflow-y: auto;
+  border: var(--co-border-width) solid var(--co-color-border);
+  border-radius: var(--co-radius-card);
+  background-color: var(--co-color-background);
+  box-shadow: var(--co-shadow-subtle);
+}
+
+.co-predictive-search__response {
+  display: grid;
+  gap: var(--co-space-5);
+  padding: var(--co-space-4);
+}
+
+.co-predictive-search__groups,
+.co-predictive-search__group {
+  display: grid;
+  gap: var(--co-space-3);
+}
+
+.co-predictive-search__heading {
+  font-size: var(--co-font-size-h6);
+}
+
+.co-predictive-search__list {
+  display: grid;
+  gap: var(--co-space-3);
+}
+
+.co-predictive-search__view-all {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: calc(var(--co-space-6) + var(--co-space-3));
+  color: var(--co-color-accent);
+  font-weight: 600;
+}
+
+.co-predictive-search__empty {
+  color: var(--co-color-text-muted);
+}

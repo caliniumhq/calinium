@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.com/schemas/calinium-durable-object-reference.schema.json",
+  "title": "Calinium Durable Object Reference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "reference_version",
+    "id",
+    "storage_provider_kind",
+    "object_key",
+    "sha256",
+    "bytes",
+    "content_type",
+    "immutable",
+    "created_at",
+    "organization_id",
+    "project_id",
+    "canonical_shop",
+    "evidence_kind",
+    "evidence_identity",
+    "lineage_identity"
+  ],
+  "properties": {
+    "reference_version": { "const": "calinium-durable-object-reference-v1" },
+    "id": { "type": "string", "pattern": "^durable-object-[a-f0-9]{24}$" },
+    "storage_provider_kind": { "enum": ["local-filesystem", "object-storage"] },
+    "object_key": {
+      "type": "string",
+      "pattern": "^organizations/[a-f0-9]{24}/projects/[a-f0-9]{24}/authoritative/[a-z0-9_-]+/[a-f0-9]{24}/[a-f0-9]{64}\\.(json|zip|png|jpg|jpeg|webp|pdf|mp4|webm)$"
+    },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "bytes": { "type": "integer", "minimum": 0 },
+    "content_type": { "type": "string", "minLength": 1 },
+    "immutable": { "const": true },
+    "created_at": { "type": "string", "format": "date-time" },
+    "organization_id": { "type": "string", "minLength": 1 },
+    "project_id": { "type": "string", "minLength": 1 },
+    "canonical_shop": { "type": ["string", "null"] },
+    "evidence_kind": { "type": "string", "minLength": 1 },
+    "evidence_identity": { "type": "string", "minLength": 1 },
+    "lineage_identity": { "type": ["string", "null"] }
+  }
+}

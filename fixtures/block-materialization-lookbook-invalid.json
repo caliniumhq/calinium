@@ -1,0 +1,8 @@
+{
+  "cases": [
+    {"case_id": "missing-primary-image", "expected": "omit", "plan_operations": [{"op": "remove", "path": "/content_entities/abpc_oak-loom-feature-rug/resource_reference_ids/0"}], "expected_warning": "missing_primary_image"},
+    {"case_id": "duplicate-destination", "expected": "omit", "plan_operations": [{"op": "replace", "path": "/content_entities/abpc_oak-loom-care-frame/resource_reference_ids/1", "value": "abprs_oak-loom-lookbook-product"}], "expected_warning": "duplicate_destination"},
+    {"case_id": "missing-optional-mobile", "expected": "materialize", "plan_operations": [{"op": "remove", "path": "/content_entities/abpc_oak-loom-feature-rug/resource_reference_ids/1"}]},
+    {"case_id": "mismatched-resource-revision", "expected": "reject", "resource_operations": [{"op": "replace", "path": "/resources/abprs_oak-loom-lookbook-product/approved_revision", "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}], "expected_error": "revision does not match"}
+  ]
+}

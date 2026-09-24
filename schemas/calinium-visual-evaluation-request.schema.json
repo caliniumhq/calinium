@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-evaluation-request.schema.json",
+  "title": "Calinium Visual Evaluation Request",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "evaluation_request_id", "policy", "render", "generation", "architecture", "route", "viewport", "provenance"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "visual-evaluation-request-v1"},
+    "evaluation_request_id": {"type": "string", "pattern": "^visual-evaluation-request-[a-f0-9]{20}$"},
+    "policy": {"type": "object", "required": ["policy_revision", "evaluator_version", "observation_revision"], "properties": {"policy_revision": {"type": "string", "const": "storefront-visual-evaluation-policy-v1"}, "evaluator_version": {"type": "string", "const": "storefront-visual-evaluator-v1"}, "observation_revision": {"type": "string", "const": "storefront-objective-observation-v1"}}, "additionalProperties": false},
+    "render": {"type": "object", "required": ["request_id", "render_id", "render_revision", "render_result_checksum", "screenshot_sha256", "screenshot_reference"], "properties": {"request_id": {"type": "string", "pattern": "^render-request-[a-f0-9]{20}$"}, "render_id": {"type": "string", "pattern": "^render-[a-f0-9]{20}$"}, "render_revision": {"type": "string", "const": "storefront-render-v1"}, "render_result_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "screenshot_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}, "screenshot_reference": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "generation": {"$ref": "calinium-storefront-render-request.schema.json#/properties/generation"},
+    "architecture": {"type": "object", "required": ["profile_id", "profile_version", "selection_revision_id", "runtime_application_revision_id"], "properties": {"profile_id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"}, "profile_version": {"type": "string"}, "selection_revision_id": {"type": "string", "pattern": "^architecture-selection-[a-f0-9]{20}$"}, "runtime_application_revision_id": {"type": "string", "pattern": "^architecture-runtime-[a-f0-9]{20}$"}}, "additionalProperties": false},
+    "route": {"$ref": "calinium-storefront-render-request.schema.json#/properties/routes/items"},
+    "viewport": {"$ref": "calinium-storefront-render-request.schema.json#/properties/viewports/items"},
+    "provenance": {"type": "object", "required": ["comparison_fixture_revision", "capture_policy_revision", "artifact_sha256", "source_manifest_reference"], "properties": {"comparison_fixture_revision": {"type": "string", "pattern": "^comparison-fixture-[a-f0-9]{20}$"}, "capture_policy_revision": {"type": "string", "const": "storefront-capture-policy-v1"}, "artifact_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "source_manifest_reference": {"type": "string", "minLength": 1}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

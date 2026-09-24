@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-visual-briefing.schema.json",
+  "title": "Calinium merchant visual briefing",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "briefing_id", "project_binding", "state", "direction", "reasons", "essential_detail", "source_binding", "behavior", "safety", "checksum"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "contract_version": {"const": "merchant-visual-briefing-v1"},
+    "briefing_id": {"type": "string", "pattern": "^merchant-visual-briefing-[a-f0-9]{20}$"},
+    "project_binding": {"$ref": "#/$defs/projectBinding"},
+    "state": {"enum": ["analyzing", "recommendation_ready", "direction_choice_required", "essential_detail_required", "blocked", "accepted", "superseded", "build_in_progress", "preview_ready"]},
+    "direction": {
+      "type": "object",
+      "required": ["mode", "recommended_direction", "selected_direction", "options"],
+      "properties": {
+        "mode": {"enum": ["none", "recommendation", "choice_required", "selected"]},
+        "recommended_direction": {"type": ["string", "null"], "enum": ["visual_story_led", "direct_efficient", null]},
+        "selected_direction": {"type": ["string", "null"], "enum": ["visual_story_led", "direct_efficient", null]},
+        "options": {"type": "array", "maxItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/directionOption"}}
+      },
+      "additionalProperties": false
+    },
+    "reasons": {"type": "array", "maxItems": 3, "items": {"type": "object", "required": ["reason_code", "copy", "source_reason_code"], "properties": {"reason_code": {"type": "string", "pattern": "^[a-z0-9_]+$"}, "copy": {"type": "string", "minLength": 1}, "source_reason_code": {"type": "string", "pattern": "^[a-z0-9_]+$"}}, "additionalProperties": false}},
+    "essential_detail": {"oneOf": [{"type": "null"}, {"type": "object", "required": ["question_id", "prompt"], "properties": {"question_id": {"enum": ["products", "audience", "goal"]}, "prompt": {"type": "string", "minLength": 1}}, "additionalProperties": false}]},
+    "source_binding": {
+      "type": "object",
+      "required": ["store_intelligence_revision", "store_intelligence_checksum", "merchant_intent_revision", "merchant_intent_checksum", "selection_kind", "selection_revision", "selection_checksum", "material_question_id", "material_question_checksum", "flow_state", "flow_sequence", "flow_checksum"],
+      "properties": {
+        "store_intelligence_revision": {"type": ["string", "null"]},
+        "store_intelligence_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "merchant_intent_revision": {"type": ["string", "null"]},
+        "merchant_intent_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "selection_kind": {"enum": ["none", "frozen", "material_question_required"]},
+        "selection_revision": {"type": ["string", "null"]},
+        "selection_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "material_question_id": {"type": ["string", "null"]},
+        "material_question_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "flow_state": {"type": ["string", "null"]},
+        "flow_sequence": {"type": ["integer", "null"], "minimum": 0},
+        "flow_checksum": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "behavior": {"type": "object", "required": ["independently_selects_architecture", "reuses_existing_e2_semantics", "maximum_direction_choices", "recommendation_requires_choice"], "properties": {"independently_selects_architecture": {"const": false}, "reuses_existing_e2_semantics": {"const": true}, "maximum_direction_choices": {"const": 2}, "recommendation_requires_choice": {"const": false}}, "additionalProperties": false},
+    "safety": {"type": "object", "required": ["arbitrary_generated_copy_allowed", "numeric_confidence_exposed", "internal_architecture_identity_exposed", "automatic_generation_allowed", "automatic_theme_action_allowed"], "properties": {"arbitrary_generated_copy_allowed": {"const": false}, "numeric_confidence_exposed": {"const": false}, "internal_architecture_identity_exposed": {"const": false}, "automatic_generation_allowed": {"const": false}, "automatic_theme_action_allowed": {"const": false}}, "additionalProperties": false},
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "$defs": {
+    "projectBinding": {"type": "object", "required": ["project_id", "organization_id", "shop"], "properties": {"project_id": {"type": "string", "minLength": 1}, "organization_id": {"type": "string", "minLength": 1}, "shop": {"type": ["string", "null"], "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"}}, "additionalProperties": false},
+    "directionOption": {"type": "object", "required": ["direction_id", "title", "description", "eligible"], "properties": {"direction_id": {"enum": ["visual_story_led", "direct_efficient"]}, "title": {"enum": ["Visual & story-led", "Direct & efficient"]}, "description": {"enum": ["Immersive imagery, editorial layouts, and discovery through storytelling.", "Clear product access, practical navigation, and faster browsing."]}, "eligible": {"const": true}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

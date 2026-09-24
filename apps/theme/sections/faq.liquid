@@ -1,0 +1,80 @@
+{% liquid
+  assign faq_classes = 'co-faq co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign faq_classes = faq_classes | append: ' co-faq--width-' | append: section.settings.content_width
+  assign faq_heading_id = 'FaqHeading-' | append: section.id
+  assign faq_has_visible_items = false
+
+  for block in section.blocks
+    if block.settings.question != blank and block.settings.answer != blank
+      assign faq_has_visible_items = true
+    endif
+  endfor
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ faq_classes }}" aria-labelledby="{{ faq_heading_id }}" data-co-section-behavior data-co-faq data-allow-multiple="{{ section.settings.allow_multiple }}" {{ section.shopify_attributes }}>
+  <div class="co-faq__inner co-page-width">
+    {% render 'section-heading', heading: section.settings.heading, description: section.settings.description, id: faq_heading_id, alignment: 'left', size: section.settings.heading_size %}
+    {% if faq_has_visible_items %}
+      <div class="co-faq__items">
+        {% assign faq_first_visible_open = false %}
+        {% for block in section.blocks %}
+          {% if block.settings.question != blank and block.settings.answer != blank %}
+            {% assign faq_panel_id = 'FaqAnswer-' | append: section.id | append: '-' | append: block.id %}
+            {% assign faq_item_initial_open = false %}
+            {% if section.settings.first_item_open and faq_first_visible_open == false %}
+              {% assign faq_item_initial_open = true %}
+              {% assign faq_first_visible_open = true %}
+            {% endif %}
+            <div class="co-faq__item" data-faq-item {% if faq_item_initial_open %}data-initial-open="true"{% endif %} {{ block.shopify_attributes }}>
+              <h3 class="co-faq__question"><button class="co-faq__trigger" type="button" aria-expanded="true" aria-controls="{{ faq_panel_id }}" data-faq-trigger><span>{{ block.settings.question | escape }}</span>{% render 'icon', name: 'chevron-down', size: 20, class: 'co-faq__icon' %}</button></h3>
+              <div id="{{ faq_panel_id }}" class="co-faq__answer" data-faq-panel>{{ block.settings.answer }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% elsif request.design_mode %}<p>{{ 'sections.faq.placeholder_text' | t }}</p>{% endif %}
+  </div>
+</section>
+
+{% if section.settings.enable_structured_data and faq_has_visible_items %}
+  {% capture faq_json_items %}
+    {% assign faq_json_count = 0 %}
+    {% for block in section.blocks %}
+      {% if block.settings.question != blank and block.settings.answer != blank %}
+        {% if faq_json_count > 0 %},{% endif %}
+        {"@type":"Question","name":{{ block.settings.question | strip_html | strip_newlines | json }},"acceptedAnswer":{"@type":"Answer","text":{{ block.settings.answer | strip_html | strip_newlines | json }}}}
+        {% assign faq_json_count = faq_json_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+  {% endcapture %}
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ faq_json_items | strip }}]}</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:sections.faq.name",
+  "tag": "section",
+  "class": "co-section-faq",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "Questions, answered" },
+    { "type": "richtext", "id": "description", "label": "t:sections.shared.settings.description.label" },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "standard", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "checkbox", "id": "allow_multiple", "label": "t:sections.shared.settings.allow_multiple_open.label", "default": false },
+    { "type": "checkbox", "id": "first_item_open", "label": "t:sections.shared.settings.first_item_open.label", "default": false },
+    { "type": "select", "id": "content_width", "label": "t:sections.shared.settings.content_width.label", "default": "narrow", "options": [{ "value": "narrow", "label": "t:sections.shared.options.narrow" }, { "value": "wide", "label": "t:sections.shared.options.wide" }] },
+    { "type": "checkbox", "id": "enable_structured_data", "label": "t:sections.shared.settings.enable_faq_structured_data.label", "info": "t:sections.shared.settings.enable_faq_structured_data.info", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [
+    { "type": "question", "name": "t:sections.faq.blocks.question", "settings": [{ "type": "text", "id": "question", "label": "t:sections.shared.settings.question.label", "default": "What should I know before ordering?" }, { "type": "richtext", "id": "answer", "label": "t:sections.shared.settings.answer.label", "default": "<p>Use this area to share a clear answer with your customers.</p>" }] }
+  ],
+  "max_blocks": 20,
+  "presets": [{ "name": "t:sections.faq.preset", "blocks": [{ "type": "question" }, { "type": "question" }, { "type": "question" }] }]
+}
+{% endschema %}

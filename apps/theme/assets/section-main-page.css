@@ -1,0 +1,62 @@
+/* Merchant-authored page content with a controlled reading measure. */
+.co-main-page {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-main-page__inner {
+  display: grid;
+  gap: var(--co-space-5);
+}
+
+.co-main-page__content {
+  inline-size: min(100%, var(--co-content-width));
+}
+
+.co-main-page--width-narrow .co-main-page__content {
+  inline-size: min(100%, calc(var(--co-content-width) - var(--co-space-7)));
+}
+
+.co-main-page--width-wide .co-main-page__content {
+  inline-size: 100%;
+}
+
+.co-main-page--align-center .co-main-page__content {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.co-main-page__content > * + * {
+  margin-block-start: var(--co-space-4);
+}
+
+.co-main-page__content :where(ul, ol) {
+  padding-inline-start: var(--co-space-5);
+}
+
+.co-main-page__content :where(li + li) {
+  margin-block-start: var(--co-space-2);
+}
+
+.co-main-page__content :where(blockquote) {
+  padding-inline-start: var(--co-space-4);
+  border-inline-start: var(--co-border-width) solid var(--co-color-border);
+}
+
+.co-main-page__content :where(table) {
+  display: block;
+  max-inline-size: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.co-main-page__content :where(th, td) {
+  padding: var(--co-space-2) var(--co-space-3);
+  border: var(--co-border-width) solid var(--co-color-border);
+  text-align: start;
+}
+
+.co-main-page__content :where(img, iframe, video) {
+  max-inline-size: 100%;
+}

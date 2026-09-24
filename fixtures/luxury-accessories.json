@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "businessName": "Aureline",
+  "businessDescription": "Aureline sells a narrow collection of merchant-approved fine jewelry and small leather accessories.",
+  "productsOrServices": ["fine jewelry", "small leather accessories"],
+  "targetAudience": "customers choosing considered gifts and personal pieces",
+  "primaryGoal": "present the approved collection with quiet visual clarity",
+  "countries": ["France", "United Kingdom"],
+  "existingStoreUrl": "https://aureline.example",
+  "existingBrand": {
+    "hasLogo": true,
+    "brandColors": ["#171512", "#F4F0E8"],
+    "inspirations": ["Quiet product presentation"],
+    "assets": ["logo", "product photography"]
+  },
+  "preferences": {
+    "desiredFeeling": ["quiet", "refined", "precise"],
+    "creativeFreedom": "medium",
+    "brandPersonality": ["luxury", "sophisticated"]
+  }
+}

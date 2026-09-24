@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-project-merchant-profile.schema.json",
+  "title": "Calinium project Merchant Profile revision",
+  "description": "Organization-scoped, versioned persistence envelope for the unchanged canonical Merchant Profile.",
+  "type": "object",
+  "required": ["version", "id", "project_id", "interview_session_id", "profile", "created_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^mpr_[a-z0-9-]+$"},
+    "project_id": {"type": "string", "pattern": "^prj_[a-z0-9-]+$"},
+    "interview_session_id": {"type": "string", "pattern": "^pis_[a-z0-9-]+$"},
+    "profile": {"$ref": "calinium-merchant-profile.schema.json"},
+    "created_at": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

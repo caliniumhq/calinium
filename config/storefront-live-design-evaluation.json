@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "configuration_version": "1.0.0",
+  "configuration_id": "calinium_openai_live_design_evaluation",
+  "configuration_revision": "openai-live-design-evaluation-gpt-5-6-sol-v1",
+  "provider": {
+    "interface_version": "storefront-design-provider-v1",
+    "provider_id": "calinium-openai-responses-multimodal",
+    "provider_version": "1.0.0",
+    "provider_kind": "live_multimodal"
+  },
+  "api": {
+    "endpoint": "https://api.openai.com/v1/responses",
+    "api_family": "responses",
+    "timeout_ms": 300000,
+    "max_attempts": 3,
+    "maximum_retry_delay_ms": 5000,
+    "retry_statuses": [429, 500, 502, 503, 504]
+  },
+  "model": {
+    "id": "gpt-5.6-sol",
+    "configuration_revision": "gpt-5-6-sol-subjective-storefront-evaluator-v1",
+    "reasoning_effort": "medium",
+    "image_detail": "original",
+    "max_output_tokens": 30000,
+    "store": false
+  },
+  "credentials": {
+    "api_key_environment_variable": "OPENAI_API_KEY",
+    "organization_environment_variable": "OPENAI_ORG_ID",
+    "project_environment_variable": "OPENAI_PROJECT_ID"
+  },
+  "calibration": {
+    "repeat_runs": 3,
+    "comparison_fixture_revision": "comparison-fixture-0c881e4699c1cd3e33b0",
+    "comparison_key": "d7413cc5957c06221d6426210f86ae7cfd081bc2e66d55dbdb98a13b12d417f6",
+    "human_calibration_reference": "fixtures/storefront-design-evaluation-provider-calibration.json"
+  },
+  "safety": {
+    "fixture_fallback_allowed": false,
+    "automatic_repair_allowed": false,
+    "automatic_mutation_allowed": false,
+    "shopify_write_allowed": false
+  }
+}

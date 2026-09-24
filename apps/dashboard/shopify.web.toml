@@ -1,0 +1,9 @@
+# Shopify CLI starts Calinium's existing single HTTP process from this directory.
+# It is intentionally not a Shopify starter application.
+roles = ["frontend", "backend"]
+auth_callback_path = ["/api/shopify/oauth/callback"]
+webhooks_path = "/api/shopify/webhooks"
+
+[commands]
+dev = "npm run dev"
+build = "npm run build"

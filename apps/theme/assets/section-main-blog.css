@@ -1,0 +1,43 @@
+/* Editorial blog index composition. */
+.co-main-blog {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-main-blog__inner,
+.co-main-blog__header,
+.co-main-blog__grid,
+.co-main-blog__empty {
+  display: grid;
+  gap: var(--co-space-5);
+}
+
+.co-main-blog__header {
+  inline-size: min(100%, var(--co-content-width));
+}
+
+.co-main-blog__description > * + * {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-main-blog__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.co-main-blog__empty {
+  inline-size: min(100%, var(--co-content-width));
+  padding-block: var(--co-space-7);
+}
+
+@media (min-width: 48rem) {
+  .co-main-blog__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72rem) {
+  .co-main-blog__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

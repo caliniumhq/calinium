@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "base_plan_fixture": "approved-block-plan-editorial-grid.json",
+  "base_resource_fixture": "block-materialization-editorial-grid.json",
+  "cases": [
+    {
+      "case_id": "incomplete-story",
+      "purpose": "Omit a story that has no approved visible name.",
+      "expected": "omit",
+      "plan_operations": [
+        {"op": "remove", "path": "/content_entities/abpc_natural-fiber-journal/localized_values/0"}
+      ],
+      "expected_warning": "missing_visible_name"
+    },
+    {
+      "case_id": "duplicate-destination",
+      "purpose": "Omit the later story when it repeats a prior approved destination.",
+      "expected": "omit",
+      "plan_operations": [
+        {"op": "replace", "path": "/compositions/0/block_placements/1/content_entity_id", "value": "abpc_rug-care-guides"}
+      ],
+      "expected_warning": "duplicate_destination"
+    },
+    {
+      "case_id": "missing-optional-field",
+      "purpose": "Preserve a complete story when an optional excerpt is absent.",
+      "expected": "materialize",
+      "plan_operations": [
+        {"op": "remove", "path": "/content_entities/abpc_rug-care-guides/localized_values/1"}
+      ]
+    },
+    {
+      "case_id": "unsupported-optional-resource",
+      "purpose": "Omit only optional media when its approved runtime binding is unavailable.",
+      "expected": "omit",
+      "resource_operations": [
+        {"op": "remove", "path": "/resource_snapshot/resources/abprs_rug-care-image"}
+      ],
+      "expected_warning": "unsupported_optional_resource"
+    },
+    {
+      "case_id": "unapproved-plan",
+      "purpose": "Reject a plan that is not fully approved.",
+      "expected": "reject",
+      "plan_operations": [
+        {"op": "replace", "path": "/approval/approval_status", "value": "draft"}
+      ],
+      "expected_error": "Approved Block Plan validation failed"
+    },
+    {
+      "case_id": "duplicate-placement-identity",
+      "purpose": "Reject a plan with duplicate semantic placement identity.",
+      "expected": "reject",
+      "plan_operations": [
+        {"op": "replace", "path": "/compositions/0/block_placements/1/placement_id", "value": "abpl_homepage-rug-care-guides"}
+      ],
+      "expected_error": "Approved Block Plan validation failed"
+    },
+    {
+      "case_id": "mismatched-resource-revision",
+      "purpose": "Reject a runtime resource value whose immutable approved revision does not match the plan.",
+      "expected": "reject",
+      "resource_operations": [
+        {"op": "replace", "path": "/resource_snapshot/resources/abprs_rug-care-collection/approved_revision", "value": "9999999999999999999999999999999999999999999999999999999999999999"}
+      ],
+      "expected_error": "revision does not match"
+    },
+    {
+      "case_id": "unsupported-semantic-block-role",
+      "purpose": "Reject a placement that requests a runtime role outside this adapter.",
+      "expected": "reject",
+      "plan_operations": [
+        {"op": "replace", "path": "/compositions/0/block_placements/0/semantic_block_role", "value": "visual_frame"}
+      ],
+      "expected_error": "Approved Block Plan validation failed"
+    },
+    {
+      "case_id": "invalid-page-role",
+      "purpose": "Reject a materialization request that targets a page not approved by the policy.",
+      "expected": "reject",
+      "context": {"page_role": "collection_page"},
+      "expected_error": "ineligible page role"
+    }
+  ]
+}

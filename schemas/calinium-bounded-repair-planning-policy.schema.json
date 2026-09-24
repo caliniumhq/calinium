@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-bounded-repair-planning-policy.schema.json",
+  "title": "Calinium Bounded Repair-planning Policy",
+  "type": "object",
+  "required": ["schema_version", "policy_version", "policy_id", "policy_revision", "source_observation_policy_revision", "eligible_human_decisions", "ineligible_human_decisions", "eligible_relationships", "ineligible_relationships", "responsibilities", "statuses", "required_reliability", "required_forbidden_scope", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "policy_version": {"type": "string", "const": "bounded-repair-planning-policy-v1"},
+    "policy_id": {"type": "string", "const": "calinium_bounded_repair_planning"},
+    "policy_revision": {"type": "string"},
+    "source_observation_policy_revision": {"type": "string"},
+    "eligible_human_decisions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "ineligible_human_decisions": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "eligible_relationships": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "ineligible_relationships": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "responsibilities": {"type": "array", "minItems": 6, "items": {"type": "string"}},
+    "statuses": {"type": "array", "minItems": 4, "items": {"type": "string"}},
+    "required_reliability": {"type": "object", "required": ["status", "repair_planning_consumption_allowed"], "properties": {"status": {"type": "string", "const": "repair_planning_eligible"}, "repair_planning_consumption_allowed": {"type": "boolean", "const": true}}, "additionalProperties": false},
+    "required_forbidden_scope": {"type": "array", "minItems": 16, "items": {"type": "string"}},
+    "safety": {"type": "object", "required": ["human_review_required", "automatic_repair_allowed", "mutation_allowed_in_d3a", "repair_execution_capability_allowed_in_d3a", "openai_api_required"], "properties": {"human_review_required": {"type": "boolean", "const": true}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "mutation_allowed_in_d3a": {"type": "boolean", "const": false}, "repair_execution_capability_allowed_in_d3a": {"type": "boolean", "const": false}, "openai_api_required": {"type": "boolean", "const": false}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

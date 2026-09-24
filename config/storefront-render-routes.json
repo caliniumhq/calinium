@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "registry_version": "1.0.0",
+  "registry_id": "calinium_storefront_render_routes",
+  "routes": [
+    {
+      "id": "homepage",
+      "path_template": "/",
+      "entity_kind": null,
+      "expected_landmarks": ["#MainContent"],
+      "safe_capture_state": "read_only"
+    },
+    {
+      "id": "collection",
+      "path_template": "/collections/{handle}",
+      "entity_kind": "collection",
+      "expected_landmarks": ["#MainContent", "[data-main-collection]"],
+      "safe_capture_state": "read_only"
+    },
+    {
+      "id": "product",
+      "path_template": "/products/{handle}",
+      "entity_kind": "product",
+      "expected_landmarks": ["#MainContent", "[data-main-product]"],
+      "safe_capture_state": "read_only"
+    },
+    {
+      "id": "cart",
+      "path_template": "/cart",
+      "entity_kind": null,
+      "expected_landmarks": ["#MainContent", "[data-main-cart]"],
+      "safe_capture_state": "fresh_empty_context_no_mutation"
+    }
+  ]
+}

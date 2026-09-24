@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "catalog_version": 1,
+  "compatible_compiler_versions": ["1.0.0"],
+  "catalog_id": "strategy_setting_mapping",
+  "description": "Deterministic bridge from Strategy Compiler decision keys to installed Calinium capabilities and real Theme Editor setting IDs. A partial or unsupported status is intentional and prevents the future Draft Builder from inventing a theme control.",
+  "mappings": [
+    {
+      "id": "industry",
+      "decision_id": "industry",
+      "support_status": "unsupported",
+      "mapping_kind": "strategy_context",
+      "target": {"capability_ids": ["section_composition"], "global_setting_ids": [], "section_setting_refs": [], "section_ids": []},
+      "reason": "Industry is a compiler context decision. The current theme has no global industry setting, so no automatic Theme Editor value is available.",
+      "fallback": "Retain industry only as strategy context and require later section selection mapping.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "industry"}
+    },
+    {
+      "id": "personality",
+      "decision_id": "personality",
+      "support_status": "partial",
+      "mapping_kind": "strategy_context",
+      "target": {"capability_ids": ["typography", "spacing_layout", "motion_accessibility", "editorial_content"], "global_setting_ids": [], "section_setting_refs": [], "section_ids": []},
+      "reason": "Brand personality influences downstream typography, spacing, motion, and composition, but it is not represented by a standalone Shopify setting.",
+      "fallback": "Use the resolved downstream mappings; keep personality itself in the strategy trace.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "personality"}
+    },
+    {
+      "id": "design_language",
+      "decision_id": "design_language",
+      "support_status": "partial",
+      "mapping_kind": "theme_setting",
+      "target": {"capability_ids": ["typography", "spacing_layout", "color_schemes", "section_composition"], "global_setting_ids": ["heading_scale", "body_scale", "section_spacing", "grid_gap", "default_color_scheme"], "section_setting_refs": [], "section_ids": []},
+      "reason": "Visual language maps to existing scale, spacing, color-scheme, and composition controls, but it does not map to one atomic Theme Editor setting.",
+      "fallback": "Apply only the mapped global defaults and present typography/font and color selection for merchant review.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "design_language"}
+    },
+    {
+      "id": "typography",
+      "decision_id": "typography",
+      "support_status": "partial",
+      "mapping_kind": "theme_setting",
+      "target": {"capability_ids": ["typography"], "global_setting_ids": ["type_heading_font", "heading_scale", "heading_line_height", "heading_letter_spacing", "type_body_font", "body_scale", "body_line_height"], "section_setting_refs": [], "section_ids": []},
+      "reason": "Scale, line-height, and tracking map directly; font selection remains merchant-review because a profile name is not a licensed font choice.",
+      "fallback": "Use existing safe scale defaults and request approval before setting font pickers.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "typography"}
+    },
+    {
+      "id": "spacing",
+      "decision_id": "spacing",
+      "support_status": "full",
+      "mapping_kind": "theme_setting",
+      "target": {"capability_ids": ["spacing_layout"], "global_setting_ids": ["page_width", "content_width", "mobile_gutter", "desktop_gutter", "section_spacing", "grid_gap"], "section_setting_refs": [], "section_ids": []},
+      "reason": "Spacing profiles map to the real global layout controls and their token-backed defaults.",
+      "fallback": "Use schema defaults when a profile does not supply a compatible numeric value.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "spacing"}
+    },
+    {
+      "id": "color_strategy",
+      "decision_id": "color_strategy",
+      "support_status": "partial",
+      "mapping_kind": "theme_setting",
+      "target": {"capability_ids": ["color_schemes"], "global_setting_ids": ["default_color_scheme", "color_schemes"], "section_setting_refs": [], "section_ids": []},
+      "reason": "The theme exposes scheme selection, while the actual palette definitions are merchant-owned color-scheme data rather than strategy-owned values.",
+      "fallback": "Use the current default scheme and flag palette changes for merchant review.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "color_strategy"}
+    },
+    {
+      "id": "image_strategy",
+      "decision_id": "image_strategy",
+      "support_status": "partial",
+      "mapping_kind": "section_composition",
+      "target": {"capability_ids": ["responsive_media", "hero_media", "editorial_content"], "global_setting_ids": [], "section_setting_refs": ["hero-slideshow.slide.desktop_image", "hero-slideshow.slide.mobile_image", "editorial-hero.image", "editorial-hero.mobile_image", "video-hero.poster_image", "lookbook.item.image"], "section_ids": ["hero-slideshow", "editorial-hero", "video-hero", "lookbook"]},
+      "reason": "The theme supports responsive media and explicit media fields, but photographic style cannot be automatically derived or manufactured by a Shopify setting.",
+      "fallback": "Require merchant assets and choose text-first or placeholder-safe variants when assets are unavailable.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "image_strategy"}
+    },
+    {
+      "id": "animation",
+      "decision_id": "animation",
+      "support_status": "partial",
+      "mapping_kind": "theme_setting",
+      "target": {"capability_ids": ["motion_accessibility"], "global_setting_ids": ["enable_motion", "motion_duration"], "section_setting_refs": ["editorial-hero.enable_animation", "full-screen-hero.enable_animation", "video-hero.enable_animation"], "section_ids": ["editorial-hero", "full-screen-hero", "video-hero"]},
+      "reason": "The global motion controls and several section-level animation toggles exist; there is no universal per-section animation profile setting.",
+      "fallback": "Keep the global reduced-motion-safe defaults and do not set unsupported animation properties.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "animation"}
+    },
+    {
+      "id": "conversion_strategy",
+      "decision_id": "conversion_strategy",
+      "support_status": "partial",
+      "mapping_kind": "section_composition",
+      "target": {"capability_ids": ["commerce_merchandising", "trust_content", "newsletter", "product_cards"], "global_setting_ids": [], "section_setting_refs": ["product-carousel.enable_quick_add", "testimonials.auto_rotate", "newsletter.button_label"], "section_ids": ["product-carousel", "testimonials", "newsletter"]},
+      "reason": "Conversion strategy maps to installed commerce, trust, and lead-capture sections, but urgency, claims, and proof require merchant-controlled content and verification.",
+      "fallback": "Use a section only when its merchant-required fields and safety classifications are satisfied.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "conversion_strategy"}
+    },
+    {
+      "id": "blueprint",
+      "decision_id": "blueprint",
+      "support_status": "full",
+      "mapping_kind": "section_composition",
+      "target": {"capability_ids": ["section_composition"], "global_setting_ids": [], "section_setting_refs": [], "section_ids": []},
+      "reason": "Blueprints constrain the installed-section flow and maximum section count through existing page-blueprints and section capabilities.",
+      "fallback": "Reject uninstalled section references and use the blueprint’s documented fallback recipe.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "blueprint"}
+    },
+    {
+      "id": "homepage_recipe",
+      "decision_id": "homepage_recipe",
+      "support_status": "full",
+      "mapping_kind": "section_composition",
+      "target": {"capability_ids": ["section_composition"], "global_setting_ids": [], "section_setting_refs": [], "section_ids": []},
+      "reason": "Every current layout-recipe section is checked against an installed section capability profile.",
+      "fallback": "Use the recipe’s documented section sequence only where all fields remain merchant-safe.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "homepage_recipe"}
+    },
+    {
+      "id": "section_selection",
+      "decision_id": "section_selection",
+      "support_status": "full",
+      "mapping_kind": "section_composition",
+      "target": {"capability_ids": ["section_composition"], "global_setting_ids": [], "section_setting_refs": [], "section_ids": []},
+      "reason": "The compiler’s selected sections are validated against installed section files and their generated capability profiles.",
+      "fallback": "Do not select an uninstalled section; surface an explicit unsupported capability instead.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "section_selection"}
+    },
+    {
+      "id": "section_ordering",
+      "decision_id": "section_ordering",
+      "support_status": "full",
+      "mapping_kind": "section_composition",
+      "target": {"capability_ids": ["section_composition"], "global_setting_ids": [], "section_setting_refs": [], "section_ids": []},
+      "reason": "Ordering uses existing recipe, blueprint, composition-rule, compatibility, content-density, and installed-section data.",
+      "fallback": "Reject invalid adjacency and excessive homepage length during strategy validation.",
+      "source": {"file": "ai/compiler/compile-strategy.js", "decision_id": "section_ordering"}
+    }
+  ]
+}

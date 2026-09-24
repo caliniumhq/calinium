@@ -1,0 +1,47 @@
+{
+  "fixture_revision": "merchant-flow-preview-binding-fixture-v2",
+  "controlled_legacy_shape": {
+    "organization_id": "organization-f1-d-controlled",
+    "project_id": "prj_public-fixture-0001",
+    "connection_id": "shopify-connection-f1-d-controlled",
+    "canonical_shop": "calinium-example.myshopify.com",
+    "flow_id": "merchant-flow-00000000000000000001",
+    "flow_sequence": 27,
+    "render_flow_sequence": 19,
+    "render_flow_checksum": "1111111111111111111111111111111111111111111111111111111111111111",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "artifact_checksum": "2222222222222222222222222222222222222222222222222222222222222222",
+    "render_request_id": "merchant-render-request-33333333333333333333",
+    "render_request_checksum": "4444444444444444444444444444444444444444444444444444444444444444",
+    "render_evidence_id": "merchant-render-manifest-55555555555555555555",
+    "render_evidence_checksum": "6666666666666666666666666666666666666666666666666666666666666666",
+    "render_revision": "merchant-flow-storefront-render-v1",
+    "render_result_ids": [
+      "merchant-render-77777777777777777777",
+      "merchant-render-88888888888888888888"
+    ],
+    "render_checksum": "9999999999999999999999999999999999999999999999999999999999999999",
+    "d1_evidence_id": "merchant-flow-d1-evaluation-f1-d",
+    "d1_evidence_checksum": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "d2_7_evidence_id": "merchant-flow-d2-7-evaluation-f1-d",
+    "d2_7_evidence_checksum": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "founder_review_id": "design-review-f1e00000000000000000",
+    "founder_review_checksum": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "development_theme_id": "100000000006",
+    "main_theme_id": "100000000001",
+    "runtime_configuration_revision": "merchant-flow-controlled-beta-runtime-v1",
+    "render_target_configuration_revision": "merchant-flow-controlled-render-targets-v1",
+    "source_revision": "1000000000000000000000000000000000000006",
+    "preview_url": "https://calinium-example.myshopify.com/?preview_theme_id=100000000006",
+    "created_at": "2026-09-05T10:00:00.000Z",
+    "legacy_missing_source": {
+      "request_deployed_source_revision": null,
+      "selected_lineage_deployed_source_revision": null,
+      "d2_7_failure_deployed_source_revision": null,
+      "historical_candidate": "2000000000000000000000000000000000000006",
+      "historical_candidate_authority": "timestamp_only_rejected",
+      "audit_classification": "D. HISTORICAL_RENDER_SOURCE_REVISION_NOT_PROVABLE"
+    },
+    "recovery_source_revision": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  }
+}

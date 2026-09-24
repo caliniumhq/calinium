@@ -1,0 +1,176 @@
+{% liquid
+  assign quote_banner_classes = 'co-quote-banner co-library-section co-editorial-pack-section co-color-scheme-' | append: section.settings.color_scheme
+  assign quote_banner_classes = quote_banner_classes | append: ' co-quote-banner--align-' | append: section.settings.text_alignment
+  assign quote_banner_classes = quote_banner_classes | append: ' co-quote-banner--width-' | append: section.settings.content_width
+  if section.settings.enable_animation
+    assign quote_banner_classes = quote_banner_classes | append: ' co-quote-banner--animate'
+  endif
+%}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{% render 'section-spacing', section: section %}
+<section class="{{ quote_banner_classes }}" {{ section.shopify_attributes }}><div class="co-quote-banner__inner"><div class="co-quote-banner__content">{% if section.settings.quote_icon != 'none' %}<span class="co-quote-banner__icon">{% render 'icon', icon: section.settings.quote_icon, size: 32, decorative: true %}</span>{% endif %}{% if section.settings.show_quote_mark %}<span class="co-quote-banner__mark" aria-hidden="true">“</span>{% endif %}{% if section.settings.quote != blank %}<blockquote class="co-quote-banner__quote">{{ section.settings.quote | escape }}</blockquote>{% endif %}{% if section.settings.attribution != blank or section.settings.role != blank %}<cite class="co-quote-banner__citation">{% if section.settings.attribution != blank %}{{ section.settings.attribution | escape }}{% endif %}{% if section.settings.role != blank %}<span class="co-quote-banner__role">{{ section.settings.role | escape }}</span>{% endif %}</cite>{% endif %}{% if section.settings.image != blank %}{% render 'responsive-image', image: section.settings.image, alt: section.settings.attribution, loading: 'lazy', sizes: '160px', widths: '96, 160, 240', ratio: 'square', class: 'co-quote-banner__image' %}{% endif %}</div></div></section>
+{% schema %}
+{
+  "name": "t:sections.quote_banner.name",
+  "tag": "section",
+  "class": "co-section-quote-banner",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "t:sections.shared.settings.quote.label",
+      "default": "A clear statement can give a page its point of view."
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "t:sections.quote_banner.settings.attribution.label"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "t:sections.shared.settings.role.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.shared.settings.image.label"
+    },
+    {
+      "type": "select",
+      "id": "quote_icon",
+      "label": "t:sections.quote_banner.settings.quote_icon.label",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.shared.options.none"
+        },
+        {
+          "value": "sparkle",
+          "label": "t:sections.shared.options.sparkle"
+        },
+        {
+          "value": "diamond",
+          "label": "t:sections.shared.options.diamond"
+        },
+        {
+          "value": "crown",
+          "label": "t:sections.shared.options.crown"
+        },
+        {
+          "value": "star",
+          "label": "t:sections.shared.options.star"
+        },
+        {
+          "value": "leaf",
+          "label": "t:sections.shared.options.leaf"
+        },
+        {
+          "value": "globe",
+          "label": "t:sections.shared.options.globe"
+        },
+        {
+          "value": "verified",
+          "label": "t:sections.shared.options.verified"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quote_mark",
+      "label": "t:sections.quote_banner.settings.show_quote_mark.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shared.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shared.options.center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "t:sections.shared.settings.content_width.label",
+      "default": "narrow",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.shared.options.narrow"
+        },
+        {
+          "value": "wide",
+          "label": "t:sections.shared.options.wide"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "t:sections.quote_banner.settings.enable_animation.label",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.shared.settings.desktop_top_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.shared.settings.desktop_bottom_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "t:sections.shared.settings.mobile_top_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "t:sections.shared.settings.mobile_bottom_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.quote_banner.preset"
+    }
+  ]
+}
+{% endschema %}

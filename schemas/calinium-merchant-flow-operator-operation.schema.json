@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-operator-operation.schema.json",
+  "title": "Calinium merchant-flow operator operation",
+  "type": "object",
+  "required": ["contract_version", "operation_kind", "idempotency_key", "expected_flow_sequence", "expected_flow_checksum", "evidence", "decision"],
+  "properties": {
+    "contract_version": {"const": "merchant-flow-operator-operation-v1"},
+    "operation_kind": {"enum": ["qa_review", "repair_resolution", "cancel"]},
+    "idempotency_key": {"type": "string", "minLength": 8, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{7,199}$"},
+    "expected_flow_sequence": {"type": "integer", "minimum": 0},
+    "expected_flow_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "evaluation": {"$ref": "#/$defs/evidenceBinding"},
+        "review": {"$ref": "#/$defs/evidenceBinding"},
+        "repair_class": {"enum": ["responsive_layout", "generated_content_eligibility"]},
+        "repair_plan": {"$ref": "#/$defs/evidenceBinding"},
+        "plan_approval": {"$ref": "#/$defs/evidenceBinding"},
+        "repair_execution": {"$ref": "#/$defs/evidenceBinding"},
+        "post_repair_qa": {"$ref": "#/$defs/evidenceBinding"},
+        "final_human_review": {"$ref": "#/$defs/evidenceBinding"},
+        "final_state": {"$ref": "#/$defs/evidenceBinding"},
+        "reason_code": {"enum": ["operator_requested", "support_abort", "safety_abort"]}
+      },
+      "additionalProperties": false
+    },
+    "decision": {"type": ["string", "null"], "enum": ["accepted", "needs_fix", "human_approved", "declined", "failed", null]}
+  },
+  "$defs": {
+    "evidenceBinding": {
+      "type": "object",
+      "required": ["id", "checksum", "reference"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "reference": {"type": "string", "pattern": "^(output|plans)/.+\\.json$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "catalog_version": 1,
+  "compatible_compiler_versions": ["1.0.0"],
+  "catalog_id": "theme_capabilities",
+  "description": "Traceable catalog of Calinium capabilities implemented by the current theme. It describes implementation; it does not create Shopify configuration.",
+  "capabilities": [
+    {
+      "id": "typography",
+      "name": "Typography",
+      "description": "Theme-editor font families, type scales, line heights, and heading tracking are exposed as global settings and emitted as Calinium tokens.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/config/settings_schema.json", "setting_ids": ["type_heading_font", "heading_scale", "heading_line_height", "heading_letter_spacing", "type_body_font", "body_scale", "body_line_height"]},
+        {"file": "apps/theme/assets/tokens.css", "token_prefix": "--co-font-"}
+      ]
+    },
+    {
+      "id": "color_schemes",
+      "name": "Color schemes",
+      "description": "Global color schemes and a default color-scheme selector are available to sections that expose a color_scheme setting.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/config/settings_schema.json", "setting_ids": ["color_schemes", "default_color_scheme"]},
+        {"file": "apps/theme/assets/tokens.css", "token_prefix": "--co-color-"}
+      ]
+    },
+    {
+      "id": "spacing_layout",
+      "name": "Spacing and layout",
+      "description": "Page width, content width, gutters, section spacing, and grid gap are global theme settings with token fallbacks.",
+      "ai_configurable": true,
+      "merchant_review_required": false,
+      "source": [
+        {"file": "apps/theme/config/settings_schema.json", "setting_ids": ["page_width", "content_width", "mobile_gutter", "desktop_gutter", "section_spacing", "grid_gap"]},
+        {"file": "apps/theme/assets/tokens.css", "token_prefix": "--co-space-"},
+        {"file": "apps/theme/snippets/section-spacing.liquid"}
+      ]
+    },
+    {
+      "id": "motion_accessibility",
+      "name": "Motion and reduced-motion behavior",
+      "description": "Global motion toggles and duration settings are implemented with token-based motion and reduced-motion fallbacks.",
+      "ai_configurable": true,
+      "merchant_review_required": false,
+      "source": [
+        {"file": "apps/theme/config/settings_schema.json", "setting_ids": ["enable_motion", "motion_duration"]},
+        {"file": "apps/theme/assets/tokens.css", "token_prefix": "--co-motion-"},
+        {"file": "apps/theme/assets/base.css", "feature": "prefers-reduced-motion"},
+        {"file": "apps/theme/assets/calinium-sections.js", "feature": "section_lifecycle"}
+      ]
+    },
+    {
+      "id": "responsive_media",
+      "name": "Responsive media",
+      "description": "Sections render Shopify-hosted responsive imagery through the canonical responsive-image primitive and use native video controls where available.",
+      "ai_configurable": false,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/snippets/responsive-image.liquid"},
+        {"file": "apps/theme/snippets/media-item.liquid"},
+        {"file": "apps/theme/assets/component-image.css"}
+      ]
+    },
+    {
+      "id": "section_composition",
+      "name": "Section composition",
+      "description": "The installed Shopify sections are the real composition surface; schemas, presets, blocks, and assets are audited in theme-section-capabilities.json.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/sections", "pattern": "*.liquid", "feature": "section_schemas"},
+        {"file": "config/calinium-section-manifest.json"},
+        {"file": "config/compatibility-matrix.json"}
+      ]
+    },
+    {
+      "id": "hero_media",
+      "name": "Hero media",
+      "description": "The theme includes banner, slideshow, editorial, split, full-screen, and video hero sections with schema-configured media and content controls.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/sections/hero-banner.liquid"},
+        {"file": "apps/theme/sections/hero-slideshow.liquid"},
+        {"file": "apps/theme/sections/editorial-hero.liquid"},
+        {"file": "apps/theme/sections/split-hero.liquid"},
+        {"file": "apps/theme/sections/full-screen-hero.liquid"},
+        {"file": "apps/theme/sections/video-hero.liquid"}
+      ]
+    },
+    {
+      "id": "product_cards",
+      "name": "Canonical product cards",
+      "description": "Product listings compose the canonical product-card, price, product-form, and responsive-image primitives.",
+      "ai_configurable": true,
+      "merchant_review_required": false,
+      "source": [
+        {"file": "apps/theme/snippets/product-card.liquid"},
+        {"file": "apps/theme/snippets/price.liquid"},
+        {"file": "apps/theme/snippets/product-form.liquid"},
+        {"file": "apps/theme/assets/component-product-card.css"},
+        {"file": "apps/theme/assets/product-form.js"}
+      ]
+    },
+    {
+      "id": "commerce_merchandising",
+      "name": "Commerce and merchandising",
+      "description": "Product and collection merchandising sections reuse the canonical product card and existing cart enhancement infrastructure.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/assets/section-commerce-pack.css"},
+        {"file": "apps/theme/assets/calinium-sections.js", "feature": "ScrollCarousel"},
+        {"file": "apps/theme/sections/product-carousel.liquid"},
+        {"file": "apps/theme/sections/product-recommendations.liquid"}
+      ]
+    },
+    {
+      "id": "header_navigation",
+      "name": "Header and navigation",
+      "description": "Header and announcement-bar schemas provide merchant-configured navigation and announcement controls.",
+      "ai_configurable": false,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/sections/header.liquid"},
+        {"file": "apps/theme/sections/announcement-bar.liquid"},
+        {"file": "apps/theme/assets/header.js"}
+      ]
+    },
+    {
+      "id": "footer_navigation",
+      "name": "Footer",
+      "description": "The footer schema provides merchant-controlled footer content and navigation blocks.",
+      "ai_configurable": false,
+      "merchant_review_required": true,
+      "source": [{"file": "apps/theme/sections/footer.liquid"}, {"file": "apps/theme/assets/section-footer.css"}]
+    },
+    {
+      "id": "cart",
+      "name": "Cart",
+      "description": "Cart drawer and cart-page behavior use the existing cart JavaScript and Shopify cart forms.",
+      "ai_configurable": false,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/sections/cart-drawer.liquid"},
+        {"file": "apps/theme/sections/main-cart.liquid"},
+        {"file": "apps/theme/assets/cart.js"},
+        {"file": "apps/theme/assets/cart-drawer.js"}
+      ]
+    },
+    {
+      "id": "search_filters",
+      "name": "Search and filters",
+      "description": "Search, predictive search, collection filtering, and sort controls have dedicated Shopify sections and existing enhancement assets.",
+      "ai_configurable": false,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/sections/main-search.liquid"},
+        {"file": "apps/theme/sections/predictive-search.liquid"},
+        {"file": "apps/theme/snippets/facets.liquid"},
+        {"file": "apps/theme/assets/predictive-search.js"},
+        {"file": "apps/theme/assets/facets.js"}
+      ]
+    },
+    {
+      "id": "editorial_content",
+      "name": "Editorial content",
+      "description": "Editorial and image-led storytelling uses canonical section-heading, rich-text, button, media-item, and icon primitives.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/snippets/section-heading.liquid"},
+        {"file": "apps/theme/snippets/rich-text.liquid"},
+        {"file": "apps/theme/snippets/button.liquid"},
+        {"file": "apps/theme/snippets/media-item.liquid"},
+        {"file": "apps/theme/snippets/icon.liquid"},
+        {"file": "apps/theme/assets/section-editorial-pack.css"}
+      ]
+    },
+    {
+      "id": "brand_storytelling",
+      "name": "Brand storytelling",
+      "description": "Factual brand-story sections are controlled by the existing AI manifest, setting metadata, block taxonomy, and content-safety rules.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "config/calinium-section-manifest.json"},
+        {"file": "config/calinium-setting-metadata.json"},
+        {"file": "config/calinium-block-taxonomy.json"},
+        {"file": "apps/theme/assets/section-brand-storytelling-pack.css"}
+      ]
+    },
+    {
+      "id": "trust_content",
+      "name": "Trust content",
+      "description": "Testimonials, FAQ, certifications, and related factual proof sections exist, but factual inputs remain subject to content-safety classifications.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/sections/testimonials.liquid"},
+        {"file": "apps/theme/sections/faq.liquid"},
+        {"file": "apps/theme/sections/awards-certifications.liquid"},
+        {"file": "docs/ai/content-safety-levels.md"}
+      ]
+    },
+    {
+      "id": "blog_articles",
+      "name": "Blog and articles",
+      "description": "Blog, article, and featured-blog sections are available with Shopify article objects and canonical article-card metadata.",
+      "ai_configurable": false,
+      "merchant_review_required": true,
+      "source": [
+        {"file": "apps/theme/sections/main-blog.liquid"},
+        {"file": "apps/theme/sections/main-article.liquid"},
+        {"file": "apps/theme/sections/featured-blog.liquid"},
+        {"file": "apps/theme/snippets/article-card.liquid"}
+      ]
+    },
+    {
+      "id": "newsletter",
+      "name": "Newsletter capture",
+      "description": "A newsletter section uses Shopify’s customer form rather than a separate marketing endpoint.",
+      "ai_configurable": true,
+      "merchant_review_required": true,
+      "source": [{"file": "apps/theme/sections/newsletter.liquid"}, {"file": "apps/theme/assets/section-newsletter.css"}]
+    }
+  ]
+}

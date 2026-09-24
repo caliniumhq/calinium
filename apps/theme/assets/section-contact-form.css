@@ -1,0 +1,72 @@
+/* Server-rendered Shopify contact form. */
+.co-contact-form {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-contact-form__inner,
+.co-contact-form__header,
+.co-contact-form__form,
+.co-contact-form__field,
+.co-contact-form__actions {
+  display: grid;
+  gap: var(--co-space-4);
+}
+
+.co-contact-form__inner {
+  inline-size: min(100% - (var(--co-page-gutter) * 2), var(--co-content-width));
+  margin-inline: auto;
+}
+
+.co-contact-form__text > * + * {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-contact-form__required-note,
+.co-contact-form__field-description {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+}
+
+.co-contact-form__required-marker {
+  color: var(--co-color-accent);
+  font-weight: 600;
+}
+
+.co-contact-form__status,
+.co-contact-form__errors,
+.co-contact-form__field-error {
+  padding: var(--co-space-3);
+  border: var(--co-border-width) solid var(--co-color-border);
+  border-radius: var(--co-radius-input);
+}
+
+.co-contact-form__status {
+  background-color: var(--co-color-surface);
+}
+
+.co-contact-form__errors,
+.co-contact-form__field-error {
+  color: var(--co-color-accent);
+  font-size: var(--co-font-size-small);
+  font-weight: 600;
+}
+
+.co-contact-form__actions {
+  justify-items: start;
+}
+
+@media (min-width: 48rem) {
+  .co-contact-form__form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .co-contact-form__status,
+  .co-contact-form__errors,
+  .co-contact-form__required-note,
+  .co-contact-form__field--message,
+  .co-contact-form__actions {
+    grid-column: 1 / -1;
+  }
+}

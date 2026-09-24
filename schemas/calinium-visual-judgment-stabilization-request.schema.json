@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-judgment-stabilization-request.schema.json",
+  "title": "Calinium Visual Judgment Stabilization Request",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "request_id", "mode", "policy_revision", "source_evaluation", "cells", "architecture_profiles", "objective_facts", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "visual-judgment-stabilization-request-v1"},
+    "request_id": {"type": "string", "pattern": "^visual-judgment-request-[a-f0-9]{20}$"},
+    "mode": {"type": "string", "enum": ["offline_reclassification", "limited_live_validation"]},
+    "policy_revision": {"type": "string", "const": "visual-judgment-stabilization-phase-d2-6-v1"},
+    "source_evaluation": {"type": "object", "required": ["evaluation_id", "evaluation_checksum"], "properties": {"evaluation_id": {"type": "string"}, "evaluation_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false},
+    "cells": {"type": "array", "minItems": 12, "maxItems": 16, "items": {"type": "object", "required": ["cell_id", "profile_id", "route_id", "viewport_id", "screenshot", "objective_evaluation"], "properties": {"cell_id": {"type": "string"}, "profile_id": {"type": "string"}, "route_id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]}, "viewport_id": {"type": "string", "enum": ["desktop-v1", "mobile-v1"]}, "screenshot": {"type": "object"}, "objective_evaluation": {"type": "object"}}, "additionalProperties": false}},
+    "architecture_profiles": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "object"}},
+    "objective_facts": {"type": "array", "items": {"type": "object"}},
+    "safety": {"type": "object", "required": ["fixture_fallback_allowed", "automatic_mutation_allowed", "automatic_repair_allowed", "shopify_write_allowed", "human_review_required"], "properties": {"fixture_fallback_allowed": {"type": "boolean", "const": false}, "automatic_mutation_allowed": {"type": "boolean", "const": false}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "shopify_write_allowed": {"type": "boolean", "const": false}, "human_review_required": {"type": "boolean", "const": true}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

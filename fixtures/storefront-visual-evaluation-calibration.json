@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "evidence_version": "1.0.0",
+  "evidence_id": "phase-d1-objective-visual-evaluation-calibration-v1",
+  "status": "approved_with_known_issue",
+  "contracts": {
+    "evaluation_request": "visual-evaluation-request-v1",
+    "evaluation_result": "visual-evaluation-result-v1",
+    "finding": "visual-finding-v1",
+    "human_review": "visual-human-review-v1",
+    "policy_revision": "storefront-visual-evaluation-policy-v1",
+    "evaluator_version": "storefront-visual-evaluator-v1",
+    "observation_revision": "storefront-objective-observation-v1",
+    "capture_policy_revision": "storefront-capture-policy-v1",
+    "architecture_evidence_revision": "storefront-architecture-evidence-v1"
+  },
+  "comparison": {
+    "comparison_fixture_revision": "comparison-fixture-0c881e4699c1cd3e33b0",
+    "comparison_key": "d7413cc5957c06221d6426210f86ae7cfd081bc2e66d55dbdb98a13b12d417f6"
+  },
+  "matrix": {
+    "expected_cells": 16,
+    "profiles": ["profile.current_calinium.v1", "profile.editorial_discovery.v1"],
+    "routes": ["homepage", "collection", "product", "cart"],
+    "viewports": ["desktop-v1", "mobile-v1"]
+  },
+  "captures": [
+    {"profile_id": "profile.current_calinium.v1", "route_id": "homepage", "viewport_id": "desktop-v1", "render_id": "render-80b980d301ca942050dd", "screenshot": {"sha256": "e98b6fe53c7643b0503e379bf0183900f68d28a7f43204e1128ff8a8098a5597", "width": 1440, "height": 3072}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-7215a137029f47396f79", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.current_calinium.v1", "route_id": "homepage", "viewport_id": "mobile-v1", "render_id": "render-9cfd6df8592c4095bb16", "screenshot": {"sha256": "578512decdd90eb4d7bd5f53e015b2ebb09b1a0d9e20ca18351065da275eae30", "width": 657, "height": 2248}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-86afbb828bf278750895", "findings": [{"finding_id": "visual-finding-2093852270c8474f3079", "rule_id": "root_horizontal_overflow", "severity": "high"}], "automatic_gate": "fail_review_required"},
+    {"profile_id": "profile.current_calinium.v1", "route_id": "collection", "viewport_id": "desktop-v1", "render_id": "render-28c85be3f54048c87e99", "screenshot": {"sha256": "4a3c1bff717929b28ec95d31c55fa4b8c6d46fff249a24fcc11de6946d8246d3", "width": 1440, "height": 2511}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-d1ebf5b4922b3f2bbbab", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.current_calinium.v1", "route_id": "collection", "viewport_id": "mobile-v1", "render_id": "render-3506770a26a288891bcb", "screenshot": {"sha256": "733b01bcb7cdf3654abaae4bcdc5de9922506198d15e530f178a8d2143e4b891", "width": 390, "height": 2581}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-20c48f23e30c21d135d0", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.current_calinium.v1", "route_id": "product", "viewport_id": "desktop-v1", "render_id": "render-85ceb55e657182635e93", "screenshot": {"sha256": "fdcd3e93a31ab6acdfa2d6c38b199ee355e07e11356140fa46359dc5f8bb5618", "width": 1440, "height": 3867}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-ef7ec399477c2eaa5a4c", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.current_calinium.v1", "route_id": "product", "viewport_id": "mobile-v1", "render_id": "render-794c7542aaa5a3921ec4", "screenshot": {"sha256": "3f9c57276b1c823236caa4a97f88e62cd3bba798042a7ee0a19a13b4f5049ac0", "width": 390, "height": 3665}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-a625f08befffb636f674", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.current_calinium.v1", "route_id": "cart", "viewport_id": "desktop-v1", "render_id": "render-c8fbca4901907c63576c", "screenshot": {"sha256": "140f2144ec63dbcc929664d98bcc9b1fd736bc68f97f6bde1b38ac6512102b7d", "width": 1440, "height": 946}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-0519ceca5b00fa7152f6", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.current_calinium.v1", "route_id": "cart", "viewport_id": "mobile-v1", "render_id": "render-4a8571dc3f51ef4a2d44", "screenshot": {"sha256": "4aa2ad54ddeb82f275a23586f2c3c386429f41d8c221e00b931d734013928057", "width": 390, "height": 1048}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-6952bad5af645b92af25", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "homepage", "viewport_id": "desktop-v1", "render_id": "render-7d65befe6f70966199f6", "screenshot": {"sha256": "13debce9fae521ca393d29f3771d2791c72bb39ce2d3c6a4cb33563927f2d5ba", "width": 1440, "height": 3868}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-dce632bdef6fc3a1189a", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "homepage", "viewport_id": "mobile-v1", "render_id": "render-124a1fb7a0f13bf282d0", "screenshot": {"sha256": "3e0eece4daabe08f1308e7d2857dfc67cb28fba8b6454a9f46ea4bcde3bfa9d5", "width": 390, "height": 2184}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-0837b5b420ed69ac8ef1", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "collection", "viewport_id": "desktop-v1", "render_id": "render-375d2b1a08be856767ef", "screenshot": {"sha256": "23364d16159a9790b57d6d037bba7f5c7a55e7e42925932f6a6453ad85c1f40a", "width": 1440, "height": 3245}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-5737116a6e1c958d8dc8", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "collection", "viewport_id": "mobile-v1", "render_id": "render-b0ae1f7555e6a7ed8c1a", "screenshot": {"sha256": "edd6b6499490ba9ca6d2294aa07f50f33753ed551ecac03a3258cd988caf17a3", "width": 390, "height": 2623}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-262410b9b98d075bc503", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "product", "viewport_id": "desktop-v1", "render_id": "render-3ea162d79b14064beb71", "screenshot": {"sha256": "7610c4d6853ab26beb7e13d9f8179d85aeb2cdc387a609951ff0d72ef70c0942", "width": 1440, "height": 3940}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-e7b7a69705c11de5f60c", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "product", "viewport_id": "mobile-v1", "render_id": "render-cc9eb5351063b1d0f60e", "screenshot": {"sha256": "9647dade2c86e1ae16e863c7a9cc0b6efe97511c4745901daa59cb75b13fa3a5", "width": 390, "height": 3647}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-a1313b676ee3ec77e1ed", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "cart", "viewport_id": "desktop-v1", "render_id": "render-9c2c505321625157cb51", "screenshot": {"sha256": "dd5e549d5010eb43ee31d58b298da53175d73f0b2347c4fd417b0ff8714789cd", "width": 1440, "height": 995}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-ad0a7be3f987574ac2dd", "findings": [], "automatic_gate": "pass"},
+    {"profile_id": "profile.editorial_discovery.v1", "route_id": "cart", "viewport_id": "mobile-v1", "render_id": "render-157478ee26123f660d24", "screenshot": {"sha256": "86799dff9dd561b3fb75c5224fd315aa9f2adfab4f584a6f03058959b157749c", "width": 390, "height": 1048}, "objective_observation_revision": "storefront-objective-observation-v1", "evaluation_id": "visual-evaluation-e1ab08b0fc5c88331d22", "findings": [], "automatic_gate": "pass"}
+  ],
+  "known_issues": {
+    "current_mobile_homepage": {
+      "profile_id": "profile.current_calinium.v1",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "observed_document_width": 657,
+      "horizontal_overflow_px": 267,
+      "rule_id": "root_horizontal_overflow",
+      "severity": "high",
+      "evaluation_id": "visual-evaluation-86afbb828bf278750895",
+      "evaluation_checksum": "64c8e615a03bcb6e6a8987dc21646f838166098a62d90b411eca802606b2591b",
+      "finding_id": "visual-finding-2093852270c8474f3079",
+      "human_review_status": "accepted_with_known_issue",
+      "review_reference": "fixtures/storefront-visual-human-review-current-mobile-homepage.json"
+    },
+    "editorial_mobile_homepage": {
+      "profile_id": "profile.editorial_discovery.v1",
+      "viewport_width": 390,
+      "viewport_height": 844,
+      "observed_document_width": 390,
+      "root_horizontal_overflow_finding": false
+    }
+  },
+  "calibration": {
+    "cells_passed_automatically": 15,
+    "cells_requiring_review": 1,
+    "cells_passed_after_human_review": 16,
+    "automatic_repairs": 0,
+    "authoritative_screenshots_modified": false,
+    "determinism": {
+      "complete_evaluation_tree_runs": 2,
+      "byte_identical": true,
+      "file_count_per_tree": 34,
+      "tree_sha256": "60be5049c8708cb441e89998051d0de1234698a7b90709385e6b959d54847a8f"
+    }
+  },
+  "storage": {
+    "screenshot_binaries_tracked": false,
+    "runtime_evaluation_root": "output/storefront-visual-evaluations/phase-d1-approved-comparison",
+    "reproduction_command": "npm run capture:editorial-discovery-comparison -- --execute-development-render --replace && npm run evaluate:storefront-visuals -- --replace --human-review fixtures/storefront-visual-human-review-current-mobile-homepage.json"
+  }
+}

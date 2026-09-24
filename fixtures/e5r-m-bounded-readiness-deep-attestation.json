@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "phase": "E5R-M",
+  "classification": "DEPLOYED_READINESS_EXECUTION_BOUNDARY",
+  "snapshot_revision": "controlled-beta-readiness-snapshot-v1",
+  "deep_attestation_revision": "controlled-beta-deep-attestation-v1",
+  "release_7_regression": {
+    "fly_timeout_ms": 5000,
+    "legacy_endpoint": "/api/ready",
+    "commands": [
+      {
+        "operation": "shopify version",
+        "duration_ms": 2179
+      },
+      {
+        "operation": "shopify config autoupgrade status",
+        "duration_ms": 1874
+      },
+      {
+        "operation": "shopify version",
+        "duration_ms": 1774
+      }
+    ],
+    "subtotal_ms": 5827,
+    "legacy_result": "fly_health_timeout"
+  },
+  "endpoint_budgets_ms": {
+    "health": 250,
+    "public_readiness": 500,
+    "protected_snapshot_readiness": 1000
+  },
+  "freshness": {
+    "snapshot_ttl_ms": 300000,
+    "background_refresh_interval_ms": 120000,
+    "deep_attestation_timeout_ms": 60000
+  },
+  "fly_health_model": {
+    "before": "/api/ready",
+    "after": "/api/ready",
+    "timeout_ms": 5000,
+    "timeout_increased": false,
+    "deployment_applied": false
+  },
+  "preserved_identity": {
+    "project_id": "prj_public-fixture-0001",
+    "merchant_flow_id": "merchant-flow-00000000000000000001",
+    "generation_job_id": "merchant-flow-job-00000000000000000002",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "artifact_checksum": "c2e5dd71a4b06b173f266cc3c5e7cf60aff4c3c9f269b73b372bcf3f66e95b09",
+    "render_job_id": "merchant-flow-job-00000000000000000001",
+    "render_job_state": "retryable",
+    "architecture_profile_id": "profile.editorial_discovery.v1",
+    "design_dna_id": "adna_0989b341020b3def5aac2c7eda0b1b93b9af1aae"
+  },
+  "safety": {
+    "automatic_repair_allowed": false,
+    "shopify_write_allowed": false,
+    "live_theme_mutation_allowed": false,
+    "deployment_allowed": false,
+    "openai_calls": 0,
+    "shopify_calls": 0
+  }
+}

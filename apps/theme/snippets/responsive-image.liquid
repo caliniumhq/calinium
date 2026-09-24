@@ -1,0 +1,103 @@
+{% liquid
+  assign responsive_image = image
+  assign responsive_mobile_image = mobile_image | default: blank
+  assign image_alt = responsive_image.alt
+  assign image_loading = loading | default: 'lazy'
+  assign image_fetchpriority = fetchpriority | default: 'auto'
+  assign image_widths = widths | default: '165, 360, 535, 750, 1000, 1500, 2000, 3000'
+  assign image_sizes = sizes | default: '100vw'
+  assign image_ratio = ratio | default: 'natural'
+  assign image_fit = fit | default: 'cover'
+  assign image_link = link | default: blank
+  assign image_caption = caption | default: blank
+  assign image_classes = 'co-image co-image--ratio-' | append: image_ratio
+  assign image_classes = image_classes | append: ' co-image--fit-' | append: image_fit
+  assign image_link_label = link_label | default: blank
+  assign should_link_image = false
+
+  if class != blank
+    assign image_classes = image_classes | append: ' ' | append: class
+  endif
+
+  if alt != nil
+    assign image_alt = alt
+  endif
+
+  if image_link_label == blank and image_alt != blank
+    assign image_link_label = image_alt
+  endif
+
+  if image_link != blank and image_link_label != blank
+    assign should_link_image = true
+  endif
+%}
+
+{% if responsive_image != blank %}
+  {% capture image_media %}
+    {% if should_link_image %}
+      <a
+        class="co-image__link"
+        href="{{ image_link | escape }}"
+        aria-label="{{ image_link_label | escape }}"
+      >
+    {% endif %}
+
+    {% if responsive_mobile_image != blank %}
+      {% capture mobile_image_srcset %}
+        {% assign mobile_image_widths = image_widths | split: ',' %}
+        {% for mobile_image_width in mobile_image_widths %}
+          {% assign mobile_image_width_value = mobile_image_width | strip %}
+          {{ responsive_mobile_image | image_url: width: mobile_image_width_value }} {{ mobile_image_width_value }}w{% unless forloop.last %}, {% endunless %}
+        {% endfor %}
+      {% endcapture %}
+
+      <picture class="co-image__picture">
+        <source
+          media="(max-width: 47.99rem)"
+          srcset="{{ mobile_image_srcset | strip }}"
+          sizes="{{ image_sizes | escape }}"
+        >
+        {{
+          responsive_image
+          | image_url: width: 3000
+          | image_tag:
+            alt: image_alt,
+            class: 'co-image__media',
+            fetchpriority: image_fetchpriority,
+            loading: image_loading,
+            sizes: image_sizes,
+            widths: image_widths
+        }}
+      </picture>
+    {% else %}
+      {{
+        responsive_image
+        | image_url: width: 3000
+        | image_tag:
+          alt: image_alt,
+          class: 'co-image__media',
+          fetchpriority: image_fetchpriority,
+          loading: image_loading,
+          sizes: image_sizes,
+          widths: image_widths
+      }}
+    {% endif %}
+
+    {% if should_link_image %}
+      </a>
+    {% elsif image_link != blank %}
+      <!-- Calinium responsive-image: link omitted because it has no accessible name. -->
+    {% endif %}
+  {% endcapture %}
+
+  {% if image_caption != blank %}
+    <figure class="{{ image_classes | escape }}">
+      <div class="co-image__frame">{{ image_media }}</div>
+      <figcaption class="co-image__caption">{{ image_caption | escape }}</figcaption>
+    </figure>
+  {% else %}
+    <div class="{{ image_classes | escape }}">
+      <div class="co-image__frame">{{ image_media }}</div>
+    </div>
+  {% endif %}
+{% endif %}

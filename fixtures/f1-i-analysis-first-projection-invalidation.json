@@ -1,0 +1,44 @@
+{
+  "fixture_revision": "f1-i-analysis-first-projection-invalidation-fixture-v1",
+  "classification": "F1_PROJECTION_NOT_INVALIDATED_AFTER_OPERATOR_MUTATION",
+  "controlled_shape": {
+    "session_updated_at": "2026-09-06T19:50:00.000Z",
+    "flow": {
+      "flow_id": "merchant-flow-f1i-fixture",
+      "state": "preview_ready",
+      "sequence": 27
+    },
+    "historical_render_source_status": "unavailable_legacy",
+    "initial_projection": {
+      "stage": "review_preview",
+      "preview_availability": "needs_attention",
+      "preview_link": null,
+      "recovery_eligible": true
+    },
+    "post_recovery_authority": {
+      "same_session_updated_at": true,
+      "same_flow_state": true,
+      "same_flow_sequence": true,
+      "recovery_record_exists": true,
+      "preview_availability": "available",
+      "preview_link_present": true
+    }
+  },
+  "operator_mutations": {
+    "preview_provenance_recovery": "explicit_projection_refresh",
+    "founder_qa_submission": "existing_flow_state_or_sequence_refresh",
+    "founder_qa_evidence_recovery": "no_merchant_projection_change",
+    "system_readiness": "diagnostic_read_no_refresh"
+  },
+  "invariants": {
+    "server_authoritative_projection": true,
+    "maximum_projection_gets_per_explicit_invalidation": 1,
+    "stale_response_may_overwrite_newer": false,
+    "local_preview_state_patch": false,
+    "business_mutations_from_projection_refresh": 0,
+    "provider_calls": 0,
+    "shopify_calls": 0,
+    "theme_mutations": 0,
+    "source_default_enabled": false
+  }
+}

@@ -1,0 +1,290 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-cart-item.css' | asset_url | stylesheet_tag }}
+{{ 'component-quantity-input.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-cart.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cart.js' | asset_url }}" type="module"></script>
+
+{% liquid
+  assign main_cart_classes = 'co-main-cart co-color-scheme-' | append: section.settings.color_scheme
+  assign main_cart_heading_id = 'CartHeading-' | append: section.id
+  assign main_cart_form_id = 'CartForm-' | append: section.id
+  assign main_cart_note_id = 'CartNote-' | append: section.id
+  assign main_cart_continue_url = routes.all_products_collection_url
+  assign main_cart_recommendation_url = blank
+  assign main_cart_recommendation_source = section.settings.recommendation_source
+  assign main_cart_show_recommendations = false
+  assign main_cart_recommendations_heading = section.settings.recommendations_heading
+  assign main_cart_recommendation_loading_label = 'cart.recommendations_loading' | t
+
+  if main_cart_continue_url == blank
+    assign main_cart_continue_url = routes.root_url
+  endif
+
+  if section.settings.enable_recommendations
+    assign main_cart_show_recommendations = true
+  endif
+
+  if section.settings.enable_sticky_summary
+    assign main_cart_classes = main_cart_classes | append: ' co-main-cart--sticky-summary'
+  endif
+
+  if main_cart_recommendations_heading == blank
+    assign main_cart_recommendations_heading = 'cart.recommendations' | t
+  endif
+
+  if main_cart_show_recommendations and main_cart_recommendation_source == 'shopify' and cart.items.first.product != blank
+    capture main_cart_recommendation_url
+      echo routes.product_recommendations_url
+      echo '?section_id='
+      echo section.id
+      echo '&product_id='
+      echo cart.items.first.product.id
+      echo '&limit='
+      echo section.settings.recommendations_to_show
+      echo '&intent='
+      echo section.settings.recommendation_intent
+    endcapture
+  endif
+%}
+
+<section
+  class="{{ main_cart_classes }}"
+  aria-labelledby="{{ main_cart_heading_id }}"
+  data-cart-root
+  data-main-cart
+  data-cart-section-id="{{ section.id }}"
+  data-cart-url="{{ routes.cart_url }}"
+  data-cart-error-message="{{ 'cart.update_error' | t }}"
+  data-cart-update-message="{{ 'cart.updated' | t }}"
+  data-cart-remove-message="{{ 'cart.removed' | t }}"
+  data-cart-refresh-error-message="{{ 'cart.refresh_error' | t }}"
+>
+  <div class="co-main-cart__inner co-page-width">
+    <div class="co-main-cart__feedback" data-cart-feedback role="status" hidden></div>
+
+    <div data-cart-content>
+      <header class="co-main-cart__header">
+        <h1 id="{{ main_cart_heading_id }}" class="co-main-cart__heading" data-cart-heading tabindex="-1">{{ 'cart.title' | t }}</h1>
+      </header>
+
+      {% if cart.empty? %}
+        {% render 'cart-empty-state', context: 'page', continue_url: main_cart_continue_url %}
+
+        {% if section.settings.empty_products.count > 0 %}
+          <section class="co-main-cart__empty-products" aria-labelledby="CartEmptyProductsHeading-{{ section.id }}">
+            <h2 id="CartEmptyProductsHeading-{{ section.id }}" class="co-main-cart__recommendations-heading">{{ 'cart.empty_recommendations' | t }}</h2>
+            <ul class="co-main-cart__recommendations-grid" role="list">
+              {% for empty_product in section.settings.empty_products limit: section.settings.recommendations_to_show %}
+                <li>{% render 'product-card', product: empty_product, section_id: section.id, image_ratio: section.settings.recommendation_image_ratio, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 25vw, 50vw', image_widths: '165, 360, 535, 750, 1000', show_vendor: section.settings.show_recommendation_vendor, show_rating: false, show_compare_at_price: true, show_sale_badge: true, show_sold_out_badge: true, show_secondary_image: false, show_inventory: false, show_quick_add: false, card_alignment: 'left' %}</li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endif %}
+      {% else %}
+        {% form 'cart', cart, id: main_cart_form_id, class: 'co-main-cart__form', data-cart-form: '' %}
+          {% if form.errors %}
+            <div class="co-main-cart__errors" role="alert">{{ form.errors | default_errors }}</div>
+          {% endif %}
+
+          <div class="co-main-cart__layout">
+            <ul class="co-main-cart__items" role="list">
+              {% for item in cart.items %}
+                <li>
+                  {% render 'cart-item',
+                    item: item,
+                    context: 'page',
+                    image_loading: 'lazy',
+                    image_sizes: '(min-width: 48rem) 16rem, 30vw',
+                    image_widths: '165, 360, 535, 750'
+                  %}
+                </li>
+              {% endfor %}
+            </ul>
+
+            <aside class="co-main-cart__summary" aria-label="{{ 'cart.summary' | t }}">
+              {% render 'cart-summary',
+                cart: cart,
+                show_note: section.settings.show_cart_note,
+                note_id: main_cart_note_id,
+                show_update: true,
+                show_dynamic_checkout: section.settings.show_dynamic_checkout,
+                show_payment_icons: section.settings.show_payment_icons,
+                show_secure_checkout: section.settings.show_secure_checkout,
+                shipping_threshold: section.settings.free_shipping_threshold,
+                context: 'page'
+              %}
+            </aside>
+          </div>
+        {% endform %}
+
+        {% if main_cart_show_recommendations %}
+          <section
+            class="co-main-cart__recommendations"
+            data-cart-recommendations
+            {% if main_cart_recommendation_url != blank and recommendations.performed == false %}data-cart-recommendations-url="{{ main_cart_recommendation_url | strip | escape }}"{% endif %}
+            {% if main_cart_recommendation_source == 'shopify' and recommendations.performed == false %}hidden{% endif %}
+            aria-labelledby="CartRecommendationsHeading-{{ section.id }}"
+          >
+            <h2 id="CartRecommendationsHeading-{{ section.id }}" class="co-main-cart__recommendations-heading">{{ main_cart_recommendations_heading | escape }}</h2>
+            {% if main_cart_recommendation_source == 'merchant' and section.settings.recommendation_products.count > 0 %}
+              <ul class="co-main-cart__recommendations-grid" role="list">
+                {% for recommendation_product in section.settings.recommendation_products limit: section.settings.recommendations_to_show %}
+                  <li>{% render 'product-card', product: recommendation_product, section_id: section.id, image_ratio: section.settings.recommendation_image_ratio, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 25vw, 50vw', image_widths: '165, 360, 535, 750, 1000', show_vendor: section.settings.show_recommendation_vendor, show_rating: false, show_compare_at_price: true, show_sale_badge: true, show_sold_out_badge: true, show_secondary_image: false, show_inventory: false, show_quick_add: false, card_alignment: 'left' %}</li>
+                {% endfor %}
+              </ul>
+            {% elsif main_cart_recommendation_source == 'shopify' and recommendations.performed and recommendations.products_count > 0 %}
+              <ul class="co-main-cart__recommendations-grid" role="list">
+                {% for recommendation_product in recommendations.products limit: section.settings.recommendations_to_show %}
+                  <li>{% render 'product-card', product: recommendation_product, section_id: section.id, image_ratio: section.settings.recommendation_image_ratio, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 25vw, 50vw', image_widths: '165, 360, 535, 750, 1000', show_vendor: section.settings.show_recommendation_vendor, show_rating: false, show_compare_at_price: true, show_sale_badge: true, show_sold_out_badge: true, show_secondary_image: false, show_inventory: false, show_quick_add: false, card_alignment: 'left' %}</li>
+                {% endfor %}
+              </ul>
+            {% elsif main_cart_recommendation_source == 'shopify' and recommendations.performed == false %}
+              <div class="co-main-cart__recommendations-loading">{% render 'loading-spinner', size: 20, label: main_cart_recommendation_loading_label %}</div>
+            {% endif %}
+          </section>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main_cart.name",
+  "tag": "section",
+  "class": "co-section-main-cart",
+  "limit": 1,
+  "enabled_on": {
+    "templates": ["cart"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "t:sections.main_cart.settings.show_cart_note.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.main_cart.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Summary"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_summary",
+      "label": "Keep summary visible on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show accelerated checkout",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secure_checkout",
+      "label": "Show secure checkout message",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show available payment methods",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "free_shipping_threshold",
+      "label": "Free-shipping threshold",
+      "info": "Enter the amount in your store currency. Leave at 0 to hide this message.",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "unit": "$",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Recommendations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_recommendations",
+      "label": "Show cart recommendations",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "recommendation_source",
+      "label": "Recommendation source",
+      "default": "merchant",
+      "options": [
+        { "value": "merchant", "label": "Selected products" },
+        { "value": "shopify", "label": "Shopify recommendations" }
+      ]
+    },
+    {
+      "type": "product_list",
+      "id": "recommendation_products",
+      "label": "Selected products",
+      "limit": 4
+    },
+    {
+      "type": "text",
+      "id": "recommendations_heading",
+      "label": "Recommendations heading"
+    },
+    {
+      "type": "select",
+      "id": "recommendation_intent",
+      "label": "Shopify recommendation type",
+      "default": "related",
+      "options": [
+        { "value": "related", "label": "Related products" },
+        { "value": "complementary", "label": "Complementary products" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "recommendations_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "recommendation_image_ratio",
+      "label": "Product image ratio",
+      "default": "portrait",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "landscape", "label": "Landscape" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_recommendation_vendor",
+      "label": "Show product vendor",
+      "default": false
+    },
+    {
+      "type": "product_list",
+      "id": "empty_products",
+      "label": "Products to show with an empty cart",
+      "limit": 4
+    }
+  ]
+}
+{% endschema %}

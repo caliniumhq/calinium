@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/theme-mapping-coverage.schema.json",
+  "allOf": [{"$ref": "theme-mapping.schema.json#/$defs/metadata"}],
+  "required": ["compiler_decisions_total", "fully_mapped", "partially_mapped", "unsupported", "global_settings_audited", "section_settings_audited", "classified_settings", "coverage_percentage", "source"],
+  "properties": {
+    "compiler_decisions_total": {"type": "integer", "minimum": 1},
+    "fully_mapped": {"type": "integer", "minimum": 0},
+    "partially_mapped": {"type": "integer", "minimum": 0},
+    "unsupported": {"type": "integer", "minimum": 0},
+    "global_settings_audited": {"type": "integer", "minimum": 1},
+    "section_settings_audited": {"type": "integer", "minimum": 1},
+    "classified_settings": {"type": "integer", "minimum": 1},
+    "coverage_percentage": {"type": "number", "minimum": 0},
+    "source": {"$ref": "theme-mapping.schema.json#/$defs/source"}
+  }
+}

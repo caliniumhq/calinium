@@ -1,0 +1,91 @@
+/* Reusable product option selection component. */
+.co-variant-picker {
+  display: grid;
+  gap: var(--co-space-5);
+}
+
+.co-variant-picker__option {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.co-variant-picker__label {
+  display: block;
+  margin-block-end: var(--co-space-2);
+  color: var(--co-color-text);
+  font-weight: 600;
+}
+
+.co-variant-picker__values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--co-space-2);
+}
+
+.co-variant-picker__value {
+  position: relative;
+}
+
+.co-variant-picker__value input {
+  position: absolute;
+  inline-size: 0.0625rem;
+  block-size: 0.0625rem;
+  opacity: 0;
+}
+
+.co-variant-picker__value label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: calc(var(--co-space-6) + var(--co-space-3));
+  padding: var(--co-space-2) var(--co-space-4);
+  border: var(--co-border-width) solid var(--co-color-border);
+  border-radius: var(--co-radius-button);
+  color: var(--co-color-text);
+  background-color: var(--co-color-background);
+  cursor: pointer;
+}
+
+.co-variant-picker__value--swatch label {
+  gap: var(--co-space-2);
+}
+
+.co-variant-picker__swatch {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  overflow: hidden;
+  border: var(--co-border-width) solid rgb(0 0 0 / 0.16);
+  border-radius: 50%;
+  background: var(--co-variant-swatch, var(--co-color-surface));
+}
+
+.co-variant-picker__swatch img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.co-variant-picker__value input:checked + label {
+  border-color: var(--co-color-accent);
+  box-shadow: inset 0 0 0 var(--co-border-width) var(--co-color-accent);
+  font-weight: 600;
+}
+
+.co-variant-picker__value input:focus-visible + label {
+  outline: var(--co-focus-ring-width) solid var(--co-color-accent);
+  outline-offset: var(--co-focus-ring-offset);
+}
+
+.co-variant-picker__value input:disabled + label {
+  cursor: not-allowed;
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+
+.co-variant-picker__option select {
+  background-color: var(--co-color-surface);
+}

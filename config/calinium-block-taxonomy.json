@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "blocks": [
+    {"id":"achievement","category":"storytelling","purpose":"Represent one merchant-verified founder achievement.","common_fields":["heading","text","achievement_icon"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"timeline_item","category":"storytelling","purpose":"Represent one dated milestone in a chronological sequence.","common_fields":["date","heading","text","image","timeline_icon"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"material","category":"storytelling","purpose":"Represent one material, ingredient, fabric, component, or resource.","common_fields":["image","material_icon","heading","text","origin","properties"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"craft_step","category":"storytelling","purpose":"Represent one verified craft or specialist-work step.","common_fields":["craft_icon","image","heading","text"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"process_step","category":"storytelling","purpose":"Represent one production or service workflow step.","common_fields":["process_icon","heading","text","image","duration","statistic"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"initiative","category":"storytelling","purpose":"Represent one verified environmental or social initiative.","common_fields":["initiative_icon","image","heading","text","certification_reference"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"metric","category":"storytelling","purpose":"Represent one verified metric.","common_fields":["value","label","description","metric_icon"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"certification","category":"storytelling","purpose":"Represent one verified certification or standard.","common_fields":["logo","heading","issuer","text"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"value","category":"storytelling","purpose":"Represent one brand value or principle.","common_fields":["value_icon","image","heading","text"],"repeatable":true,"ai_populatable":true,"merchant_verification_required":true},
+    {"id":"team_member","category":"storytelling","purpose":"Represent one real person in the brand team.","common_fields":["image","name","role","bio","email","link"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"award","category":"storytelling","purpose":"Represent one verified award or recognition.","common_fields":["logo","award_icon","heading","issuer","year","text","verification_link"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true},
+    {"id":"gallery_item","category":"storytelling","purpose":"Represent one real behind-the-scenes image or video item.","common_fields":["image","mobile_image","video","caption","location","date"],"repeatable":true,"ai_populatable":false,"merchant_verification_required":true}
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "policy_revision": "architecture-selection-policy-v1",
+  "selection_engine_version": "architecture-selection-v2",
+  "eligibility_evaluator_version": "architecture-eligibility-v2",
+  "fit_evaluator_version": "architecture-fit-v2",
+  "ambiguity_evaluator_version": "architecture-ambiguity-v1",
+  "signal_derivation_revision": "architecture-store-signal-derivation-v1",
+  "mode": "automatic_beta",
+  "supported_profiles": [
+    "profile.current_calinium.v1",
+    "profile.editorial_discovery.v1"
+  ],
+  "conservative_fallback_profile_id": "profile.current_calinium.v1",
+  "base_score": 50,
+  "score_bounds": {"minimum": 0, "maximum": 100},
+  "profile_fit_definitions": {
+    "profile.current_calinium.v1": {
+      "summary": "Conventional commerce hierarchy for broader or more complex catalog exploration, utility-led navigation, denser product discovery, and stores whose decision path cannot depend on rich imagery.",
+      "structural_evidence": [
+        "single-grid commerce header and disclosure navigation",
+        "uniform commerce product-card hierarchy",
+        "conventional collection grid with facets, sorting, and pagination",
+        "balanced product-detail media and purchase relationship"
+      ]
+    },
+    "profile.editorial_discovery.v1": {
+      "summary": "Image-led, story-rich discovery for stores that can support editorial merchandising rhythm, stronger media hierarchy, asymmetric product detail, and restrained catalog/navigation complexity.",
+      "structural_evidence": [
+        "editorial masthead and distinct utility/navigation hierarchy",
+        "independent media-led product-card composition",
+        "feature-first editorial merchandising grid",
+        "media-led asymmetric product-detail relationship"
+      ]
+    }
+  },
+  "store_signal_rules": [
+    {"id": "catalog_small", "path": "selection.catalog_scale", "value": "small", "impact": "medium", "weights": {"profile.current_calinium.v1": 0, "profile.editorial_discovery.v1": 8}},
+    {"id": "catalog_moderate", "path": "selection.catalog_scale", "value": "moderate", "impact": "low", "weights": {"profile.current_calinium.v1": 4, "profile.editorial_discovery.v1": 3}},
+    {"id": "catalog_large", "path": "selection.catalog_scale", "value": "large", "impact": "high", "weights": {"profile.current_calinium.v1": 22, "profile.editorial_discovery.v1": -10}},
+    {"id": "variants_simple", "path": "selection.variant_complexity", "value": "simple", "impact": "low", "weights": {"profile.current_calinium.v1": 0, "profile.editorial_discovery.v1": 3}},
+    {"id": "variants_moderate", "path": "selection.variant_complexity", "value": "moderate", "impact": "low", "weights": {"profile.current_calinium.v1": 5, "profile.editorial_discovery.v1": 0}},
+    {"id": "variants_complex", "path": "selection.variant_complexity", "value": "complex", "impact": "high", "weights": {"profile.current_calinium.v1": 15, "profile.editorial_discovery.v1": -6}},
+    {"id": "navigation_minimal", "path": "selection.navigation_complexity", "value": "minimal", "impact": "medium", "weights": {"profile.current_calinium.v1": 0, "profile.editorial_discovery.v1": 6}},
+    {"id": "navigation_moderate", "path": "selection.navigation_complexity", "value": "moderate", "impact": "low", "weights": {"profile.current_calinium.v1": 4, "profile.editorial_discovery.v1": 2}},
+    {"id": "navigation_complex", "path": "selection.navigation_complexity", "value": "complex", "impact": "high", "weights": {"profile.current_calinium.v1": 18, "profile.editorial_discovery.v1": -8}},
+    {"id": "media_weak", "path": "selection.media_richness", "value": "weak", "impact": "high", "weights": {"profile.current_calinium.v1": 8, "profile.editorial_discovery.v1": -20}},
+    {"id": "media_adequate", "path": "selection.media_richness", "value": "adequate", "impact": "medium", "weights": {"profile.current_calinium.v1": 3, "profile.editorial_discovery.v1": 6}},
+    {"id": "media_strong", "path": "selection.media_richness", "value": "strong", "impact": "high", "weights": {"profile.current_calinium.v1": 0, "profile.editorial_discovery.v1": 20}},
+    {"id": "collections_small", "path": "selection.collection_breadth", "value": "small", "impact": "low", "weights": {"profile.current_calinium.v1": 0, "profile.editorial_discovery.v1": 4}},
+    {"id": "collections_moderate", "path": "selection.collection_breadth", "value": "moderate", "impact": "low", "weights": {"profile.current_calinium.v1": 3, "profile.editorial_discovery.v1": 2}},
+    {"id": "collections_broad", "path": "selection.collection_breadth", "value": "broad", "impact": "medium", "weights": {"profile.current_calinium.v1": 10, "profile.editorial_discovery.v1": -4}}
+  ],
+  "intent_signal_rules": [
+    {"id": "shopping_image_led", "path": "storefront.shopping_mode", "value": "image_led", "impact": "high", "weights": {"profile.current_calinium.v1": -5, "profile.editorial_discovery.v1": 25}},
+    {"id": "shopping_information_led", "path": "storefront.shopping_mode", "value": "information_led", "impact": "high", "weights": {"profile.current_calinium.v1": 25, "profile.editorial_discovery.v1": -8}},
+    {"id": "shopping_balanced", "path": "storefront.shopping_mode", "value": "balanced", "impact": "low", "weights": {"profile.current_calinium.v1": 3, "profile.editorial_discovery.v1": 3}},
+    {"id": "discovery_priority", "path": "storefront.discovery_priority", "value": "discovery", "impact": "high", "weights": {"profile.current_calinium.v1": -3, "profile.editorial_discovery.v1": 18}},
+    {"id": "efficiency_priority", "path": "storefront.discovery_priority", "value": "efficiency", "impact": "high", "weights": {"profile.current_calinium.v1": 18, "profile.editorial_discovery.v1": -4}},
+    {"id": "discovery_balanced", "path": "storefront.discovery_priority", "value": "balanced", "impact": "low", "weights": {"profile.current_calinium.v1": 3, "profile.editorial_discovery.v1": 3}},
+    {"id": "storytelling_high", "path": "storefront.storytelling_emphasis", "value": "high", "impact": "high", "weights": {"profile.current_calinium.v1": -2, "profile.editorial_discovery.v1": 16}},
+    {"id": "storytelling_low", "path": "storefront.storytelling_emphasis", "value": "low", "impact": "medium", "weights": {"profile.current_calinium.v1": 8, "profile.editorial_discovery.v1": -8}},
+    {"id": "storytelling_balanced", "path": "storefront.storytelling_emphasis", "value": "balanced", "impact": "low", "weights": {"profile.current_calinium.v1": 2, "profile.editorial_discovery.v1": 2}},
+    {"id": "navigation_prominent", "path": "storefront.navigation_priority", "value": "prominent", "impact": "medium", "weights": {"profile.current_calinium.v1": 12, "profile.editorial_discovery.v1": -4}},
+    {"id": "navigation_minimal_intent", "path": "storefront.navigation_priority", "value": "minimal", "impact": "medium", "weights": {"profile.current_calinium.v1": -1, "profile.editorial_discovery.v1": 8}},
+    {"id": "navigation_balanced_intent", "path": "storefront.navigation_priority", "value": "balanced", "impact": "low", "weights": {"profile.current_calinium.v1": 2, "profile.editorial_discovery.v1": 2}},
+    {"id": "density_dense", "path": "storefront.product_density", "value": "dense", "impact": "high", "weights": {"profile.current_calinium.v1": 14, "profile.editorial_discovery.v1": -6}},
+    {"id": "density_restrained", "path": "storefront.product_density", "value": "restrained", "impact": "medium", "weights": {"profile.current_calinium.v1": -2, "profile.editorial_discovery.v1": 10}},
+    {"id": "density_balanced", "path": "storefront.product_density", "value": "balanced", "impact": "low", "weights": {"profile.current_calinium.v1": 3, "profile.editorial_discovery.v1": 3}},
+    {"id": "direction_current", "path": "storefront.architecture_direction", "value": "current_calinium", "impact": "high", "weights": {"profile.current_calinium.v1": 40, "profile.editorial_discovery.v1": -20}},
+    {"id": "direction_editorial", "path": "storefront.architecture_direction", "value": "editorial_discovery", "impact": "high", "weights": {"profile.current_calinium.v1": -20, "profile.editorial_discovery.v1": 40}},
+    {"id": "direction_none", "path": "storefront.architecture_direction", "value": "no_preference", "impact": "low", "weights": {"profile.current_calinium.v1": 0, "profile.editorial_discovery.v1": 0}}
+  ],
+  "ambiguity": {
+    "maximum_score_margin": 10,
+    "question_limit": 1,
+    "high_impact_intent_paths": [
+      "storefront.shopping_mode",
+      "storefront.discovery_priority",
+      "storefront.storytelling_emphasis"
+    ],
+    "material_questions": [
+      {
+        "topic": "shopping_mode",
+        "intent_path": "storefront.shopping_mode",
+        "why_it_matters": "An image-led versus information-led shopping priority changes the relative fit of the two approved structural storefront profiles.",
+        "profiles_affected": ["profile.current_calinium.v1", "profile.editorial_discovery.v1"],
+        "decision_to_resolve": "Whether the storefront should prioritize editorial visual discovery or conventional information-rich commerce exploration.",
+        "answer_values": ["image_led", "information_led"]
+      }
+    ]
+  },
+  "fallback": {
+    "allowed_reasons": ["signals_insufficient", "question_unavailable", "exact_tie_after_known_intent"],
+    "invalid_explicit_profile": "fail_closed",
+    "legacy_mode_default": "profile.current_calinium.v1"
+  },
+  "safety": {
+    "automatic_repair_allowed": false,
+    "merchant_ui_activation": false,
+    "live_theme_mutation_allowed": false,
+    "maximum_material_questions": 1
+  }
+}

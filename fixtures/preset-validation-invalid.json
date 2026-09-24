@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "cases": [
+    {"case_id": "unknown-preset", "operation": "select", "mutation": "unknown_preset", "expected_error_family": "Unknown Calinium preset"},
+    {"case_id": "inactive-preset", "operation": "catalog", "mutation": "inactive_preset", "expected_error_family": "inactive"},
+    {"case_id": "unknown-preset-version", "operation": "lookup", "mutation": "unknown_version", "expected_error_family": "version 99.0 is unavailable"},
+    {"case_id": "incompatible-industry", "operation": "select", "mutation": "incompatible_industry", "expected_error_family": "incompatible_industry"},
+    {"case_id": "incompatible-business-model", "operation": "select", "mutation": "incompatible_business_model", "expected_error_family": "incompatible_business_model"},
+    {"case_id": "incompatible-design-language", "operation": "select", "mutation": "incompatible_design_language", "expected_error_family": "incompatible_design_language"},
+    {"case_id": "missing-required-content", "operation": "approval", "mutation": "missing_required_content", "expected_error_family": "required content"},
+    {"case_id": "missing-required-approved-media", "operation": "compatibility", "mutation": "missing_required_media", "expected_error_family": "product_interface_media"},
+    {"case_id": "unsupported-section-requirement", "operation": "catalog", "mutation": "unsupported_requirement_section", "expected_error_family": "uninstalled section"},
+    {"case_id": "invalid-global-setting-id", "operation": "catalog", "mutation": "invalid_global_setting_id", "expected_error_family": "unknown invalid_setting"},
+    {"case_id": "invalid-global-setting-value", "operation": "catalog", "mutation": "invalid_global_setting_value", "expected_error_family": "unsupported runtime value"},
+    {"case_id": "invalid-section-default", "operation": "catalog", "mutation": "invalid_section_default", "expected_error_family": "unknown setting"},
+    {"case_id": "unknown-section-identity", "operation": "catalog", "mutation": "unknown_section", "expected_error_family": "unknown-section"},
+    {"case_id": "stale-preset-approval", "operation": "approval", "mutation": "stale_strategy", "expected_error_family": "Store Strategy changed"},
+    {"case_id": "unapproved-selection", "operation": "revision", "mutation": "unapproved_selection", "expected_error_family": "Approved preset validation failed"},
+    {"case_id": "client-preset-payload-injection", "operation": "selection_schema", "mutation": "client_payload", "expected_error_family": "unsupported field runtime_settings"},
+    {"case_id": "preset-version-mismatch", "operation": "revision", "mutation": "version_mismatch", "expected_error_family": "identity does not match"},
+    {"case_id": "target-theme-incompatibility", "operation": "revision", "mutation": "target_theme", "expected_error_family": "unsupported theme"},
+    {"case_id": "merchant-setting-conflict", "operation": "precedence", "mutation": "merchant_setting", "expected_error_family": "merchant value preserved"},
+    {"case_id": "missing-minimum-composition", "operation": "application", "mutation": "minimum_composition", "expected_error_family": "minimum viable composition"},
+    {"case_id": "signal-unsupported-comparison", "operation": "omission", "mutation": "unsupported_comparison", "expected_error_family": "product-comparison"},
+    {"case_id": "signal-invented-pricing-destination", "operation": "truth", "mutation": "invented_pricing", "expected_error_family": "invented_pricing"},
+    {"case_id": "signal-unapproved-screenshot", "operation": "compatibility", "mutation": "unapproved_screenshot", "expected_error_family": "product_interface_media"},
+    {"case_id": "signal-unsupported-technical-claims", "operation": "truth", "mutation": "unsupported_technical_claim", "expected_error_family": "invented_performance_claims"}
+  ]
+}

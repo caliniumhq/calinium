@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-design-provider-response.schema.json",
+  "title": "Calinium Design Evaluation Provider Response",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "response_id", "evaluation_request_id", "status", "provider", "run_sequence", "screenshot_evidence", "dimension_assessments", "findings", "error"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "design-provider-response-v1"},
+    "response_id": {"type": "string", "pattern": "^design-provider-response-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["evaluated", "failed"]},
+    "provider": {"type": "object", "required": ["interface_version", "provider_id", "provider_version", "provider_kind", "model"], "properties": {"interface_version": {"type": "string", "const": "storefront-design-provider-v1"}, "provider_id": {"type": "string"}, "provider_version": {"type": "string"}, "provider_kind": {"type": "string", "enum": ["live_multimodal", "approved_fixture_replay", "mock"]}, "model": {"type": ["object", "null"]}}, "additionalProperties": false},
+    "run_sequence": {"type": "integer", "minimum": 1},
+    "screenshot_evidence": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": "object", "required": ["cell_id", "sha256"], "properties": {"cell_id": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}, "additionalProperties": false}},
+    "dimension_assessments": {"type": "array", "items": {"$ref": "calinium-design-dimension-assessment.schema.json"}},
+    "findings": {"type": "array", "items": {"$ref": "calinium-design-finding.schema.json"}},
+    "operation": {"type": "object", "required": ["api_family", "api_response_id", "response_model", "model_configuration_revision", "latency_ms", "attempts", "retry_count", "request_count", "retries", "usage"], "properties": {"api_family": {"type": "string", "const": "responses"}, "api_response_id": {"type": ["string", "null"]}, "response_model": {"type": ["string", "null"]}, "model_configuration_revision": {"type": "string"}, "latency_ms": {"type": "integer", "minimum": 0}, "attempts": {"type": "integer", "minimum": 1}, "retry_count": {"type": "integer", "minimum": 0}, "request_count": {"type": "integer", "minimum": 1}, "retries": {"type": "array", "items": {"type": "object"}}, "usage": {"type": ["object", "null"]}}, "additionalProperties": false},
+    "diagnostics": {"type": "object", "required": ["objective_consistency", "evidence_support"], "properties": {"objective_consistency": {"type": "object"}, "evidence_support": {"type": "array", "items": {"type": "object"}}, "rejected_attempts": {"type": "array", "items": {"type": "object"}}}, "additionalProperties": false},
+    "error": {"type": ["object", "null"]}
+  },
+  "additionalProperties": false
+}

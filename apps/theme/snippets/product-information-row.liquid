@@ -1,0 +1,14 @@
+{% liquid
+  assign information_row_heading = heading | default: blank
+  assign information_row_content = content | default: blank
+%}
+
+{% if information_row_heading != blank and information_row_content != blank %}
+  <details class="co-product-information-row" {% if open %}open{% endif %} {% if block != blank %}{{ block.shopify_attributes }}{% endif %}>
+    <summary class="co-product-information-row__summary">
+      <span>{{ information_row_heading | escape }}</span>
+      {% render 'icon', name: 'chevron-down', size: 20, class: 'co-product-information-row__icon' %}
+    </summary>
+    <div class="co-product-information-row__content">{{ information_row_content }}</div>
+  </details>
+{% endif %}

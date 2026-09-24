@@ -1,0 +1,319 @@
+{
+  "schema_version": "1.0",
+  "phase": "E5R-P",
+  "fixture_version": "e5r-p-authoritative-legacy-d2-7-lineage-binding-v1",
+  "contract_version": "controlled-beta-d2-7-legacy-lineage-resolution-v1",
+  "resolver_revision": "controlled-beta-d2-7-legacy-lineage-resolver-v1",
+  "release_12_blocker": {
+    "deployed_source_revision": "1000000000000000000000000000000000000002",
+    "deployed_tag": "core-2-phase-e5r-o-complete",
+    "fly_release": 12,
+    "image_digest": "sha256:96724f4a7bc154485e959962ce7359c8fa7b988564c2417163b0e2747f087ce0",
+    "error_code": "controlled_beta_d2_7_legacy_evidence_ambiguous",
+    "validated_legacy_lineage_count": 2,
+    "attempt_6_exists": false,
+    "resume_operation_exists": false,
+    "provider_called": false,
+    "render_repeated": false,
+    "d1_repeated": false
+  },
+  "scope": {
+    "shop_domain": "calinium-example.myshopify.com",
+    "project_id": "prj_public-fixture-0001",
+    "organization_id": "org_06669364-0474-471d-a9e0-111f53930637",
+    "flow_id": "merchant-flow-00000000000000000001",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "artifact_checksum": "c2e5dd71a4b06b173f266cc3c5e7cf60aff4c3c9f269b73b372bcf3f66e95b09",
+    "artifact_manifest_checksum": "85cb7b495b11757c7f1933bf1478848bfe8ab870ac8604fbf8cbd3405a42721d",
+    "generation_id": "generation-run-order-02fe097c-88d3-449e-ad1f-287e82a4ff35-attempt-1",
+    "target_role": "DEVELOPMENT",
+    "target_theme_id": "100000000006",
+    "runtime_configuration_revision": "merchant-flow-controlled-beta-runtime-v1",
+    "render_target_configuration_revision": "merchant-flow-controlled-render-targets-v1",
+    "deployed_source_revision": null,
+    "route_ids": [
+      "homepage",
+      "collection",
+      "product",
+      "cart"
+    ],
+    "viewport_ids": [
+      "desktop-v1",
+      "mobile-v1"
+    ]
+  },
+  "authoritative_context": {
+    "flow": {
+      "state": "failed_retryable",
+      "sequence": 20,
+      "checksum": "7c149b2004ccc221e92166a3cf90557a75ea69540cbc5dcf602bcb4a595be846"
+    },
+    "terminal_predecessor": {
+      "state": "render_qa_running",
+      "sequence": 19,
+      "checksum": "38c7406a50f1a457bff65f7d69976c0ee9054246ed06bedadea3592b41479899"
+    },
+    "job": {
+      "job_id": "merchant-flow-job-00000000000000000001",
+      "kind": "render_qa",
+      "status": "retryable",
+      "logical_attempt": 5,
+      "lease_epoch": 0,
+      "authorized_resume_operation_id": null,
+      "authorized_attempt": null,
+      "lease_token": null
+    },
+    "accepted_d1_evaluation_id": "merchant-flow-d1-evaluation-00000000000000000001",
+    "accepted_d1_evaluation_checksum": "e765b594bcbbae2fede5cada9c158180cc82f15d8f5186283004e442fbed80a4",
+    "d2_7_parent_request_id": "merchant-flow-d2-7-request-00000000000000000001",
+    "d2_7_parent_request_checksum": "de1a70fea80404c58ab8e543747703174d4d829eb44b863a02e4efe0e9dcf6ad",
+    "direct_job_to_render_pointer_retained": false,
+    "direct_job_attempt_to_d1_pointer_retained": false,
+    "direct_job_attempt_to_d2_parent_pointer_retained": false,
+    "selection_authority": "exact_terminal_predecessor_flow_revision",
+    "timestamps_are_selection_authority": false
+  },
+  "lineages": [
+    {
+      "fixture_label": "historical_alternative_a",
+      "expected_disposition": "retained_not_selected",
+      "generic_legacy_validation": "fully_valid",
+      "render": {
+        "request_id": "merchant-render-request-21f17bc77f712b8583a9",
+        "request_checksum": "ebb4fb5f2da9fbc22b7574f0f463f692b93319d95b2ca3f57a62b297dd5b654d",
+        "evidence_checksum": "2036823d46be1fca87c160d1e478706589db70ea60f81657cbe8718e23e16f70",
+        "status": "accepted",
+        "capture_cells_passed": 8,
+        "capture_cells_total": 8,
+        "route_ids": [
+          "homepage",
+          "collection",
+          "product",
+          "cart"
+        ],
+        "viewport_ids": [
+          "desktop-v1",
+          "mobile-v1"
+        ],
+        "manifest_generated_at": "2026-09-01T13:13:13.399Z"
+      },
+      "d1": {
+        "evaluation_id": "merchant-flow-d1-evaluation-5b6f04475247923f298c",
+        "evaluation_checksum": "829cf1c463d7f165f529d3cd55d1abb88b5c3049b9823238b2d45b090a2f787f",
+        "status": "passed",
+        "finding_count": 0,
+        "capture_cells": 8,
+        "render_request_id": "merchant-render-request-21f17bc77f712b8583a9",
+        "render_request_checksum": "ebb4fb5f2da9fbc22b7574f0f463f692b93319d95b2ca3f57a62b297dd5b654d"
+      },
+      "d2_7_parent": {
+        "request_id": "merchant-flow-d2-7-request-85486c83d122cdadf55e",
+        "request_checksum": "86771a3b577f5bba8748c89f42bd1844ff1f615f40ee08d4582b31982bf5defe",
+        "evaluation_exists": false,
+        "route_viewport_cells": 6,
+        "cart_excluded": true
+      },
+      "flow_revision": {
+        "state": "render_qa_running",
+        "sequence": 17,
+        "checksum": "d4283ad6c03c13e79cf73f8ae4799f1f40b4e1017bcbd36eb1d2fb3d9b790e6a",
+        "running_at": "2026-09-01T13:11:56.798Z",
+        "terminal_sequence": 18,
+        "terminal_state": "failed_retryable",
+        "terminal_at": "2026-09-01T13:13:13.617Z"
+      },
+      "durable_association": {
+        "job_id": null,
+        "logical_attempt": null,
+        "direct_attempt_pointer_retained": false,
+        "explicit_resume_operation_id": null,
+        "relation_to_attempt_4": "historically_unavailable"
+      }
+    },
+    {
+      "fixture_label": "authoritative_attempt_5_b",
+      "expected_disposition": "selected",
+      "generic_legacy_validation": "fully_valid",
+      "render": {
+        "request_id": "merchant-render-request-c757b6025eee792afe4f",
+        "request_checksum": "8feac61194d69781690d309cf06b3be88bffa8f755579bd62aff3d26a0939231",
+        "evidence_checksum": "1fb576f0eebe858892b30469d50e4c37d0ee529888c6ffcb6151bb89389c35e4",
+        "status": "accepted",
+        "capture_cells_passed": 8,
+        "capture_cells_total": 8,
+        "route_ids": [
+          "homepage",
+          "collection",
+          "product",
+          "cart"
+        ],
+        "viewport_ids": [
+          "desktop-v1",
+          "mobile-v1"
+        ],
+        "manifest_generated_at": "2026-09-01T13:14:28.214Z"
+      },
+      "d1": {
+        "evaluation_id": "merchant-flow-d1-evaluation-00000000000000000001",
+        "evaluation_checksum": "e765b594bcbbae2fede5cada9c158180cc82f15d8f5186283004e442fbed80a4",
+        "status": "passed",
+        "finding_count": 0,
+        "capture_cells": 8,
+        "render_request_id": "merchant-render-request-c757b6025eee792afe4f",
+        "render_request_checksum": "8feac61194d69781690d309cf06b3be88bffa8f755579bd62aff3d26a0939231"
+      },
+      "d2_7_parent": {
+        "request_id": "merchant-flow-d2-7-request-00000000000000000001",
+        "request_checksum": "de1a70fea80404c58ab8e543747703174d4d829eb44b863a02e4efe0e9dcf6ad",
+        "evaluation_exists": false,
+        "route_viewport_cells": 6,
+        "cart_excluded": true
+      },
+      "flow_revision": {
+        "state": "render_qa_running",
+        "sequence": 19,
+        "checksum": "38c7406a50f1a457bff65f7d69976c0ee9054246ed06bedadea3592b41479899",
+        "running_at": "2026-09-01T13:13:40.374Z",
+        "terminal_sequence": 20,
+        "terminal_state": "failed_retryable",
+        "terminal_at": "2026-09-01T13:14:28.474Z"
+      },
+      "durable_association": {
+        "job_id": null,
+        "logical_attempt": null,
+        "direct_attempt_pointer_retained": false,
+        "explicit_resume_operation_id": null,
+        "relation_to_attempt_5": "authoritative_via_exact_terminal_predecessor_flow_revision"
+      }
+    }
+  ],
+  "shared_validation": {
+    "same_shop": true,
+    "same_project": true,
+    "same_organization": true,
+    "same_flow": true,
+    "same_artifact_and_checksum": true,
+    "same_development_target": true,
+    "same_runtime_configuration": true,
+    "same_render_target_configuration": true,
+    "complete_route_viewport_matrix": true,
+    "accepted_d1_bound_to_exact_render": true,
+    "canonical_d2_7_parent_request": true,
+    "reason_both_pass_e5r_o": "E5R-O validated each lineage independently but had no deterministic authority comparison beyond generic scope and evidence validity.",
+    "e5r_o_result": "ambiguous_legacy_match",
+    "e5r_p_result": "authoritative_match",
+    "e5r_p_selected_fixture_label": "authoritative_attempt_5_b",
+    "selection_reason": "The current failed revision at sequence 20 has one exact render_qa_running predecessor at sequence 19; only lineage B embeds that predecessor sequence and checksum.",
+    "selection_does_not_use_latest_timestamp": true
+  },
+  "binding_record_expectation": {
+    "semantic_name": "legacy_d2_7_recovery_binding",
+    "checksum_bound": true,
+    "shop_bound": true,
+    "project_bound": true,
+    "flow_bound": true,
+    "job_bound": true,
+    "job_attempt_bound": true,
+    "current_flow_revision_bound": true,
+    "terminal_predecessor_revision_bound": true,
+    "artifact_bound": true,
+    "target_bound": true,
+    "runtime_bound": true,
+    "source_revision_bound_when_present": true,
+    "candidate_set_bound": true,
+    "selected_render_d1_parent_bound": true,
+    "idempotent": true,
+    "auditable": true,
+    "historical_evidence_copied": false,
+    "historical_evidence_rewritten": false,
+    "persist_only_inside_authenticated_resume_transaction": true
+  },
+  "cases": {
+    "A": {
+      "description": "one fully valid lineage and no stronger authoritative pointer",
+      "expected_status": "unique_legacy_match"
+    },
+    "B": {
+      "description": "two valid lineages with exactly one parent-bound lineage",
+      "expected_status": "authoritative_match",
+      "expected_priority": "d2_7_parent_request"
+    },
+    "C": {
+      "description": "two valid lineages with exactly one job-and-attempt-bound lineage",
+      "expected_status": "authoritative_match",
+      "expected_priority": "job_logical_attempt"
+    },
+    "D": {
+      "description": "parent, job attempt, D1/render, and predecessor revision all identify one lineage",
+      "expected_status": "authoritative_match",
+      "expected_priority": "d2_7_parent_request"
+    },
+    "E": {
+      "description": "two equally authoritative lineages",
+      "expected_status": "ambiguous_legacy_match"
+    },
+    "F": {
+      "description": "the independently authoritative selected lineage has an invalid checksum",
+      "expected_status": "incompatible_legacy_evidence"
+    },
+    "G": {
+      "description": "one valid lineage and one invalid alternative without an independent authority pointer",
+      "expected_status": "incompatible_legacy_evidence"
+    },
+    "H": {
+      "description": "candidate binds the wrong merchant flow",
+      "expected_status": "incompatible_legacy_evidence"
+    },
+    "I": {
+      "description": "candidate binds the wrong shop",
+      "expected_status": "incompatible_legacy_evidence"
+    },
+    "J": {
+      "description": "candidate binds the wrong DEVELOPMENT target",
+      "expected_status": "incompatible_legacy_evidence"
+    },
+    "K": {
+      "description": "candidate source or runtime provenance mismatches",
+      "expected_status": "incompatible_legacy_evidence"
+    },
+    "L": {
+      "description": "resume expects a stale flow sequence or checksum",
+      "expected_status": "incompatible_legacy_evidence"
+    },
+    "M": {
+      "description": "a modern flow already contains an explicit checksum-bound D2.7 failure lineage",
+      "expected_status": "legacy_resolution_not_required"
+    },
+    "N": {
+      "description": "repeated resolution with reversed candidate discovery order",
+      "expected_status": "authoritative_match",
+      "expected_same_checksum": true
+    }
+  },
+  "resume_precondition": {
+    "eligible_statuses": [
+      "authoritative_match",
+      "unique_legacy_match"
+    ],
+    "resolution_occurs_before_resume_operation_registration": true,
+    "resolution_occurs_before_flow_compare_and_swap": true,
+    "resolution_occurs_before_attempt_6_arm": true,
+    "resolution_occurs_before_provider_call": true,
+    "ambiguous_or_incompatible_arms_attempt_6": false
+  },
+  "safety": {
+    "attempts_created": 0,
+    "resume_operations_created": 0,
+    "provider_calls": 0,
+    "openai_calls": 0,
+    "shopify_calls": 0,
+    "shopify_writes": 0,
+    "render_calls": 0,
+    "d1_calls": 0,
+    "theme_mutations": 0,
+    "historical_evidence_mutations": 0,
+    "automatic_retry_allowed": false,
+    "automatic_repair_allowed": false,
+    "deployment_allowed": false
+  }
+}

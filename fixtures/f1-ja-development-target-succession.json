@@ -1,0 +1,95 @@
+{
+  "fixture_revision": "f1-ja-development-target-succession-fixture-v1",
+  "classification": "DEVELOPMENT_PREVIEW_TARGET_SUPERSEDED",
+  "controlled_incident": {
+    "shop_domain": "calinium-example.myshopify.com",
+    "project_id": "prj_public-fixture-0001",
+    "flow_id": "merchant-flow-00000000000000000001",
+    "artifact_id": "theme-artifact-00000000000000000001",
+    "before_state": "preview_ready",
+    "before_sequence": 27,
+    "main_theme_id": "100000000001",
+    "historical_development_theme_id": "100000000006",
+    "historical_target_status": "not_found",
+    "successor_development_theme_id": "100000000005",
+    "successor_target_status": "verified",
+    "successor_role": "development",
+    "after_state": "artifact_ready",
+    "after_sequence": 28
+  },
+  "genericity_proof": {
+    "alternate_successor_theme_id": "299999999991",
+    "production_logic_contains_controlled_theme_ids": false,
+    "successor_is_selected_from_runtime_configuration": true,
+    "successor_job_identity_includes_succession_and_binding": true
+  },
+  "submission_contract": {
+    "contract_version": "merchant-flow-render-target-succession-submission-v1",
+    "exact_client_fields": [
+      "contract_version",
+      "flow_id",
+      "expected_flow_sequence",
+      "expected_flow_checksum",
+      "idempotency_key"
+    ],
+    "client_supplied_target_identity": false,
+    "client_supplied_source_or_configuration": false,
+    "client_supplied_readiness_or_operator": false,
+    "embedded_operator_authorization_required": true
+  },
+  "authority_contract": {
+    "source": "shopify_admin_api",
+    "prior_target_must_be_absent": true,
+    "successor_target_must_be_development": true,
+    "successor_target_must_be_ready": true,
+    "main_must_be_present_and_excluded": true,
+    "prior_target_may_equal_main": false,
+    "successor_target_may_equal_main": false,
+    "complete_theme_inventory_required": true,
+    "complete_inventory_checksum_persisted": true,
+    "main_role_authority_checksum_persisted": true,
+    "fresh_readiness_required": true
+  },
+  "atomicity_contract": {
+    "append_only_succession_record": true,
+    "flow_compare_and_swap_required": true,
+    "new_render_qa_job_inserted_in_same_transaction": true,
+    "job_scheduled_only_after_commit": true,
+    "unique_flow_sequence": true,
+    "unique_successor_job": true,
+    "exact_replay_is_idempotent": true,
+    "conflicting_replay_fails_closed": true
+  },
+  "evidence_policy": {
+    "artifact_and_generation_reused": true,
+    "store_intelligence_merchant_intent_architecture_design_dna_and_composition_reused": true,
+    "paid_identity_reused": true,
+    "old_render_d1_d2_7_review_and_preview_remain_historical": true,
+    "locatable_superseded_evidence_graph": true,
+    "anonymous_digest_only_evidence": false,
+    "raw_model_content_retained": false,
+    "secret_content_retained": false,
+    "old_evidence_authorizes_successor": false,
+    "successor_render_qa_job_is_new": true,
+    "successor_requires_new_eight_cell_render": true,
+    "successor_requires_new_d1": true,
+    "successor_requires_new_d2_7_when_policy_required": true,
+    "successor_requires_checksum_bound_human_review": true
+  },
+  "safety": {
+    "automatic_repair_allowed": false,
+    "automatic_retry_allowed": false,
+    "automatic_publish_allowed": false,
+    "main_theme_mutation_allowed": false,
+    "fixture_replay_allowed": false,
+    "provider_calls_during_f1_ja": 0,
+    "shopify_writes_during_f1_ja": 0,
+    "deployments_during_f1_ja": 0,
+    "theme_source_changes_during_f1_ja": 0
+  },
+  "phase_boundary": {
+    "f1_ja_scope": "local succession infrastructure only",
+    "f1_jb_scope": "separately approved deployment, protected operator application, fresh render and quality evidence",
+    "f1_jb_started": false
+  }
+}

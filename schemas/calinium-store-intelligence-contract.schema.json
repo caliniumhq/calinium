@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-store-intelligence-contract.schema.json",
+  "title": "Calinium Core 2.0 Store Intelligence contract",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "revision_id", "normalization_version", "status", "facts", "capability_signals", "confidence", "provenance"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "store-intelligence-contract-v1"},
+    "revision_id": {"type": ["string", "null"]},
+    "normalization_version": {"type": ["string", "null"]},
+    "status": {"type": "string", "enum": ["usable", "partial", "stale", "refresh_failed", "not_available"]},
+    "facts": {"type": "array", "items": {"type": "object", "required": ["path", "value", "confidence", "source"], "properties": {"path": {"type": "string", "minLength": 1}, "value": {}, "confidence": {"type": "string", "enum": ["High", "Medium", "Low", "Unknown"]}, "source": {"type": "string", "const": "shopify_authoritative_store_data"}, "derivation_revision": {"type": "string", "minLength": 1}, "provenance": {"$ref": "#/$defs/signalProvenance"}}, "additionalProperties": false}},
+    "derived_signals": {"type": "array", "items": {"type": "object", "required": ["path", "value", "confidence", "derivation_revision", "provenance"], "properties": {"path": {"type": "string", "minLength": 1}, "value": {}, "confidence": {"type": "string", "enum": ["High", "Medium", "Low", "Unknown"]}, "derivation_revision": {"type": "string", "const": "architecture-store-signal-derivation-v1"}, "provenance": {"$ref": "#/$defs/signalProvenance"}}, "additionalProperties": false}},
+    "capability_signals": {"type": "object", "required": ["has_products", "has_collections", "has_navigation", "has_usable_media", "has_video", "has_unpublished_theme"], "properties": {"has_products": {"type": "boolean"}, "has_collections": {"type": "boolean"}, "has_navigation": {"type": "boolean"}, "has_usable_media": {"type": "boolean"}, "has_video": {"type": "boolean"}, "has_unpublished_theme": {"type": "boolean"}}, "additionalProperties": false},
+    "confidence": {"type": "string", "enum": ["High", "Medium", "Low", "Unknown"]},
+    "provenance": {"type": "object", "required": ["source_authority", "source_revision", "normalization_version"], "properties": {"source_authority": {"type": "string", "const": "shopify_authoritative_store_data"}, "source_revision": {"type": ["string", "null"]}, "normalization_version": {"type": ["string", "null"]}}, "additionalProperties": false}
+  },
+  "$defs": {
+    "signalProvenance": {"type": "object", "required": ["source_authority", "source_revision", "normalization_version", "source_paths"], "properties": {"source_authority": {"type": "string", "const": "shopify_authoritative_store_data"}, "source_revision": {"type": ["string", "null"]}, "normalization_version": {"type": ["string", "null"]}, "source_paths": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

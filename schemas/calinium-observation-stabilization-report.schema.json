@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-observation-stabilization-report.schema.json",
+  "title": "Calinium Observation Stabilization Report",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "report_id", "mode", "policy_revision", "run_count", "metrics", "support", "comparisons", "rejected_interpretations", "duplicate_reduction", "reliability", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "observation-stabilization-report-v1"},
+    "report_id": {"type": "string", "pattern": "^observation-stabilization-report-[a-f0-9]{20}$"},
+    "mode": {"type": "string", "enum": ["offline_reprocessing", "limited_live_validation"]},
+    "policy_revision": {"type": "string"},
+    "run_count": {"type": "integer", "minimum": 2},
+    "metrics": {"type": "object"},
+    "support": {"type": "array"},
+    "comparisons": {"type": "array"},
+    "rejected_interpretations": {"type": "array"},
+    "duplicate_reduction": {"type": "object"},
+    "reliability": {"type": "object"},
+    "safety": {"type": "object"}
+  },
+  "additionalProperties": false
+}

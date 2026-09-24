@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-judgment-reliability-report.schema.json",
+  "title": "Calinium Visual Judgment Reliability Report",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "report_id", "mode", "policy_revision", "source_evaluation", "run_count", "metrics", "unsupported_observation_keys", "unstable_items", "reliability", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "visual-judgment-reliability-report-v1"},
+    "report_id": {"type": "string", "pattern": "^visual-judgment-report-[a-f0-9]{20}$"},
+    "mode": {"type": "string", "enum": ["offline_reclassification", "limited_live_validation"]},
+    "policy_revision": {"type": "string", "const": "visual-judgment-stabilization-phase-d2-6-v1"},
+    "source_evaluation": {"type": "object"},
+    "run_count": {"type": "integer", "minimum": 2},
+    "metrics": {"type": "object", "required": ["observation_agreement", "high_impact_finding_agreement", "primary_dimension_agreement", "importance_agreement", "responsibility_agreement", "recommendation_agreement", "root_symptom_agreement", "d1_contradiction_count", "unsupported_finding_rate"], "properties": {"observation_agreement": {"type": "number"}, "high_impact_finding_agreement": {"type": "number"}, "primary_dimension_agreement": {"type": "number"}, "importance_agreement": {"type": "number"}, "responsibility_agreement": {"type": "number"}, "recommendation_agreement": {"type": "number"}, "root_symptom_agreement": {"type": "number"}, "d1_contradiction_count": {"type": "integer"}, "unsupported_finding_rate": {"type": "number"}}, "additionalProperties": false},
+    "unsupported_observation_keys": {"type": "array", "items": {"type": "string"}},
+    "unstable_items": {"type": "array", "items": {"type": "string"}},
+    "reliability": {"type": "object", "required": ["status", "criteria", "human_review_required", "automatic_repair_allowed", "repair_planning_consumption_allowed"], "properties": {"status": {"type": "string", "enum": ["not_reliable", "human_review_only", "repair_planning_eligible"]}, "criteria": {"type": "object"}, "human_review_required": {"type": "boolean", "const": true}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "repair_planning_consumption_allowed": {"type": "boolean", "const": false}}, "additionalProperties": false},
+    "safety": {"type": "object", "required": ["fixture_fallback_used", "automatic_mutation_allowed", "automatic_repair_allowed", "shopify_write_allowed"], "properties": {"fixture_fallback_used": {"type": "boolean", "const": false}, "automatic_mutation_allowed": {"type": "boolean", "const": false}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "shopify_write_allowed": {"type": "boolean", "const": false}}, "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

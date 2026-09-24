@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-generation-approval.schema.json",
+  "title": "Calinium generation approval",
+  "description": "An immutable merchant approval record required before the isolated Theme Generator can create a review workspace.",
+  "type": "object",
+  "required": ["version", "approval_id", "draft_version", "approved", "approved_at", "approval_reference", "completed_confirmations", "merchant_references", "asset_references"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "approval_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "draft_version": {"type": "integer", "const": 1},
+    "approved": {"type": "boolean", "const": true},
+    "approved_at": {"type": "string", "minLength": 1},
+    "approval_reference": {"type": "string", "minLength": 1},
+    "completed_confirmations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "merchant_references": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean", "null"]}},
+    "asset_references": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
+    "approved_block_plan": {"type": ["object", "null"], "properties": {"plan_id": {"type": "string", "minLength": 1}, "revision_id": {"type": "string", "minLength": 1}, "schema_version": {"type": "string", "minLength": 1}, "parent_revision_id": {"type": ["string", "null"]}, "plan_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "resource_snapshot_id": {"type": "string", "minLength": 1}, "resource_snapshot_revision_id": {"type": "string", "minLength": 1}, "resource_snapshot_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "approval_id": {"type": "string", "minLength": 1}, "approval_reference": {"type": "string", "minLength": 1}, "approval_revision_id": {"type": "string", "minLength": 1}, "approved_at": {"type": "string", "minLength": 1}, "organization_id": {"type": "string", "minLength": 1}, "project_id": {"type": "string", "minLength": 1}, "merchant_scope_id": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "approved_preset": {"type": ["object", "null"], "additionalProperties": false, "properties": {"revision_id": {"type": "string"}, "preset_id": {"type": "string"}, "preset_version": {"type": "string"}, "catalog_version": {"type": "string"}, "selection_source": {"type": "string"}, "approval_reference": {"type": "string"}, "approved_at": {"type": "string"}, "strategy_revision": {"type": "string"}, "compatibility_result": {"type": "object"}, "fallback": {"type": ["object", "null"]}, "target_theme": {"type": "object"}, "preset_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}},
+    "approved_recommendation": {"$ref": "#/$defs/recommendationProvenance"},
+    "approved_design_dna": {"$ref": "#/$defs/designDnaProvenance"},
+    "architecture_selection": {"$ref": "calinium-generated-theme.schema.json#/$defs/architectureProvenance"},
+    "notes": {"type": "string"}
+  },
+  "$defs": {
+    "recommendationProvenance": {"type": ["object", "null"], "additionalProperties": false, "required": ["revision_id", "candidate_revision_id", "approval_checksum"], "properties": {"revision_id": {"type": "string", "minLength": 1}, "candidate_revision_id": {"type": "string", "minLength": 1}, "approval_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}},
+    "designDnaProvenance": {"type": ["object", "null"], "additionalProperties": false, "required": ["revision_id", "candidate_revision_id", "recommendation_approval_revision_id", "engine_version", "preset_id", "approval_reference", "approved_at", "approval_checksum"], "properties": {"revision_id": {"type": "string", "minLength": 1}, "candidate_revision_id": {"type": "string", "minLength": 1}, "recommendation_approval_revision_id": {"type": "string", "minLength": 1}, "engine_version": {"type": "string", "pattern": "^design-dna-v[0-9]+$"}, "preset_id": {"type": "string", "enum": ["atelier", "maison", "gallery", "ritual", "essential", "signal"]}, "approval_reference": {"type": "string", "minLength": 1}, "approved_at": {"type": "string", "minLength": 1}, "approval_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}}
+  },
+  "additionalProperties": false
+}

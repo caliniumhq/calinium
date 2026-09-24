@@ -1,0 +1,283 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+{% if section.settings.enable_quick_add %}
+  {{ 'component-quantity-input.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" type="module"></script>
+{% endif %}
+
+{% liquid
+  assign carousel_collection = section.settings.collection
+  assign carousel_heading_id = 'ProductCarouselHeading-' | append: section.id
+  assign carousel_classes = 'co-product-carousel co-commerce-section co-commerce-section--align-' | append: section.settings.text_alignment
+  assign carousel_classes = carousel_classes | append: ' co-color-scheme-' | append: section.settings.color_scheme
+  assign carousel_classes = carousel_classes | append: ' co-product-carousel--mobile-swipe-' | append: section.settings.enable_swipe_mobile
+  assign carousel_view_all_label = section.settings.view_all_label | default: 'collections.view_collection' | t
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ carousel_classes }}" style="--co-commerce-desktop-columns: {{ section.settings.columns_desktop }};" {% if section.settings.heading != blank %}aria-labelledby="{{ carousel_heading_id }}"{% endif %} data-co-section-behavior data-co-carousel {{ section.shopify_attributes }}>
+  <div class="co-page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.description, id: carousel_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-commerce-section__header' %}
+    {% if carousel_collection != blank and carousel_collection.products_count > 0 %}
+      {% paginate carousel_collection.products by section.settings.products_to_show %}
+        <ul class="co-commerce-carousel__track" role="list" data-carousel-track>
+          {% for product in carousel_collection.products %}
+            <li class="co-commerce-carousel__slide" data-carousel-slide>
+              {% render 'product-card', product: product, section_id: section.id, image_ratio: section.settings.image_ratio, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 25vw, 78vw', image_widths: '165, 360, 535, 750, 1000', show_vendor: section.settings.show_vendor, show_rating: false, show_compare_at_price: true, show_sale_badge: section.settings.show_badges, show_sold_out_badge: section.settings.show_badges, show_secondary_image: section.settings.show_secondary_image, show_inventory: false, show_quick_add: section.settings.enable_quick_add, card_alignment: section.settings.text_alignment %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% if paginate.pages > 0 and carousel_collection.products.size > 1 %}
+          {% if section.settings.enable_arrows %}
+            <div class="co-commerce-carousel__controls" aria-label="{{ 'sections.product_carousel.controls_label' | t | escape }}">
+              <button class="co-button co-button--secondary co-button--medium" type="button" data-action="carousel-prev" aria-label="{{ 'sections.product_carousel.previous' | t | escape }}">{% render 'icon', icon: 'arrow-left', size: 18, decorative: true %}</button>
+              <button class="co-button co-button--secondary co-button--medium" type="button" data-action="carousel-next" aria-label="{{ 'sections.product_carousel.next' | t | escape }}">{% render 'icon', icon: 'arrow-right', size: 18, decorative: true %}</button>
+            </div>
+          {% endif %}
+          {% if section.settings.enable_pagination %}
+            <div class="co-commerce-carousel__pagination" aria-label="{{ 'sections.product_carousel.pagination_label' | t | escape }}">
+              {% for product in carousel_collection.products %}
+                <button class="co-button co-button--secondary co-button--small" type="button" data-carousel-dot="{{ forloop.index0 }}" aria-label="{{ 'sections.product_carousel.go_to' | t: number: forloop.index | escape }}"{% if forloop.first %} aria-current="true"{% endif %}><span aria-hidden="true">•</span></button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endpaginate %}
+      {% if section.settings.show_view_all %}<div class="co-commerce-section__actions">{% render 'button', label: carousel_view_all_label, url: carousel_collection.url, variant: 'text', icon: 'arrow-right', icon_position: 'end' %}</div>{% endif %}
+    {% elsif request.design_mode %}
+      <p class="co-commerce-section__empty">{{ 'sections.product_carousel.empty' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.product_carousel.name",
+  "tag": "section",
+  "class": "co-section-product-carousel",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.shared.settings.collection.label"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.shared.settings.eyebrow.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.shared.settings.heading.label",
+      "default": "Featured products"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.shared.settings.description.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.shared.settings.heading_size.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.shared.options.small"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.shared.options.standard"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.shared.options.large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shared.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shared.options.center"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "t:sections.product_carousel.settings.products_to_show.label",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.product_carousel.settings.columns_desktop.label",
+      "default": "4",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_swipe_mobile",
+      "label": "t:sections.product_carousel.settings.enable_swipe_mobile.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_arrows",
+      "label": "t:sections.product_carousel.settings.enable_arrows.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_pagination",
+      "label": "t:sections.product_carousel.settings.enable_pagination.label",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.shared.settings.image_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.shared.options.adapt"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.shared.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.shared.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.shared.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:sections.shared.settings.show_vendor.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "t:sections.product_carousel.settings.show_badges.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "t:sections.shared.settings.show_secondary_image.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:sections.shared.settings.enable_quick_add.label",
+      "info": "t:sections.shared.settings.enable_quick_add.info",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "t:sections.shared.settings.show_view_all.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "t:sections.shared.settings.view_all_label.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.shared.settings.desktop_top_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.shared.settings.desktop_bottom_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "t:sections.shared.settings.mobile_top_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "t:sections.shared.settings.mobile_bottom_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product_carousel.preset"
+    }
+  ]
+}
+{% endschema %}

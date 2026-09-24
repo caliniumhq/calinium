@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-design-human-review.schema.json",
+  "title": "Calinium Design Human Review Decision",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "review_id", "evaluation_id", "evaluation_checksum", "review_revision", "reviewed_at", "reviewer", "decision", "notes", "finding_decisions"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "design-human-review-v1"},
+    "review_id": {"type": "string", "pattern": "^design-review-[a-f0-9]{20}$"},
+    "evaluation_id": {"type": "string", "pattern": "^design-evaluation-[a-f0-9]{20}$"},
+    "evaluation_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "review_revision": {"type": "string", "pattern": "^design-review-revision-[a-f0-9]{20}$"},
+    "reviewed_at": {"type": "string", "format": "date-time"},
+    "reviewer": {"type": "object", "required": ["type", "reference"], "properties": {"type": {"type": "string", "const": "human"}, "reference": {"type": "string"}}, "additionalProperties": false},
+    "decision": {"type": "string", "enum": ["approved", "approved_with_notes", "repair_recommended", "repair_required", "deferred"]},
+    "notes": {"type": ["string", "null"]},
+    "finding_decisions": {"type": "array", "items": {"type": "object", "required": ["finding_id", "decision", "notes"], "properties": {"finding_id": {"type": "string"}, "decision": {"type": "string", "enum": ["accepted", "needs_fix", "false_positive", "preference_only", "merchant_content_issue", "deferred"]}, "notes": {"type": ["string", "null"]}}, "additionalProperties": false}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-shopify-resource.schema.json",
+  "title": "Calinium normalized Shopify resource",
+  "description": "The minimum non-sensitive Shopify resource metadata retained for project review and approved generation references.",
+  "type": "object",
+  "required": ["version", "id", "connection_id", "resource_type", "remote_gid", "display_title", "handle", "resource_status", "preview_url", "metadata", "source_revision", "remote_updated_at", "last_synced_at", "last_sync_run_id", "availability_status", "approval_eligible", "deleted_at", "created_at", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^shr_[a-z0-9-]+$"},
+    "connection_id": {"type": "string", "pattern": "^shc_[a-z0-9-]+$"},
+    "resource_type": {"type": "string", "enum": ["shop", "product", "variant", "product_media", "collection", "menu", "file", "market", "theme"]},
+    "remote_gid": {"type": "string", "minLength": 1},
+    "display_title": {"type": "string", "minLength": 1, "maxLength": 240},
+    "handle": {"type": ["string", "null"]},
+    "resource_status": {"type": ["string", "null"]},
+    "preview_url": {"type": ["string", "null"]},
+    "metadata": {"type": "object"},
+    "source_revision": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "remote_updated_at": {"type": ["string", "null"]},
+    "last_synced_at": {"type": "string"},
+    "last_sync_run_id": {"type": ["string", "null"], "pattern": "^ssr_[a-z0-9-]+$"},
+    "availability_status": {"type": "string", "enum": ["available", "stale", "unavailable", "deleted", "permission_missing"]},
+    "approval_eligible": {"type": "boolean"},
+    "deleted_at": {"type": ["string", "null"]},
+    "created_at": {"type": "string"},
+    "updated_at": {"type": "string"}
+  },
+  "additionalProperties": false
+}

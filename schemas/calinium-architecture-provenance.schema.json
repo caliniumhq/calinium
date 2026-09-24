@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-architecture-provenance.schema.json",
+  "$ref": "calinium-generated-theme.schema.json#/$defs/architectureProvenance"
+}

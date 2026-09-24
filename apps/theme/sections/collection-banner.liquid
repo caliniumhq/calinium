@@ -1,0 +1,75 @@
+{% liquid
+  assign collection_banner_image = section.settings.image | default: collection.image
+  assign collection_banner_classes = 'co-collection-banner co-color-scheme-' | append: section.settings.color_scheme
+  assign collection_banner_classes = collection_banner_classes | append: ' co-collection-banner--' | append: section.settings.content_alignment
+  assign collection_banner_classes = collection_banner_classes | append: ' co-collection-banner--' | append: section.settings.layout
+  assign collection_banner_heading_id = 'CollectionBannerHeading-' | append: section.id
+%}
+
+{% if collection != blank %}
+  {% if section.settings.show_image and collection_banner_image != blank %}
+    {{ 'component-image.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+  {{ 'section-collection-banner.css' | asset_url | stylesheet_tag }}
+
+  <section class="{{ collection_banner_classes }}" aria-labelledby="{{ collection_banner_heading_id }}" style="--co-collection-banner-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};">
+    <div class="co-collection-banner__inner{% if section.settings.layout == 'contained' %} co-page-width{% endif %}">
+      <div class="co-collection-banner__content">
+        <h1 id="{{ collection_banner_heading_id }}" class="co-collection-banner__heading">{{ collection.title | escape }}</h1>
+
+        {% if section.settings.show_description and collection.description != blank %}
+          <div class="co-collection-banner__description">{{ collection.description }}</div>
+        {% endif %}
+
+        {% if section.settings.editorial_text != blank %}
+          <p class="co-collection-banner__editorial">{{ section.settings.editorial_text | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+          {% render 'button', label: section.settings.button_label, url: section.settings.button_link, variant: 'secondary' %}
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_image and collection_banner_image != blank %}
+        <div class="co-collection-banner__media{% if section.settings.enable_overlay %} co-collection-banner__media--with-overlay{% endif %}">
+          {% render 'responsive-image',
+            image: collection_banner_image,
+            mobile_image: section.settings.mobile_image,
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '(min-width: 48rem) 50vw, 100vw',
+            widths: '375, 550, 750, 1000, 1500, 2000',
+            ratio: section.settings.image_ratio,
+            class: 'co-collection-banner__image'
+          %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:sections.collection_banner.name",
+  "tag": "section",
+  "class": "co-section-collection-banner",
+  "limit": 1,
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "header", "content": "Collection hero" },
+    { "type": "checkbox", "id": "show_image", "label": "t:sections.collection_banner.settings.show_image.label", "default": true },
+    { "type": "image_picker", "id": "image", "label": "Collection image override", "info": "Takes priority over the collection image." },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image override" },
+    { "type": "checkbox", "id": "show_description", "label": "t:sections.collection_banner.settings.show_description.label", "default": true },
+    { "type": "text", "id": "editorial_text", "label": "Editorial text", "info": "Optional context supplied by the merchant." },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "contained", "options": [{ "value": "contained", "label": "Contained" }, { "value": "full_width", "label": "Full width" }] },
+    { "type": "select", "id": "image_ratio", "label": "t:sections.collection_banner.settings.image_ratio.label", "default": "wide", "options": [{ "value": "landscape", "label": "t:sections.collection_banner.settings.image_ratio.options.landscape" }, { "value": "wide", "label": "t:sections.collection_banner.settings.image_ratio.options.wide" }] },
+    { "type": "select", "id": "content_alignment", "label": "t:sections.collection_banner.settings.content_alignment.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.collection_banner.settings.content_alignment.options.left" }, { "value": "center", "label": "t:sections.collection_banner.settings.content_alignment.options.center" }, { "value": "right", "label": "Right" }] },
+    { "type": "checkbox", "id": "enable_overlay", "label": "Add a media overlay", "default": false },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay strength", "min": 0, "max": 80, "step": 5, "default": 25, "unit": "%" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.collection_banner.settings.color_scheme.label", "default": "scheme-1" }
+  ]
+}
+{% endschema %}

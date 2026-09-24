@@ -1,0 +1,82 @@
+/* Image with text editorial section. */
+.co-image-with-text {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-image-with-text__inner {
+  display: grid;
+  gap: var(--co-grid-gap);
+}
+
+.co-image-with-text__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-block: var(--co-space-3);
+}
+
+.co-image-with-text--align-center .co-image-with-text__content {
+  align-items: center;
+  text-align: center;
+}
+
+.co-image-with-text__eyebrow {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.co-image-with-text__heading {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-image-with-text__text {
+  margin-block-start: var(--co-space-4);
+}
+
+.co-image-with-text__text > * + * {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-image-with-text__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--co-space-3);
+  margin-block-start: var(--co-space-5);
+}
+
+.co-image-with-text--align-center .co-image-with-text__actions {
+  justify-content: center;
+}
+
+@media (min-width: 48rem) {
+  .co-image-with-text--has-image.co-image-with-text--has-content .co-image-with-text__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+
+  .co-image-with-text--has-image.co-image-with-text--has-content.co-image-with-text--image-left .co-image-with-text__media {
+    grid-column: 1;
+  }
+
+  .co-image-with-text--has-image.co-image-with-text--has-content.co-image-with-text--image-left .co-image-with-text__content {
+    grid-column: 2;
+  }
+
+  .co-image-with-text--has-image.co-image-with-text--has-content.co-image-with-text--image-right .co-image-with-text__content {
+    grid-column: 1;
+  }
+
+  .co-image-with-text--has-image.co-image-with-text--has-content.co-image-with-text--image-right .co-image-with-text__media {
+    grid-column: 2;
+  }
+
+  .co-image-with-text__content {
+    padding: var(--co-space-7);
+  }
+}

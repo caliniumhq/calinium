@@ -1,0 +1,2339 @@
+{
+  "schema_version": 1,
+  "catalog_version": 1,
+  "compatible_compiler_versions": [
+    "1.0.0"
+  ],
+  "catalog_id": "strategy_section_mapping",
+  "description": "Traceable homepage recipe and blueprint mappings to currently installed section capabilities.",
+  "mappings": [
+    {
+      "mapping_id": "layout_recipe.luxury_story",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "luxury_story"
+      },
+      "name": "Luxury story",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "founder-story",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/founder-story.liquid",
+            "section_id": "founder-story"
+          }
+        },
+        {
+          "section_id": "craftsmanship",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "feature-item",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/craftsmanship.liquid",
+            "section_id": "craftsmanship"
+          }
+        },
+        {
+          "section_id": "featured-collection",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js",
+              "section-featured-collection.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-collection.liquid",
+            "section_id": "featured-collection"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "layout_recipe.technology_clarity",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "technology_clarity"
+      },
+      "name": "Technology clarity",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "product-highlights",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-highlights.liquid",
+            "section_id": "product-highlights"
+          }
+        },
+        {
+          "section_id": "product-comparison",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-comparison.liquid",
+            "section_id": "product-comparison"
+          }
+        },
+        {
+          "section_id": "product-carousel",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-carousel.liquid",
+            "section_id": "product-carousel"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "faq",
+          "priority": 6,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": []
+          },
+          "source": {
+            "file": "apps/theme/sections/faq.liquid",
+            "section_id": "faq"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 7,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "layout_recipe.food_story",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "food_story"
+      },
+      "name": "Food story",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "materials",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/materials.liquid",
+            "section_id": "materials"
+          }
+        },
+        {
+          "section_id": "manufacturing-process",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "media-item",
+              "section-heading",
+              "section-spacing",
+              "timeline-item"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/manufacturing-process.liquid",
+            "section_id": "manufacturing-process"
+          }
+        },
+        {
+          "section_id": "featured-collection",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js",
+              "section-featured-collection.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-collection.liquid",
+            "section_id": "featured-collection"
+          }
+        },
+        {
+          "section_id": "featured-blog",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "article-card",
+              "button",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-article-card.css",
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-blog.liquid",
+            "section_id": "featured-blog"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "layout_recipe.beauty_discovery",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "beauty_discovery"
+      },
+      "name": "Beauty discovery",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "materials",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/materials.liquid",
+            "section_id": "materials"
+          }
+        },
+        {
+          "section_id": "featured-collection",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js",
+              "section-featured-collection.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-collection.liquid",
+            "section_id": "featured-collection"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "faq",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": []
+          },
+          "source": {
+            "file": "apps/theme/sections/faq.liquid",
+            "section_id": "faq"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "layout_recipe.catalogue_first",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "catalogue_first"
+      },
+      "name": "Catalogue first",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "featured-categories",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-categories.liquid",
+            "section_id": "featured-categories"
+          }
+        },
+        {
+          "section_id": "collection-carousel",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "collection-card",
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-collection-card.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/collection-carousel.liquid",
+            "section_id": "collection-carousel"
+          }
+        },
+        {
+          "section_id": "product-carousel",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-carousel.liquid",
+            "section_id": "product-carousel"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "layout_recipe.service_trust",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "service_trust"
+      },
+      "name": "Service trust",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "brand-values",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "feature-item",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/brand-values.liquid",
+            "section_id": "brand-values"
+          }
+        },
+        {
+          "section_id": "team",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/team.liquid",
+            "section_id": "team"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "faq",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": []
+          },
+          "source": {
+            "file": "apps/theme/sections/faq.liquid",
+            "section_id": "faq"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "layout_recipe.editorial_discovery",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "editorial_discovery"
+      },
+      "name": "Editorial discovery",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "lookbook",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/lookbook.liquid",
+            "section_id": "lookbook"
+          }
+        },
+        {
+          "section_id": "story-banner",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/story-banner.liquid",
+            "section_id": "story-banner"
+          }
+        },
+        {
+          "section_id": "featured-collection",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js",
+              "section-featured-collection.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-collection.liquid",
+            "section_id": "featured-collection"
+          }
+        },
+        {
+          "section_id": "editorial-grid",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/editorial-grid.liquid",
+            "section_id": "editorial-grid"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "layout_recipe.hospitality_escape",
+      "mapping_type": "layout_recipe",
+      "source": {
+        "file": "config/layout-recipes.json",
+        "id": "hospitality_escape"
+      },
+      "name": "Hospitality escape",
+      "sections": [
+        {
+          "section_id": "full-screen-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "premium-hero-content",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "premium-hero.js",
+              "section-premium-hero.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/full-screen-hero.liquid",
+            "section_id": "full-screen-hero"
+          }
+        },
+        {
+          "section_id": "story-banner",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/story-banner.liquid",
+            "section_id": "story-banner"
+          }
+        },
+        {
+          "section_id": "behind-the-scenes",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/behind-the-scenes.liquid",
+            "section_id": "behind-the-scenes"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "faq",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": []
+          },
+          "source": {
+            "file": "apps/theme/sections/faq.liquid",
+            "section_id": "faq"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "page_blueprint.homepage",
+      "mapping_type": "page_blueprint",
+      "source": {
+        "file": "config/page-blueprints.json",
+        "id": "homepage"
+      },
+      "name": "Homepage",
+      "sections": [
+        {
+          "section_id": "hero-slideshow",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "responsive-image"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "hero-slideshow.js",
+              "section-hero-slideshow.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/hero-slideshow.liquid",
+            "section_id": "hero-slideshow"
+          }
+        },
+        {
+          "section_id": "editorial-hero",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/editorial-hero.liquid",
+            "section_id": "editorial-hero"
+          }
+        },
+        {
+          "section_id": "featured-collection",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js",
+              "section-featured-collection.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-collection.liquid",
+            "section_id": "featured-collection"
+          }
+        },
+        {
+          "section_id": "product-carousel",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-carousel.liquid",
+            "section_id": "product-carousel"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "page_blueprint.product",
+      "mapping_type": "page_blueprint",
+      "source": {
+        "file": "config/page-blueprints.json",
+        "id": "product"
+      },
+      "name": "Product",
+      "sections": [
+        {
+          "section_id": "main-product",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "product-form",
+              "product-highlight",
+              "product-information-row",
+              "product-media",
+              "responsive-image"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-media.css",
+              "component-quantity-input.css",
+              "component-variant-picker.css",
+              "premium-product.js",
+              "product-form.js",
+              "product-gallery.js",
+              "section-main-product.css",
+              "variant-picker.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/main-product.liquid",
+            "section_id": "main-product"
+          }
+        },
+        {
+          "section_id": "product-highlights",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-highlights.liquid",
+            "section_id": "product-highlights"
+          }
+        },
+        {
+          "section_id": "product-comparison",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-comparison.liquid",
+            "section_id": "product-comparison"
+          }
+        },
+        {
+          "section_id": "complementary-products",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "loading-spinner",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/complementary-products.liquid",
+            "section_id": "complementary-products"
+          }
+        },
+        {
+          "section_id": "product-recommendations",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "loading-spinner",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-recommendations.liquid",
+            "section_id": "product-recommendations"
+          }
+        },
+        {
+          "section_id": "faq",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": []
+          },
+          "source": {
+            "file": "apps/theme/sections/faq.liquid",
+            "section_id": "faq"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "page_blueprint.collection",
+      "mapping_type": "page_blueprint",
+      "source": {
+        "file": "config/page-blueprints.json",
+        "id": "collection"
+      },
+      "name": "Collection",
+      "sections": [
+        {
+          "section_id": "collection-banner",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image"
+            ],
+            "assets": [
+              "component-image.css",
+              "section-collection-banner.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/collection-banner.liquid",
+            "section_id": "collection-banner"
+          }
+        },
+        {
+          "section_id": "main-collection-product-grid",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "active-filters",
+              "button",
+              "facets",
+              "icon",
+              "pagination",
+              "product-card",
+              "sort-select"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-facets.css",
+              "component-image.css",
+              "component-pagination.css",
+              "component-price.css",
+              "component-product-card.css",
+              "facets.js",
+              "premium-collection.js",
+              "product-form.js",
+              "section-main-collection.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/main-collection-product-grid.liquid",
+            "section_id": "main-collection-product-grid"
+          }
+        },
+        {
+          "section_id": "collection-tabs",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/collection-tabs.liquid",
+            "section_id": "collection-tabs"
+          }
+        },
+        {
+          "section_id": "collection-carousel",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "collection-card",
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-collection-card.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/collection-carousel.liquid",
+            "section_id": "collection-carousel"
+          }
+        },
+        {
+          "section_id": "featured-categories",
+          "priority": 5,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-categories.liquid",
+            "section_id": "featured-categories"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "page_blueprint.article",
+      "mapping_type": "page_blueprint",
+      "source": {
+        "file": "config/page-blueprints.json",
+        "id": "article"
+      },
+      "name": "Article",
+      "sections": [
+        {
+          "section_id": "main-article",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "article-meta",
+              "button",
+              "pagination",
+              "responsive-image",
+              "social-sharing"
+            ],
+            "assets": [
+              "component-article-card.css",
+              "component-button.css",
+              "component-image.css",
+              "component-pagination.css",
+              "component-social-sharing.css",
+              "section-main-article.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/main-article.liquid",
+            "section_id": "main-article"
+          }
+        },
+        {
+          "section_id": "featured-blog",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "article-card",
+              "button",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-article-card.css",
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-blog.liquid",
+            "section_id": "featured-blog"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        },
+        {
+          "section_id": "featured-collection",
+          "priority": 4,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js",
+              "section-featured-collection.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/featured-collection.liquid",
+            "section_id": "featured-collection"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "page_blueprint.about",
+      "mapping_type": "page_blueprint",
+      "source": {
+        "file": "config/page-blueprints.json",
+        "id": "about"
+      },
+      "name": "About",
+      "sections": [
+        {
+          "section_id": "founder-story",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "icon",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/founder-story.liquid",
+            "section_id": "founder-story"
+          }
+        },
+        {
+          "section_id": "brand-timeline",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "responsive-image",
+              "section-heading",
+              "section-spacing",
+              "timeline-item"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/brand-timeline.liquid",
+            "section_id": "brand-timeline"
+          }
+        },
+        {
+          "section_id": "brand-values",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "feature-item",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/brand-values.liquid",
+            "section_id": "brand-values"
+          }
+        },
+        {
+          "section_id": "team",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/team.liquid",
+            "section_id": "team"
+          }
+        },
+        {
+          "section_id": "craftsmanship",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "feature-item",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/craftsmanship.liquid",
+            "section_id": "craftsmanship"
+          }
+        },
+        {
+          "section_id": "behind-the-scenes",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/behind-the-scenes.liquid",
+            "section_id": "behind-the-scenes"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "page_blueprint.contact",
+      "mapping_type": "page_blueprint",
+      "source": {
+        "file": "config/page-blueprints.json",
+        "id": "contact"
+      },
+      "name": "Contact",
+      "sections": [
+        {
+          "section_id": "contact-form",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button"
+            ],
+            "assets": [
+              "component-button.css",
+              "section-contact-form.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/contact-form.liquid",
+            "section_id": "contact-form"
+          }
+        },
+        {
+          "section_id": "team",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/team.liquid",
+            "section_id": "team"
+          }
+        },
+        {
+          "section_id": "faq",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": []
+          },
+          "source": {
+            "file": "apps/theme/sections/faq.liquid",
+            "section_id": "faq"
+          }
+        },
+        {
+          "section_id": "icon-row",
+          "priority": 4,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/icon-row.liquid",
+            "section_id": "icon-row"
+          }
+        }
+      ]
+    },
+    {
+      "mapping_id": "page_blueprint.landing_page",
+      "mapping_type": "page_blueprint",
+      "source": {
+        "file": "config/page-blueprints.json",
+        "id": "landing_page"
+      },
+      "name": "Landing page",
+      "sections": [
+        {
+          "section_id": "editorial-hero",
+          "priority": 1,
+          "recommended_position": "opening",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "rich-text",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/editorial-hero.liquid",
+            "section_id": "editorial-hero"
+          }
+        },
+        {
+          "section_id": "split-hero",
+          "priority": 2,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "rich-text",
+              "section-heading"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/split-hero.liquid",
+            "section_id": "split-hero"
+          }
+        },
+        {
+          "section_id": "product-highlights",
+          "priority": 3,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "product-card",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "component-price.css",
+              "component-product-card.css",
+              "component-quantity-input.css",
+              "product-form.js"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/product-highlights.liquid",
+            "section_id": "product-highlights"
+          }
+        },
+        {
+          "section_id": "testimonials",
+          "priority": 4,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/testimonials.liquid",
+            "section_id": "testimonials"
+          }
+        },
+        {
+          "section_id": "faq",
+          "priority": 5,
+          "recommended_position": "middle",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "icon",
+              "section-heading",
+              "section-spacing"
+            ],
+            "assets": []
+          },
+          "source": {
+            "file": "apps/theme/sections/faq.liquid",
+            "section_id": "faq"
+          }
+        },
+        {
+          "section_id": "newsletter",
+          "priority": 6,
+          "recommended_position": "closing",
+          "required": false,
+          "optional": true,
+          "fallback_section": null,
+          "dependencies": {
+            "snippets": [
+              "button",
+              "responsive-image",
+              "section-spacing"
+            ],
+            "assets": [
+              "component-button.css",
+              "component-image.css",
+              "section-newsletter.css"
+            ]
+          },
+          "source": {
+            "file": "apps/theme/sections/newsletter.liquid",
+            "section_id": "newsletter"
+          }
+        }
+      ]
+    }
+  ]
+}

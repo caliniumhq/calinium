@@ -1,0 +1,63 @@
+{% liquid
+  assign comparison_classes = 'co-comparison-table co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign comparison_heading_id = 'ComparisonHeading-' | append: section.id
+  assign comparison_column_count = 0
+  if section.settings.sticky_first_column
+    assign comparison_classes = comparison_classes | append: ' co-comparison-table--sticky-first-column'
+  endif
+  for block in section.blocks
+    if block.type == 'column'
+      assign comparison_column_count = comparison_column_count | plus: 1
+    endif
+  endfor
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ comparison_classes }}" aria-labelledby="{{ comparison_heading_id }}" {{ section.shopify_attributes }}>
+  <div class="co-comparison-table__inner co-page-width">
+    {% render 'section-heading', heading: section.settings.heading, description: section.settings.description, id: comparison_heading_id, alignment: 'left', size: section.settings.heading_size %}
+    {% if comparison_column_count > 0 %}
+      <div class="co-comparison-table__scroll">
+        <table>
+          <thead><tr><th scope="col">{{ section.settings.first_column_heading | escape }}</th>{% assign comparison_column_index = 0 %}{% for block in section.blocks %}{% if block.type == 'column' %}{% assign comparison_column_index = comparison_column_index | plus: 1 %}<th scope="col"{% if section.settings.highlighted_column == comparison_column_index %} class="is-highlighted"{% endif %} {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</th>{% endif %}{% endfor %}</tr></thead>
+          <tbody>
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                <tr {{ block.shopify_attributes }}><th scope="row">{{ block.settings.feature | escape }}</th>{% for column in (1..comparison_column_count) %}{% capture comparison_value_key %}value_{{ column }}{% endcapture %}<td{% if section.settings.highlighted_column == column %} class="is-highlighted"{% endif %}>{{ block.settings[comparison_value_key] }}</td>{% endfor %}</tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% elsif request.design_mode %}<p>{{ 'sections.comparison_table.placeholder_text' | t }}</p>{% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.comparison_table.name",
+  "tag": "section",
+  "class": "co-section-comparison-table",
+  "settings": [
+    { "type": "paragraph", "content": "t:sections.comparison_table.instructions" },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "Compare the details" },
+    { "type": "richtext", "id": "description", "label": "t:sections.shared.settings.description.label" },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "standard", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "text", "id": "first_column_heading", "label": "t:sections.shared.settings.first_column_heading.label", "default": "Feature" },
+    { "type": "range", "id": "highlighted_column", "label": "t:sections.shared.settings.highlighted_column.label", "min": 0, "max": 5, "step": 1, "default": 0, "info": "t:sections.shared.settings.highlighted_column.info" },
+    { "type": "checkbox", "id": "sticky_first_column", "label": "t:sections.shared.settings.sticky_first_column.label", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [
+    { "type": "column", "name": "t:sections.comparison_table.blocks.column", "limit": 5, "settings": [{ "type": "text", "id": "heading", "label": "t:sections.shared.settings.column_heading.label", "default": "Option" }] },
+    { "type": "feature", "name": "t:sections.comparison_table.blocks.feature", "settings": [{ "type": "text", "id": "feature", "label": "t:sections.shared.settings.feature.label", "default": "Feature" }, { "type": "richtext", "id": "value_1", "label": "t:sections.shared.settings.value_1.label" }, { "type": "richtext", "id": "value_2", "label": "t:sections.shared.settings.value_2.label" }, { "type": "richtext", "id": "value_3", "label": "t:sections.shared.settings.value_3.label" }, { "type": "richtext", "id": "value_4", "label": "t:sections.shared.settings.value_4.label" }, { "type": "richtext", "id": "value_5", "label": "t:sections.shared.settings.value_5.label" }] }
+  ],
+  "max_blocks": 24,
+  "presets": [{ "name": "t:sections.comparison_table.preset", "blocks": [{ "type": "column" }, { "type": "column" }, { "type": "feature" }, { "type": "feature" }] }]
+}
+{% endschema %}

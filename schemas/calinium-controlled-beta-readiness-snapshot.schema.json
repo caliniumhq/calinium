@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-controlled-beta-readiness-snapshot.schema.json",
+  "title": "Calinium controlled-beta readiness snapshot",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "snapshot_revision",
+    "deep_attestation_revision",
+    "readiness_revision",
+    "snapshot_id",
+    "process_generation_id",
+    "binding",
+    "binding_checksum",
+    "status",
+    "checked_at",
+    "valid_until",
+    "components",
+    "reason_codes",
+    "deep_attestation",
+    "checksum"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "snapshot_revision": {"const": "controlled-beta-readiness-snapshot-v1"},
+    "deep_attestation_revision": {"const": "controlled-beta-deep-attestation-v1"},
+    "readiness_revision": {"const": "merchant-flow-controlled-beta-readiness-v1"},
+    "snapshot_id": {"type": "string", "pattern": "^controlled-readiness-snapshot-[a-f0-9]{20}$"},
+    "process_generation_id": {"type": "string", "pattern": "^readiness-process-[A-Za-z0-9-]{4,100}$"},
+    "binding": {"$ref": "#/$defs/binding"},
+    "binding_checksum": {"$ref": "#/$defs/checksum"},
+    "status": {"enum": ["INITIALIZING", "READY", "NOT_READY"]},
+    "checked_at": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
+    "valid_until": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
+    "components": {
+      "type": "object",
+      "required": [
+        "configuration", "source_attestation", "beta_allowlist", "database", "artifact_storage",
+        "durable_job_storage", "generation_worker", "render_qa_worker", "shopify_cli_runtime",
+        "shopify_cli_runtime_state", "shopify_runtime_credentials", "shopify_storefront_password", "controlled_shopify_target",
+        "d1", "d2_7_provider", "operator_authorization", "telemetry"
+      ],
+      "additionalProperties": {"$ref": "#/$defs/component"}
+    },
+    "reason_codes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]{2,100}$"}
+    },
+    "deep_attestation": {
+      "type": "object",
+      "required": ["status", "operation_id", "trigger", "started_at", "completed_at", "duration_ms"],
+      "properties": {
+        "status": {"enum": ["pending", "completed"]},
+        "operation_id": {"oneOf": [{"type": "string", "pattern": "^controlled-readiness-refresh-[a-f0-9]{20}$"}, {"type": "null"}]},
+        "trigger": {"oneOf": [{"enum": ["startup", "background", "operator"]}, {"type": "null"}]},
+        "started_at": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
+        "completed_at": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
+        "duration_ms": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "null"}]}
+      },
+      "additionalProperties": false
+    },
+    "checksum": {"$ref": "#/$defs/checksum"}
+  },
+  "$defs": {
+    "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "component": {
+      "type": "object",
+      "required": ["ready", "reason_code"],
+      "properties": {
+        "ready": {"type": "boolean"},
+        "reason_code": {"oneOf": [{"type": "string", "pattern": "^[a-z][a-z0-9_]{2,100}$"}, {"type": "null"}]},
+        "status": {"enum": ["READY", "NOT_READY", "NOT_REQUIRED"]}
+      },
+      "additionalProperties": false
+    },
+    "binding": {
+      "type": "object",
+      "required": [
+        "source_revision", "build_revision", "controlled_runtime_revision", "readiness_revision",
+        "render_target_configuration_revision", "shopify_cli_runtime_revision", "shopify_cli_expected_version",
+        "shopify_cli_runtime_state_revision", "shopify_cli_auto_upgrade_policy",
+        "shopify_storefront_password_binding_revision", "shopify_storefront_password_requirements_revision",
+        "shopify_storefront_password_status", "shopify_storefront_password_requirements", "controlled_shop_domains",
+        "development_targets", "main_theme_id", "d1_required", "d2_7_required",
+        "operator_operation_available", "configuration_checksum", "process_generation_id", "binding_checksum"
+      ],
+      "properties": {
+        "source_revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "build_revision": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "controlled_runtime_revision": {"const": "merchant-flow-controlled-beta-runtime-v1"},
+        "readiness_revision": {"const": "merchant-flow-controlled-beta-readiness-v1"},
+        "render_target_configuration_revision": {"const": "merchant-flow-controlled-render-targets-v1"},
+        "shopify_cli_runtime_revision": {"const": "shopify-cli-runtime-v1"},
+        "shopify_cli_expected_version": {"const": "4.6.0"},
+        "shopify_cli_runtime_state_revision": {"const": "shopify-cli-runtime-state-v1"},
+        "shopify_cli_auto_upgrade_policy": {"const": "disabled"},
+        "shopify_storefront_password_binding_revision": {"const": "shopify-storefront-password-binding-v1"},
+        "shopify_storefront_password_requirements_revision": {"enum": ["shopify-storefront-password-requirements-v1", ""]},
+        "shopify_storefront_password_status": {"enum": ["READY", "NOT_READY", "NOT_REQUIRED"]},
+        "shopify_storefront_password_requirements": {
+          "type": "array", "minItems": 0, "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "required": ["shop_domain", "requirement"],
+            "properties": {
+              "shop_domain": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"},
+              "requirement": {"enum": ["required", "not_required"]}
+            },
+            "additionalProperties": false
+          }
+        },
+        "controlled_shop_domains": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"}},
+        "development_targets": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["shop_domain", "theme_id", "expected_theme_role"],
+            "properties": {
+              "shop_domain": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*\\.myshopify\\.com$"},
+              "theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+              "expected_theme_role": {"const": "development"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "main_theme_id": {"type": "string", "pattern": "^[1-9][0-9]*$"},
+        "d1_required": {"const": true},
+        "d2_7_required": {"type": "boolean"},
+        "operator_operation_available": {"const": true},
+        "configuration_checksum": {"$ref": "#/$defs/checksum"},
+        "process_generation_id": {"type": "string", "pattern": "^readiness-process-[A-Za-z0-9-]{4,100}$"},
+        "binding_checksum": {"$ref": "#/$defs/checksum"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"shopify_storefront_password_status": {"enum": ["READY", "NOT_REQUIRED"]}},
+            "required": ["shopify_storefront_password_status"]
+          },
+          "then": {
+            "properties": {
+              "shopify_storefront_password_requirements_revision": {"const": "shopify-storefront-password-requirements-v1"},
+              "shopify_storefront_password_requirements": {"minItems": 1}
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

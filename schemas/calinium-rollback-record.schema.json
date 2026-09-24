@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-rollback-record.schema.json",
+  "title": "Calinium controlled rollback record",
+  "description": "Immutable execution record that extends Milestone 8B rollback preparation metadata without changing it.",
+  "type": "object",
+  "required": ["version", "manager_version", "rollback_id", "rollback_timestamp", "rollback_reason", "source_release", "source_deployment", "restored_deployment", "rollback_metadata", "restored_checksums", "restored_theme", "previous_preview_verification", "validation", "traceability", "status"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "manager_version": {"type": "string", "const": "1.0.0"},
+    "rollback_id": {"type": "string", "pattern": "^rollback-[a-z0-9-]+$"},
+    "rollback_timestamp": {"type": "string", "minLength": 1},
+    "rollback_reason": {"type": "string", "minLength": 1},
+    "source_release": {"$ref": "#/$defs/release_reference"},
+    "source_deployment": {"type": "string", "pattern": "^deployment-[a-z0-9-]+$"},
+    "restored_deployment": {"type": "string", "pattern": "^deployment-[a-z0-9-]+$"},
+    "rollback_metadata": {"$ref": "#/$defs/reference"},
+    "restored_checksums": {"$ref": "#/$defs/restored_checksums"},
+    "restored_theme": {"$ref": "calinium-release-manifest.schema.json#/$defs/theme"},
+    "previous_preview_verification": {"$ref": "#/$defs/reference"},
+    "validation": {"$ref": "calinium-review-session.schema.json#/$defs/status"},
+    "traceability": {"$ref": "calinium-review-session.schema.json#/$defs/traceability"},
+    "status": {"type": "string", "enum": ["rolled_back_to_verified_development_configuration", "rollback_failed"]}
+  },
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "required": ["path", "checksum"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+      "additionalProperties": false
+    },
+    "release_reference": {
+      "type": "object",
+      "required": ["release_id", "path", "checksum"],
+      "properties": {
+        "release_id": {"type": "string", "pattern": "^release-[a-z0-9-]+$"},
+        "path": {"type": "string", "minLength": 1},
+        "checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "restored_checksums": {
+      "type": "object",
+      "required": ["expected_configuration", "actual_configuration", "restored_files"],
+      "properties": {
+        "expected_configuration": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "actual_configuration": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "restored_files": {"type": "array", "minItems": 1, "items": {"$ref": "calinium-deployment-package.schema.json#/$defs/file"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

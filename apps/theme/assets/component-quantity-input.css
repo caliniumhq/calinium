@@ -1,0 +1,50 @@
+/* Reusable native quantity input component. */
+.co-quantity-input {
+  display: grid;
+  gap: var(--co-space-2);
+}
+
+.co-quantity-input__label {
+  color: var(--co-color-text);
+  font-weight: 600;
+}
+
+.co-quantity-input__controls {
+  display: flex;
+  align-items: stretch;
+  inline-size: min(100%, calc(var(--co-space-11) + var(--co-space-8)));
+  border: var(--co-border-width) solid var(--co-color-border);
+  border-radius: var(--co-radius-input);
+  background-color: var(--co-color-surface);
+}
+
+.co-quantity-input__field {
+  min-inline-size: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  text-align: center;
+}
+
+.co-quantity-input__field:focus-visible {
+  outline-offset: calc(var(--co-focus-ring-offset) * -1);
+}
+
+.co-quantity-input__button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--co-space-6) + var(--co-space-3));
+  min-block-size: calc(var(--co-space-6) + var(--co-space-3));
+  padding: 0;
+  border: 0;
+  color: var(--co-color-text);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.co-quantity-input__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

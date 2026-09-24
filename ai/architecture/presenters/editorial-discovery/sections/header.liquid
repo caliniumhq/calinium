@@ -1,0 +1,276 @@
+{% liquid
+  assign ed_desktop_menu = section.settings.menu
+  assign ed_mobile_menu = section.settings.mobile_menu | default: ed_desktop_menu
+  assign ed_logo = section.settings.logo | default: settings.logo
+  assign ed_transparent_logo = section.settings.transparent_logo | default: ed_logo
+  assign ed_mobile_navigation_id = 'EditorialNavigation-' | append: section.id
+  assign ed_mobile_navigation_title_id = 'EditorialNavigationTitle-' | append: section.id
+  assign ed_search_results_id = 'EditorialPredictiveSearchResults-' | append: section.id
+  assign ed_localization_form_id = 'EditorialLocalizationForm-' | append: section.id
+  assign ed_mobile_localization_form_id = 'EditorialMobileLocalizationForm-' | append: section.id
+  assign ed_account_url = routes.account_login_url
+  assign ed_show_localization = false
+  assign ed_has_countries = false
+  assign ed_has_languages = false
+  assign ed_is_transparent = false
+  assign ed_distinct_transparent_logo = false
+  assign ed_classes = 'co-ed-header co-color-scheme-' | append: section.settings.color_scheme
+  assign ed_open_menu_label = 'accessibility.open_main_navigation' | t
+  assign ed_close_menu_label = 'accessibility.close_main_navigation' | t
+  assign ed_search_label = 'header.search' | t
+  assign ed_account_label = 'header.account' | t
+  assign ed_cart_label = 'header.cart_count' | t: count: cart.item_count
+  assign ed_localization_label = 'localization.update' | t
+
+  if customer
+    assign ed_account_url = routes.account_url
+  endif
+  if localization.available_countries.size > 1
+    assign ed_has_countries = true
+  endif
+  if localization.available_languages.size > 1
+    assign ed_has_languages = true
+  endif
+  if section.settings.show_localization
+    if ed_has_countries or ed_has_languages
+      assign ed_show_localization = true
+    endif
+  endif
+  if section.settings.sticky_header
+    assign ed_classes = ed_classes | append: ' co-ed-header--sticky'
+  endif
+  if section.settings.show_border
+    assign ed_classes = ed_classes | append: ' co-ed-header--bordered'
+  endif
+  if section.settings.transparent_homepage and request.page_type == 'index'
+    assign ed_is_transparent = true
+    assign ed_classes = ed_classes | append: ' co-ed-header--transparent co-ed-header--transparent-' | append: section.settings.transparent_text_treatment
+    if section.settings.transparent_logo != blank and ed_transparent_logo.id != ed_logo.id
+      assign ed_distinct_transparent_logo = true
+      assign ed_classes = ed_classes | append: ' co-ed-header--has-transparent-logo'
+    endif
+  endif
+%}
+
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{% if ed_logo != blank or ed_transparent_logo != blank %}{{ 'component-image.css' | asset_url | stylesheet_tag }}{% endif %}
+{{ 'editorial-discovery-header.css' | asset_url | stylesheet_tag }}
+{{ 'editorial-discovery-responsive.css' | asset_url | stylesheet_tag }}
+{% if section.settings.show_search and section.settings.enable_predictive_search %}
+  {{ 'predictive-search.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'predictive-search.js' | asset_url }}" type="module"></script>
+{% endif %}
+<script src="{{ 'header.js' | asset_url }}" type="module"></script>
+
+<header
+  class="{{ ed_classes }}"
+  data-header
+  data-editorial-discovery-header
+  data-calinium-presenter="section.header.editorial_discovery"
+  data-calinium-responsive-family="family.responsive_behavior.editorial_discovery.v1"
+  data-sticky-header="{{ section.settings.sticky_header }}"
+  data-desktop-navigation-activation="{{ section.settings.desktop_navigation_activation }}"
+  data-hide-on-scroll="{{ section.settings.hide_on_scroll }}"
+  data-transparent="{{ ed_is_transparent }}"
+  style="--co-ed-header-height: {{ section.settings.desktop_height }}px; --co-ed-header-height-mobile: {{ section.settings.mobile_height }}px; --co-ed-header-padding: {{ section.settings.horizontal_padding }}px; --co-ed-logo-width: {{ section.settings.desktop_logo_width }}px; --co-ed-logo-width-mobile: {{ section.settings.mobile_logo_width }}px;"
+>
+  <div class="co-ed-header__masthead{% if section.settings.width == 'contained' %} co-page-width{% endif %}">
+    <div class="co-ed-header__mobile-menu">
+      {% if ed_mobile_menu != blank %}
+        {% render 'button', aria_label: ed_open_menu_label, aria_controls: ed_mobile_navigation_id, aria_expanded: false, icon: 'menu', variant: 'text', class: 'co-ed-header__menu-toggle', data_action: 'mobile-nav-toggle' %}
+      {% endif %}
+    </div>
+
+    <a class="co-ed-header__brand" href="{{ routes.root_url | escape }}" aria-label="{{ shop.name | escape }}">
+      {% if ed_logo != blank %}
+        <span class="co-ed-header__logo co-ed-header__logo--default">
+          {% render 'responsive-image', image: ed_logo, alt: '', loading: 'eager', fetchpriority: 'high', sizes: '(max-width: 47.99rem) 50vw, 320px', widths: '120, 180, 240, 320', class: 'co-ed-header__logo-image' %}
+        </span>
+      {% else %}
+        <span class="co-ed-header__brand-name">{{ shop.name | escape }}</span>
+      {% endif %}
+      {% if ed_distinct_transparent_logo %}
+        <span class="co-ed-header__logo co-ed-header__logo--transparent">
+          {% render 'responsive-image', image: ed_transparent_logo, alt: '', loading: 'eager', fetchpriority: 'high', sizes: '(max-width: 47.99rem) 50vw, 320px', widths: '120, 180, 240, 320', class: 'co-ed-header__logo-image' %}
+        </span>
+      {% endif %}
+    </a>
+
+    <div class="co-ed-header__utilities">
+      {% if section.settings.show_search %}
+        {% if section.settings.enable_predictive_search %}
+          <details class="co-ed-header__search">
+            <summary class="co-ed-header__utility-button" aria-label="{{ ed_search_label | escape }}">
+              {% render 'icon', name: 'search', size: 20 %}<span class="co-visually-hidden">{{ ed_search_label }}</span>
+            </summary>
+            <form class="co-ed-header__search-form" action="{{ routes.search_url }}" method="get" role="search" data-predictive-search data-predictive-search-url="{{ routes.predictive_search_url }}" data-predictive-search-section-id="predictive-search" data-loading-message="{{ 'search.loading_results' | t | escape }}" data-error-message="{{ 'search.predictive_error' | t | escape }}">
+              <label class="co-visually-hidden" for="EditorialHeaderSearch-{{ section.id }}">{{ 'header.search' | t }}</label>
+              <input type="hidden" name="options[prefix]" value="last">
+              <input id="EditorialHeaderSearch-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'search.input_placeholder' | t }}" autocomplete="off" enterkeyhint="search" data-predictive-search-input aria-autocomplete="list" aria-controls="{{ ed_search_results_id }}" aria-expanded="false">
+              {% render 'button', label: ed_search_label, type: 'submit', variant: 'primary', class: 'co-ed-header__search-submit' %}
+              <div id="{{ ed_search_results_id }}" class="co-ed-header__predictive-results" data-predictive-search-results hidden></div>
+            </form>
+          </details>
+        {% else %}
+          {% render 'button', url: routes.search_url, aria_label: ed_search_label, icon: 'search', variant: 'text', class: 'co-ed-header__utility-link' %}
+        {% endif %}
+      {% endif %}
+
+      {% if section.settings.show_account and shop.customer_accounts_enabled %}
+        {% render 'button', url: ed_account_url, aria_label: ed_account_label, icon: 'account', variant: 'text', class: 'co-ed-header__utility-link co-ed-header__account' %}
+      {% endif %}
+
+      {% if ed_show_localization %}
+        <details class="co-ed-header__localization">
+          <summary class="co-ed-header__utility-button" aria-label="{{ ed_localization_label | escape }}">{% render 'icon', name: 'globe', size: 20 %}<span class="co-visually-hidden">{{ ed_localization_label }}</span></summary>
+          {% form 'localization', id: ed_localization_form_id, class: 'co-ed-header__localization-form' %}
+            {% if ed_has_countries %}
+              <label for="EditorialCountry-{{ section.id }}">{{ 'localization.country_region' | t }}</label>
+              <select id="EditorialCountry-{{ section.id }}" name="country_code">
+                {% for country in localization.available_countries %}<option value="{{ country.iso_code | escape }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.name | escape }} ({{ country.currency.iso_code | escape }} {{ country.currency.symbol | escape }})</option>{% endfor %}
+              </select>
+            {% endif %}
+            {% if ed_has_languages %}
+              <label for="EditorialLanguage-{{ section.id }}">{{ 'localization.language' | t }}</label>
+              <select id="EditorialLanguage-{{ section.id }}" name="language_code">
+                {% for language in localization.available_languages %}<option value="{{ language.iso_code | escape }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | escape }}</option>{% endfor %}
+              </select>
+            {% endif %}
+            {% render 'button', label: ed_localization_label, type: 'submit', variant: 'secondary' %}
+          {% endform %}
+        </details>
+      {% endif %}
+
+      {% if section.settings.show_cart %}
+        <span class="co-ed-header__cart" data-header-cart-count data-cart-count-one="{{ 'header.cart_count' | t: count: 1 | escape }}" data-cart-count-other="{{ 'header.cart_count' | t: count: 2 | escape }}">
+          {% render 'button', url: routes.cart_url, aria_label: ed_cart_label, icon: 'cart', variant: 'text', class: 'co-ed-header__utility-link', data_action: 'cart-drawer-open' %}
+          <span class="co-ed-header__cart-count" data-header-cart-count-value aria-hidden="true">{{ cart.item_count }}</span>
+        </span>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if ed_desktop_menu != blank %}
+    <div class="co-ed-header__navigation-wrap{% if section.settings.width == 'contained' %} co-page-width{% endif %}">
+      <nav class="co-ed-header__desktop-navigation" aria-label="{{ 'navigation.main' | t }}">
+        <ul class="co-ed-header__desktop-list" role="list">
+          {% for link in ed_desktop_menu.links %}
+            <li class="co-ed-header__desktop-item">
+              {% if link.links != blank %}
+                <details class="co-ed-header__desktop-disclosure" data-header-desktop-disclosure>
+                  <a class="co-ed-header__desktop-link{% if link.active or link.child_active %} is-active{% endif %}" href="{{ link.url | escape }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+                  <summary aria-label="{{ 'accessibility.submenu' | t: title: link.title | escape }}">{% render 'icon', name: 'chevron-down', size: 14 %}</summary>
+                  <div class="co-ed-header__submenu-panel">
+                    <p class="co-ed-header__submenu-heading" aria-hidden="true">{{ link.title | escape }}</p>
+                    <ul class="co-ed-header__submenu" role="list">
+                      {% for child_link in link.links %}
+                        <li>
+                          <a class="co-ed-header__submenu-link{% if child_link.active or child_link.child_active %} is-active{% endif %}" href="{{ child_link.url | escape }}" {% if child_link.current %}aria-current="page"{% endif %}>{{ child_link.title | escape }}</a>
+                          {% if child_link.links != blank %}
+                            <ul class="co-ed-header__submenu-nested" role="list">
+                              {% for grandchild_link in child_link.links %}<li><a href="{{ grandchild_link.url | escape }}" {% if grandchild_link.current %}aria-current="page"{% endif %}>{{ grandchild_link.title | escape }}</a></li>{% endfor %}
+                            </ul>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </details>
+              {% else %}
+                <a class="co-ed-header__desktop-link{% if link.active %} is-active{% endif %}" href="{{ link.url | escape }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  {% endif %}
+
+  {% if ed_mobile_menu != blank %}
+    <div class="co-ed-header__drawer-overlay" data-mobile-nav-overlay aria-hidden="true"></div>
+    <nav id="{{ ed_mobile_navigation_id }}" class="co-ed-header__mobile-navigation" aria-labelledby="{{ ed_mobile_navigation_title_id }}" data-mobile-nav tabindex="-1">
+      <div class="co-ed-header__drawer-heading">
+        <p id="{{ ed_mobile_navigation_title_id }}" class="co-ed-header__drawer-title">{{ 'navigation.main' | t }}</p>
+        {% render 'button', aria_label: ed_close_menu_label, icon: 'close', variant: 'text', class: 'co-ed-header__drawer-close', data_action: 'mobile-nav-close' %}
+      </div>
+      <ol class="co-ed-header__mobile-list">
+        {% for link in ed_mobile_menu.links %}
+          <li class="co-ed-header__mobile-item">
+            <span class="co-ed-header__mobile-index" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <a class="co-ed-header__mobile-link{% if link.active or link.child_active %} is-active{% endif %}" href="{{ link.url | escape }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+            {% if link.links != blank %}
+              <details class="co-ed-header__mobile-disclosure">
+                <summary>{{ 'header.expand_menu' | t: title: link.title }}</summary>
+                <ul class="co-ed-header__mobile-submenu" role="list">
+                  {% for child_link in link.links %}<li><a href="{{ child_link.url | escape }}" {% if child_link.current %}aria-current="page"{% endif %}>{{ child_link.title | escape }}</a></li>{% endfor %}
+                </ul>
+              </details>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+
+      {% if section.settings.show_account and shop.customer_accounts_enabled %}
+        <div class="co-ed-header__mobile-utilities">
+          {% render 'button', url: ed_account_url, label: ed_account_label, variant: 'secondary' %}
+          {% if ed_show_localization %}
+            {% form 'localization', id: ed_mobile_localization_form_id, class: 'co-ed-header__mobile-localization-form' %}
+              {% if ed_has_countries %}<label for="EditorialMobileCountry-{{ section.id }}">{{ 'localization.country_region' | t }}</label><select id="EditorialMobileCountry-{{ section.id }}" name="country_code">{% for country in localization.available_countries %}<option value="{{ country.iso_code | escape }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.name | escape }}</option>{% endfor %}</select>{% endif %}
+              {% if ed_has_languages %}<label for="EditorialMobileLanguage-{{ section.id }}">{{ 'localization.language' | t }}</label><select id="EditorialMobileLanguage-{{ section.id }}" name="language_code">{% for language in localization.available_languages %}<option value="{{ language.iso_code | escape }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | escape }}</option>{% endfor %}</select>{% endif %}
+              {% render 'button', label: ed_localization_label, type: 'submit', variant: 'secondary' %}
+            {% endform %}
+          {% endif %}
+        </div>
+      {% elsif ed_show_localization %}
+        <div class="co-ed-header__mobile-utilities">
+          {% form 'localization', id: ed_mobile_localization_form_id, class: 'co-ed-header__mobile-localization-form' %}
+            {% if ed_has_countries %}<label for="EditorialMobileCountry-{{ section.id }}">{{ 'localization.country_region' | t }}</label><select id="EditorialMobileCountry-{{ section.id }}" name="country_code">{% for country in localization.available_countries %}<option value="{{ country.iso_code | escape }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.name | escape }}</option>{% endfor %}</select>{% endif %}
+            {% if ed_has_languages %}<label for="EditorialMobileLanguage-{{ section.id }}">{{ 'localization.language' | t }}</label><select id="EditorialMobileLanguage-{{ section.id }}" name="language_code">{% for language in localization.available_languages %}<option value="{{ language.iso_code | escape }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | escape }}</option>{% endfor %}</select>{% endif %}
+            {% render 'button', label: ed_localization_label, type: 'submit', variant: 'secondary' %}
+          {% endform %}
+        </div>
+      {% endif %}
+    </nav>
+  {% endif %}
+</header>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "tag": "section",
+  "class": "co-section-header",
+  "limit": 1,
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "header", "content": "t:sections.header.groups.navigation" },
+    { "type": "link_list", "id": "menu", "label": "t:sections.header.settings.menu.label", "info": "t:sections.header.settings.menu.info", "default": "main-menu" },
+    { "type": "link_list", "id": "mobile_menu", "label": "t:sections.header.settings.mobile_menu.label", "info": "t:sections.header.settings.mobile_menu.info" },
+    { "type": "select", "id": "desktop_navigation_activation", "label": "t:sections.header.settings.desktop_navigation_activation.label", "default": "hover", "options": [{ "value": "hover", "label": "t:sections.header.settings.desktop_navigation_activation.options.hover" }, { "value": "click", "label": "t:sections.header.settings.desktop_navigation_activation.options.click" }] },
+    { "type": "header", "content": "t:sections.header.groups.logo" },
+    { "type": "image_picker", "id": "logo", "label": "t:sections.header.settings.logo.label", "info": "t:sections.header.settings.logo.info" },
+    { "type": "image_picker", "id": "transparent_logo", "label": "t:sections.header.settings.transparent_logo.label", "info": "t:sections.header.settings.transparent_logo.info" },
+    { "type": "range", "id": "desktop_logo_width", "min": 80, "max": 360, "step": 4, "unit": "px", "label": "t:sections.header.settings.desktop_logo_width.label", "default": 160 },
+    { "type": "range", "id": "mobile_logo_width", "min": 60, "max": 240, "step": 4, "unit": "px", "label": "t:sections.header.settings.mobile_logo_width.label", "default": 128 },
+    { "type": "header", "content": "t:sections.header.groups.layout" },
+    { "type": "select", "id": "layout", "label": "t:sections.header.settings.layout.label", "default": "centered", "options": [{ "value": "centered", "label": "t:sections.header.settings.layout.options.centered" }, { "value": "left", "label": "t:sections.header.settings.layout.options.left" }] },
+    { "type": "select", "id": "width", "label": "t:sections.header.settings.width.label", "default": "contained", "options": [{ "value": "contained", "label": "t:sections.header.settings.width.options.contained" }, { "value": "full", "label": "t:sections.header.settings.width.options.full" }] },
+    { "type": "range", "id": "desktop_height", "min": 56, "max": 128, "step": 4, "unit": "px", "label": "t:sections.header.settings.desktop_height.label", "default": 80 },
+    { "type": "range", "id": "mobile_height", "min": 48, "max": 96, "step": 4, "unit": "px", "label": "t:sections.header.settings.mobile_height.label", "default": 64 },
+    { "type": "range", "id": "horizontal_padding", "min": 12, "max": 64, "step": 2, "unit": "px", "label": "t:sections.header.settings.horizontal_padding.label", "default": 24 },
+    { "type": "checkbox", "id": "show_border", "label": "t:sections.header.settings.show_border.label", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.header.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "header", "content": "t:sections.header.groups.behavior" },
+    { "type": "checkbox", "id": "sticky_header", "label": "t:sections.header.settings.sticky_header.label", "info": "t:sections.header.settings.sticky_header.info", "default": true },
+    { "type": "checkbox", "id": "hide_on_scroll", "label": "t:sections.header.settings.hide_on_scroll.label", "info": "t:sections.header.settings.hide_on_scroll.info", "default": false },
+    { "type": "checkbox", "id": "transparent_homepage", "label": "t:sections.header.settings.transparent_homepage.label", "info": "t:sections.header.settings.transparent_homepage.info", "default": false },
+    { "type": "select", "id": "transparent_text_treatment", "label": "t:sections.header.settings.transparent_text_treatment.label", "default": "light", "options": [{ "value": "light", "label": "t:sections.header.settings.transparent_text_treatment.options.light" }, { "value": "dark", "label": "t:sections.header.settings.transparent_text_treatment.options.dark" }] },
+    { "type": "header", "content": "t:sections.header.groups.utilities" },
+    { "type": "checkbox", "id": "show_search", "label": "t:sections.header.settings.show_search.label", "default": true },
+    { "type": "checkbox", "id": "enable_predictive_search", "label": "t:sections.header.settings.enable_predictive_search.label", "info": "t:sections.header.settings.enable_predictive_search.info", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "t:sections.header.settings.show_account.label", "default": true },
+    { "type": "checkbox", "id": "show_cart", "label": "t:sections.header.settings.show_cart.label", "default": true },
+    { "type": "checkbox", "id": "show_localization", "label": "t:sections.header.settings.show_localization.label", "info": "t:sections.header.settings.show_localization.info", "default": true }
+  ],
+  "presets": [{ "name": "t:sections.header.presets.default" }]
+}
+{% endschema %}

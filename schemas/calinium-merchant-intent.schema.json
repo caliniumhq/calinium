@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-intent.schema.json",
+  "title": "Calinium Core 2.0 Merchant Intent",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "revision_id", "parent_revision_id", "inferred_shopify_facts", "merchant_provided_answers", "explicit_preferences", "unresolved_material_decisions", "confidence", "provenance"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "merchant-intent-v1"},
+    "revision_id": {"type": "string", "pattern": "^merchant-intent-[a-f0-9]{20}$"},
+    "parent_revision_id": {"type": ["string", "null"], "pattern": "^merchant-intent-[a-f0-9]{20}$"},
+    "inferred_shopify_facts": {"type": "array", "items": {"$ref": "#/$defs/value"}},
+    "merchant_provided_answers": {"type": "array", "items": {"$ref": "#/$defs/value"}},
+    "explicit_preferences": {"type": "array", "items": {"$ref": "#/$defs/value"}},
+    "unresolved_material_decisions": {"type": "array", "maxItems": 1, "items": {"type": "object", "required": ["id", "question", "materiality", "status"], "properties": {"id": {"type": "string", "minLength": 1}, "question": {"type": "string", "minLength": 1}, "materiality": {"type": "string", "const": "architecture_changing"}, "status": {"type": "string", "const": "unresolved"}}, "additionalProperties": false}},
+    "confidence": {"type": "object", "required": ["overall", "basis"], "properties": {"overall": {"type": "string", "enum": ["High", "Medium", "Low", "Unknown"]}, "basis": {"type": "string", "minLength": 1}}, "additionalProperties": false},
+    "provenance": {"type": "array", "items": {"type": "object", "required": ["source_type", "source_revision"], "properties": {"source_type": {"type": "string", "enum": ["shopify_inference", "merchant_answer", "merchant_preference", "approved_creative_brief", "approved_store_strategy"]}, "source_revision": {"type": ["string", "null"]}}, "additionalProperties": false}},
+    "material_question_resolution": {"$ref": "calinium-architecture-material-clarification.schema.json"}
+  },
+  "$defs": {
+    "shoppingMode": {"type": "string", "enum": ["image_led", "information_led", "balanced"]},
+    "value": {"type": "object", "required": ["path", "value", "confidence", "source_type", "source_revision"], "properties": {"path": {"type": "string", "minLength": 1}, "value": {}, "confidence": {"type": "string", "enum": ["High", "Medium", "Low", "Unknown"]}, "source_type": {"type": "string", "enum": ["shopify_inference", "merchant_answer", "merchant_preference"]}, "source_revision": {"type": ["string", "null"]}}, "allOf": [{"if": {"properties": {"path": {"const": "storefront.shopping_mode"}}, "required": ["path"]}, "then": {"properties": {"value": {"$ref": "#/$defs/shoppingMode"}}}}], "additionalProperties": false}
+  },
+  "additionalProperties": false
+}

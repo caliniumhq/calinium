@@ -1,0 +1,131 @@
+/* Additive, token-based layouts for Calinium's Brand Storytelling Pack. */
+.co-brand-story-section { padding-block: var(--co-section-padding-top) var(--co-section-padding-bottom); color: var(--co-color-text); background: var(--co-color-background-gradient), var(--co-color-background); }
+.co-brand-story-section__header { margin-block-end: var(--co-space-6); }
+.co-brand-story-section__content { display: grid; gap: var(--co-space-4); align-content: center; }
+.co-brand-story-section__actions { display: flex; flex-wrap: wrap; gap: var(--co-space-3); margin-block-start: var(--co-space-2); }
+.co-brand-story-section__empty { color: var(--co-color-text-muted); }
+.co-brand-story-section__placeholder { display: grid; min-block-size: 16rem; place-items: center; background: var(--co-color-surface); color: var(--co-color-text-muted); }
+.co-brand-story-section__placeholder svg { inline-size: 100%; block-size: 100%; }
+.co-brand-story-section__quote { padding-inline-start: var(--co-space-4); border-inline-start: var(--co-border-width) solid var(--co-color-accent); font-family: var(--co-font-heading-family); font-size: var(--co-font-size-h5); font-style: var(--co-font-heading-style); line-height: var(--co-line-height-heading); }
+.co-brand-story-section__note { color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+
+.co-founder-story__layout,
+.co-craftsmanship__layout { display: grid; gap: var(--co-space-6); align-items: center; }
+.co-founder-story__media,
+.co-craftsmanship__media { background: var(--co-color-surface); }
+.co-founder-story__media .co-image__media,
+.co-craftsmanship__media .co-image__media,
+.co-craftsmanship__video { inline-size: 100%; block-size: 100%; object-fit: cover; }
+.co-founder-story__signature { max-inline-size: 10rem; }
+.co-founder-story__signature .co-image__media { max-block-size: var(--co-space-8); object-fit: contain; }
+.co-founder-story__achievements,
+.co-craftsmanship__steps,
+.co-materials__grid,
+.co-brand-values__grid,
+.co-team__grid,
+.co-awards-certifications__grid,
+.co-sustainability__initiatives,
+.co-sustainability__metrics,
+.co-sustainability__certifications { display: grid; gap: var(--co-grid-gap); }
+.co-founder-story__achievement { display: grid; grid-template-columns: auto 1fr; gap: var(--co-space-3); align-items: start; }
+.co-founder-story__achievement-icon { color: var(--co-color-accent); }
+
+.co-brand-timeline__track { display: grid; gap: var(--co-space-6); }
+.co-brand-timeline__item { position: relative; display: grid; grid-template-columns: auto 1fr; gap: var(--co-space-4); min-inline-size: 0; }
+.co-brand-timeline__marker { display: grid; inline-size: var(--co-space-6); block-size: var(--co-space-6); place-items: center; border: var(--co-border-width) solid var(--co-color-accent); border-radius: 50%; color: var(--co-color-accent); }
+.co-brand-timeline__item:not(:last-child)::before { position: absolute; inset-block: var(--co-space-6) calc(var(--co-space-6) * -1); inset-inline-start: calc(var(--co-space-3) - (var(--co-border-width) / 2)); inline-size: var(--co-border-width); content: ''; background: var(--co-color-border); }
+.co-brand-timeline__media { margin-block-start: var(--co-space-3); }
+.co-brand-timeline__media .co-image__media { object-fit: cover; }
+.co-brand-timeline__controls { display: none; gap: var(--co-space-2); margin-block-start: var(--co-space-5); }
+.co-brand-timeline[data-carousel-enhanced="true"] .co-brand-timeline__controls { display: flex; }
+
+.co-materials__item { display: grid; gap: var(--co-space-3); }
+.co-materials__media .co-image__media { object-fit: cover; }
+.co-materials__details { display: grid; gap: var(--co-space-2); }
+.co-materials__meta { color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+.co-materials__icon { color: var(--co-color-accent); }
+
+.co-craftsmanship__steps { margin-block-start: var(--co-space-2); }
+.co-manufacturing-process__list { display: grid; gap: var(--co-space-5); counter-reset: process; }
+.co-manufacturing-process__step { position: relative; display: grid; grid-template-columns: auto 1fr; gap: var(--co-space-4); counter-increment: process; }
+.co-manufacturing-process__step::before { display: grid; inline-size: var(--co-space-7); block-size: var(--co-space-7); place-items: center; border: var(--co-border-width) solid var(--co-color-accent); border-radius: 50%; color: var(--co-color-accent); content: counter(process); font-family: var(--co-font-heading-family); }
+.co-manufacturing-process__step:not(:last-child)::after { position: absolute; inset-block-start: var(--co-space-7); inset-inline-start: calc(var(--co-space-7) / 2); inline-size: var(--co-border-width); block-size: calc(100% - var(--co-space-7)); content: ''; background: var(--co-color-border); }
+.co-manufacturing-process__step-content { display: grid; gap: var(--co-space-2); }
+.co-manufacturing-process__meta { display: flex; flex-wrap: wrap; gap: var(--co-space-3); color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+
+.co-sustainability__layout { display: grid; gap: var(--co-space-6); }
+.co-sustainability__initiatives { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.co-sustainability__initiative { min-inline-size: 0; }
+.co-sustainability__metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-block-start: var(--co-space-6); }
+.co-sustainability__certifications { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-block-start: var(--co-space-6); }
+.co-sustainability__certification { padding: var(--co-space-4); border: var(--co-border-width) solid var(--co-color-border); }
+
+.co-brand-values__grid { grid-template-columns: repeat(var(--co-brand-values-mobile-columns, 2), minmax(0, 1fr)); }
+.co-brand-values--list .co-brand-values__grid { grid-template-columns: 1fr; }
+.co-brand-values__item { min-inline-size: 0; }
+.co-brand-values--featured-first .co-brand-values__item:first-child { padding: var(--co-space-5); background: var(--co-color-surface); }
+
+.co-team__grid { grid-template-columns: repeat(var(--co-team-mobile-columns, 2), minmax(0, 1fr)); }
+.co-team__member { display: grid; gap: var(--co-space-3); min-inline-size: 0; }
+.co-team__portrait .co-image__media { object-fit: cover; }
+.co-team__details { display: grid; gap: var(--co-space-2); }
+.co-team__name { font-size: var(--co-font-size-h5); }
+.co-team__role,
+.co-team__bio { color: var(--co-color-text-muted); }
+.co-team__links { display: flex; flex-wrap: wrap; gap: var(--co-space-3); font-size: var(--co-font-size-small); }
+
+.co-awards-certifications__grid { grid-template-columns: repeat(var(--co-awards-mobile-columns, 2), minmax(0, 1fr)); }
+.co-awards-certifications__item { display: grid; gap: var(--co-space-3); min-inline-size: 0; padding: var(--co-space-4); border: var(--co-border-width) solid var(--co-color-border); }
+.co-awards-certifications__logo .co-image__media { max-block-size: var(--co-space-8); object-fit: contain; }
+.co-awards-certifications__issuer,
+.co-awards-certifications__year,
+.co-awards-certifications__description { color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+.co-awards-certifications__icon { color: var(--co-color-accent); }
+
+.co-behind-the-scenes__track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--co-grid-gap); }
+.co-behind-the-scenes__item { min-inline-size: 0; }
+.co-behind-the-scenes__figure { display: grid; gap: var(--co-space-2); }
+.co-behind-the-scenes__media .co-image__media,
+.co-behind-the-scenes__video { inline-size: 100%; block-size: 100%; object-fit: cover; }
+.co-behind-the-scenes__caption { color: var(--co-color-text-muted); font-size: var(--co-font-size-small); }
+.co-behind-the-scenes__meta { display: flex; flex-wrap: wrap; gap: var(--co-space-2); }
+.co-behind-the-scenes__controls { display: none; gap: var(--co-space-2); margin-block-start: var(--co-space-5); }
+.co-behind-the-scenes[data-carousel-enhanced="true"] .co-behind-the-scenes__controls { display: flex; }
+
+@media (min-width: 48rem) {
+  .co-founder-story__layout,
+  .co-craftsmanship__layout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .co-founder-story--image-right .co-founder-story__media,
+  .co-craftsmanship--image-right .co-craftsmanship__media { grid-column: 2; grid-row: 1; }
+  .co-founder-story--image-right .co-founder-story__content,
+  .co-craftsmanship--image-right .co-craftsmanship__content { grid-column: 1; grid-row: 1; }
+  .co-founder-story--full-width .co-founder-story__inner { max-inline-size: none; padding-inline: var(--co-page-gutter); }
+  .co-brand-timeline--horizontal .co-brand-timeline__track,
+  .co-behind-the-scenes--scroll .co-behind-the-scenes__track { grid-auto-columns: minmax(18rem, 32vw); grid-auto-flow: column; grid-template-columns: none; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: inline mandatory; scrollbar-width: none; }
+  .co-brand-timeline--horizontal .co-brand-timeline__track::-webkit-scrollbar,
+  .co-behind-the-scenes--scroll .co-behind-the-scenes__track::-webkit-scrollbar { display: none; }
+  .co-brand-timeline--horizontal .co-brand-timeline__item,
+  .co-behind-the-scenes--scroll .co-behind-the-scenes__item { scroll-snap-align: start; }
+  .co-brand-timeline--horizontal .co-brand-timeline__item { grid-template-columns: 1fr; }
+  .co-brand-timeline--horizontal .co-brand-timeline__item:not(:last-child)::before { inset-block-start: calc(var(--co-space-3) - (var(--co-border-width) / 2)); inset-inline-start: var(--co-space-6); inline-size: calc(100% - var(--co-space-6)); block-size: var(--co-border-width); }
+  .co-materials__grid,
+  .co-craftsmanship__steps,
+  .co-sustainability__initiatives,
+  .co-sustainability__metrics,
+  .co-sustainability__certifications { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .co-manufacturing-process__list { grid-template-columns: repeat(var(--co-process-columns, 4), minmax(0, 1fr)); }
+  .co-manufacturing-process__step { grid-template-columns: 1fr; }
+  .co-manufacturing-process__step::after { inset-block-start: calc(var(--co-space-7) / 2); inset-inline-start: var(--co-space-7); inline-size: calc(100% - var(--co-space-7)); block-size: var(--co-border-width); }
+  .co-brand-values__grid { grid-template-columns: repeat(var(--co-brand-values-desktop-columns, 4), minmax(0, 1fr)); }
+  .co-brand-values--list .co-brand-values__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .co-brand-values--featured-first .co-brand-values__item:first-child { grid-column: span 2; }
+  .co-team__grid { grid-template-columns: repeat(var(--co-team-desktop-columns, 4), minmax(0, 1fr)); }
+  .co-awards-certifications__grid { grid-template-columns: repeat(var(--co-awards-desktop-columns, 4), minmax(0, 1fr)); }
+  .co-behind-the-scenes__track { grid-template-columns: repeat(var(--co-gallery-desktop-columns, 3), minmax(0, 1fr)); }
+  .co-behind-the-scenes--editorial .co-behind-the-scenes__item:first-child { grid-column: span 2; grid-row: span 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .co-brand-timeline__track,
+  .co-behind-the-scenes__track { scroll-behavior: auto; }
+}

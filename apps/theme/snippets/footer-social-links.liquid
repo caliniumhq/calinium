@@ -1,0 +1,47 @@
+{% liquid
+  assign footer_social_heading = heading | default: blank
+  assign footer_social_instagram = instagram_url | default: blank
+  assign footer_social_facebook = facebook_url | default: blank
+  assign footer_social_tiktok = tiktok_url | default: blank
+  assign footer_social_pinterest = pinterest_url | default: blank
+  assign footer_social_x = x_url | default: blank
+  assign footer_social_youtube = youtube_url | default: blank
+  assign footer_social_linkedin = linkedin_url | default: blank
+  assign footer_social_has_links = false
+
+  if footer_social_instagram != blank or footer_social_facebook != blank or footer_social_tiktok != blank or footer_social_pinterest != blank or footer_social_x != blank or footer_social_youtube != blank or footer_social_linkedin != blank
+    assign footer_social_has_links = true
+  endif
+%}
+
+{% if footer_social_has_links %}
+  <section class="co-footer__block co-footer__block--social" {% if block != blank %}{{ block.shopify_attributes }}{% endif %}>
+    {% if footer_social_heading != blank %}
+      <h2 class="co-footer__block-heading">{{ footer_social_heading | escape }}</h2>
+    {% endif %}
+
+    <ul class="co-footer__social-list" role="list">
+      {% if footer_social_instagram != blank %}
+        <li><a href="{{ footer_social_instagram | escape }}" aria-label="Instagram" target="_blank" rel="noopener noreferrer">{% render 'icon', name: 'instagram', size: 20 %}<span class="co-visually-hidden">Instagram</span></a></li>
+      {% endif %}
+      {% if footer_social_facebook != blank %}
+        <li><a href="{{ footer_social_facebook | escape }}" aria-label="Facebook" target="_blank" rel="noopener noreferrer">{% render 'icon', name: 'facebook', size: 20 %}<span class="co-visually-hidden">Facebook</span></a></li>
+      {% endif %}
+      {% if footer_social_tiktok != blank %}
+        <li><a href="{{ footer_social_tiktok | escape }}" aria-label="TikTok" target="_blank" rel="noopener noreferrer">{% render 'icon', name: 'tiktok', size: 20 %}<span class="co-visually-hidden">TikTok</span></a></li>
+      {% endif %}
+      {% if footer_social_pinterest != blank %}
+        <li><a href="{{ footer_social_pinterest | escape }}" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">{% render 'icon', name: 'pinterest', size: 20 %}<span class="co-visually-hidden">Pinterest</span></a></li>
+      {% endif %}
+      {% if footer_social_x != blank %}
+        <li><a href="{{ footer_social_x | escape }}" aria-label="X" target="_blank" rel="noopener noreferrer"><span class="co-footer__social-x" aria-hidden="true">X</span><span class="co-visually-hidden">X</span></a></li>
+      {% endif %}
+      {% if footer_social_youtube != blank %}
+        <li><a href="{{ footer_social_youtube | escape }}" aria-label="YouTube" target="_blank" rel="noopener noreferrer">{% render 'icon', name: 'youtube', size: 20 %}<span class="co-visually-hidden">YouTube</span></a></li>
+      {% endif %}
+      {% if footer_social_linkedin != blank %}
+        <li><a href="{{ footer_social_linkedin | escape }}" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">{% render 'icon', name: 'linkedin', size: 20 %}<span class="co-visually-hidden">LinkedIn</span></a></li>
+      {% endif %}
+    </ul>
+  </section>
+{% endif %}

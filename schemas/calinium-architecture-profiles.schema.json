@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-architecture-profiles.schema.json",
+  "title": "Calinium Core 2.0 architecture-profile registry",
+  "type": "object",
+  "required": ["schema_version", "registry_version", "registry_id", "default_profile_id", "profiles"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "registry_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "registry_id": {"type": "string", "const": "calinium_architecture_profiles"},
+    "default_profile_id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"},
+    "profiles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/profile"}}
+  },
+  "$defs": {
+    "family_id": {"type": "string", "pattern": "^family\\.[a-z_]+\\.[a-z0-9_]+\\.v[0-9]+$"},
+    "profile": {
+      "type": "object",
+      "required": ["id", "profile_schema_version", "version", "status", "name", "description", "family_selections", "capability_requirements", "compatibility", "eligibility", "fallback_behavior"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"},
+        "profile_schema_version": {"type": "string", "const": "1.0"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "status": {"type": "string", "const": "active"},
+        "name": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "family_selections": {"type": "object", "required": ["header_navigation", "product_card", "collection_merchandising", "product_detail", "cart", "responsive_behavior"], "properties": {"header_navigation": {"$ref": "#/$defs/family_id"}, "product_card": {"$ref": "#/$defs/family_id"}, "collection_merchandising": {"$ref": "#/$defs/family_id"}, "product_detail": {"$ref": "#/$defs/family_id"}, "cart": {"$ref": "#/$defs/family_id"}, "responsive_behavior": {"$ref": "#/$defs/family_id"}}, "additionalProperties": false},
+        "capability_requirements": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9_]+$"}},
+        "compatibility": {"type": "object", "required": ["target_theme", "compiler_versions", "preset_ids", "design_dna_engine_versions"], "properties": {"target_theme": {"type": "object", "required": ["id", "version"], "properties": {"id": {"type": "string", "const": "calinium-one"}, "version": {"type": "string", "const": "1.0"}}, "additionalProperties": false}, "compiler_versions": {"type": "array", "minItems": 1, "items": {"type": "string"}}, "preset_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["atelier", "maison", "gallery", "ritual", "essential", "signal"]}}, "design_dna_engine_versions": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^design-dna-v[0-9]+$"}}}, "additionalProperties": false},
+        "eligibility": {"type": "object", "required": ["required_signals", "default_eligible", "merchant_question_required"], "properties": {"required_signals": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9_.]+$"}}, "default_eligible": {"type": "boolean"}, "merchant_question_required": {"type": "boolean"}}, "additionalProperties": false},
+        "fallback_behavior": {"type": "object", "required": ["when_profile_unspecified", "when_signals_insufficient", "on_invalid_explicit_profile"], "properties": {"when_profile_unspecified": {"type": "string", "enum": ["select_this_profile", "preserve_registry_default"]}, "when_signals_insufficient": {"type": "string", "enum": ["select_this_profile", "fail_closed"]}, "on_invalid_explicit_profile": {"type": "string", "const": "fail_closed"}}, "additionalProperties": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

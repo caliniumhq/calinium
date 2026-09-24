@@ -1,0 +1,141 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "type_heading_font": "frank_ruhl_libre_n4",
+    "heading_scale": 115,
+    "type_body_font": "geist_n4",
+    "page_width": 1440,
+    "content_width": 760,
+    "mobile_gutter": 20,
+    "desktop_gutter": 64,
+    "section_spacing": 120,
+    "grid_gap": 32,
+    "button_radius": 0,
+    "card_radius": 0,
+    "media_radius": 0,
+    "input_radius": 0,
+    "button_text_transform": "uppercase",
+    "content_for_index": [],
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#fffcf7",
+          "background_gradient": "",
+          "surface": "#f4efe6",
+          "text": "#1d1d1b",
+          "text_muted": "#65615b",
+          "button": "#1d1d1b",
+          "button_label": "#ffffff",
+          "secondary_button": "#fffcf7",
+          "secondary_button_label": "#1d1d1b",
+          "border": "#d7d0c4",
+          "accent": "#53483b"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#1c1c1a",
+          "background_gradient": "",
+          "surface": "#292825",
+          "text": "#ffffff",
+          "text_muted": "#dedad2",
+          "button": "#ffffff",
+          "button_label": "#1c1c1a",
+          "secondary_button": "#1c1c1a",
+          "secondary_button_label": "#ffffff",
+          "border": "#5b5851",
+          "accent": "#d8c4a8"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#e7e1d8",
+          "background_gradient": "",
+          "surface": "#f4f0ea",
+          "text": "#242321",
+          "text_muted": "#5c5954",
+          "button": "#242321",
+          "button_label": "#ffffff",
+          "secondary_button": "#e7e1d8",
+          "secondary_button_label": "#242321",
+          "border": "#bdb5aa",
+          "accent": "#704f3b"
+        }
+      },
+      "scheme-66cf96f9-b300-4f01-abe9-907f97b2bc3b": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "surface": "#faf8f3",
+          "text": "#FFFCFC",
+          "text_muted": "#76706a",
+          "button": "#1d1d1b",
+          "button_label": "#ffffff",
+          "secondary_button": "#f2eee6",
+          "secondary_button_label": "#1d1d1b",
+          "border": "#d7d0c4",
+          "accent": "#a2a67d"
+        }
+      }
+    }
+  },
+  "presets": {
+    "Calinium One": {
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FFFCF7",
+            "background_gradient": "",
+            "surface": "#F4EFE6",
+            "text": "#1D1D1B",
+            "text_muted": "#65615B",
+            "button": "#1D1D1B",
+            "button_label": "#FFFFFF",
+            "secondary_button": "#FFFCF7",
+            "secondary_button_label": "#1D1D1B",
+            "border": "#D7D0C4",
+            "accent": "#53483B"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#1C1C1A",
+            "background_gradient": "",
+            "surface": "#292825",
+            "text": "#FFFFFF",
+            "text_muted": "#DEDAD2",
+            "button": "#FFFFFF",
+            "button_label": "#1C1C1A",
+            "secondary_button": "#1C1C1A",
+            "secondary_button_label": "#FFFFFF",
+            "border": "#5B5851",
+            "accent": "#D8C4A8"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#E7E1D8",
+            "background_gradient": "",
+            "surface": "#F4F0EA",
+            "text": "#242321",
+            "text_muted": "#5C5954",
+            "button": "#242321",
+            "button_label": "#FFFFFF",
+            "secondary_button": "#E7E1D8",
+            "secondary_button_label": "#242321",
+            "border": "#BDB5AA",
+            "accent": "#704F3B"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{% liquid
+  assign inventory_variant = variant
+  assign inventory_state = availability_state
+  assign inventory_threshold = low_inventory_threshold | default: 0
+  assign inventory_message = blank
+
+  if inventory_state == blank
+    if inventory_variant == blank
+      assign inventory_state = 'unavailable'
+    elsif inventory_variant.available
+      assign inventory_state = 'in-stock'
+
+      if inventory_variant.inventory_management != blank and inventory_variant.inventory_policy == 'deny'
+        if inventory_variant.inventory_quantity > 0 and inventory_variant.inventory_quantity <= inventory_threshold
+          assign inventory_state = 'low-stock'
+        endif
+      endif
+    else
+      assign inventory_state = 'sold-out'
+    endif
+  endif
+
+  case inventory_state
+    when 'in-stock'
+      assign inventory_message = 'products.product.in_stock' | t
+    when 'low-stock'
+      assign inventory_message = low_inventory_message
+
+      if inventory_message == blank
+        assign inventory_message = 'products.product.low_stock' | t
+      endif
+    when 'sold-out'
+      assign inventory_message = 'products.product.sold_out' | t
+    else
+      assign inventory_message = 'products.product.unavailable' | t
+  endcase
+%}
+
+<p class="co-product-inventory co-product-inventory--{{ inventory_state | escape }}" data-product-inventory-state="{{ inventory_state | escape }}">
+  <span class="co-product-inventory__indicator" aria-hidden="true"></span>
+  <span>{{ inventory_message | escape }}</span>
+</p>

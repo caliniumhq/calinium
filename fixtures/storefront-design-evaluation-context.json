@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "context_version": "1.0.0",
+  "context_revision": "storefront-design-context-phase-d2-v1",
+  "comparison_fixture_revision": "comparison-fixture-0c881e4699c1cd3e33b0",
+  "comparison_key": "d7413cc5957c06221d6426210f86ae7cfd081bc2e66d55dbdb98a13b12d417f6",
+  "preset": {"status": "available", "revision_id": "essential@1.0", "reference": "output/preset-demo-themes/essential/manifest.json", "reason_code": null},
+  "design_dna": {"status": "not_available", "revision_id": null, "reference": null, "reason_code": "approved_design_dna_payload_absent_from_comparison_provenance"},
+  "merchant_intent": {"status": "reference_only", "revision_id": "merchant-intent-eb43d300930d433a677e", "reference": "output/preset-demo-themes/essential/manifest.json", "reason_code": "revision_reference_present_payload_absent"},
+  "store_intelligence": {"status": "not_available", "revision_id": null, "reference": null, "reason_code": "store_intelligence_revision_absent_from_comparison_provenance"},
+  "catalog": {
+    "fixture_id": "minimal-catalog",
+    "store_fixture_id": "controlled-current-calinium-snowboards-v1",
+    "capability_signals": ["product_present", "collection_present", "navigation_present", "usable_product_media_present"],
+    "content_constraints": ["minimal_approved_content", "no_resolved_design_dna_payload", "no_resolved_merchant_intent_payload"]
+  },
+  "source_authority": ["render_result", "screenshot_sha256", "architecture_registry", "generated_manifest", "controlled_resource_fixture", "phase_d1_calibration"],
+  "excluded_context": ["benchmark_theme_screenshots", "benchmark_theme_source", "unresolved_merchant_facts", "inferred_design_dna"]
+}

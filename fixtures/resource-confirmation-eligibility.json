@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "policy_version": "resource-confirmation-eligibility-v1",
+  "authoritative_legacyexample_plan": {
+    "project_label": "legacyexample test",
+    "deployed_release": 39,
+    "saved_plan_checksum": "c58ff01db31d8469a576bf01643da9a3789e87fda64e152374d6b7e091c89485",
+    "required_confirmations": [
+      "artisan_claims",
+      "craft_context",
+      "craft_media",
+      "locations",
+      "methods",
+      "production_time",
+      "quote",
+      "review:global:global.color_schemes",
+      "review:review:full-screen-hero.badge",
+      "review:review:full-screen-hero.button_link",
+      "review:review:full-screen-hero.secondary_button_link",
+      "review:review:full-screen-hero.slide.badge",
+      "review:review:full-screen-hero.slide.primary_button_link",
+      "review:review:full-screen-hero.slide.secondary_button_link",
+      "review:review:full-screen-hero.slide.text_link",
+      "review:review:full-screen-hero.slide.text_link_label",
+      "review:review:full-screen-hero.text_link",
+      "review:review:full-screen-hero.text_link_label",
+      "review:verification:craftsmanship:artisan_claims",
+      "review:verification:craftsmanship:craft_context",
+      "review:verification:craftsmanship:craft_media",
+      "review:verification:craftsmanship:locations",
+      "review:verification:craftsmanship:methods",
+      "review:verification:craftsmanship:production_time",
+      "review:verification:craftsmanship:quote"
+    ],
+    "fields": [
+      {"setting_ref": "craftsmanship.image", "section_id": "craftsmanship", "kind": "image", "required": true},
+      {"setting_ref": "full-screen-hero.image", "section_id": "full-screen-hero", "kind": "image", "required": true},
+      {"setting_ref": "full-screen-hero.collection", "section_id": "full-screen-hero", "kind": "collection", "required": true},
+      {"setting_ref": "full-screen-hero.product", "section_id": "full-screen-hero", "kind": "product", "required": true},
+      {"setting_ref": "full-screen-hero.badge", "section_id": "full-screen-hero", "kind": "confirmation", "required": false},
+      {"setting_ref": "full-screen-hero.button_link", "section_id": "full-screen-hero", "kind": "confirmation", "required": false},
+      {"setting_ref": "featured-collection.collection", "section_id": "featured-collection", "kind": "collection", "required": true}
+    ],
+    "groups": [
+      {"kind": "image", "field_refs": ["craftsmanship.image", "full-screen-hero.image"], "section_ids": ["craftsmanship", "full-screen-hero"], "required": true},
+      {"kind": "collection", "field_refs": ["full-screen-hero.collection", "featured-collection.collection"], "section_ids": ["full-screen-hero", "featured-collection"], "required": true},
+      {"kind": "product", "field_refs": ["full-screen-hero.product"], "section_ids": ["full-screen-hero"], "required": true},
+      {"kind": "confirmation", "field_refs": ["full-screen-hero.badge", "full-screen-hero.button_link"], "section_ids": ["full-screen-hero"], "required": false}
+    ],
+    "required_assets": [{"asset_id": "hero_image", "label": "Hero image", "field_refs": ["full-screen-hero.image"]}],
+    "effective_store_strategy": {"homepage": {"sections": ["full-screen-hero", "craftsmanship", "featured-collection", "newsletter"]}},
+    "approved_preset_revision": {
+      "revision_id": "apr_fixture_legacyexample",
+      "preset_checksum": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "approval": {"approved_at": "2026-08-20T00:00:00.000Z"},
+      "preset_snapshot": {
+        "id": "atelier",
+        "color_system_intent": "warm_tactile",
+        "omission_priority": ["craftsmanship"],
+        "content_requirements": [{"id": "craft_evidence", "kind": "verified_evidence", "level": "recommended", "sections": ["craftsmanship"]}]
+      }
+    },
+    "saved_generation_context": {
+      "status": "awaiting_configuration",
+      "approval_reference": null,
+      "approved_at": null,
+      "merchant_references": {
+        "full-screen-hero.image": "fixture://approved/hero-image",
+        "full-screen-hero.collection": "fixture://approved/hero-collection",
+        "full-screen-hero.product": "fixture://approved/hero-product",
+        "featured-collection.collection": "fixture://approved/featured-collection"
+      },
+      "asset_references": {"hero_image": "fixture://approved/hero-image"},
+      "completed_confirmations": [
+        "field:full-screen-hero.image",
+        "field:full-screen-hero.collection",
+        "field:full-screen-hero.product",
+        "field:featured-collection.collection"
+      ],
+      "resolved_empty_fields": ["full-screen-hero.badge", "full-screen-hero.button_link"]
+    },
+    "expected": {
+      "counts": {"auto_verifiable": 1, "merchant_confirmation_required": 0, "optional_omittable": 24, "critical_confirmation_required": 0, "unresolved_review_required": 0},
+      "merchant_action_count": 0,
+      "omitted_section_ids": ["craftsmanship"],
+      "flow_eligible_after_resource_approval": true
+    }
+  },
+  "controlled_cases": [
+    {
+      "id": "all_items_verifiable",
+      "contracts": [
+        {"confirmation_id": "store.product_count", "category": "shopify_fact", "requested_claim": "Use the active product count.", "source_section": "featured-collection", "nature": "factual", "expected_source": "shopify_store_intelligence", "omission_policy": "not_allowed", "critical": false, "dependent_modules": ["featured-collection"]}
+      ],
+      "active_sections": ["featured-collection"],
+      "evidence": [{"confirmation_id": "store.product_count", "source_type": "shopify_store_intelligence", "source_identity": "miv_fixture", "source_revision": "store-intelligence-v1", "extracted_value": 4, "derivation_revision": "resource-confirmation-derivation-v1", "confidence": 1, "verified_at": "2026-08-20T00:00:00.000Z"}],
+      "expected": {"classification": "auto_verifiable", "flow_eligible": true, "merchant_actions": 0}
+    },
+    {
+      "id": "optional_content_unavailable",
+      "contracts": [
+        {"confirmation_id": "story.quote", "category": "optional_editorial", "requested_claim": "Include a merchant quote.", "source_section": "founder-story", "nature": "editorial", "expected_source": "merchant", "omission_policy": "omit_dependent_module", "critical": false, "dependent_modules": ["founder-story"]}
+      ],
+      "active_sections": [],
+      "evidence": [],
+      "expected": {"classification": "optional_omittable", "state": "omitted_by_policy", "flow_eligible": true}
+    },
+    {
+      "id": "one_material_fact_unknown",
+      "contracts": [
+        {"confirmation_id": "operations.lead_time", "category": "operational_fact", "requested_claim": "Use the current production lead time.", "source_section": "product-main", "nature": "operational", "expected_source": "merchant", "omission_policy": "not_allowed", "critical": false, "dependent_modules": ["product-main.lead-time"]}
+      ],
+      "active_sections": ["product-main"],
+      "evidence": [],
+      "expected": {"classification": "merchant_confirmation_required", "merchant_actions": 1, "flow_eligible": false}
+    },
+    {
+      "id": "critical_commercial_fact_unknown",
+      "contracts": [
+        {"confirmation_id": "policy.return_guarantee", "category": "commercial_guarantee", "requested_claim": "Publish the return guarantee.", "source_section": "product-main", "nature": "commercial", "expected_source": "merchant_policy", "omission_policy": "not_allowed", "critical": true, "dependent_modules": ["product-main.return-guarantee"]}
+      ],
+      "active_sections": ["product-main"],
+      "evidence": [],
+      "expected": {"classification": "critical_confirmation_required", "flow_eligible": false}
+    },
+    {
+      "id": "mixed_plan",
+      "contracts": [
+        {"confirmation_id": "store.collection_count", "category": "shopify_fact", "requested_claim": "Use collection availability.", "source_section": "featured-collection", "nature": "factual", "expected_source": "shopify_store_intelligence", "omission_policy": "not_allowed", "critical": false, "dependent_modules": ["featured-collection"]},
+        {"confirmation_id": "story.subtitle", "category": "optional_editorial", "requested_claim": "Include an optional story subtitle.", "source_section": "story", "nature": "editorial", "expected_source": "merchant", "omission_policy": "omit_field", "critical": false, "dependent_modules": ["story.subtitle"], "field_refs": ["story.subtitle"]},
+        {"confirmation_id": "operations.lead_time", "category": "operational_fact", "requested_claim": "Use the current production lead time.", "source_section": "product-main", "nature": "operational", "expected_source": "merchant", "omission_policy": "not_allowed", "critical": false, "dependent_modules": ["product-main.lead-time"]}
+      ],
+      "active_sections": ["featured-collection", "story", "product-main"],
+      "evidence": [{"confirmation_id": "store.collection_count", "source_type": "shopify_store_intelligence", "source_identity": "miv_fixture", "source_revision": "store-intelligence-v1", "extracted_value": 2, "derivation_revision": "resource-confirmation-derivation-v1", "confidence": 1, "verified_at": "2026-08-20T00:00:00.000Z"}],
+      "expected": {"counts": {"auto_verifiable": 1, "merchant_confirmation_required": 1, "optional_omittable": 1}, "merchant_actions": 1}
+    },
+    {"id": "reload_retry", "inherits": "mixed_plan", "expected": {"stable_revision": true, "stable_checksum": true}},
+    {"id": "merchant_confirms_one", "inherits": "one_material_fact_unknown", "merchant_confirmations": ["operations.lead_time"], "expected": {"state": "merchant_confirmed", "flow_eligible": true, "authoritative_revision_count": 1}},
+    {"id": "unsupported_content", "inherits": "one_material_fact_unknown", "invalid_evidence_confidence": 0.6, "expected": {"never_auto_confirmed": true, "flow_eligible": false}}
+  ]
+}

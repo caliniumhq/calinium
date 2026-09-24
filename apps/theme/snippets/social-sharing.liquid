@@ -1,0 +1,30 @@
+{% liquid
+  assign social_sharing_article = article
+  assign social_sharing_title_value = title | default: social_sharing_article.title
+  assign social_sharing_url_value = share_url | default: url | default: social_sharing_article.url
+  assign social_sharing_title = social_sharing_title_value | url_encode
+  assign social_sharing_url = social_sharing_url_value | url_encode
+  assign social_sharing_label = label | default: 'articles.share' | t
+  assign social_sharing_classes = 'co-social-sharing'
+
+  if class != blank
+    assign social_sharing_classes = social_sharing_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if social_sharing_title_value != blank and social_sharing_url_value != blank %}
+  <nav class="{{ social_sharing_classes | escape }}" aria-label="{{ social_sharing_label | escape }}">
+    <p class="co-social-sharing__heading">{{ social_sharing_label | escape }}</p>
+    <ul class="co-social-sharing__list" role="list">
+      <li>
+        <a href="mailto:?subject={{ social_sharing_title }}&amp;body={{ social_sharing_url }}">{{ 'articles.share_via_email' | t }}</a>
+      </li>
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ social_sharing_url }}" target="_blank" rel="noopener noreferrer">{{ 'articles.share_on_facebook' | t }}</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/intent/tweet?text={{ social_sharing_title }}&amp;url={{ social_sharing_url }}" target="_blank" rel="noopener noreferrer">{{ 'articles.share_on_x' | t }}</a>
+      </li>
+    </ul>
+  </nav>
+{% endif %}

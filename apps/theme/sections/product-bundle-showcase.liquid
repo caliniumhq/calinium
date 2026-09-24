@@ -1,0 +1,293 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+{% if section.settings.enable_quick_add %}
+  {{ 'component-quantity-input.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" type="module"></script>
+{% endif %}
+
+{% liquid
+  assign bundle_heading_id = 'ProductBundleHeading-' | append: section.id
+  assign bundle_classes = 'co-product-bundle co-commerce-section co-color-scheme-' | append: section.settings.color_scheme
+  assign bundle_handles = '|'
+  assign bundle_subtotal = 0
+  assign bundle_count = 0
+  for block in section.blocks
+    assign bundle_product = block.settings.product
+    if bundle_product != blank
+      assign bundle_token = '|' | append: bundle_product.handle | append: '|'
+      unless bundle_handles contains bundle_token
+        assign bundle_handles = bundle_handles | append: bundle_product.handle | append: '|'
+        assign bundle_count = bundle_count | plus: 1
+        assign bundle_variant = bundle_product.selected_or_first_available_variant
+        if bundle_variant != blank and bundle_variant.available
+          assign bundle_subtotal = bundle_subtotal | plus: bundle_variant.price
+        endif
+      endunless
+    endif
+  endfor
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ bundle_classes }}" style="--co-bundle-desktop-columns: {{ section.settings.columns_desktop }}; --co-bundle-mobile-columns: {{ section.settings.columns_mobile }};" {% if section.settings.heading != blank %}aria-labelledby="{{ bundle_heading_id }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.description, id: bundle_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-commerce-section__header' %}
+    {% if bundle_count > 0 %}
+      {% assign rendered_bundle_handles = '|' %}
+      <div class="co-product-bundle__products" role="list">
+        {% for block in section.blocks %}
+          {% assign bundle_product = block.settings.product %}
+          {% if bundle_product != blank %}
+            {% assign bundle_token = '|' | append: bundle_product.handle | append: '|' %}
+            {% unless rendered_bundle_handles contains bundle_token %}
+              {% assign rendered_bundle_handles = rendered_bundle_handles | append: bundle_product.handle | append: '|' %}
+              <div role="listitem" {{ block.shopify_attributes }}>
+                {% render 'product-card', product: bundle_product, section_id: section.id, image_ratio: section.settings.image_ratio, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 33vw, 50vw', image_widths: '165, 360, 535, 750, 1000', show_vendor: section.settings.show_vendor, show_rating: false, show_compare_at_price: true, show_sale_badge: true, show_sold_out_badge: true, show_secondary_image: section.settings.show_secondary_image, show_inventory: false, show_quick_add: section.settings.enable_quick_add, card_alignment: section.settings.text_alignment %}
+              </div>
+            {% endunless %}
+          {% elsif request.design_mode %}
+            <div class="co-commerce-section__placeholder" role="listitem" {{ block.shopify_attributes }}>{{ 'product-1' | placeholder_svg_tag }}</div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="co-product-bundle__summary">
+        <span>{{ 'sections.product_bundle_showcase.subtotal_label' | t }}</span>
+        <strong class="co-product-bundle__subtotal">{{ bundle_subtotal | money }}</strong>
+      </div>
+      {% if section.settings.bundle_link != blank and section.settings.bundle_link_label != blank %}<div class="co-commerce-section__actions">{% render 'button', label: section.settings.bundle_link_label, url: section.settings.bundle_link, variant: 'secondary' %}</div>{% endif %}
+    {% elsif request.design_mode %}
+      <p class="co-commerce-section__empty">{{ 'sections.product_bundle_showcase.empty' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.product_bundle_showcase.name",
+  "tag": "section",
+  "class": "co-section-product-bundle-showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.shared.settings.eyebrow.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.shared.settings.heading.label",
+      "default": "Complete the set"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.shared.settings.description.label",
+      "default": "<p>A considered group of products to explore together.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.shared.settings.heading_size.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.shared.options.small"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.shared.options.standard"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.shared.options.large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shared.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shared.options.center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.product_bundle_showcase.settings.columns_desktop.label",
+      "default": "3",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:sections.product_bundle_showcase.settings.columns_mobile.label",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.shared.options.one"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.shared.options.two"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.shared.settings.image_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.shared.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.shared.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.shared.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:sections.shared.settings.show_vendor.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "t:sections.shared.settings.show_secondary_image.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:sections.shared.settings.enable_quick_add.label",
+      "info": "t:sections.shared.settings.enable_quick_add.info",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "bundle_link",
+      "label": "t:sections.product_bundle_showcase.settings.bundle_link.label"
+    },
+    {
+      "type": "text",
+      "id": "bundle_link_label",
+      "label": "t:sections.product_bundle_showcase.settings.bundle_link_label.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.shared.settings.desktop_top_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.shared.settings.desktop_bottom_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "t:sections.shared.settings.mobile_top_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "t:sections.shared.settings.mobile_bottom_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.product_bundle_showcase.blocks.product",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.shared.settings.product.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "t:sections.product_bundle_showcase.preset",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

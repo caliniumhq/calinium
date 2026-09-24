@@ -1,0 +1,77 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign logo_list_classes = 'co-logo-list co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign logo_list_classes = logo_list_classes | append: ' co-logo-list--desktop-columns-' | append: section.settings.desktop_columns
+  assign logo_list_classes = logo_list_classes | append: ' co-logo-list--mobile-columns-' | append: section.settings.mobile_columns
+  assign logo_list_classes = logo_list_classes | append: ' co-logo-list--layout-' | append: section.settings.layout
+  assign logo_list_classes = logo_list_classes | append: ' co-logo-list--divider-' | append: section.settings.divider
+  assign logo_list_pause_label = 'sections.logo_list.pause' | t
+  assign logo_list_resume_label = 'sections.logo_list.resume' | t
+
+  if section.settings.grayscale
+    assign logo_list_classes = logo_list_classes | append: ' co-logo-list--grayscale'
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ logo_list_classes }}" style="--co-logo-height: {{ section.settings.logo_height }}px;" {% if section.settings.layout == 'marquee' %}data-co-section-behavior data-co-marquee data-pause-label="{{ logo_list_pause_label | escape }}" data-resume-label="{{ logo_list_resume_label | escape }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-logo-list__inner co-page-width">
+    {% if section.blocks.size > 0 %}
+      <div class="co-logo-list__viewport">
+        <div class="co-logo-list__track">
+          <ul class="co-logo-list__list" role="list">
+            {% for block in section.blocks %}
+              <li class="co-logo-list__item" {{ block.shopify_attributes }}>
+                {% capture logo_list_item %}
+                  {% if block.settings.logo != blank %}{% render 'responsive-image', image: block.settings.logo, alt: block.settings.company_name, loading: 'lazy', sizes: '180px', widths: '96, 144, 180, 240', ratio: 'natural', fit: 'contain', class: 'co-logo-list__image' %}{% else %}<span class="co-logo-list__placeholder">{{ block.settings.company_name | default: 'Logo' | escape }}</span>{% endif %}
+                {% endcapture %}
+                {% if block.settings.url != blank %}<a href="{{ block.settings.url | escape }}" aria-label="{{ block.settings.company_name | escape }}">{{ logo_list_item }}</a>{% else %}{{ logo_list_item }}{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+          {% if section.settings.layout == 'marquee' %}
+            <ul class="co-logo-list__list co-logo-list__list--duplicate" role="list" aria-hidden="true">
+              {% for block in section.blocks %}
+                <li class="co-logo-list__item">
+                  {% if block.settings.logo != blank %}{% render 'responsive-image', image: block.settings.logo, alt: '', loading: 'lazy', sizes: '180px', widths: '96, 144, 180, 240', ratio: 'natural', fit: 'contain', class: 'co-logo-list__image' %}{% else %}<span class="co-logo-list__placeholder">{{ block.settings.company_name | default: 'Logo' | escape }}</span>{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+      {% if section.settings.layout == 'marquee' %}{% render 'button', label: logo_list_pause_label, type: 'button', variant: 'text', class: 'co-logo-list__pause', data_action: 'marquee-pause' %}{% endif %}
+    {% elsif request.design_mode %}
+      <p>{{ 'sections.logo_list.placeholder_text' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.logo_list.name",
+  "tag": "section",
+  "class": "co-section-logo-list",
+  "settings": [
+    { "type": "range", "id": "logo_height", "label": "t:sections.shared.settings.logo_height.label", "min": 24, "max": 120, "step": 4, "unit": "px", "default": 56 },
+    { "type": "select", "id": "desktop_columns", "label": "t:sections.shared.settings.desktop_columns.label", "default": "4", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "5", "label": "5" }, { "value": "6", "label": "6" }] },
+    { "type": "select", "id": "mobile_columns", "label": "t:sections.shared.settings.mobile_columns.label", "default": "2", "options": [{ "value": "1", "label": "t:sections.shared.options.one" }, { "value": "2", "label": "t:sections.shared.options.two" }] },
+    { "type": "checkbox", "id": "grayscale", "label": "t:sections.shared.settings.grayscale.label", "default": false },
+    { "type": "select", "id": "layout", "label": "t:sections.shared.settings.layout.label", "default": "grid", "options": [{ "value": "grid", "label": "t:sections.shared.options.grid" }, { "value": "marquee", "label": "t:sections.shared.options.marquee" }] },
+    { "type": "select", "id": "divider", "label": "t:sections.shared.settings.divider_style.label", "default": "none", "options": [{ "value": "none", "label": "t:sections.shared.options.none" }, { "value": "vertical", "label": "t:sections.shared.options.vertical" }] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    { "type": "logo", "name": "t:sections.logo_list.blocks.logo", "settings": [{ "type": "image_picker", "id": "logo", "label": "t:sections.shared.settings.logo.label" }, { "type": "text", "id": "company_name", "label": "t:sections.shared.settings.company_name.label", "info": "t:sections.shared.settings.company_name.info", "default": "Company name" }, { "type": "url", "id": "url", "label": "t:sections.shared.settings.link.label" }] }
+  ],
+  "max_blocks": 16,
+  "presets": [{ "name": "t:sections.logo_list.preset", "blocks": [{ "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" }] }]
+}
+{% endschema %}

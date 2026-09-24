@@ -1,0 +1,54 @@
+/* Rich text editorial section. */
+.co-rich-text {
+  padding-block: var(--co-section-spacing);
+  color: var(--co-color-text);
+  background: var(--co-color-background-gradient), var(--co-color-background);
+}
+
+.co-rich-text__content {
+  inline-size: min(100%, var(--co-content-width));
+}
+
+.co-rich-text--width-narrow .co-rich-text__content {
+  inline-size: min(100%, calc(var(--co-content-width) - var(--co-space-7)));
+}
+
+.co-rich-text--width-wide .co-rich-text__content {
+  inline-size: 100%;
+}
+
+.co-rich-text--align-center .co-rich-text__content {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.co-rich-text__eyebrow {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.co-rich-text__heading {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-rich-text__text {
+  margin-block-start: var(--co-space-4);
+}
+
+.co-rich-text__text > * + * {
+  margin-block-start: var(--co-space-3);
+}
+
+.co-rich-text__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--co-space-3);
+  margin-block-start: var(--co-space-5);
+}
+
+.co-rich-text--align-center .co-rich-text__actions {
+  justify-content: center;
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "evidence_version": "1.0.0",
+  "evidence_revision": "phase-d2-subjective-design-evaluation-calibration-v1",
+  "comparison_fixture_revision": "comparison-fixture-0c881e4699c1cd3e33b0",
+  "comparison_key": "d7413cc5957c06221d6426210f86ae7cfd081bc2e66d55dbdb98a13b12d417f6",
+  "evaluation_request_id": "design-evaluation-request-936f6e6b49e0acc4d336",
+  "evaluation_id": "design-evaluation-7ba68e367666ac0c071a",
+  "evaluation_checksum": "1820f7b6cf5a309ca7819bce60ad490c7c4d1d3fc1c60a904321efeda1b2301c",
+  "policy_revision": "storefront-design-evaluation-policy-v1",
+  "provider": {
+    "interface_version": "storefront-design-provider-v1",
+    "provider_id": "calinium-approved-multimodal-calibration",
+    "provider_version": "1.0.0",
+    "provider_kind": "approved_fixture_replay",
+    "live_model_used": false,
+    "reason": "No live multimodal provider is configured in the repository; the approved calibration records human visual judgments bound to the actual PNG hashes and exercises the same versioned provider boundary."
+  },
+  "profiles": [
+    "profile.current_calinium.v1",
+    "profile.editorial_discovery.v1"
+  ],
+  "routes": ["homepage", "collection", "product", "cart"],
+  "viewports": ["desktop-v1", "mobile-v1"],
+  "cells_evaluated": 16,
+  "dimension_count": 12,
+  "assessment_count": 22,
+  "finding_count": 6,
+  "current_calinium": {
+    "strengths": ["clear primary hierarchy", "scan-friendly collection grid", "clear PDP purchase sequence"],
+    "concerns": ["D1-confirmed mobile Homepage overflow has high design impact", "shared empty supporting modules", "duplicated Homepage signup action", "desktop footer brand wrap"]
+  },
+  "editorial_discovery": {
+    "strengths": ["strong image-led hierarchy", "featured-first product discovery", "distinct desktop PDP composition", "contained and reprioritized mobile Homepage"],
+    "concerns": ["shared empty supporting modules", "duplicated Homepage signup action", "desktop footer brand wrap", "desktop Collection title breaks inside a word"],
+    "uncertain": ["mobile PDP differentiation is limited but the purchase flow remains sound"]
+  },
+  "controlled_comparison": {
+    "desktop_differentiation": "strong",
+    "mobile_differentiation": "acceptable",
+    "cart_similarity": "intentional_shared_family",
+    "screenshot_hash_inequality_used_as_design_judgment": false
+  },
+  "repeat_consistency": {
+    "runs": 2,
+    "dimension_categorical_agreement": 1,
+    "high_impact_finding_agreement": 1,
+    "responsibility_agreement": 1,
+    "unstable_items": [],
+    "identical_prose_required": false
+  },
+  "human_review": {
+    "review_id": "design-review-e9fa9cc6c47edbfd53bf",
+    "review_revision": "design-review-revision-814dd40d4f9a4ea2d436",
+    "accepted_actionable_findings": 5,
+    "preference_only_findings": 1,
+    "final_gate": "repair_required",
+    "automatic_repair_authorized": false
+  },
+  "combined_quality": {
+    "phase_d1": {"pass": 15, "pass_with_review": 1, "objective_finding_count": 1},
+    "phase_d2_before_review": "review_required",
+    "phase_d2_after_review": "repair_required",
+    "merged_into_single_score": false
+  },
+  "context_limits": {
+    "design_dna": "not_available",
+    "merchant_intent": "revision_reference_only",
+    "store_intelligence": "not_available",
+    "preset": "essential@1.0",
+    "benchmark_theme_evidence_excluded": true
+  },
+  "safety": {
+    "automatic_repair_allowed": false,
+    "automatic_mutation_allowed": false,
+    "shopify_write_allowed": false,
+    "architecture_sources_changed": false,
+    "theme_sources_changed": false,
+    "screenshot_binaries_tracked": false
+  }
+}

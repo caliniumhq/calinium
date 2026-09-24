@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-content-plan-public-projection.schema.json",
+  "title": "Calinium sanitized public content-plan projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "resolved", "targets"],
+  "properties": {
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actionable_count", "ready_count", "optional_not_included_count", "blocked_count"],
+      "properties": {
+        "actionable_count": {"type": "integer", "minimum": 0, "maximum": 12},
+        "ready_count": {"type": "integer", "minimum": 0, "maximum": 12},
+        "optional_not_included_count": {"type": "integer", "minimum": 0, "maximum": 12},
+        "blocked_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "resolved": {"type": "boolean"},
+    "targets": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {"$ref": "#/$defs/target"}
+    }
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content_key", "label", "state", "available_in_direction", "actionable", "blocked"],
+      "properties": {
+        "content_key": {
+          "enum": [
+            "editorial_grid",
+            "lookbook",
+            "craftsmanship",
+            "manufacturing_process",
+            "brand_timeline",
+            "sustainability",
+            "team",
+            "awards_certifications",
+            "cross_sell_products",
+            "product_bundle_showcase",
+            "shop_the_look",
+            "complementary_products_fallback"
+          ]
+        },
+        "label": {
+          "enum": [
+            "Editorial Grid",
+            "Lookbook",
+            "Craftsmanship",
+            "Manufacturing Process",
+            "Brand Timeline",
+            "Sustainability",
+            "Team",
+            "Awards and Certifications",
+            "Cross-sell Products",
+            "Product Bundle Showcase",
+            "Shop the Look",
+            "Complementary Products fallback"
+          ]
+        },
+        "state": {"enum": ["needs_input", "ready", "optional_not_included", "required_before_continuing"]},
+        "available_in_direction": {"type": "boolean"},
+        "actionable": {"type": "boolean"},
+        "blocked": {"type": "boolean"}
+      }
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
+{{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+{{ 'editorial-discovery-product-card.css' | asset_url | stylesheet_tag }}
+{{ 'editorial-discovery-collection.css' | asset_url | stylesheet_tag }}
+{{ 'editorial-discovery-responsive.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'facets.js' | asset_url }}" type="module"></script>
+<script src="{{ 'premium-collection.js' | asset_url }}" type="module"></script>
+{% if section.settings.enable_quick_add %}<script src="{{ 'product-form.js' | asset_url }}" type="module"></script>{% endif %}
+
+{% liquid
+  assign ed_classes = 'co-ed-collection-grid co-color-scheme-' | append: section.settings.color_scheme
+  assign ed_classes = ed_classes | append: ' co-ed-collection-grid--mobile-' | append: section.settings.mobile_columns
+  assign ed_classes = ed_classes | append: ' co-ed-collection-grid--desktop-' | append: section.settings.desktop_columns
+  assign ed_classes = ed_classes | append: ' co-ed-collection-grid--filters-' | append: section.settings.filter_layout
+  assign ed_heading_id = 'EditorialCollectionGridHeading-' | append: section.id
+  assign ed_form_id = 'EditorialCollectionFiltersForm-' | append: section.id
+  assign ed_sort_id = 'EditorialCollectionSortBy-' | append: section.id
+  assign ed_apply_filters_label = 'collections.apply_filters' | t
+%}
+
+{% if collection != blank %}
+  <section
+    class="{{ ed_classes }}"
+    aria-labelledby="{{ ed_heading_id }}"
+    data-main-collection
+    data-editorial-discovery-collection
+    data-calinium-presenter="section.main_collection_product_grid.editorial_discovery"
+    data-calinium-responsive-family="family.responsive_behavior.editorial_discovery.v1"
+    data-section-id="{{ section.id }}"
+    data-collection-pagination-mode="{{ section.settings.pagination_mode }}"
+    data-collection-mobile-drawer="{{ section.settings.enable_mobile_filter_drawer }}"
+    data-collection-sticky-filters="{{ section.settings.enable_sticky_filters }}"
+    data-collection-load-more-label="{{ 'collections.load_more' | t | escape }}"
+    data-collection-loading-message="{{ 'collections.loading_more' | t | escape }}"
+    data-collection-loaded-message="{{ 'collections.loaded_more' | t: count: '[count]' | escape }}"
+    data-collection-load-more-error="{{ 'collections.load_more_error' | t | escape }}"
+  >
+    <div class="co-ed-collection-grid__inner co-page-width">
+      <header class="co-ed-collection-grid__intro">
+        <span aria-hidden="true">Archive</span>
+        <h2 id="{{ ed_heading_id }}" class="co-visually-hidden">{{ collection.title | escape }} — {{ 'collections.products' | t }}</h2>
+        {% if section.settings.show_description and collection.description != blank %}<div class="co-ed-collection-grid__description rte">{{ collection.description }}</div>{% endif %}
+      </header>
+
+      {% paginate collection.products by section.settings.products_per_page %}
+        <form id="{{ ed_form_id }}" class="co-ed-collection-grid__form" action="{{ collection.url }}" method="get" data-facets-form>
+          <div class="co-ed-collection-grid__toolbar">
+            {% if collection.filters.size > 0 %}<button class="co-ed-collection-grid__mobile-filter" type="button" data-collection-open-filters hidden>{{ 'collections.filters' | t }}</button>{% endif %}
+            <p class="co-ed-collection-grid__count" aria-live="polite">{{ 'collections.product_count' | t: count: collection.products_count }}</p>
+            {% render 'sort-select', results: collection, id: ed_sort_id %}
+          </div>
+
+          {% render 'active-filters', results: collection, clear_url: collection.url %}
+
+          <div class="co-ed-collection-grid__layout">
+            {% if collection.filters.size > 0 %}
+              <aside class="co-ed-collection-grid__filters" data-collection-filter-panel>
+                <p class="co-ed-collection-grid__filter-title">{{ 'collections.filters' | t }}</p>
+                {% render 'facets', filters: collection.filters, id_prefix: section.id %}
+              </aside>
+            {% endif %}
+
+            <div class="co-ed-collection-grid__products">
+              {% if collection.products_count > 0 %}
+                <ol class="co-ed-collection-grid__list" data-collection-grid>
+                  {% for product in collection.products %}
+                    <li class="co-ed-collection-grid__item{% if forloop.first %} co-ed-collection-grid__item--lead{% endif %}">
+                      <span class="co-ed-collection-grid__sequence" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                      {% render 'editorial-discovery-product-card',
+                        product: product,
+                        image_ratio: section.settings.image_ratio,
+                        image_loading: 'lazy',
+                        image_sizes: '(min-width: 64rem) 24vw, (min-width: 48rem) 32vw, 50vw',
+                        image_widths: '165, 360, 535, 750, 1000, 1500',
+                        show_availability: section.settings.show_availability,
+                        show_vendor: section.settings.show_vendor,
+                        show_rating: section.settings.show_rating,
+                        show_compare_at_price: section.settings.show_compare_at_price,
+                        show_sale_badge: section.settings.show_sale_badge,
+                        show_secondary_image: section.settings.show_secondary_image,
+                        show_inventory: section.settings.show_inventory,
+                        show_swatches: section.settings.show_swatches,
+                        show_new_badge: section.settings.show_new_badge,
+                        new_badge_tag: section.settings.new_badge_tag,
+                        new_badge_label: section.settings.new_badge_label,
+                        show_limited_badge: section.settings.show_limited_badge,
+                        limited_badge_tag: section.settings.limited_badge_tag,
+                        limited_badge_label: section.settings.limited_badge_label,
+                        enable_quick_view_hook: section.settings.enable_quick_view_hook,
+                        enable_wishlist_hook: section.settings.enable_wishlist_hook,
+                        enable_quick_add: section.settings.enable_quick_add,
+                        card_alignment: section.settings.card_alignment,
+                        section_id: section.id
+                      %}
+                    </li>
+                  {% endfor %}
+                </ol>
+                <div class="co-ed-collection-grid__pagination" data-collection-pagination>{% render 'pagination', paginate: paginate %}</div>
+                <p class="co-visually-hidden" aria-live="polite" data-collection-status></p>
+              {% else %}
+                <div class="co-ed-collection-grid__empty" role="status">
+                  <p>{{ 'collections.empty' | t }}</p>
+                  {% if collection.filters.size > 0 %}<a href="{{ collection.url | escape }}">{{ 'collections.clear_all' | t }}</a>{% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="co-ed-collection-grid__submit">{% render 'button', label: ed_apply_filters_label, type: 'submit', variant: 'secondary' %}</div>
+
+          {% if collection.filters.size > 0 %}
+            <dialog class="co-ed-collection-grid__dialog" aria-labelledby="EditorialFilterDialogTitle-{{ section.id }}" data-collection-filter-dialog>
+              <div class="co-ed-collection-grid__dialog-inner">
+                <header class="co-ed-collection-grid__dialog-header">
+                  <h2 id="EditorialFilterDialogTitle-{{ section.id }}">{{ 'collections.filters' | t }}</h2>
+                  <button type="button" data-collection-close-filters aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close', size: 20 %}</button>
+                </header>
+                <div data-collection-filter-dialog-content></div>
+              </div>
+            </dialog>
+          {% endif %}
+        </form>
+      {% endpaginate %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:sections.main_collection.name",
+  "tag": "section",
+  "class": "co-section-main-collection",
+  "limit": 1,
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "header", "content": "Grid" },
+    { "type": "range", "id": "products_per_page", "label": "t:sections.main_collection.settings.products_per_page.label", "min": 12, "max": 48, "step": 4, "default": 24 },
+    { "type": "select", "id": "mobile_columns", "label": "t:sections.main_collection.settings.mobile_columns.label", "default": "2", "options": [{ "value": "1", "label": "t:sections.main_collection.settings.mobile_columns.options.one" }, { "value": "2", "label": "t:sections.main_collection.settings.mobile_columns.options.two" }] },
+    { "type": "select", "id": "desktop_columns", "label": "t:sections.main_collection.settings.desktop_columns.label", "default": "4", "options": [{ "value": "2", "label": "t:sections.main_collection.settings.desktop_columns.options.two" }, { "value": "3", "label": "t:sections.main_collection.settings.desktop_columns.options.three" }, { "value": "4", "label": "t:sections.main_collection.settings.desktop_columns.options.four" }, { "value": "5", "label": "5 columns" }] },
+    { "type": "select", "id": "image_ratio", "label": "t:sections.main_collection.settings.image_ratio.label", "default": "portrait", "options": [{ "value": "adapt", "label": "t:sections.main_collection.settings.image_ratio.options.adapt" }, { "value": "square", "label": "t:sections.main_collection.settings.image_ratio.options.square" }, { "value": "portrait", "label": "t:sections.main_collection.settings.image_ratio.options.portrait" }, { "value": "landscape", "label": "t:sections.main_collection.settings.image_ratio.options.landscape" }] },
+    { "type": "header", "content": "Product cards" },
+    { "type": "checkbox", "id": "show_availability", "label": "t:sections.main_collection.settings.show_availability.label", "default": true },
+    { "type": "checkbox", "id": "show_vendor", "label": "t:sections.shared.settings.show_vendor.label", "default": false },
+    { "type": "checkbox", "id": "show_rating", "label": "t:sections.shared.settings.show_rating.label", "info": "t:sections.shared.settings.show_rating.info", "default": false },
+    { "type": "checkbox", "id": "show_compare_at_price", "label": "t:sections.shared.settings.show_compare_at_price.label", "default": true },
+    { "type": "checkbox", "id": "show_sale_badge", "label": "t:sections.shared.settings.show_sale_badge.label", "default": true },
+    { "type": "checkbox", "id": "show_secondary_image", "label": "t:sections.shared.settings.show_secondary_image.label", "default": false },
+    { "type": "checkbox", "id": "show_inventory", "label": "t:sections.shared.settings.show_inventory.label", "default": false },
+    { "type": "checkbox", "id": "show_swatches", "label": "Show available color swatches", "info": "Only real Shopify swatches are shown.", "default": true },
+    { "type": "checkbox", "id": "show_new_badge", "label": "Show a new badge for a matching product tag", "default": false },
+    { "type": "text", "id": "new_badge_tag", "label": "New product tag", "info": "Leave blank to keep the badge hidden." },
+    { "type": "text", "id": "new_badge_label", "label": "New badge label", "default": "New" },
+    { "type": "checkbox", "id": "show_limited_badge", "label": "Show a limited badge for a matching product tag", "default": false },
+    { "type": "text", "id": "limited_badge_tag", "label": "Limited product tag", "info": "Leave blank to keep the badge hidden." },
+    { "type": "text", "id": "limited_badge_label", "label": "Limited badge label", "default": "Limited" },
+    { "type": "checkbox", "id": "enable_quick_add", "label": "t:sections.shared.settings.enable_quick_add.label", "info": "t:sections.shared.settings.enable_quick_add.info", "default": false },
+    { "type": "checkbox", "id": "enable_quick_view_hook", "label": "Enable quick view app hook", "info": "Adds an integration hook only; no quick-view experience is invented.", "default": false },
+    { "type": "checkbox", "id": "enable_wishlist_hook", "label": "Enable wishlist app hook", "info": "Adds an integration hook only; no wishlist experience is invented.", "default": false },
+    { "type": "select", "id": "card_alignment", "label": "t:sections.shared.settings.card_alignment.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "center", "label": "t:sections.shared.options.center" }, { "value": "right", "label": "t:sections.shared.options.right" }] },
+    { "type": "header", "content": "Filters and sorting" },
+    { "type": "select", "id": "filter_layout", "label": "Desktop filter layout", "default": "sidebar", "options": [{ "value": "sidebar", "label": "Sidebar" }, { "value": "toolbar", "label": "Toolbar" }] },
+    { "type": "checkbox", "id": "enable_sticky_filters", "label": "Keep desktop filters visible while browsing", "default": true },
+    { "type": "checkbox", "id": "enable_mobile_filter_drawer", "label": "Use a mobile filter drawer", "default": true },
+    { "type": "select", "id": "pagination_mode", "label": "Pagination style", "default": "pagination", "options": [{ "value": "pagination", "label": "Pages" }, { "value": "load_more", "label": "Load more" }, { "value": "infinite", "label": "Infinite scroll" }] },
+    { "type": "checkbox", "id": "show_description", "label": "t:sections.main_collection.settings.show_description.label", "info": "t:sections.main_collection.settings.show_description.info", "default": false },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.main_collection.settings.color_scheme.label", "default": "scheme-1" }
+  ]
+}
+{% endschema %}

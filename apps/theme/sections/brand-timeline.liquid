@@ -1,0 +1,60 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{% liquid
+  assign timeline_heading_id = 'BrandTimelineHeading-' | append: section.id
+  assign timeline_classes = 'co-brand-timeline co-brand-story-section co-color-scheme-' | append: section.settings.color_scheme
+  assign timeline_classes = timeline_classes | append: ' co-brand-timeline--' | append: section.settings.layout
+  if section.settings.layout == 'horizontal'
+    assign timeline_classes = timeline_classes | append: ' co-brand-timeline--interactive'
+  endif
+%}
+{% render 'section-spacing', section: section %}
+<section class="{{ timeline_classes }}"{% if section.settings.heading != blank %} aria-labelledby="{{ timeline_heading_id }}"{% endif %}{% if section.settings.layout == 'horizontal' %} data-co-section-behavior data-co-carousel{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.text, id: timeline_heading_id, level: 'h2', alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-brand-story-section__header' %}
+    {% if section.blocks.size > 0 %}
+      <ol class="co-brand-timeline__track"{% if section.settings.layout == 'horizontal' %} data-carousel-track{% endif %}>
+        {% for block in section.blocks %}
+          <li class="co-brand-timeline__item"{% if section.settings.layout == 'horizontal' %} data-carousel-slide{% endif %} {{ block.shopify_attributes }}>
+            <span class="co-brand-timeline__marker">{% if block.settings.timeline_icon != 'none' %}{% render 'icon', icon: block.settings.timeline_icon, size: 20, decorative: true %}{% else %}<span aria-hidden="true">{{ forloop.index }}</span>{% endif %}</span>
+            <div>
+              {% render 'timeline-item', eyebrow: block.settings.date, heading: block.settings.heading, text: block.settings.text, class: 'co-brand-timeline__content' %}
+              {% if block.settings.image != blank %}<div class="co-brand-timeline__media">{% render 'responsive-image', image: block.settings.image, loading: 'lazy', sizes: '(min-width: 48rem) 28vw, 100vw', widths: '240, 360, 535, 750, 1000', ratio: section.settings.image_ratio, class: 'co-brand-timeline__image' %}</div>{% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+      {% if section.settings.layout == 'horizontal' and section.blocks.size > 1 %}<div class="co-brand-timeline__controls" aria-label="{{ 'sections.brand_timeline.controls_label' | t | escape }}"><button class="co-button co-button--secondary co-button--medium" type="button" data-action="carousel-prev" aria-label="{{ 'sections.brand_timeline.previous' | t | escape }}">{% render 'icon', icon: 'arrow-left', size: 18, decorative: true %}</button><button class="co-button co-button--secondary co-button--medium" type="button" data-action="carousel-next" aria-label="{{ 'sections.brand_timeline.next' | t | escape }}">{% render 'icon', icon: 'arrow-right', size: 18, decorative: true %}</button></div>{% endif %}
+    {% elsif request.design_mode %}<p class="co-brand-story-section__empty">{{ 'sections.brand_timeline.empty' | t }}</p>{% endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "t:sections.brand_timeline.name",
+  "tag": "section",
+  "class": "co-section-brand-timeline",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "t:sections.shared.settings.eyebrow.label" },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "Our journey" },
+    { "type": "richtext", "id": "text", "label": "t:sections.shared.settings.text.label" },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "large", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "select", "id": "text_alignment", "label": "t:sections.shared.settings.text_alignment.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "center", "label": "t:sections.shared.options.center" }] },
+    { "type": "select", "id": "layout", "label": "t:sections.shared.settings.layout.label", "default": "vertical", "options": [{ "value": "vertical", "label": "t:sections.shared.options.vertical" }, { "value": "horizontal", "label": "t:sections.shared.options.horizontal" }] },
+    { "type": "select", "id": "image_ratio", "label": "t:sections.shared.settings.image_ratio.label", "default": "landscape", "options": [{ "value": "square", "label": "t:sections.shared.options.square" }, { "value": "portrait", "label": "t:sections.shared.options.portrait" }, { "value": "landscape", "label": "t:sections.shared.options.landscape" }] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [{ "type": "timeline_item", "name": "t:sections.brand_timeline.blocks.timeline_item", "settings": [
+    { "type": "text", "id": "date", "label": "t:sections.brand_timeline.settings.date.label" },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label" },
+    { "type": "richtext", "id": "text", "label": "t:sections.shared.settings.text.label" },
+    { "type": "image_picker", "id": "image", "label": "t:sections.shared.settings.image.label" },
+    { "type": "select", "id": "timeline_icon", "label": "t:sections.shared.settings.icon.label", "default": "none", "options": [{ "value": "none", "label": "t:sections.shared.options.none" }, { "value": "sparkle", "label": "t:sections.shared.options.sparkle" }, { "value": "star", "label": "t:sections.shared.options.star" }, { "value": "calendar", "label": "t:sections.shared.options.calendar" }, { "value": "arrow-right", "label": "t:sections.shared.options.arrow-right" }] }
+  ] }],
+  "max_blocks": 12,
+  "presets": [{ "name": "t:sections.brand_timeline.preset", "blocks": [{ "type": "timeline_item" }, { "type": "timeline_item" }] }]
+}
+{% endschema %}

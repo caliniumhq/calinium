@@ -1,0 +1,98 @@
+{{ 'component-button.css' | asset_url | stylesheet_tag }}
+{{ 'section-rich-text.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign rich_text_has_content = false
+  assign rich_text_use_blocks = false
+  assign rich_text_classes = 'co-rich-text co-library-section co-color-scheme-' | append: section.settings.color_scheme
+  assign rich_text_classes = rich_text_classes | append: ' co-rich-text--width-' | append: section.settings.content_width
+  assign rich_text_classes = rich_text_classes | append: ' co-rich-text--align-' | append: section.settings.content_alignment
+  assign rich_text_classes = rich_text_classes | append: ' co-rich-text--heading-' | append: section.settings.heading_size
+
+  if section.blocks.size > 0
+    assign rich_text_has_content = true
+    assign rich_text_use_blocks = true
+  elsif section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.text != blank
+    assign rich_text_has_content = true
+  elsif section.settings.button_label_1 != blank and section.settings.button_link_1 != blank
+    assign rich_text_has_content = true
+  elsif section.settings.button_label_2 != blank and section.settings.button_link_2 != blank
+    assign rich_text_has_content = true
+  endif
+%}
+
+{% render 'section-spacing', section: section %}
+
+{% if rich_text_has_content %}
+  <section class="{{ rich_text_classes }}" {{ section.shopify_attributes }}>
+    <div class="co-rich-text__inner co-page-width">
+      <div class="co-rich-text__content">
+        {% if rich_text_use_blocks %}
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'eyebrow' %}
+                {% if block.settings.text != blank %}<p class="co-rich-text__eyebrow" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</p>{% endif %}
+              {% when 'heading' %}
+                {% if block.settings.heading != blank %}<h2 class="co-rich-text__heading" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>{% endif %}
+              {% when 'text' %}
+                {% if block.settings.text != blank %}<div class="co-rich-text__text" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>{% endif %}
+              {% when 'button' %}
+                {% if block.settings.label != blank and block.settings.link != blank %}<div class="co-rich-text__actions" {{ block.shopify_attributes }}>{% render 'button', label: block.settings.label, url: block.settings.link, variant: block.settings.style %}</div>{% endif %}
+              {% when 'custom_liquid' %}
+                {% if block.settings.custom_liquid != blank %}<div class="co-rich-text__custom-liquid" {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>{% endif %}
+            {% endcase %}
+          {% endfor %}
+        {% else %}
+          {% if section.settings.eyebrow != blank %}<p class="co-rich-text__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+          {% if section.settings.heading != blank %}
+            {% if section.settings.heading_tag == 'h3' %}<h3 class="co-rich-text__heading">{{ section.settings.heading }}</h3>{% else %}<h2 class="co-rich-text__heading">{{ section.settings.heading }}</h2>{% endif %}
+          {% endif %}
+          {% if section.settings.text != blank %}<div class="co-rich-text__text">{{ section.settings.text }}</div>{% endif %}
+          {% if section.settings.button_label_1 != blank and section.settings.button_link_1 != blank or section.settings.button_label_2 != blank and section.settings.button_link_2 != blank %}
+            <div class="co-rich-text__actions">
+              {% if section.settings.button_label_1 != blank and section.settings.button_link_1 != blank %}{% render 'button', label: section.settings.button_label_1, url: section.settings.button_link_1, variant: 'primary' %}{% endif %}
+              {% if section.settings.button_label_2 != blank and section.settings.button_link_2 != blank %}{% render 'button', label: section.settings.button_label_2, url: section.settings.button_link_2, variant: 'secondary' %}{% endif %}
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:sections.rich_text.name",
+  "tag": "section",
+  "class": "co-section-rich-text",
+  "settings": [
+    { "type": "header", "content": "t:sections.shared.headers.legacy_content" },
+    { "type": "text", "id": "eyebrow", "label": "t:sections.rich_text.settings.eyebrow.label" },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.rich_text.settings.heading.label" },
+    { "type": "select", "id": "heading_tag", "label": "t:sections.rich_text.settings.heading_tag.label", "default": "h2", "options": [{ "value": "h2", "label": "t:sections.rich_text.settings.heading_tag.options.h2" }, { "value": "h3", "label": "t:sections.rich_text.settings.heading_tag.options.h3" }] },
+    { "type": "richtext", "id": "text", "label": "t:sections.rich_text.settings.text.label" },
+    { "type": "text", "id": "button_label_1", "label": "t:sections.rich_text.settings.button_label_1.label" },
+    { "type": "url", "id": "button_link_1", "label": "t:sections.rich_text.settings.button_link_1.label" },
+    { "type": "text", "id": "button_label_2", "label": "t:sections.rich_text.settings.button_label_2.label" },
+    { "type": "url", "id": "button_link_2", "label": "t:sections.rich_text.settings.button_link_2.label" },
+    { "type": "header", "content": "t:sections.shared.headers.style" },
+    { "type": "select", "id": "content_width", "label": "t:sections.rich_text.settings.content_width.label", "default": "standard", "options": [{ "value": "narrow", "label": "t:sections.rich_text.settings.content_width.options.narrow" }, { "value": "standard", "label": "t:sections.rich_text.settings.content_width.options.standard" }, { "value": "wide", "label": "t:sections.rich_text.settings.content_width.options.wide" }] },
+    { "type": "select", "id": "content_alignment", "label": "t:sections.rich_text.settings.content_alignment.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.rich_text.settings.content_alignment.options.left" }, { "value": "center", "label": "t:sections.rich_text.settings.content_alignment.options.center" }] },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "standard", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.rich_text.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [
+    { "type": "eyebrow", "name": "t:sections.rich_text.blocks.eyebrow", "settings": [{ "type": "text", "id": "text", "label": "t:sections.shared.settings.text.label", "default": "Thoughtful details" }] },
+    { "type": "heading", "name": "t:sections.rich_text.blocks.heading", "settings": [{ "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "A clear, considered message" }] },
+    { "type": "text", "name": "t:sections.rich_text.blocks.text", "settings": [{ "type": "richtext", "id": "text", "label": "t:sections.shared.settings.text.label", "default": "<p>Use this space to introduce a collection, principle, or seasonal story.</p>" }] },
+    { "type": "button", "name": "t:sections.rich_text.blocks.button", "settings": [{ "type": "text", "id": "label", "label": "t:sections.shared.settings.button_label.label", "default": "Learn more" }, { "type": "url", "id": "link", "label": "t:sections.shared.settings.link.label" }, { "type": "select", "id": "style", "label": "t:sections.shared.settings.button_style.label", "default": "primary", "options": [{ "value": "primary", "label": "t:sections.shared.options.primary" }, { "value": "secondary", "label": "t:sections.shared.options.secondary" }] }] },
+    { "type": "custom_liquid", "name": "t:sections.rich_text.blocks.custom_liquid", "settings": [{ "type": "liquid", "id": "custom_liquid", "label": "t:sections.shared.settings.custom_liquid.label" }] }
+  ],
+  "max_blocks": 10,
+  "presets": [{ "name": "t:sections.rich_text.presets.default", "blocks": [{ "type": "eyebrow" }, { "type": "heading" }, { "type": "text" }, { "type": "button" }] }]
+}
+{% endschema %}

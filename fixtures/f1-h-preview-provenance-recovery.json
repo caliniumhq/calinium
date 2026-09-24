@@ -1,0 +1,21 @@
+{
+  "fixture_revision": "f1-h-preview-provenance-recovery-v1",
+  "canonical_live_shape": {
+    "review": {
+      "id": "design-review-f1h00000000000000000",
+      "checksum": "abababababababababababababababababababababababababababababababab"
+    },
+    "decision": "accepted"
+  },
+  "supported_historical_flat_shape": {
+    "review_id": "design-review-f1h00000000000000000",
+    "checksum": "abababababababababababababababababababababababababababababababab",
+    "decision": "accepted"
+  },
+  "expected": {
+    "invalid_code": "merchant_flow_preview_provenance_recovery_founder_review_invalid",
+    "conflict_code": "merchant_flow_preview_provenance_recovery_founder_review_conflict",
+    "construction_code": "merchant_flow_preview_provenance_recovery_record_construction_failed",
+    "failure_event": "preview_provenance_recovery_rejected"
+  }
+}

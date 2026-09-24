@@ -1,0 +1,25 @@
+# Synthetic legacy-staging fixture. Copy and replace every identity locally;
+# never deploy this example unchanged.
+client_id = "00000000000000000000000000000002"
+name = "Calinium LEGACY_EXAMPLE Staging"
+application_url = "https://calinium-legacy-staging.fly.dev"
+embedded = true
+web_directories = [ "apps/dashboard" ]
+
+[access_scopes]
+scopes = "read_files,read_markets,read_online_store_navigation,read_products,read_content,read_themes"
+optional_scopes = [ ]
+use_legacy_install_flow = false
+
+[auth]
+redirect_urls = [ "https://calinium-legacy-staging.fly.dev/api/shopify/oauth/callback" ]
+
+[webhooks]
+api_version = "2026-07"
+
+[[webhooks.subscriptions]]
+topics = [ "app/uninstalled", "app/scopes_update", "themes/delete" ]
+uri = "/api/shopify/webhooks"
+
+[build]
+automatically_update_urls_on_dev = false

@@ -1,0 +1,62 @@
+/* Reusable editorial article card. Surrounding grids belong to the host section. */
+.co-article-card,
+.co-article-card__content {
+  display: grid;
+  gap: var(--co-space-3);
+}
+
+.co-article-card__content {
+  align-content: start;
+}
+
+.co-article-card__title {
+  font-size: var(--co-font-size-h4);
+}
+
+.co-article-card__title a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: calc(var(--co-space-6) + var(--co-space-3));
+  color: inherit;
+  text-decoration: none;
+}
+
+.co-article-card__title a:hover {
+  text-decoration: underline;
+}
+
+.co-article-card__excerpt,
+.co-article-card .co-article-meta {
+  color: var(--co-color-text-muted);
+  font-size: var(--co-font-size-small);
+}
+
+.co-article-meta {
+  display: grid;
+  gap: var(--co-space-2);
+}
+
+.co-article-meta__details,
+.co-article-meta__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--co-space-2);
+  align-items: baseline;
+}
+
+.co-article-meta__details > * + *::before {
+  display: inline-block;
+  margin-inline-end: var(--co-space-2);
+  content: "·";
+}
+
+.co-article-meta__tags {
+  font-size: var(--co-font-size-small);
+}
+
+.co-article-meta__tags a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: calc(var(--co-space-6) + var(--co-space-3));
+  text-underline-offset: 0.16em;
+}

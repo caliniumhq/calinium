@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-storefront-presets.schema.json",
+  "title": "Calinium Storefront Preset Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog_version", "target_theme", "presets"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "catalog_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "target_theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"const": "calinium-one"},
+        "version": {"type": "string", "minLength": 1}
+      }
+    },
+    "presets": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/preset"}
+    }
+  },
+  "$defs": {
+    "setting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["setting_id", "value"],
+      "properties": {
+        "setting_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "value": {"type": ["string", "number", "boolean"]}
+      }
+    },
+    "sectionDefault": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["section_id", "settings"],
+      "properties": {
+        "section_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+        "settings": {"type": "array", "items": {"$ref": "#/$defs/setting"}}
+      }
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "level", "sections"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "kind": {"enum": ["merchant_content", "approved_asset", "approved_resource", "verified_evidence"]},
+        "level": {"enum": ["required", "recommended", "optional"]},
+        "sections": {"type": "array", "items": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"}, "uniqueItems": true}
+      }
+    },
+    "preset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "version", "status", "merchant_fit", "compatible_industries", "compatible_business_models", "compatible_personalities", "compatible_design_languages", "compatible_recipes", "homepage_recipe", "page_blueprints", "global_settings", "section_defaults", "typography_direction", "spacing_direction", "color_system_intent", "imagery_treatment", "information_density", "merchandising_emphasis", "content_requirements", "supported_adapters", "omission_priority", "incompatibilities", "performance_budget", "motion_policy", "fallbacks", "recommendation_priority"],
+      "properties": {
+        "id": {"enum": ["atelier", "maison", "gallery", "ritual", "essential", "signal"]},
+        "name": {"enum": ["Atelier", "Maison", "Gallery", "Ritual", "Essential", "Signal"]},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "status": {"enum": ["active", "inactive", "deprecated"]},
+        "merchant_fit": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 2}, "uniqueItems": true},
+        "compatible_industries": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "compatible_business_models": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "compatible_personalities": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "compatible_design_languages": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "compatible_recipes": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "homepage_recipe": {"type": "string"},
+        "page_blueprints": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "global_settings": {"type": "array", "items": {"$ref": "#/$defs/setting"}},
+        "section_defaults": {"type": "array", "items": {"$ref": "#/$defs/sectionDefault"}},
+        "typography_direction": {"enum": ["refined_editorial", "quiet_luxury", "gallery_editorial", "calm_educational", "clear_neutral", "technical_clarity"]},
+        "spacing_direction": {"enum": ["spacious", "generous", "editorial", "balanced", "compact", "compact_balanced"]},
+        "color_system_intent": {"enum": ["warm_tactile", "quiet_premium", "neutral_gallery", "calm_trust", "neutral_commerce", "technical_contrast"]},
+        "imagery_treatment": {"enum": ["tactile_editorial", "premium_product", "large_editorial", "ingredient_product", "product_first", "interface_product"]},
+        "information_density": {"enum": ["low", "medium", "high"]},
+        "merchandising_emphasis": {"enum": ["restrained", "collection_led", "visual_discovery", "education_balanced", "product_first", "feature_led"]},
+        "content_requirements": {"type": "array", "items": {"$ref": "#/$defs/requirement"}},
+        "supported_adapters": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "omission_priority": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "incompatibilities": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "performance_budget": {
+          "type": "object", "additionalProperties": false,
+          "required": ["maximum_homepage_sections", "maximum_autoplay_sections", "media_priority"],
+          "properties": {
+            "maximum_homepage_sections": {"type": "integer", "minimum": 3, "maximum": 9},
+            "maximum_autoplay_sections": {"type": "integer", "minimum": 0, "maximum": 1},
+            "media_priority": {"enum": ["restrained", "balanced", "image_led", "product_led", "interface_led"]}
+          }
+        },
+        "motion_policy": {
+          "type": "object", "additionalProperties": false,
+          "required": ["intensity", "autoplay_default", "reduced_motion_required"],
+          "properties": {
+            "intensity": {"enum": ["none", "subtle", "restrained"]},
+            "autoplay_default": {"type": "boolean"},
+            "reduced_motion_required": {"const": true}
+          }
+        },
+        "fallbacks": {
+          "type": "object", "additionalProperties": false,
+          "required": ["preset_id", "recipe", "minimum_viable_sections"],
+          "properties": {
+            "preset_id": {"enum": ["atelier", "maison", "gallery", "ritual", "essential", "signal"]},
+            "recipe": {"type": "string"},
+            "minimum_viable_sections": {"type": "array", "minItems": 2, "items": {"type": "string"}, "uniqueItems": true}
+          }
+        },
+        "recommendation_priority": {"type": "integer", "minimum": 1, "maximum": 100}
+      }
+    }
+  }
+}

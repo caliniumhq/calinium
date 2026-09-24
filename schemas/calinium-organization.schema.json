@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-organization.schema.json",
+  "title": "Calinium organization",
+  "type": "object",
+  "required": ["version", "id", "name", "slug", "created_by_user_id", "created_at", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^org_[a-z0-9-]+$"},
+    "name": {"type": "string", "minLength": 1},
+    "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "created_by_user_id": {"type": "string", "pattern": "^usr_[a-z0-9-]+$"},
+    "created_at": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

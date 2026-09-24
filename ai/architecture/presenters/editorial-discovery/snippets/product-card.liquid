@@ -1,0 +1,224 @@
+{% comment %}
+  Editorial Discovery product card presenter.
+
+  This presenter consumes the same Shopify-authoritative product inputs as the
+  canonical Calinium card while using a deliberately different media-led
+  hierarchy. It never derives reviews, badges, inventory, or relationships.
+{% endcomment %}
+
+{% liquid
+  assign ed_product = product
+  assign ed_primary_image = ed_product.featured_media.preview_image | default: ed_product.featured_image
+  assign ed_secondary_image = ed_product.media[1].preview_image
+  assign ed_variant = ed_product.selected_or_first_available_variant
+  assign ed_ratio = image_ratio | default: 'portrait'
+  assign ed_placeholder_ratio = ed_ratio
+  assign ed_loading = image_loading | default: 'lazy'
+  assign ed_fetchpriority = image_fetchpriority | default: 'auto'
+  assign ed_sizes = image_sizes | default: '50vw'
+  assign ed_widths = image_widths | default: '165, 360, 535, 750, 1000'
+  assign ed_alignment = card_alignment | default: text_alignment | default: 'left'
+  assign ed_classes = 'co-ed-product-card co-ed-product-card--align-' | append: ed_alignment
+  assign ed_show_vendor = false
+  assign ed_show_rating = false
+  assign ed_show_secondary = false
+  assign ed_show_compare = true
+  assign ed_show_sale = true
+  assign ed_show_sold_out = true
+  assign ed_show_inventory = false
+  assign ed_show_unit_price = true
+  assign ed_show_swatches = false
+  assign ed_new_tag = new_badge_tag | default: '' | strip
+  assign ed_new_label = new_badge_label | default: 'New' | strip
+  assign ed_limited_tag = limited_badge_tag | default: '' | strip
+  assign ed_limited_label = limited_badge_label | default: 'Limited' | strip
+  assign ed_has_new_tag = false
+  assign ed_has_limited_tag = false
+  assign ed_quick_add_requested = false
+  assign ed_quick_add_mode = 'none'
+  assign ed_rating = ed_product.metafields.reviews.rating.value
+  assign ed_rating_count = ed_product.metafields.reviews.rating_count
+  assign ed_price_item = blank
+  assign ed_image_alt = ed_primary_image.alt | default: ed_product.title
+  assign ed_choose_options_label = 'products.product.choose_options' | t
+  assign ed_current_price_label = current_price_label
+  assign ed_compare_at_price_label = compare_at_price_label
+  assign ed_from_label = from_label
+
+  if ed_current_price_label == blank
+    assign ed_current_price_label = 'products.product.price' | t
+  endif
+  if ed_compare_at_price_label == blank
+    assign ed_compare_at_price_label = 'products.product.compare_at_price' | t
+  endif
+  if ed_from_label == blank
+    assign ed_from_label = 'products.product.from' | t
+  endif
+
+  if ed_ratio == 'adapt'
+    assign ed_ratio = 'natural'
+  endif
+  if ed_placeholder_ratio == 'adapt' or ed_placeholder_ratio == 'natural'
+    assign ed_placeholder_ratio = 'square'
+  endif
+  if show_vendor
+    assign ed_show_vendor = true
+  endif
+  if show_rating and ed_rating != blank
+    assign ed_show_rating = true
+  endif
+  if show_secondary_image and ed_secondary_image != blank
+    assign ed_show_secondary = true
+    assign ed_classes = ed_classes | append: ' co-ed-product-card--has-secondary'
+  endif
+  if show_compare_at_price == false
+    assign ed_show_compare = false
+  endif
+  if show_sale_badge == false
+    assign ed_show_sale = false
+  endif
+  if show_sold_out_badge == false or show_availability == false
+    assign ed_show_sold_out = false
+  endif
+  if show_inventory
+    assign ed_show_inventory = true
+  endif
+  if show_unit_price == false
+    assign ed_show_unit_price = false
+  endif
+  if show_swatches
+    assign ed_show_swatches = true
+  endif
+  if show_new_badge and ed_new_tag != blank and ed_product.tags contains ed_new_tag
+    assign ed_has_new_tag = true
+  endif
+  if show_limited_badge and ed_limited_tag != blank and ed_product.tags contains ed_limited_tag
+    assign ed_has_limited_tag = true
+  endif
+  if show_quick_add or enable_quick_add
+    assign ed_quick_add_requested = true
+  endif
+  unless ed_product.price_varies
+    assign ed_price_item = ed_variant
+  endunless
+  if ed_quick_add_requested and ed_product.available
+    if ed_product.has_only_default_variant
+      assign ed_quick_add_mode = 'single-variant'
+    else
+      assign ed_quick_add_mode = 'product-link'
+    endif
+  endif
+  if class != blank
+    assign ed_classes = ed_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if ed_product != blank %}
+  <article
+    class="{{ ed_classes | escape }}"
+    data-editorial-discovery-product-card
+    data-calinium-presenter="snippet.product_card.editorial_discovery"
+    data-calinium-responsive-family="family.responsive_behavior.editorial_discovery.v1"
+    {% if enable_quick_view_hook %}data-quick-view-product-url="{{ ed_product.url | escape }}"{% endif %}
+    {% if enable_wishlist_hook %}data-wishlist-product-handle="{{ ed_product.handle | escape }}"{% endif %}
+  >
+    <div class="co-ed-product-card__media-wrap">
+      <a class="co-ed-product-card__media-link" href="{{ ed_product.url | escape }}" aria-label="{{ ed_product.title | escape }}">
+        <div class="co-ed-product-card__media">
+          {% if ed_primary_image != blank %}
+            {% render 'responsive-image',
+              image: ed_primary_image,
+              alt: ed_image_alt,
+              loading: ed_loading,
+              fetchpriority: ed_fetchpriority,
+              sizes: ed_sizes,
+              widths: ed_widths,
+              ratio: ed_ratio,
+              class: 'co-ed-product-card__image'
+            %}
+            {% if ed_show_secondary %}
+              <div class="co-ed-product-card__secondary" aria-hidden="true">
+                {% render 'responsive-image', image: ed_secondary_image, alt: '', loading: 'lazy', sizes: ed_sizes, widths: ed_widths, ratio: ed_ratio, class: 'co-ed-product-card__image' %}
+              </div>
+            {% endif %}
+          {% else %}
+            <div class="co-image co-image--ratio-{{ ed_placeholder_ratio }} co-ed-product-card__placeholder" aria-hidden="true">
+              <div class="co-image__frame">{{ 'product-1' | placeholder_svg_tag: 'co-ed-product-card__placeholder-svg' }}</div>
+            </div>
+          {% endif %}
+        </div>
+      </a>
+
+    <div class="co-ed-product-card__badges">
+        {% if ed_show_sold_out and ed_product.available == false %}
+          <span class="co-ed-product-card__badge">{{ 'products.product.sold_out' | t }}</span>
+        {% elsif ed_show_sale and ed_product.compare_at_price > ed_product.price %}
+          <span class="co-ed-product-card__badge co-ed-product-card__badge--accent">{{ 'products.product.sale' | t }}</span>
+        {% endif %}
+        {% if ed_has_new_tag %}<span class="co-ed-product-card__badge">{{ ed_new_label | escape }}</span>{% endif %}
+        {% if ed_has_limited_tag %}<span class="co-ed-product-card__badge">{{ ed_limited_label | escape }}</span>{% endif %}
+      </div>
+    </div>
+
+    <div class="co-ed-product-card__content">
+      <div class="co-ed-product-card__identity">
+        {% if ed_show_vendor and ed_product.vendor != blank %}
+          <p class="co-ed-product-card__vendor">{{ ed_product.vendor | escape }}</p>
+        {% endif %}
+        <h3 class="co-ed-product-card__title"><a href="{{ ed_product.url | escape }}">{{ ed_product.title | escape }}</a></h3>
+      </div>
+
+      <div class="co-ed-product-card__commercial">
+        {% render 'price',
+          product: ed_product,
+          item: ed_price_item,
+          show_currency: show_currency,
+          show_compare_at_price: ed_show_compare,
+          show_unit_price: ed_show_unit_price,
+          from_label: ed_from_label,
+          current_price_label: ed_current_price_label,
+          compare_at_price_label: ed_compare_at_price_label
+        %}
+
+        {% if ed_show_rating %}
+          <p class="co-ed-product-card__rating" aria-label="{{ 'products.product.rating_label' | t: rating: ed_rating.rating, scale: ed_rating.scale_max | escape }}">
+            <span aria-hidden="true">{{ ed_rating.rating | round: 1 }} / {{ ed_rating.scale_max }}</span>
+            {% if ed_rating_count != blank %}<span class="co-visually-hidden">{{ 'products.product.review_count' | t: count: ed_rating_count }}</span>{% endif %}
+          </p>
+        {% endif %}
+      </div>
+
+      {% if ed_show_swatches %}
+        {% assign ed_swatch_count = 0 %}
+        {% capture ed_swatches %}
+          {% for option in ed_product.options_with_values %}
+            {% for option_value in option.values %}
+              {% if option_value.swatch != blank and ed_swatch_count < 6 %}
+                {% assign ed_swatch_count = ed_swatch_count | plus: 1 %}
+                <span class="co-ed-product-card__swatch" title="{{ option_value | escape }}"{% if option_value.swatch.color != blank %} style="--co-ed-swatch: {{ option_value.swatch.color }};"{% endif %}>
+                  {% if option_value.swatch.image != blank %}<img src="{{ option_value.swatch.image | image_url: width: 48 }}" alt="" width="24" height="24" loading="lazy">{% endif %}
+                </span>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        {% endcapture %}
+        {% if ed_swatch_count > 0 %}<span class="co-ed-product-card__swatches" aria-label="{{ 'products.product.swatch_count' | t: count: ed_swatch_count | escape }}">{{ ed_swatches }}</span>{% endif %}
+      {% endif %}
+
+      {% if ed_show_inventory %}
+        <div class="co-ed-product-card__inventory">{% render 'product-inventory', variant: ed_variant %}</div>
+      {% endif %}
+
+      {% case ed_quick_add_mode %}
+        {% when 'single-variant' %}
+          <div class="co-ed-product-card__quick-add">
+            {% render 'product-form', product: ed_product, section_id: section_id, id_suffix: ed_product.id, show_price: false, show_sku: false, show_inventory: false, show_quantity: false, variant_picker_type: 'dropdown', show_payment_button: false %}
+          </div>
+        {% when 'product-link' %}
+          <div class="co-ed-product-card__quick-add">
+            {% render 'button', label: ed_choose_options_label, url: ed_product.url, variant: 'secondary', full_width: true, class: 'co-ed-product-card__quick-add-link' %}
+          </div>
+      {% endcase %}
+    </div>
+  </article>
+{% endif %}

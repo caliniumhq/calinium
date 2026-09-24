@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-rollback-metadata.schema.json",
+  "title": "Calinium rollback preparation metadata",
+  "type": "object",
+  "required": ["version", "deployment_id", "development_theme_id", "previous_configuration_checksum", "deployment_package_id", "deployment_history_id", "generated_workspace", "rollback_implemented"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "deployment_id": {"type": "string", "minLength": 1},
+    "development_theme_id": {"type": ["string", "integer"]},
+    "previous_configuration_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "deployment_package_id": {"type": "string", "minLength": 1},
+    "deployment_history_id": {"type": "string", "minLength": 1},
+    "generated_workspace": {"type": "string", "minLength": 1},
+    "rollback_implemented": {"type": "boolean", "const": false}
+  },
+  "additionalProperties": false
+}

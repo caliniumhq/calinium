@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "bootstrap_hero": {
+      "type": "full-screen-hero",
+      "settings": {
+        "media_type": "image",
+        "heading": "",
+        "heading_tag": "h1",
+        "text": "",
+        "button_label": "",
+        "secondary_button_label": "",
+        "text_alignment": "center",
+        "content_position": "center",
+        "overlay_opacity": 0,
+        "gradient_direction": "bottom",
+        "show_scroll_cue": false,
+        "header_offset": false,
+        "enable_animation": false
+      }
+    },
+    "bootstrap_featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "",
+        "heading_tag": "h2",
+        "products_to_show": 4,
+        "desktop_columns": "4",
+        "mobile_columns": "2",
+        "desktop_layout": "grid",
+        "mobile_swipe": true,
+        "show_collection_link": false
+      }
+    },
+    "bootstrap_image_with_text": {
+      "type": "image-with-text",
+      "settings": {
+        "image_position": "right",
+        "heading": "Make this space your own",
+        "heading_tag": "h2",
+        "text": "<p>Use this section to introduce your brand, materials, or collection.</p>",
+        "button_label_1": "",
+        "button_label_2": "",
+        "content_alignment": "left"
+      }
+    },
+    "bootstrap_brand_statement": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "A clear place to begin",
+        "heading_tag": "h2",
+        "text": "<p>Replace this starter message with the story, values, or seasonal focus that matters most to your customers.</p>",
+        "button_label_1": "",
+        "button_label_2": "",
+        "content_width": "standard",
+        "content_alignment": "center"
+      }
+    },
+    "bootstrap_newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "",
+        "text": "",
+        "content_alignment": "center"
+      }
+    }
+  },
+  "order": [
+    "bootstrap_hero",
+    "bootstrap_featured_collection",
+    "bootstrap_image_with_text",
+    "bootstrap_brand_statement",
+    "bootstrap_newsletter"
+  ]
+}

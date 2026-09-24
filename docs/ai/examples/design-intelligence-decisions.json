@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "luxury_leather_bags",
+      "merchant_input": {"industry":"luxury_fashion","brand_personalities":["luxury","sophisticated"],"visual_preferences":["editorial","material_detail"],"catalog_context":"Leather bags with merchant-supplied product, material, and founder information."},
+      "ai_selection": {"design_language":"luxury","typography":"luxury_serif","spacing":"luxury","color_strategy":"luxury","image_style":"luxury","animation":"luxury","conversion_strategy":"luxury","layout_recipe":"luxury_story","section_sequence":["editorial-hero","founder-story","craftsmanship","featured-collection","testimonials","newsletter"]},
+      "reasoning":["The industry profile favors restrained material and collection storytelling.","The sequence moves from orientation to verified origin and craft context, then product discovery and proof.","No urgency, provenance, founder, or material claim may be published without merchant confirmation."],
+      "merchant_confirmation_required":["founder biography and portrait","craftsmanship and material claims","reviews or testimonials","all product availability and pricing"]
+    },
+    {
+      "id": "electronics_clarity",
+      "merchant_input": {"industry":"electronics","brand_personalities":["technical","confident"],"visual_preferences":["modern","functional_clarity"],"catalog_context":"Products have merchant-maintained specifications, compatible variants, and comparison facts."},
+      "ai_selection": {"design_language":"technical","typography":"technical_sans","spacing":"compact","color_strategy":"technical","image_style":"technical","animation":"technical","conversion_strategy":"education_first","layout_recipe":"technology_clarity","section_sequence":["hero-slideshow","product-highlights","product-comparison","product-carousel","testimonials","faq","newsletter"]},
+      "reasoning":["The profile prioritizes clear comparison and product evidence before secondary storytelling.","The product-comparison section uses only merchant-controlled values and does not scrape product specifications.","The AI keeps actions clear and never assumes compatibility, stock, ratings, or review claims."],
+      "merchant_confirmation_required":["technical specifications and comparison values","compatibility claims","reviews or testimonials","availability and delivery statements"]
+    },
+    {
+      "id": "beauty_lifestyle_discovery",
+      "merchant_input": {"industry":"beauty","brand_personalities":["warm","modern"],"visual_preferences":["lifestyle","soft_imagery"],"catalog_context":"Merchant provides approved imagery, ingredient facts, product routines, and verified customer proof."},
+      "ai_selection": {"design_language":"lifestyle","typography":"modern_sans","spacing":"comfortable","color_strategy":"warm","image_style":"beauty","animation":"luxury","conversion_strategy":"trust_first","layout_recipe":"beauty_discovery","section_sequence":["video-hero","materials","featured-collection","testimonials","faq","newsletter"]},
+      "reasoning":["The sequence balances sensorial imagery, verified material context, collection discovery, proof, and questions.","Beauty imagery must preserve accurate color and use consent-based representation.","The AI does not invent efficacy, ingredient, routine, or before-and-after claims."],
+      "merchant_confirmation_required":["ingredient and formulation facts","claims and testing evidence","customer reviews or testimonials","model consent and image usage rights"]
+    }
+  ]
+}

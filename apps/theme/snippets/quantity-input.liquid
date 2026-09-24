@@ -1,0 +1,62 @@
+{% liquid
+  assign quantity_variant = variant
+  assign quantity_input_id = id | default: 'Quantity'
+  assign quantity_input_name = name | default: 'quantity'
+  assign quantity_input_label = label
+  assign quantity_minimum = quantity_variant.quantity_rule.min | default: 1
+  assign quantity_maximum = quantity_variant.quantity_rule.max
+  assign quantity_increment = quantity_variant.quantity_rule.increment | default: 1
+  assign quantity_value = value | default: quantity_minimum
+  assign quantity_cart_line_key = cart_line_key | default: blank
+  assign quantity_label_class = 'co-quantity-input__label'
+
+  if quantity_input_label == blank
+    assign quantity_input_label = 'products.product.quantity' | t
+  endif
+
+  if visually_hidden_label
+    assign quantity_label_class = quantity_label_class | append: ' co-visually-hidden'
+  endif
+%}
+
+<div class="co-quantity-input" data-quantity-input>
+  <label class="{{ quantity_label_class }}" for="{{ quantity_input_id }}">{{ quantity_input_label | escape }}</label>
+  <div class="co-quantity-input__controls">
+    <button
+      class="co-quantity-input__button"
+      type="button"
+      data-action="quantity-decrease"
+      {% if quantity_cart_line_key != blank %}data-cart-quantity-action="decrease" data-cart-line-key="{{ quantity_cart_line_key | escape }}"{% endif %}
+      aria-label="{{ 'products.product.decrease_quantity' | t }}"
+      hidden
+    >
+      {% render 'icon', name: 'minus', size: 20 %}
+    </button>
+
+    <input
+      id="{{ quantity_input_id }}"
+      class="co-quantity-input__field"
+      type="number"
+      name="{{ quantity_input_name | escape }}"
+      value="{{ quantity_value }}"
+      min="{{ quantity_minimum }}"
+      {% if quantity_maximum != blank %}max="{{ quantity_maximum }}"{% endif %}
+      step="{{ quantity_increment }}"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      data-quantity-field
+      {% if quantity_cart_line_key != blank %}data-cart-quantity-input data-cart-line-key="{{ quantity_cart_line_key | escape }}" data-cart-quantity-last-value="{{ quantity_value }}"{% endif %}
+    >
+
+    <button
+      class="co-quantity-input__button"
+      type="button"
+      data-action="quantity-increase"
+      {% if quantity_cart_line_key != blank %}data-cart-quantity-action="increase" data-cart-line-key="{{ quantity_cart_line_key | escape }}"{% endif %}
+      aria-label="{{ 'products.product.increase_quantity' | t }}"
+      hidden
+    >
+      {% render 'icon', name: 'plus', size: 20 %}
+    </button>
+  </div>
+</div>

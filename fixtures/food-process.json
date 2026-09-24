@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "businessName": "Fixture Pantry",
+  "businessDescription": "Fixture-only pantry goods merchant used to validate approved Manufacturing Process content without making claims about a live merchant.",
+  "productsOrServices": ["small-batch pantry goods", "food and beverage gifts"],
+  "targetAudience": "ingredient-conscious shoppers who want approved product and process context",
+  "primaryGoal": "help shoppers explore approved pantry collections and understand verified process stages",
+  "countries": ["United Kingdom"],
+  "existingStoreUrl": "https://fixture-pantry.example",
+  "existingBrand": {
+    "hasLogo": true,
+    "brandColors": ["#5A3F2E", "#F3E8D7", "#B77B42"],
+    "inspirations": ["Warm pantry editorial photography"],
+    "assets": ["logo", "product photography", "process photography"]
+  },
+  "preferences": {
+    "desiredFeeling": ["warm", "considered", "grounded"],
+    "creativeFreedom": "medium",
+    "brandPersonality": ["warm", "traditional"]
+  }
+}

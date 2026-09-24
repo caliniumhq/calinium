@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "businessName": "Oak & Loom",
+  "businessDescription": "Oak & Loom sells handwoven rugs with natural fibers, each made by a small group of artisan makers.",
+  "productsOrServices": ["handwoven rugs", "natural fiber home textiles"],
+  "targetAudience": "homeowners looking for tactile, enduring pieces with a visible maker story",
+  "primaryGoal": "tell the craft story while making collections easy to explore",
+  "countries": ["United States"],
+  "existingStoreUrl": "https://oakandloom.example",
+  "existingBrand": {
+    "hasLogo": true,
+    "brandColors": ["#5F4A3D", "#F2EDE3", "#9A7758"],
+    "inspirations": ["Tactile editorial interiors", "Material-led storytelling"],
+    "assets": ["logo", "product photography", "lifestyle photography", "maker photography"]
+  },
+  "preferences": {
+    "desiredFeeling": ["tactile", "grounded", "heritage-led"],
+    "creativeFreedom": "medium",
+    "brandPersonality": ["sophisticated", "warm"]
+  }
+}

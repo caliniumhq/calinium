@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-storefront-design-evaluation-policy.schema.json",
+  "title": "Calinium Storefront Design Evaluation Policy",
+  "type": "object",
+  "required": ["schema_version", "policy_version", "policy_id", "policy_revision", "provider_interface_version", "evaluator_version", "required_repeat_runs", "dimensions", "judgments", "importance", "confidence", "responsibilities", "recommendation_categories", "review_decisions", "gate_statuses", "automatic_repair_allowed", "single_numeric_score_allowed"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "policy_version": {"type": "string", "const": "1.0.0"},
+    "policy_id": {"type": "string", "const": "calinium_storefront_design_evaluation"},
+    "policy_revision": {"type": "string", "const": "storefront-design-evaluation-policy-v1"},
+    "provider_interface_version": {"type": "string", "const": "storefront-design-provider-v1"},
+    "evaluator_version": {"type": "string", "const": "storefront-design-evaluator-v1"},
+    "required_repeat_runs": {"type": "integer", "const": 2},
+    "dimensions": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"type": "object", "required": ["id", "version"], "properties": {"id": {"type": "string"}, "version": {"type": "string", "const": "1.0.0"}}, "additionalProperties": false}},
+    "judgments": {"type": "array", "items": {"type": "string", "enum": ["strong", "acceptable", "concern", "not_assessable"]}},
+    "importance": {"type": "array", "items": {"type": "string", "enum": ["high", "medium", "low", "note"]}},
+    "confidence": {"type": "array", "items": {"type": "string", "enum": ["high", "medium", "low"]}},
+    "responsibilities": {"type": "array", "items": {"type": "string"}},
+    "recommendation_categories": {"type": "array", "items": {"type": "string"}},
+    "review_decisions": {"type": "array", "items": {"type": "string"}},
+    "gate_statuses": {"type": "array", "items": {"type": "string"}},
+    "automatic_repair_allowed": {"type": "boolean", "const": false},
+    "single_numeric_score_allowed": {"type": "boolean", "const": false}
+  },
+  "additionalProperties": false
+}

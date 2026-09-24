@@ -1,0 +1,88 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'editorial-discovery-product-card.css' | asset_url | stylesheet_tag }}
+{{ 'editorial-discovery-commerce.css' | asset_url | stylesheet_tag }}
+{{ 'editorial-discovery-responsive.css' | asset_url | stylesheet_tag }}
+{% if section.settings.enable_quick_add %}
+  {{ 'component-quantity-input.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" type="module"></script>
+{% endif %}
+
+{% liquid
+  assign recent_heading_id = 'RecentlyViewedHeading-' | append: section.id
+  assign recent_classes = 'co-recently-viewed co-commerce-section co-ed-commerce-section co-color-scheme-' | append: section.settings.color_scheme
+  assign recent_handles = request.params.recently_viewed_handles | default: '' | split: ','
+  assign rendered_recent_handles = '|'
+  assign recent_loading_label = 'sections.recently_viewed_products.loading' | t
+  assign rendered_recent_count = 0
+  assign recent_has_products = false
+  for handle in recent_handles limit: 12
+    assign recent_product = all_products[handle]
+    assign recent_token = '|' | append: handle | append: '|'
+    if recent_product != blank and recent_product.handle != product.handle
+      unless rendered_recent_handles contains recent_token
+        assign rendered_recent_handles = rendered_recent_handles | append: handle | append: '|'
+        assign recent_has_products = true
+      endunless
+    endif
+  endfor
+  assign rendered_recent_handles = '|'
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ recent_classes }}" style="--co-commerce-desktop-columns: {{ section.settings.columns_desktop }}; --co-commerce-mobile-columns: {{ section.settings.columns_mobile }};" data-calinium-presenter="section.recently_viewed_products.editorial_discovery" data-calinium-responsive-family="family.responsive_behavior.editorial_discovery.v1"{% if request.design_mode %} data-design-mode="true"{% endif %} data-co-section-behavior data-recently-viewed data-section-id="{{ section.id }}" data-current-product-handle="{{ product.handle | default: '' | escape }}" data-recently-viewed-limit="{{ section.settings.products_to_show }}" data-recently-viewed-url="{{ request.path | escape }}" {% if section.settings.heading != blank %}aria-labelledby="{{ recent_heading_id }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-page-width" data-recently-viewed-content{% if recent_has_products %} data-recently-viewed-results{% endif %}>
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.description, id: recent_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-commerce-section__header' %}
+    {% if request.params.recently_viewed_handles != blank %}
+      <ul class="co-recently-viewed__grid" role="list">
+        {% for handle in recent_handles limit: 12 %}
+          {% assign recent_product = all_products[handle] %}
+          {% assign recent_token = '|' | append: handle | append: '|' %}
+          {% if recent_product != blank and recent_product.handle != product.handle %}
+            {% unless rendered_recent_handles contains recent_token %}
+              {% assign rendered_recent_handles = rendered_recent_handles | append: handle | append: '|' %}
+              {% assign rendered_recent_count = rendered_recent_count | plus: 1 %}
+              <li>{% render 'editorial-discovery-product-card', product: recent_product, section_id: section.id, image_ratio: section.settings.image_ratio, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 25vw, 50vw', image_widths: '165, 360, 535, 750, 1000', show_vendor: section.settings.show_vendor, show_rating: false, show_compare_at_price: true, show_sale_badge: section.settings.show_badges, show_sold_out_badge: section.settings.show_badges, show_secondary_image: section.settings.show_secondary_image, show_inventory: false, show_quick_add: section.settings.enable_quick_add, card_alignment: section.settings.text_alignment %}</li>
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+      {% if rendered_recent_count == 0 and request.design_mode %}<p class="co-commerce-section__empty">{{ 'sections.recently_viewed_products.empty' | t }}</p>{% endif %}
+    {% elsif request.design_mode %}
+      <p class="co-commerce-section__empty">{{ 'sections.recently_viewed_products.preview' | t }}</p>
+    {% else %}
+      <div class="co-commerce-loading">{% render 'loading-spinner', size: 20, label: recent_loading_label %}</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.recently_viewed_products.name",
+  "tag": "section",
+  "class": "co-section-recently-viewed-products",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "t:sections.shared.settings.eyebrow.label" },
+    { "type": "inline_richtext", "id": "heading", "label": "t:sections.shared.settings.heading.label", "default": "Recently viewed" },
+    { "type": "richtext", "id": "description", "label": "t:sections.shared.settings.description.label" },
+    { "type": "select", "id": "heading_size", "label": "t:sections.shared.settings.heading_size.label", "default": "standard", "options": [{ "value": "small", "label": "t:sections.shared.options.small" }, { "value": "standard", "label": "t:sections.shared.options.standard" }, { "value": "large", "label": "t:sections.shared.options.large" }] },
+    { "type": "select", "id": "text_alignment", "label": "t:sections.shared.settings.text_alignment.label", "default": "left", "options": [{ "value": "left", "label": "t:sections.shared.options.left" }, { "value": "center", "label": "t:sections.shared.options.center" }] },
+    { "type": "range", "id": "products_to_show", "label": "t:sections.recently_viewed_products.settings.products_to_show.label", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "select", "id": "columns_desktop", "label": "t:sections.recently_viewed_products.settings.columns_desktop.label", "default": "4", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }] },
+    { "type": "select", "id": "columns_mobile", "label": "t:sections.recently_viewed_products.settings.columns_mobile.label", "default": "2", "options": [{ "value": "1", "label": "t:sections.shared.options.one" }, { "value": "2", "label": "t:sections.shared.options.two" }] },
+    { "type": "select", "id": "image_ratio", "label": "t:sections.shared.settings.image_ratio.label", "default": "portrait", "options": [{ "value": "square", "label": "t:sections.shared.options.square" }, { "value": "portrait", "label": "t:sections.shared.options.portrait" }, { "value": "landscape", "label": "t:sections.shared.options.landscape" }] },
+    { "type": "checkbox", "id": "show_vendor", "label": "t:sections.shared.settings.show_vendor.label", "default": false },
+    { "type": "checkbox", "id": "show_badges", "label": "t:sections.recently_viewed_products.settings.show_badges.label", "default": true },
+    { "type": "checkbox", "id": "show_secondary_image", "label": "t:sections.shared.settings.show_secondary_image.label", "default": false },
+    { "type": "checkbox", "id": "enable_quick_add", "label": "t:sections.shared.settings.enable_quick_add.label", "info": "t:sections.shared.settings.enable_quick_add.info", "default": false },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.shared.settings.color_scheme.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "t:sections.shared.settings.desktop_top_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "t:sections.shared.settings.desktop_bottom_spacing.label", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "mobile_padding_top", "label": "t:sections.shared.settings.mobile_top_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "t:sections.shared.settings.mobile_bottom_spacing.label", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [{ "name": "t:sections.recently_viewed_products.preset" }]
+}
+{% endschema %}

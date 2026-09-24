@@ -1,0 +1,10 @@
+import { useState } from 'react';
+import { t } from '../../lib/i18n';
+
+export function AuthScreen({ mode, onSubmit, onModeChange, pending, error }) {
+  const [values, setValues] = useState({ full_name: '', organization_name: '', email: '', password: '' });
+  const isSignUp = mode === 'sign_up';
+  const update = (event) => setValues((current) => ({ ...current, [event.target.name]: event.target.value }));
+  const submit = (event) => { event.preventDefault(); onSubmit(values); };
+  return <main className="auth-screen"><div className="auth-screen__content"><p className="eyebrow">{t('auth.eyebrow')}</p><h1>{t(isSignUp ? 'auth.create_title' : 'auth.sign_in_title')}</h1><p>{t(isSignUp ? 'auth.create_description' : 'auth.sign_in_description')}</p><form onSubmit={submit} noValidate>{isSignUp && <><label>{t('auth.full_name')}<input name="full_name" autoComplete="name" value={values.full_name} onChange={update} required /></label><label>{t('auth.organization_name')}<input name="organization_name" autoComplete="organization" value={values.organization_name} onChange={update} required /></label></>}<label>{t('auth.email')}<input name="email" type="email" autoComplete="email" value={values.email} onChange={update} required /></label><label>{t('auth.password')}<input name="password" type="password" autoComplete={isSignUp ? 'new-password' : 'current-password'} value={values.password} onChange={update} minLength="12" required /><span>{t('auth.password_hint')}</span></label>{error && <p className="form-error" role="alert">{error}</p>}<button className="button button--primary button--large" type="submit" disabled={pending}>{t(pending ? 'auth.working' : (isSignUp ? 'auth.create_action' : 'auth.sign_in_action'))}</button></form><p className="auth-screen__switch">{t(isSignUp ? 'auth.has_account' : 'auth.new_account')} <button type="button" className="text-button" onClick={() => onModeChange(isSignUp ? 'sign_in' : 'sign_up')}>{t(isSignUp ? 'auth.sign_in_action' : 'auth.create_action')}</button></p></div></main>;
+}

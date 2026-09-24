@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-architecture-families.schema.json",
+  "title": "Calinium Core 2.0 architecture-family registry",
+  "type": "object",
+  "required": ["schema_version", "registry_version", "registry_id", "target_theme", "families"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "registry_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "registry_id": {"type": "string", "const": "calinium_architecture_families"},
+    "target_theme": {"$ref": "#/$defs/theme"},
+    "families": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/family"}}
+  },
+  "$defs": {
+    "theme": {"type": "object", "required": ["id", "version"], "properties": {"id": {"type": "string", "const": "calinium-one"}, "version": {"type": "string", "const": "1.0"}}, "additionalProperties": false},
+    "family": {
+      "type": "object",
+      "required": ["id", "family", "version", "status", "name", "description", "presenters", "runtime_files", "capability_requirements", "compatibility", "eligibility"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^family\\.[a-z_]+\\.[a-z0-9_]+\\.v[0-9]+$"},
+        "family": {"type": "string", "enum": ["header_navigation", "product_card", "collection_merchandising", "product_detail", "cart", "responsive_behavior"]},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "status": {"type": "string", "const": "active"},
+        "name": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "presenters": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z0-9_.]+$"}},
+        "runtime_files": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^(apps/theme/(assets|sections|snippets|templates)|ai/architecture/presenters/[a-z0-9-]+/(assets|sections|snippets))/.+$"}},
+        "runtime_overlays": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["source", "target"],
+            "properties": {
+              "source": {"type": "string", "pattern": "^ai/architecture/presenters/[a-z0-9-]+/(assets|sections|snippets)/[a-z0-9._-]+$"},
+              "target": {"type": "string", "pattern": "^(assets|sections|snippets)/[a-z0-9._-]+$"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "capability_requirements": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9_]+$"}},
+        "compatibility": {"type": "object", "required": ["requires_family_types", "incompatible_family_ids"], "properties": {"requires_family_types": {"type": "array", "items": {"type": "string", "enum": ["header_navigation", "product_card", "collection_merchandising", "product_detail", "cart", "responsive_behavior"]}}, "incompatible_family_ids": {"type": "array", "items": {"type": "string", "pattern": "^family\\.[a-z_]+\\.[a-z0-9_]+\\.v[0-9]+$"}}}, "additionalProperties": false},
+        "eligibility": {"type": "object", "required": ["required_signals", "fallback_eligible"], "properties": {"required_signals": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9_.]+$"}}, "fallback_eligible": {"type": "boolean"}}, "additionalProperties": false}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

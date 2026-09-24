@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-approved-block-plan.schema.json",
+  "title": "Calinium Approved Block Plan",
+  "description": "An immutable, merchant-approved, theme-agnostic content graph. It records semantic content, provenance, evidence, and composition without Shopify template or generator runtime structure.",
+  "type": "object",
+  "required": ["schema_version", "plan_id", "revision_id", "parent_revision_id", "created_at", "store_scope", "approval", "default_locale", "content_entities", "resource_references", "evidence_references", "compositions", "metadata"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "plan_id": {"type": "string", "pattern": "^abp_[a-z0-9][a-z0-9_-]*$"},
+    "revision_id": {"type": "string", "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+    "parent_revision_id": {"type": ["string", "null"], "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+    "created_at": {"$ref": "#/$defs/timestamp"},
+    "store_scope": {"$ref": "#/$defs/store_scope"},
+    "approval": {"$ref": "#/$defs/approval"},
+    "default_locale": {"$ref": "#/$defs/locale"},
+    "content_entities": {"$ref": "#/$defs/content_entity_map"},
+    "resource_references": {"$ref": "#/$defs/resource_reference_map"},
+    "evidence_references": {"$ref": "#/$defs/evidence_reference_map"},
+    "compositions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/composition"}},
+    "metadata": {"$ref": "#/$defs/metadata"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "timestamp": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{3})?Z$"},
+    "locale": {"type": "string", "pattern": "^[a-z]{2,3}(?:-[A-Z]{2})?$"},
+    "approval_reference": {"type": "string", "pattern": "^aba_[a-z0-9][a-z0-9_-]*$"},
+    "store_scope": {
+      "type": "object",
+      "required": ["organization_id", "project_id", "merchant_scope_id"],
+      "properties": {
+        "organization_id": {"type": "string", "pattern": "^org_[a-z0-9][a-z0-9_-]*$"},
+        "project_id": {"type": "string", "pattern": "^prj_[a-z0-9][a-z0-9_-]*$"},
+        "merchant_scope_id": {"type": "string", "pattern": "^mrc_[a-z0-9][a-z0-9_-]*$"}
+      },
+      "additionalProperties": false
+    },
+    "approval": {
+      "type": "object",
+      "required": ["approval_id", "approval_reference", "approval_status", "approver_type", "approved_at"],
+      "properties": {
+        "approval_id": {"$ref": "#/$defs/approval_reference"},
+        "approval_reference": {"type": "string", "minLength": 1, "maxLength": 160},
+        "approval_status": {"type": "string", "const": "approved"},
+        "approver_type": {"type": "string", "enum": ["merchant", "merchant_representative"]},
+        "approved_at": {"$ref": "#/$defs/timestamp"}
+      },
+      "additionalProperties": false
+    },
+    "localized_value": {
+      "type": "object",
+      "required": ["locale", "field", "value", "value_type", "approval_id"],
+      "properties": {
+        "locale": {"$ref": "#/$defs/locale"},
+        "field": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$"},
+        "value": {"type": "string", "minLength": 1, "maxLength": 8000},
+        "value_type": {"type": "string", "enum": ["merchant_authored_text", "merchant_approved_text", "approved_assertion", "direct_quote"]},
+        "approval_id": {"$ref": "#/$defs/approval_reference"}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_type", "approval_id", "evidence_reference_ids"],
+      "properties": {
+        "source_type": {"type": "string", "enum": ["merchant_authored", "merchant_approved", "shopify_resource", "project_asset", "evidence_backed", "external_verified"]},
+        "approval_id": {"$ref": "#/$defs/approval_reference"},
+        "evidence_reference_ids": {"type": "array", "items": {"type": "string", "pattern": "^abpe_[a-z0-9][a-z0-9_-]*$"}}
+      },
+      "additionalProperties": false
+    },
+    "accessibility": {
+      "type": "object",
+      "required": ["decorative_media", "localized", "transcript_resource_id"],
+      "properties": {
+        "decorative_media": {"type": "boolean"},
+        "localized": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["locale", "alt_text", "accessible_label"],
+            "properties": {
+              "locale": {"$ref": "#/$defs/locale"},
+              "alt_text": {"type": ["string", "null"], "maxLength": 500},
+              "accessible_label": {"type": ["string", "null"], "maxLength": 500}
+            },
+            "additionalProperties": false
+          }
+        },
+        "transcript_resource_id": {"type": ["string", "null"], "pattern": "^abprs_[a-z0-9][a-z0-9_-]*$"}
+      },
+      "additionalProperties": false
+    },
+    "content_entity": {
+      "type": "object",
+      "required": ["content_id", "content_type", "localized_values", "resource_reference_ids", "evidence_reference_ids", "provenance"],
+      "properties": {
+        "content_id": {"type": "string", "pattern": "^abpc_[a-z0-9][a-z0-9_-]*$"},
+        "content_type": {"type": "string", "enum": ["editorial_story", "visual_frame", "craftsmanship_evidence", "manufacturing_process_stage", "timeline_milestone", "sustainability_initiative", "team_member", "recognition", "curated_product_relationship", "quote", "approved_text"]},
+        "localized_values": {"type": "array", "items": {"$ref": "#/$defs/localized_value"}},
+        "resource_reference_ids": {"type": "array", "items": {"type": "string", "pattern": "^abprs_[a-z0-9][a-z0-9_-]*$"}},
+        "evidence_reference_ids": {"type": "array", "items": {"type": "string", "pattern": "^abpe_[a-z0-9][a-z0-9_-]*$"}},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "accessibility": {"$ref": "#/$defs/accessibility"}
+      },
+      "additionalProperties": false
+    },
+    "content_entity_map": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/content_entity"}
+    },
+    "resource_reference": {
+      "type": "object",
+      "required": ["resource_id", "resource_type", "source_type", "source_reference", "approved_revision", "approval_id"],
+      "properties": {
+        "resource_id": {"type": "string", "pattern": "^abprs_[a-z0-9][a-z0-9_-]*$"},
+        "resource_type": {"type": "string", "enum": ["shopify_product", "shopify_collection", "shopify_article", "shopify_page", "project_image", "project_video", "external_url", "merchant_fact"]},
+        "reference_role": {"type": "string", "enum": ["destination", "primary_media", "mobile_media", "supporting_media"]},
+        "source_type": {"type": "string", "enum": ["shopify", "project_asset", "merchant_record", "external"]},
+        "source_reference": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "approved_revision": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "approval_id": {"$ref": "#/$defs/approval_reference"},
+        "checksum_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "resource_reference_map": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/resource_reference"}
+    },
+    "evidence_reference": {
+      "type": "object",
+      "required": ["evidence_id", "evidence_type", "source_type", "source_reference", "approved_revision", "approval_id"],
+      "properties": {
+        "evidence_id": {"type": "string", "pattern": "^abpe_[a-z0-9][a-z0-9_-]*$"},
+        "evidence_type": {"type": "string", "enum": ["claim_evidence", "quote_source", "certification_proof", "origin_proof", "sustainability_proof", "rights_usage_proof", "merchant_confirmed_fact", "external_verification"]},
+        "source_type": {"type": "string", "enum": ["merchant_record", "project_asset", "shopify_resource", "external"]},
+        "source_reference": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "approved_revision": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "approval_id": {"$ref": "#/$defs/approval_reference"}
+      },
+      "additionalProperties": false
+    },
+    "evidence_reference_map": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/evidence_reference"}
+    },
+    "visibility": {
+      "type": "object",
+      "required": ["mode", "conditions"],
+      "properties": {
+        "mode": {"type": "string", "enum": ["always", "conditional"]},
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scope", "operator", "values"],
+            "properties": {
+              "scope": {"type": "string", "enum": ["locale", "market", "audience"]},
+              "operator": {"type": "string", "enum": ["equals", "includes"]},
+              "values": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "presentation_intent": {
+      "type": "object",
+      "required": ["emphasis", "media_priority", "density"],
+      "properties": {
+        "emphasis": {"type": "string", "enum": ["primary", "supporting"]},
+        "media_priority": {"type": "string", "enum": ["primary", "supporting", "none"]},
+        "density": {"type": "string", "enum": ["compact", "balanced", "generous"]}
+      },
+      "additionalProperties": false
+    },
+    "block_placement": {
+      "type": "object",
+      "required": ["placement_id", "content_entity_id", "semantic_block_role", "order", "visibility"],
+      "properties": {
+        "placement_id": {"type": "string", "pattern": "^abpl_[a-z0-9][a-z0-9_-]*$"},
+        "content_entity_id": {"type": "string", "pattern": "^abpc_[a-z0-9][a-z0-9_-]*$"},
+        "semantic_block_role": {"type": "string", "enum": ["editorial_story", "lookbook_frame", "craftsmanship_step", "manufacturing_process_step", "visual_frame", "timeline_item", "sustainability_initiative", "team_member", "recognition", "curated_product", "curated_cross_sell_product", "bundle_product", "shop_the_look_product", "fallback_product", "quote"]},
+        "order": {"type": "integer", "minimum": 1},
+        "visibility": {"$ref": "#/$defs/visibility"},
+        "presentation_intent": {"$ref": "#/$defs/presentation_intent"},
+        "marker_position": {
+          "type": "object",
+          "required": ["x_percent", "y_percent"],
+          "properties": {
+            "x_percent": {"type": "integer", "minimum": 0, "maximum": 100},
+            "y_percent": {"type": "integer", "minimum": 0, "maximum": 100}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "composition": {
+      "type": "object",
+      "required": ["composition_id", "page_role", "section_role", "order", "visibility", "block_placements"],
+      "properties": {
+        "composition_id": {"type": "string", "pattern": "^abpcp_[a-z0-9][a-z0-9_-]*$"},
+        "page_role": {"type": "string", "enum": ["homepage", "standard_page", "product_page", "collection_page", "blog_page", "article_page"]},
+        "section_role": {"type": "string", "enum": ["editorial_discovery_grid", "editorial_lookbook", "craftsmanship_evidence", "manufacturing_process", "visual_story", "brand_timeline", "sustainability_evidence", "team_directory", "recognition_evidence", "curated_product_group", "cross_sell_products", "product_bundle_showcase", "shop_the_look", "complementary_products_fallback", "quote_emphasis"]},
+        "order": {"type": "integer", "minimum": 1},
+        "visibility": {"$ref": "#/$defs/visibility"},
+        "presentation_intent": {"$ref": "#/$defs/presentation_intent"},
+        "resource_reference_ids": {"type": "array", "items": {"type": "string", "pattern": "^abprs_[a-z0-9][a-z0-9_-]*$"}},
+        "accessibility": {"$ref": "#/$defs/accessibility"},
+        "block_placements": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/block_placement"}}
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["immutable", "source", "migration"],
+      "properties": {
+        "immutable": {"type": "boolean", "const": true},
+        "source": {"type": "string", "const": "merchant_approved"},
+        "migration": {
+          "type": "object",
+          "required": ["status", "source_revision_id", "migration_version"],
+          "properties": {
+            "status": {"type": "string", "enum": ["native", "migrated"]},
+            "source_revision_id": {"type": ["string", "null"], "pattern": "^abpr_[a-z0-9][a-z0-9_-]*$"},
+            "migration_version": {"type": ["string", "null"], "pattern": "^[0-9]+\\.[0-9]+$"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

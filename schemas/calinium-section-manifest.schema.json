@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-section-manifest.schema.json",
+  "title": "Calinium section manifest",
+  "type": "object",
+  "required": ["version", "enums", "sections"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "enums": {
+      "type": "object",
+      "required": ["categories", "industries", "content_safety_levels", "performance_costs"],
+      "properties": {
+        "categories": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9_]+$" } },
+        "industries": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9_]+$" } },
+        "content_safety_levels": { "type": "array", "items": { "enum": ["safe_to_generate", "generate_with_context", "merchant_confirmation_required", "merchant_only"] } },
+        "performance_costs": { "type": "array", "items": { "enum": ["low", "medium", "high"] } }
+      },
+      "additionalProperties": false
+    },
+    "sections": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/section" } }
+  },
+  "$defs": {
+    "stringArray": { "type": "array", "items": { "type": "string" } },
+    "section": {
+      "type": "object",
+      "required": ["id", "version", "category", "name", "purpose", "primary_use_cases", "recommended_templates", "recommended_positions", "industry_suitability", "visual_styles", "content_requirements", "capabilities", "supported_blocks", "layout_variants", "complexity", "content_density", "media_priority", "conversion_role", "funnel_stages", "dependencies", "incompatibilities", "performance_cost", "requires_javascript", "supports_dynamic_sources", "merchant_assets_required", "merchant_verification_required", "content_safety_level", "ai_generation_notes", "composition"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" }, "version": { "type": "integer", "minimum": 1 }, "category": { "type": "string", "pattern": "^[a-z0-9_]+$" }, "name": { "type": "string", "minLength": 1 }, "purpose": { "type": "string", "minLength": 1 },
+        "primary_use_cases": { "$ref": "#/$defs/stringArray" }, "recommended_templates": { "$ref": "#/$defs/stringArray" }, "recommended_positions": { "$ref": "#/$defs/stringArray" }, "visual_styles": { "$ref": "#/$defs/stringArray" }, "capabilities": { "$ref": "#/$defs/stringArray" }, "supported_blocks": { "$ref": "#/$defs/stringArray" }, "layout_variants": { "$ref": "#/$defs/stringArray" }, "funnel_stages": { "$ref": "#/$defs/stringArray" }, "dependencies": { "$ref": "#/$defs/stringArray" }, "incompatibilities": { "$ref": "#/$defs/stringArray" }, "merchant_assets_required": { "$ref": "#/$defs/stringArray" }, "merchant_verification_required": { "$ref": "#/$defs/stringArray" }, "ai_generation_notes": { "$ref": "#/$defs/stringArray" },
+        "industry_suitability": { "type": "object", "required": ["highly_suitable", "conditionally_suitable", "generally_unsuitable"], "properties": { "highly_suitable": { "$ref": "#/$defs/stringArray" }, "conditionally_suitable": { "$ref": "#/$defs/stringArray" }, "generally_unsuitable": { "$ref": "#/$defs/stringArray" } }, "additionalProperties": false },
+        "content_requirements": { "type": "object", "required": ["required", "recommended", "optional"], "properties": { "required": { "$ref": "#/$defs/stringArray" }, "recommended": { "$ref": "#/$defs/stringArray" }, "optional": { "$ref": "#/$defs/stringArray" } }, "additionalProperties": false },
+        "complexity": { "enum": ["low", "medium", "high"] }, "content_density": { "enum": ["low", "medium", "high"] }, "media_priority": { "enum": ["low", "medium", "high"] }, "conversion_role": { "enum": ["trust", "education", "consideration", "navigation"] }, "performance_cost": { "enum": ["low", "medium", "high"] }, "requires_javascript": { "type": "boolean" }, "supports_dynamic_sources": { "type": "boolean" }, "content_safety_level": { "enum": ["safe_to_generate", "generate_with_context", "merchant_confirmation_required", "merchant_only"] },
+        "composition": { "type": "object", "required": ["recommended_after", "recommended_before", "avoid_adjacent_to", "max_instances_per_template", "above_the_fold", "auto_add_safe", "merchant_verification_before_publish"], "properties": { "recommended_after": { "$ref": "#/$defs/stringArray" }, "recommended_before": { "$ref": "#/$defs/stringArray" }, "avoid_adjacent_to": { "$ref": "#/$defs/stringArray" }, "max_instances_per_template": { "type": "integer", "minimum": 1 }, "above_the_fold": { "type": "boolean" }, "auto_add_safe": { "type": "boolean" }, "merchant_verification_before_publish": { "type": "boolean" } }, "additionalProperties": false }
+      }, "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

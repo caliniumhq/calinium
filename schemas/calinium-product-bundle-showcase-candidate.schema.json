@@ -1,0 +1,10 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://calinium.local/schemas/calinium-product-bundle-showcase-candidate.schema.json",
+  "title":"Calinium Product Bundle Showcase Candidate Plan",
+  "description":"Mutable review state for a non-transactional merchant-curated product showcase.",
+  "type":"object","additionalProperties":false,
+  "required":["version","status","candidate_version","products","warnings","updated_at"],
+  "properties":{"version":{"type":"integer","const":1},"status":{"type":"string","enum":["not_required","draft","approved"]},"candidate_version":{"type":"integer","minimum":0},"products":{"type":"array","maxItems":5,"items":{"$ref":"#/$defs/product"}},"warnings":{"type":"array","items":{"type":"string","minLength":1,"maxLength":240}},"updated_at":{"type":"string","minLength":1}},
+  "$defs":{"product":{"type":"object","additionalProperties":false,"required":["content_id","placement_id","product_resource_id","order"],"properties":{"content_id":{"type":"string","pattern":"^abpc_[a-z0-9][a-z0-9_-]*$"},"placement_id":{"type":"string","pattern":"^abpl_[a-z0-9][a-z0-9_-]*$"},"product_resource_id":{"type":"string","minLength":1,"maxLength":240},"order":{"type":"integer","minimum":1}}}}
+}

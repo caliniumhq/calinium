@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-storefront-objective-observation.schema.json",
+  "title": "Calinium Storefront Objective Observation",
+  "type": "object",
+  "required": ["observation_revision", "geometry", "landmarks", "offscreen_candidates", "clipping_candidates", "collision_candidates", "broken_media", "touch_target_risks", "purchase_interaction", "navigation_interaction"],
+  "properties": {
+    "observation_revision": {"type": "string", "const": "storefront-objective-observation-v1"},
+    "geometry": {
+      "type": "object",
+      "required": ["viewport_width", "viewport_height", "document_scroll_width", "document_scroll_height", "body_scroll_width", "body_scroll_height"],
+      "properties": {
+        "viewport_width": {"type": "integer", "minimum": 1},
+        "viewport_height": {"type": "integer", "minimum": 1},
+        "document_scroll_width": {"type": "integer", "minimum": 1},
+        "document_scroll_height": {"type": "integer", "minimum": 1},
+        "body_scroll_width": {"type": "integer", "minimum": 1},
+        "body_scroll_height": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "landmarks": {"type": "array", "items": {"$ref": "#/$defs/landmark"}},
+    "offscreen_candidates": {"type": "array", "maxItems": 25, "items": {"$ref": "#/$defs/geometryCandidate"}},
+    "clipping_candidates": {"type": "array", "maxItems": 25, "items": {"$ref": "#/$defs/clippingCandidate"}},
+    "collision_candidates": {"type": "array", "maxItems": 25, "items": {"$ref": "#/$defs/collisionCandidate"}},
+    "broken_media": {"type": "array", "maxItems": 25, "items": {"$ref": "#/$defs/mediaCandidate"}},
+    "touch_target_risks": {"type": "array", "maxItems": 25, "items": {"$ref": "#/$defs/touchCandidate"}},
+    "purchase_interaction": {"$ref": "#/$defs/purchaseInteraction"},
+    "navigation_interaction": {"$ref": "#/$defs/navigationInteraction"}
+  },
+  "$defs": {
+    "rect": {
+      "type": "object",
+      "required": ["x", "y", "width", "height", "top", "right", "bottom", "left"],
+      "properties": {
+        "x": {"type": "number"}, "y": {"type": "number"}, "width": {"type": "number", "minimum": 0}, "height": {"type": "number", "minimum": 0},
+        "top": {"type": "number"}, "right": {"type": "number"}, "bottom": {"type": "number"}, "left": {"type": "number"}
+      },
+      "additionalProperties": false
+    },
+    "landmark": {
+      "type": "object", "required": ["selector", "count", "visible_count"],
+      "properties": {"selector": {"type": "string", "minLength": 1}, "count": {"type": "integer", "minimum": 0}, "visible_count": {"type": "integer", "minimum": 0}},
+      "additionalProperties": false
+    },
+    "geometryCandidate": {
+      "type": "object", "required": ["selector", "rect", "overflow_left", "overflow_right", "intentional_scroll_context"],
+      "properties": {"selector": {"type": "string"}, "rect": {"$ref": "#/$defs/rect"}, "overflow_left": {"type": "number", "minimum": 0}, "overflow_right": {"type": "number", "minimum": 0}, "intentional_scroll_context": {"type": "boolean"}},
+      "additionalProperties": false
+    },
+    "clippingCandidate": {
+      "type": "object", "required": ["selector", "rect", "client_width", "client_height", "scroll_width", "scroll_height", "overflow_x", "overflow_y", "intentional_clip_context"],
+      "properties": {"selector": {"type": "string"}, "rect": {"$ref": "#/$defs/rect"}, "client_width": {"type": "number", "minimum": 0}, "client_height": {"type": "number", "minimum": 0}, "scroll_width": {"type": "number", "minimum": 0}, "scroll_height": {"type": "number", "minimum": 0}, "overflow_x": {"type": "string"}, "overflow_y": {"type": "string"}, "intentional_clip_context": {"type": "boolean"}},
+      "additionalProperties": false
+    },
+    "collisionCandidate": {
+      "type": "object", "required": ["first_selector", "second_selector", "first_rect", "second_rect", "overlap_ratio", "intentional_layer_context"],
+      "properties": {"first_selector": {"type": "string"}, "second_selector": {"type": "string"}, "first_rect": {"$ref": "#/$defs/rect"}, "second_rect": {"$ref": "#/$defs/rect"}, "overlap_ratio": {"type": "number", "minimum": 0, "maximum": 1}, "intentional_layer_context": {"type": "boolean"}},
+      "additionalProperties": false
+    },
+    "mediaCandidate": {
+      "type": "object", "required": ["selector", "kind", "critical", "complete", "natural_width", "natural_height", "visible"],
+      "properties": {"selector": {"type": "string"}, "kind": {"type": "string", "enum": ["image", "video", "model"]}, "critical": {"type": "boolean"}, "complete": {"type": "boolean"}, "natural_width": {"type": "number", "minimum": 0}, "natural_height": {"type": "number", "minimum": 0}, "visible": {"type": "boolean"}},
+      "additionalProperties": false
+    },
+    "touchCandidate": {
+      "type": "object", "required": ["selector", "tag", "role", "rect", "inline_text_exception", "spacing_exception", "disabled"],
+      "properties": {"selector": {"type": "string"}, "tag": {"type": "string"}, "role": {"type": ["string", "null"]}, "rect": {"$ref": "#/$defs/rect"}, "inline_text_exception": {"type": "boolean"}, "spacing_exception": {"type": "boolean"}, "disabled": {"type": "boolean"}},
+      "additionalProperties": false
+    },
+    "purchaseInteraction": {
+      "type": "object", "required": ["applicable", "product_form_count", "cart_add_form_count", "primary_control_count", "visible_primary_control_count", "variant_control_count", "controls_connected"],
+      "properties": {"applicable": {"type": "boolean"}, "product_form_count": {"type": "integer", "minimum": 0}, "cart_add_form_count": {"type": "integer", "minimum": 0}, "primary_control_count": {"type": "integer", "minimum": 0}, "visible_primary_control_count": {"type": "integer", "minimum": 0}, "variant_control_count": {"type": "integer", "minimum": 0}, "controls_connected": {"type": "boolean"}},
+      "additionalProperties": false
+    },
+    "navigationInteraction": {
+      "type": "object", "required": ["applicable", "trigger_present", "trigger_visible", "opened", "expanded_state_updated", "controlled_panel_visible", "closed", "focus_remained_reachable"],
+      "properties": {"applicable": {"type": "boolean"}, "trigger_present": {"type": "boolean"}, "trigger_visible": {"type": "boolean"}, "opened": {"type": "boolean"}, "expanded_state_updated": {"type": "boolean"}, "controlled_panel_visible": {"type": "boolean"}, "closed": {"type": "boolean"}, "focus_remained_reachable": {"type": "boolean"}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

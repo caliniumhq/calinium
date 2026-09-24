@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.com/schemas/calinium-durable-storage-provider-acceptance.schema.json",
+  "title": "Calinium Durable Storage Provider Acceptance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "acceptance_revision", "status", "provider", "checked_at", "checks", "acceptance_checksum"],
+  "properties": {
+    "contract_version": { "const": "calinium-durable-storage-provider-acceptance-v1" },
+    "acceptance_revision": { "const": "tigris-real-io-restore-v1" },
+    "status": { "const": "READY" },
+    "provider": { "const": "tigris" },
+    "checked_at": { "type": "string", "format": "date-time" },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_health", "conditional_write", "stat", "exact_read", "checksum", "durable_reference",
+        "identical_replay", "conflicting_replay_rejected", "authoritative_lifecycle_safe",
+        "fresh_runtime_restore", "wrong_checksum_rejected", "disposable_cleanup"
+      ],
+      "properties": {
+        "provider_health": { "const": true },
+        "conditional_write": { "const": true },
+        "stat": { "const": true },
+        "exact_read": { "const": true },
+        "checksum": { "const": true },
+        "durable_reference": { "const": true },
+        "identical_replay": { "const": true },
+        "conflicting_replay_rejected": { "const": true },
+        "authoritative_lifecycle_safe": { "const": true },
+        "fresh_runtime_restore": { "const": true },
+        "wrong_checksum_rejected": { "const": true },
+        "disposable_cleanup": { "const": true }
+      }
+    },
+    "acceptance_checksum": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

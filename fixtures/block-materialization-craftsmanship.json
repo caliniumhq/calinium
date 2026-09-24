@@ -1,0 +1,10 @@
+{
+  "resource_snapshot": {
+    "snapshot_id": "abps_fixture_craftsmanship_r1",
+    "approval": {"approval_id": "aba_fixture_craftsmanship"},
+    "resources": {
+      "abprs_fixture_craftsmanship_edge_image": {"resource_type": "project_image", "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111", "runtime_value": "dashboard://fixture-assets/craftsmanship-edge"}
+    }
+  },
+  "expected": {"block_count": 2, "block_orders": ["abpl_fixture_craftsmanship_edge", "abpl_fixture_craftsmanship_hardware"]}
+}

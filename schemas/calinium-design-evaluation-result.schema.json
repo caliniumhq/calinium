@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-design-evaluation-result.schema.json",
+  "title": "Calinium Subjective Design Evaluation Result",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "evaluation_id", "evaluation_request_id", "status", "request", "provider_runs", "dimension_assessments", "findings", "repeat_consistency", "subjective_gate", "objective_quality_summary", "combined_quality_summary", "safety", "error"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "design-evaluation-result-v1"},
+    "evaluation_id": {"type": "string", "pattern": "^design-evaluation-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["evaluated", "failed"]},
+    "request": {"$ref": "calinium-design-evaluation-request.schema.json"},
+    "provider_runs": {"type": "array", "items": {"type": "object", "required": ["response_id", "response_checksum", "run_sequence"], "properties": {"response_id": {"type": "string"}, "response_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "run_sequence": {"type": "integer"}, "provider": {"type": "object"}, "operation": {"type": "object"}, "diagnostics": {"type": "object"}, "dimension_assessments": {"type": "array", "items": {"$ref": "calinium-design-dimension-assessment.schema.json"}}, "findings": {"type": "array", "items": {"$ref": "calinium-design-finding.schema.json"}}}, "additionalProperties": false}},
+    "dimension_assessments": {"type": "array", "items": {"$ref": "calinium-design-dimension-assessment.schema.json"}},
+    "findings": {"type": "array", "items": {"$ref": "calinium-design-finding.schema.json"}},
+    "repeat_consistency": {"type": "object", "required": ["runs", "dimension_categorical_agreement", "high_impact_finding_agreement", "responsibility_agreement", "unstable_items", "identical_prose_required"], "properties": {"runs": {"type": "integer"}, "dimension_categorical_agreement": {"type": "number", "minimum": 0, "maximum": 1}, "high_impact_finding_agreement": {"type": "number", "minimum": 0, "maximum": 1}, "responsibility_agreement": {"type": "number", "minimum": 0, "maximum": 1}, "recommendation_agreement": {"type": "number", "minimum": 0, "maximum": 1}, "unstable_items": {"type": "array", "items": {"type": "string"}}, "identical_prose_required": {"type": "boolean", "const": false}}, "additionalProperties": false},
+    "subjective_gate": {"$ref": "#/$defs/gate"},
+    "objective_quality_summary": {"type": "object"},
+    "combined_quality_summary": {"type": "object"},
+    "safety": {"type": "object", "required": ["automatic_mutation_allowed", "automatic_repair_allowed", "single_numeric_score_present"], "properties": {"automatic_mutation_allowed": {"type": "boolean", "const": false}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "single_numeric_score_present": {"type": "boolean", "const": false}}, "additionalProperties": false},
+    "error": {"type": ["object", "null"]}
+  },
+  "$defs": {"gate": {"type": "object", "required": ["status", "policy_revision", "human_review_required", "automatic_repair_allowed", "reason_codes"], "properties": {"status": {"type": "string", "enum": ["approved", "approved_with_notes", "repair_recommended", "repair_required", "review_required"]}, "policy_revision": {"type": "string"}, "human_review_required": {"type": "boolean"}, "automatic_repair_allowed": {"type": "boolean", "const": false}, "reason_codes": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false}},
+  "additionalProperties": false
+}

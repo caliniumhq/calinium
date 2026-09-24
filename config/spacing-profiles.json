@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "items": [
+    {"id":"compact","name":"Compact","section_spacing_range_px":[48,72],"card_spacing_range_px":[12,20],"grid_spacing_range_px":[12,20],"whitespace_philosophy":"Use compact rhythm only when comparison, specifications, or navigation benefit from density.","mobile_spacing_range_px":[32,48]},
+    {"id":"comfortable","name":"Comfortable","section_spacing_range_px":[64,96],"card_spacing_range_px":[16,24],"grid_spacing_range_px":[16,24],"whitespace_philosophy":"Maintain an easy reading rhythm with practical separation between actions and content.","mobile_spacing_range_px":[40,56]},
+    {"id":"editorial","name":"Editorial","section_spacing_range_px":[80,120],"card_spacing_range_px":[20,32],"grid_spacing_range_px":[20,32],"whitespace_philosophy":"Use intentional pauses around media and long-form storytelling; vary pace without crowding.","mobile_spacing_range_px":[48,64]},
+    {"id":"luxury","name":"Luxury","section_spacing_range_px":[96,144],"card_spacing_range_px":[20,32],"grid_spacing_range_px":[24,40],"whitespace_philosophy":"Let material, image, and typography breathe; do not fill space with decorative UI.","mobile_spacing_range_px":[56,72]},
+    {"id":"immersive","name":"Immersive","section_spacing_range_px":[96,160],"card_spacing_range_px":[20,32],"grid_spacing_range_px":[20,32],"whitespace_philosophy":"Use large, cinematic transitions between major narrative moments while preserving an efficient mobile rhythm.","mobile_spacing_range_px":[56,80]}
+  ]
+}

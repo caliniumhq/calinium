@@ -1,0 +1,301 @@
+{{ 'component-image.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+{% if section.settings.enable_quick_add %}
+  {{ 'component-quantity-input.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" type="module"></script>
+{% endif %}
+
+{% liquid
+  assign cross_sell_heading_id = 'CrossSellHeading-' | append: section.id
+  assign cross_sell_classes = 'co-cross-sell co-commerce-section co-commerce-section--align-' | append: section.settings.text_alignment
+  assign cross_sell_classes = cross_sell_classes | append: ' co-color-scheme-' | append: section.settings.color_scheme
+  assign cross_sell_classes = cross_sell_classes | append: ' co-cross-sell--card-style-' | append: section.settings.card_style
+  assign cross_sell_handles = '|'
+  assign cross_sell_count = 0
+  for block in section.blocks
+    assign cross_sell_product = block.settings.product
+    if cross_sell_product != blank
+      if section.settings.exclude_current_product == false or cross_sell_product.handle != product.handle
+        assign cross_sell_token = '|' | append: cross_sell_product.handle | append: '|'
+        unless cross_sell_handles contains cross_sell_token
+          assign cross_sell_handles = cross_sell_handles | append: cross_sell_product.handle | append: '|'
+          assign cross_sell_count = cross_sell_count | plus: 1
+        endunless
+      endif
+    endif
+  endfor
+%}
+
+{% render 'section-spacing', section: section %}
+
+<section class="{{ cross_sell_classes }}" style="--co-commerce-desktop-columns: {{ section.settings.columns_desktop }}; --co-commerce-mobile-columns: {{ section.settings.columns_mobile }};" {% if section.settings.heading != blank %}aria-labelledby="{{ cross_sell_heading_id }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="co-page-width">
+    {% render 'section-heading', eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.description, id: cross_sell_heading_id, alignment: section.settings.text_alignment, size: section.settings.heading_size, class: 'co-commerce-section__header' %}
+    {% if cross_sell_count > 0 %}
+      {% assign rendered_cross_sell_handles = '|' %}
+      <ul class="co-cross-sell__grid" role="list">
+        {% for block in section.blocks %}
+          {% assign cross_sell_product = block.settings.product %}
+          {% if cross_sell_product != blank %}
+            {% if section.settings.exclude_current_product == false or cross_sell_product.handle != product.handle %}
+              {% assign cross_sell_token = '|' | append: cross_sell_product.handle | append: '|' %}
+              {% unless rendered_cross_sell_handles contains cross_sell_token %}
+                {% assign rendered_cross_sell_handles = rendered_cross_sell_handles | append: cross_sell_product.handle | append: '|' %}
+                <li {{ block.shopify_attributes }}>
+                  {% render 'product-card', product: cross_sell_product, section_id: section.id, image_ratio: section.settings.image_ratio, image_loading: 'lazy', image_sizes: '(min-width: 48rem) 25vw, 50vw', image_widths: '165, 360, 535, 750, 1000', show_vendor: section.settings.show_vendor, show_rating: false, show_compare_at_price: true, show_sale_badge: section.settings.show_badges, show_sold_out_badge: section.settings.show_badges, show_secondary_image: section.settings.show_secondary_image, show_inventory: false, show_quick_add: section.settings.enable_quick_add, card_alignment: section.settings.text_alignment %}
+                </li>
+              {% endunless %}
+            {% endif %}
+          {% elsif request.design_mode %}
+            <li class="co-commerce-section__placeholder" {{ block.shopify_attributes }}>{{ 'product-1' | placeholder_svg_tag }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% elsif request.design_mode %}
+      <p class="co-commerce-section__empty">{{ 'sections.cross_sell_products.empty' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.cross_sell_products.name",
+  "tag": "section",
+  "class": "co-section-cross-sell-products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.shared.settings.eyebrow.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.shared.settings.heading.label",
+      "default": "Complete your selection"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.shared.settings.description.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.shared.settings.heading_size.label",
+      "default": "standard",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.shared.options.small"
+        },
+        {
+          "value": "standard",
+          "label": "t:sections.shared.options.standard"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.shared.options.large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "t:sections.shared.settings.text_alignment.label",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shared.options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shared.options.center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.cross_sell_products.settings.columns_desktop.label",
+      "default": "4",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:sections.cross_sell_products.settings.columns_mobile.label",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.shared.options.one"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.shared.options.two"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "t:sections.cross_sell_products.settings.card_style.label",
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:sections.cross_sell_products.settings.card_style.options.grid"
+        },
+        {
+          "value": "compact",
+          "label": "t:sections.cross_sell_products.settings.card_style.options.compact"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:sections.shared.settings.image_ratio.label",
+      "default": "portrait",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.shared.options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.shared.options.portrait"
+        },
+        {
+          "value": "landscape",
+          "label": "t:sections.shared.options.landscape"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:sections.shared.settings.show_vendor.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "t:sections.cross_sell_products.settings.show_badges.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "t:sections.shared.settings.show_secondary_image.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:sections.shared.settings.enable_quick_add.label",
+      "info": "t:sections.shared.settings.enable_quick_add.info",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "exclude_current_product",
+      "label": "t:sections.cross_sell_products.settings.exclude_current_product.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.shared.settings.color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.shared.settings.desktop_top_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.shared.settings.desktop_bottom_spacing.label",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "t:sections.shared.settings.mobile_top_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "t:sections.shared.settings.mobile_bottom_spacing.label",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.cross_sell_products.blocks.product",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.shared.settings.product.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.cross_sell_products.preset",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

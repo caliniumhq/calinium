@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-observation.schema.json",
+  "title": "Calinium Frozen Visual Observation",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "observation_id", "evaluation_request_id", "run_sequence", "phenomenon", "valence", "profile_ids", "route_id", "viewport_ids", "component", "visible_region", "evidence_summary", "confidence", "evidence", "objective_facts", "source_finding_ids", "frozen"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "visual-observation-v1"},
+    "observation_id": {"type": "string", "pattern": "^visual-observation-[a-f0-9]{20}$"},
+    "evaluation_request_id": {"type": "string"},
+    "run_sequence": {"type": "integer", "minimum": 1},
+    "phenomenon": {"type": "string", "enum": ["page_overflow", "content_truncation", "empty_module_visible", "repeated_information", "control_crowding", "typographic_word_break", "duplicate_surface", "comparison_friction", "architecture_difference", "other_visible_condition"]},
+    "valence": {"type": "string", "enum": ["issue", "positive", "neutral"]},
+    "profile_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "route_id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]},
+    "viewport_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "component": {"type": "string", "enum": ["page", "header", "footer", "product_row", "collection_discovery", "collection_hero", "product_supporting_content", "product_highlights", "newsletter", "product_grid", "other"]},
+    "visible_region": {"type": "string", "minLength": 1, "maxLength": 500},
+    "evidence_summary": {"type": "string", "minLength": 1, "maxLength": 1600},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "evidence": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["cell_id", "screenshot_sha256", "region", "visible_evidence"], "properties": {"cell_id": {"type": "string"}, "screenshot_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "region": {"type": "string"}, "visible_evidence": {"type": "string"}}, "additionalProperties": false}},
+    "objective_facts": {"type": "array", "items": {"type": "object", "required": ["finding_id", "rule_id", "severity", "authority"], "properties": {"finding_id": {"type": "string"}, "rule_id": {"type": "string"}, "severity": {"type": "string"}, "authority": {"type": "string", "const": "phase_d1_authoritative"}}, "additionalProperties": false}},
+    "source_finding_ids": {"type": "array", "items": {"type": "string"}},
+    "frozen": {"type": "boolean", "const": true}
+  },
+  "additionalProperties": false
+}

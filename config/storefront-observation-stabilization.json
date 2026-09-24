@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "1.0.0",
+  "policy_id": "calinium_visual_observation_stabilization",
+  "policy_revision": "visual-observation-stabilization-phase-d2-7-v1",
+  "source_stabilization_policy_revision": "visual-judgment-stabilization-phase-d2-6-v1",
+  "contracts": {
+    "observation": "concrete-visual-observation-v1",
+    "comparison": "controlled-visual-comparison-v1",
+    "report": "observation-stabilization-report-v1"
+  },
+  "phenomena": [
+    {"id": "horizontal_overflow", "kind": "issue", "legacy_phenomenon": "page_overflow", "definition": "The visible page or page-level region extends horizontally beyond its viewport."},
+    {"id": "visible_clipping", "kind": "issue", "legacy_phenomenon": "content_truncation", "definition": "A visible element is cut by the boundary of its containing surface."},
+    {"id": "truncated_visible_content", "kind": "issue", "legacy_phenomenon": "content_truncation", "definition": "Only part of visible text, media, or a card remains visible."},
+    {"id": "word_break", "kind": "issue", "legacy_phenomenon": "typographic_word_break", "definition": "A visible word breaks internally across lines."},
+    {"id": "isolated_line_wrap", "kind": "issue", "legacy_phenomenon": "typographic_word_break", "definition": "A visible final character or very short fragment is isolated on another line."},
+    {"id": "element_crowding", "kind": "issue", "legacy_phenomenon": "control_crowding", "definition": "Visible elements occupy immediately adjacent space with little separation."},
+    {"id": "overlapping_elements", "kind": "issue", "legacy_phenomenon": "control_crowding", "definition": "Two visible elements occupy the same rendered area."},
+    {"id": "empty_visible_module", "kind": "issue", "legacy_phenomenon": "empty_module_visible", "definition": "A visible module shell or heading contains no visible promised content."},
+    {"id": "repeated_visible_module", "kind": "issue", "legacy_phenomenon": "duplicate_surface", "definition": "A visible module performing the same role appears again in close succession."},
+    {"id": "missing_visible_supporting_content", "kind": "issue", "legacy_phenomenon": "empty_module_visible", "definition": "A visible label or heading has no visible supporting items beneath or beside it."},
+    {"id": "excessive_local_whitespace", "kind": "issue", "legacy_phenomenon": "empty_module_visible", "definition": "A bounded visible region contains a large uninterrupted blank area between identified surfaces."},
+    {"id": "dense_local_grouping", "kind": "issue", "legacy_phenomenon": "control_crowding", "definition": "Several visible elements are tightly grouped within one bounded region."},
+    {"id": "asymmetrical_grid_structure", "kind": "structure", "legacy_phenomenon": "comparison_friction", "definition": "Visible grid items use unequal dimensions or staggered positions."},
+    {"id": "repeated_media_content", "kind": "issue", "legacy_phenomenon": "repeated_information", "definition": "The same visible media or product identity appears in another nearby surface."},
+    {"id": "weak_visual_separation", "kind": "issue", "legacy_phenomenon": "control_crowding", "definition": "Two identified visible surfaces have little perceivable boundary or spacing between them."},
+    {"id": "uniform_grid_structure", "kind": "structure", "legacy_phenomenon": "architecture_difference", "definition": "Visible grid items use a consistent repeated size and aligned position."},
+    {"id": "multi_row_grid_structure", "kind": "structure", "legacy_phenomenon": "architecture_difference", "definition": "Visible grid items continue across two or more aligned rows."},
+    {"id": "featured_first_grid_structure", "kind": "structure", "legacy_phenomenon": "architecture_difference", "definition": "One visible item receives a larger or earlier position before smaller repeated items."},
+    {"id": "single_row_grouping", "kind": "structure", "legacy_phenomenon": "architecture_difference", "definition": "The identified visible elements occupy one horizontal grouping."},
+    {"id": "stacked_grouping", "kind": "structure", "legacy_phenomenon": "architecture_difference", "definition": "The identified visible elements occupy two or more vertically stacked groups."},
+    {"id": "sequential_content_order", "kind": "structure", "legacy_phenomenon": "architecture_difference", "definition": "Visible content surfaces appear in an identifiable linear order."}
+  ],
+  "components": [
+    "page_root",
+    "header_identity_controls",
+    "navigation",
+    "hero",
+    "collection_hero",
+    "collection_discovery",
+    "product_grid",
+    "product_row",
+    "product_card",
+    "pdp_primary",
+    "product_highlights",
+    "comparison_module",
+    "faq_module",
+    "newsletter_module",
+    "footer_newsletter",
+    "footer_identity",
+    "other_named_region"
+  ],
+  "support_statuses": [
+    "repeated_across_runs",
+    "single_run_supported_by_d1",
+    "single_run_requires_review",
+    "unsupported"
+  ],
+  "comparison_types": ["cross_viewport", "cross_profile"],
+  "comparison_conclusions": ["material_structural_difference", "responsive_structural_difference", "no_supported_difference", "requires_human_review"],
+  "rejected_interpretation_terms": [
+    "better", "worse", "premium", "cheap", "effective", "ineffective",
+    "stronger architecture", "weaker architecture", "comparison friction",
+    "insufficient differentiation", "poor product discovery", "weak hierarchy",
+    "more polished", "less polished", "harder to compare", "easier to compare"
+  ],
+  "reliability": {
+    "statuses": ["not_reliable", "human_review_only", "repair_planning_eligible"],
+    "thresholds": {
+      "observation_agreement": 0.75,
+      "maximum_unsupported_observation_rate": 0.10,
+      "high_impact_finding_agreement": 0.75,
+      "primary_dimension_agreement": 0.80,
+      "importance_agreement": 0.80,
+      "responsibility_agreement": 0.80,
+      "recommendation_agreement": 0.80,
+      "root_symptom_agreement": 0.80,
+      "maximum_d1_contradictions": 0
+    },
+    "human_review_required": true,
+    "automatic_repair_allowed": false
+  },
+  "limited_live_validation": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "medium",
+    "profiles": ["profile.current_calinium.v1", "profile.editorial_discovery.v1"],
+    "routes": ["homepage", "collection", "product"],
+    "viewports": ["desktop-v1", "mobile-v1"],
+    "screenshot_cells": 12,
+    "accepted_repeats": 2,
+    "maximum_accepted_calls": 2,
+    "semantic_completeness_attempts_per_repeat": 2,
+    "fixture_fallback_allowed": false,
+    "automatic_repair_allowed": false,
+    "automatic_mutation_allowed": false,
+    "shopify_write_allowed": false
+  }
+}

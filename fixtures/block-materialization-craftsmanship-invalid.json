@@ -1,0 +1,8 @@
+{
+  "cases": [
+    {"case_id": "missing-optional-image", "expected": "materialize", "plan_operations": [{"op": "remove", "path": "/content_entities/abpc_fixture_edge_finishing/resource_reference_ids/0"}]},
+    {"case_id": "duplicate-semantic-item", "expected": "omit", "plan_operations": [{"op": "replace", "path": "/content_entities/abpc_fixture_hardware_check/localized_values/0/value", "value": "Edge finishing"}], "expected_warning": "duplicate_semantic_item"},
+    {"case_id": "missing-required-evidence", "expected": "reject", "plan_operations": [{"op": "replace", "path": "/content_entities/abpc_fixture_edge_finishing/evidence_reference_ids", "value": []}], "expected_error": "no required evidence"},
+    {"case_id": "mismatched-image-revision", "expected": "reject", "resource_operations": [{"op": "replace", "path": "/resources/abprs_fixture_craftsmanship_edge_image/approved_revision", "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"}], "expected_error": "revision does not match"}
+  ]
+}

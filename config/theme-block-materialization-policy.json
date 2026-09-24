@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "catalog_version": 1,
+  "policies": [
+    {
+      "policy_id": "editorial_grid",
+      "page_role": "homepage",
+      "semantic_section_role": "editorial_discovery_grid",
+      "runtime_section_id": "editorial-grid",
+      "runtime_block_type": "story",
+      "semantic_block_role": "editorial_story",
+      "max_blocks": 8,
+      "destination_precedence": ["shopify_article", "shopify_collection", "shopify_page", "external_url"],
+      "destination_mappings": [
+        {"resource_type": "shopify_article", "runtime_setting_id": "article"},
+        {"resource_type": "shopify_collection", "runtime_setting_id": "collection"},
+        {"resource_type": "external_url", "runtime_setting_id": "link"}
+      ],
+      "localized_value_mappings": [
+        {"semantic_field": "title", "runtime_setting_id": "heading"},
+        {"semantic_field": "summary", "runtime_setting_id": "excerpt"},
+        {"semantic_field": "eyebrow", "runtime_setting_id": "eyebrow"}
+      ],
+      "optional_resource_mappings": [
+        {"resource_type": "project_image", "runtime_setting_id": "image"}
+      ],
+      "minimum_content": ["destination", "visible_name"],
+      "duplicate_key": "runtime_destination",
+      "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_destination", "missing_visible_name", "duplicate_destination", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "lookbook",
+      "page_role": "homepage",
+      "semantic_section_role": "editorial_lookbook",
+      "runtime_section_id": "lookbook",
+      "runtime_block_type": "item",
+      "semantic_block_role": "lookbook_frame",
+      "max_blocks": 6,
+      "destination_precedence": ["external_url", "shopify_product", "shopify_collection"],
+      "destination_mappings": [
+        {"resource_type": "external_url", "runtime_setting_id": "link"},
+        {"resource_type": "shopify_product", "runtime_setting_id": "product"},
+        {"resource_type": "shopify_collection", "runtime_setting_id": "collection"}
+      ],
+      "localized_value_mappings": [
+        {"semantic_field": "title", "runtime_setting_id": "title"},
+        {"semantic_field": "text", "runtime_setting_id": "text"},
+        {"semantic_field": "media_ratio", "runtime_setting_id": "media_ratio"}
+      ],
+      "optional_resource_mappings": [
+        {"resource_type": "project_image", "reference_role": "primary_media", "runtime_setting_id": "image"},
+        {"resource_type": "project_image", "reference_role": "mobile_media", "runtime_setting_id": "mobile_image"}
+      ],
+      "minimum_content": ["image", "accessible_context"],
+      "duplicate_key": "runtime_destination_or_frame",
+      "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_primary_image", "missing_accessible_context", "duplicate_destination", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "craftsmanship",
+      "page_role": "homepage",
+      "semantic_section_role": "craftsmanship_evidence",
+      "runtime_section_id": "craftsmanship",
+      "runtime_block_type": "craft_step",
+      "semantic_block_role": "craftsmanship_step",
+      "max_blocks": 8,
+      "destination_precedence": [],
+      "destination_mappings": [],
+      "localized_value_mappings": [
+        {"semantic_field": "title", "runtime_setting_id": "heading"},
+        {"semantic_field": "text", "runtime_setting_id": "text"},
+        {"semantic_field": "icon", "runtime_setting_id": "craft_icon"}
+      ],
+      "optional_resource_mappings": [
+        {"resource_type": "project_image", "reference_role": "supporting_media", "runtime_setting_id": "image"}
+      ],
+      "minimum_content": ["visible_name", "evidence"],
+      "duplicate_key": "semantic_heading",
+      "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_visible_name", "duplicate_semantic_item", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "missing_required_evidence", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "manufacturing_process",
+      "page_role": "homepage",
+      "semantic_section_role": "manufacturing_process",
+      "runtime_section_id": "manufacturing-process",
+      "runtime_block_type": "process_step",
+      "semantic_block_role": "manufacturing_process_step",
+      "max_blocks": 10,
+      "destination_precedence": [],
+      "destination_mappings": [],
+      "localized_value_mappings": [
+        {"semantic_field": "title", "runtime_setting_id": "heading"},
+        {"semantic_field": "text", "runtime_setting_id": "text"},
+        {"semantic_field": "icon", "runtime_setting_id": "process_icon"}
+      ],
+      "optional_resource_mappings": [
+        {"resource_type": "project_image", "reference_role": "supporting_media", "runtime_setting_id": "image"}
+      ],
+      "minimum_content": ["visible_name", "evidence"],
+      "duplicate_key": "semantic_heading",
+      "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_visible_name", "duplicate_semantic_item", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "missing_required_evidence", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "brand_timeline",
+      "page_role": "homepage",
+      "semantic_section_role": "brand_timeline",
+      "runtime_section_id": "brand-timeline",
+      "runtime_block_type": "timeline_item",
+      "semantic_block_role": "timeline_item",
+      "max_blocks": 12,
+      "destination_precedence": [], "destination_mappings": [],
+      "localized_value_mappings": [{"semantic_field":"date","runtime_setting_id":"date"},{"semantic_field":"title","runtime_setting_id":"heading"},{"semantic_field":"text","runtime_setting_id":"text"},{"semantic_field":"icon","runtime_setting_id":"timeline_icon"}],
+      "required_localized_fields": ["date", "title"],
+      "optional_resource_mappings": [{"resource_type":"project_image","reference_role":"supporting_media","runtime_setting_id":"image"}],
+      "minimum_content": ["visible_name", "evidence"], "duplicate_key": "semantic_heading", "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_visible_name", "duplicate_semantic_item", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "missing_required_evidence", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "sustainability",
+      "page_role": "homepage",
+      "semantic_section_role": "sustainability_evidence",
+      "runtime_section_id": "sustainability",
+      "runtime_block_type": "initiative",
+      "semantic_block_role": "sustainability_initiative",
+      "max_blocks": 8,
+      "destination_precedence": [], "destination_mappings": [],
+      "localized_value_mappings": [{"semantic_field":"title","runtime_setting_id":"heading"},{"semantic_field":"text","runtime_setting_id":"text"},{"semantic_field":"icon","runtime_setting_id":"initiative_icon"}],
+      "required_localized_fields": ["title", "text"],
+      "optional_resource_mappings": [{"resource_type":"project_image","reference_role":"supporting_media","runtime_setting_id":"image"}],
+      "minimum_content": ["visible_name", "evidence"], "duplicate_key": "semantic_heading", "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_visible_name", "duplicate_semantic_item", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "missing_required_evidence", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "team",
+      "page_role": "homepage",
+      "semantic_section_role": "team_directory",
+      "runtime_section_id": "team",
+      "runtime_block_type": "team_member",
+      "semantic_block_role": "team_member",
+      "visible_name_field": "name",
+      "max_blocks": 12,
+      "destination_precedence": [], "destination_mappings": [],
+      "localized_value_mappings": [{"semantic_field":"name","runtime_setting_id":"name"},{"semantic_field":"role","runtime_setting_id":"role"},{"semantic_field":"bio","runtime_setting_id":"bio"}],
+      "required_localized_fields": ["name", "role"],
+      "optional_resource_mappings": [{"resource_type":"project_image","reference_role":"supporting_media","runtime_setting_id":"image"}],
+      "minimum_content": ["visible_name", "evidence"], "duplicate_key": "semantic_heading", "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_visible_name", "duplicate_semantic_item", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "missing_required_evidence", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "awards_certifications",
+      "page_role": "homepage",
+      "semantic_section_role": "recognition_evidence",
+      "runtime_section_id": "awards-certifications",
+      "runtime_block_type": "award",
+      "runtime_block_type_by_semantic_kind": {"award":"award","certification":"certification"},
+      "semantic_kind_values": ["award", "certification"],
+      "semantic_block_role": "recognition",
+      "max_blocks": 12,
+      "destination_precedence": [], "destination_mappings": [],
+      "localized_value_mappings": [{"semantic_field":"title","runtime_setting_id":"heading"},{"semantic_field":"issuer","runtime_setting_id":"issuer"},{"semantic_field":"year","runtime_setting_id":"year"},{"semantic_field":"text","runtime_setting_id":"text"},{"semantic_field":"icon","runtime_setting_id":"award_icon"}],
+      "required_localized_fields": ["kind", "title", "issuer"],
+      "optional_resource_mappings": [{"resource_type":"project_image","reference_role":"supporting_media","runtime_setting_id":"logo"}],
+      "minimum_content": ["visible_name", "evidence"], "duplicate_key": "semantic_heading", "empty_section_behavior": "preserve_shell",
+      "omission_reasons": ["missing_visible_name", "duplicate_semantic_item", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "missing_required_evidence", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "cross_sell_products",
+      "page_role": "homepage",
+      "page_roles": ["homepage", "product_page", "collection_page", "standard_page"],
+      "semantic_section_role": "cross_sell_products",
+      "runtime_section_id": "cross-sell-products",
+      "runtime_block_type": "product",
+      "semantic_block_role": "curated_cross_sell_product",
+      "max_blocks": 8,
+      "destination_precedence": ["shopify_product"],
+      "destination_mappings": [{"resource_type":"shopify_product","runtime_setting_id":"product"}],
+      "localized_value_mappings": [], "optional_resource_mappings": [], "minimum_content": ["destination"],
+      "duplicate_key": "runtime_product", "source_authority": "merchant_curated", "current_product_behavior": "runtime_setting",
+      "empty_section_behavior": "preserve_shell", "omission_reasons": ["missing_destination", "duplicate_destination"],
+      "hard_failure_conditions": ["invalid_approved_plan", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "product_bundle_showcase",
+      "page_role": "homepage", "page_roles": ["homepage", "product_page", "collection_page", "standard_page"],
+      "semantic_section_role": "product_bundle_showcase", "runtime_section_id": "product-bundle-showcase", "runtime_block_type": "product", "semantic_block_role": "bundle_product",
+      "min_blocks": 2, "max_blocks": 5,
+      "destination_precedence": ["shopify_product"], "destination_mappings": [{"resource_type":"shopify_product","runtime_setting_id":"product"}],
+      "localized_value_mappings": [], "optional_resource_mappings": [], "minimum_content": ["destination"],
+      "duplicate_key": "runtime_product", "source_authority": "merchant_curated", "current_product_behavior": "not_applicable",
+      "empty_section_behavior": "preserve_shell", "omission_reasons": ["missing_destination", "duplicate_destination"],
+      "hard_failure_conditions": ["invalid_approved_plan", "minimum_block_count", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "shop_the_look",
+      "page_role": "homepage", "page_roles": ["homepage", "collection_page", "standard_page", "product_page"],
+      "semantic_section_role": "shop_the_look", "runtime_section_id": "shop-the-look", "runtime_block_type": "product", "semantic_block_role": "shop_the_look_product",
+      "max_blocks": 6,
+      "destination_precedence": ["shopify_product"], "destination_mappings": [{"resource_type":"shopify_product","runtime_setting_id":"product"}],
+      "localized_value_mappings": [], "optional_resource_mappings": [],
+      "section_resource_mappings": [{"resource_type":"project_image","reference_role":"primary_media","runtime_setting_id":"image","required":true},{"resource_type":"project_image","reference_role":"mobile_media","runtime_setting_id":"mobile_image","required":false}],
+      "placement_value_mappings": [{"semantic_field":"marker_position.x_percent","runtime_setting_id":"x_position"},{"semantic_field":"marker_position.y_percent","runtime_setting_id":"y_position"}],
+      "minimum_content": ["destination", "marker_position"], "duplicate_key": "runtime_product", "source_authority": "merchant_curated", "current_product_behavior": "not_applicable",
+      "empty_section_behavior": "preserve_shell", "omission_reasons": ["missing_destination", "duplicate_destination", "unsupported_optional_resource"],
+      "hard_failure_conditions": ["invalid_approved_plan", "missing_primary_image", "invalid_marker_position", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    },
+    {
+      "policy_id": "complementary_products_fallback",
+      "page_role": "product_page", "semantic_section_role": "complementary_products_fallback", "runtime_section_id": "complementary-products", "runtime_block_type": "fallback_product", "semantic_block_role": "fallback_product",
+      "max_blocks": 8,
+      "destination_precedence": ["shopify_product"], "destination_mappings": [{"resource_type":"shopify_product","runtime_setting_id":"product"}],
+      "localized_value_mappings": [], "optional_resource_mappings": [], "minimum_content": ["destination"],
+      "duplicate_key": "runtime_product", "source_authority": "shopify_complementary_fallback", "current_product_behavior": "always_exclude",
+      "empty_section_behavior": "preserve_shell", "omission_reasons": ["missing_destination", "duplicate_destination"],
+      "hard_failure_conditions": ["invalid_approved_plan", "ineligible_page_or_section", "unknown_runtime_block_type", "unknown_runtime_setting_id", "invalid_runtime_setting_value", "block_limit_exceeded", "resource_revision_mismatch", "generated_block_id_collision"]
+    }
+  ]
+}

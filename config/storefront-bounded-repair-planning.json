@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "policy_version": "bounded-repair-planning-policy-v1",
+  "policy_id": "calinium_bounded_repair_planning",
+  "policy_revision": "bounded-repair-planning-phase-d3a-v1",
+  "source_observation_policy_revision": "visual-observation-stabilization-phase-d2-7-v1",
+  "eligible_human_decisions": ["needs_fix"],
+  "ineligible_human_decisions": ["accepted", "false_positive", "preference_only", "merchant_content_issue", "deferred"],
+  "eligible_relationships": ["root_finding", "independent"],
+  "ineligible_relationships": ["symptom_of"],
+  "responsibilities": ["architecture_level", "composition_level", "design_token_level", "merchant_content_level", "data_quality_level", "uncertain"],
+  "statuses": ["proposed", "human_approved", "rejected", "superseded"],
+  "required_reliability": {
+    "status": "repair_planning_eligible",
+    "repair_planning_consumption_allowed": true
+  },
+  "required_forbidden_scope": [
+    "editorial_discovery",
+    "cart",
+    "typography_redesign",
+    "section_order",
+    "newsletter",
+    "empty_module_suppression",
+    "footer_wrapping",
+    "mobile_header",
+    "product_highlights",
+    "design_dna",
+    "presets",
+    "architecture_selection",
+    "merchant_content",
+    "billing",
+    "deployment",
+    "live_theme_publishing"
+  ],
+  "safety": {
+    "human_review_required": true,
+    "automatic_repair_allowed": false,
+    "mutation_allowed_in_d3a": false,
+    "repair_execution_capability_allowed_in_d3a": false,
+    "openai_api_required": false
+  }
+}

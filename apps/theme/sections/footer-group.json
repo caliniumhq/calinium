@@ -1,0 +1,28 @@
+{
+  "type": "footer",
+  "name": "t:sections.footer.name",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "layout_style": "multi_column",
+        "layout_width": "contained",
+        "color_scheme": "",
+        "show_top_divider": true,
+        "show_bottom_divider": false,
+        "padding_top": 80,
+        "padding_bottom": 48,
+        "mobile_padding_top": 48,
+        "mobile_padding_bottom": 36,
+        "show_brand": true,
+        "show_newsletter": true,
+        "newsletter_heading": "",
+        "newsletter_description": "",
+        "show_localization": true,
+        "show_policy_links": true,
+        "show_back_to_top": false
+      }
+    }
+  },
+  "order": ["footer"]
+}

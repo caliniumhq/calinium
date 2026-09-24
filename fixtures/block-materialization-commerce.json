@@ -1,0 +1,11 @@
+{
+  "resource_snapshot":{"snapshot_id":"abps_fixture_commerce_r1","approval":{"approval_id":"aba_fixture_commerce"},"resources":{
+    "abprs_product_one":{"resource_type":"shopify_product","approved_revision":"1111111111111111111111111111111111111111111111111111111111111111","runtime_value":"fixture-rug-one"},
+    "abprs_product_two":{"resource_type":"shopify_product","approved_revision":"2222222222222222222222222222222222222222222222222222222222222222","runtime_value":"fixture-rug-two"},
+    "abprs_product_three":{"resource_type":"shopify_product","approved_revision":"3333333333333333333333333333333333333333333333333333333333333333","runtime_value":"fixture-rug-three"},
+    "abprs_product_four":{"resource_type":"shopify_product","approved_revision":"4444444444444444444444444444444444444444444444444444444444444444","runtime_value":"fixture-rug-four"},
+    "abprs_scene_primary":{"resource_type":"project_image","approved_revision":"5555555555555555555555555555555555555555555555555555555555555555","runtime_value":"dashboard://fixture-assets/rug-room-scene"},
+    "abprs_scene_mobile":{"resource_type":"project_image","approved_revision":"6666666666666666666666666666666666666666666666666666666666666666","runtime_value":"dashboard://fixture-assets/rug-room-scene-mobile"}
+  }},
+  "expected":{"cross_sell":["fixture-rug-one","fixture-rug-two"],"bundle":["fixture-rug-two","fixture-rug-three"],"shop_the_look":[{"product":"fixture-rug-one","x_position":25,"y_position":40},{"product":"fixture-rug-three","x_position":70,"y_position":62}],"fallback":["fixture-rug-three","fixture-rug-four"]}
+}

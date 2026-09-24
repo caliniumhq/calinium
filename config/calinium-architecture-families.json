@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "registry_version": "1.1.0",
+  "registry_id": "calinium_architecture_families",
+  "target_theme": {
+    "id": "calinium-one",
+    "version": "1.0"
+  },
+  "families": [
+    {
+      "id": "family.header_navigation.current_calinium.v1",
+      "family": "header_navigation",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Current Calinium header and navigation",
+      "description": "The existing Calinium header group, announcement bar, desktop disclosures, and mobile navigation drawer.",
+      "presenters": ["section.header", "section.announcement_bar", "controller.header_navigation"],
+      "runtime_files": ["apps/theme/sections/header-group.json", "apps/theme/sections/header.liquid", "apps/theme/sections/announcement-bar.liquid", "apps/theme/assets/header.js", "apps/theme/assets/section-header.css"],
+      "capability_requirements": ["header_navigation", "responsive_media"],
+      "compatibility": {"requires_family_types": ["responsive_behavior"], "incompatible_family_ids": []},
+      "eligibility": {"required_signals": [], "fallback_eligible": true}
+    },
+    {
+      "id": "family.product_card.current_calinium.v1",
+      "family": "product_card",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Current Calinium product card",
+      "description": "The existing canonical product card composed with price, product form, responsive image, and bounded Quick Add behavior.",
+      "presenters": ["snippet.product_card", "snippet.price", "snippet.product_form"],
+      "runtime_files": ["apps/theme/snippets/product-card.liquid", "apps/theme/snippets/price.liquid", "apps/theme/snippets/product-form.liquid", "apps/theme/assets/component-product-card.css", "apps/theme/assets/product-form.js"],
+      "capability_requirements": ["product_cards", "responsive_media"],
+      "compatibility": {"requires_family_types": ["responsive_behavior"], "incompatible_family_ids": []},
+      "eligibility": {"required_signals": [], "fallback_eligible": true}
+    },
+    {
+      "id": "family.collection_merchandising.current_calinium.v1",
+      "family": "collection_merchandising",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Current Calinium collection merchandising",
+      "description": "The existing collection banner, collection product grid, product-card composition, filtering, sorting, and pagination system.",
+      "presenters": ["template.collection", "section.collection_banner", "section.main_collection_product_grid", "snippet.facets"],
+      "runtime_files": ["apps/theme/templates/collection.json", "apps/theme/sections/collection-banner.liquid", "apps/theme/sections/main-collection-product-grid.liquid", "apps/theme/snippets/facets.liquid", "apps/theme/assets/section-main-collection.css", "apps/theme/assets/facets.js"],
+      "capability_requirements": ["commerce_merchandising", "product_cards", "search_filters", "responsive_media"],
+      "compatibility": {"requires_family_types": ["product_card", "responsive_behavior"], "incompatible_family_ids": []},
+      "eligibility": {"required_signals": [], "fallback_eligible": true}
+    },
+    {
+      "id": "family.product_detail.current_calinium.v1",
+      "family": "product_detail",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Current Calinium product detail page",
+      "description": "The existing product template, media gallery, variant picker, product form, quantity, inventory, and supporting product information system.",
+      "presenters": ["template.product", "section.main_product", "snippet.product_media", "snippet.variant_picker", "snippet.product_form"],
+      "runtime_files": ["apps/theme/templates/product.json", "apps/theme/sections/main-product.liquid", "apps/theme/snippets/product-media.liquid", "apps/theme/snippets/variant-picker.liquid", "apps/theme/snippets/product-form.liquid", "apps/theme/assets/product-gallery.js", "apps/theme/assets/variant-picker.js", "apps/theme/assets/product-form.js", "apps/theme/assets/section-main-product.css"],
+      "capability_requirements": ["product_cards", "responsive_media", "spacing_layout"],
+      "compatibility": {"requires_family_types": ["product_card", "responsive_behavior"], "incompatible_family_ids": []},
+      "eligibility": {"required_signals": [], "fallback_eligible": true}
+    },
+    {
+      "id": "family.cart.current_calinium.v1",
+      "family": "cart",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Current Calinium cart",
+      "description": "The existing cart drawer and cart page using Shopify cart forms, shared cart items and summaries, and current cart enhancement controllers.",
+      "presenters": ["template.cart", "section.cart_drawer", "section.main_cart", "controller.cart", "controller.cart_drawer"],
+      "runtime_files": ["apps/theme/templates/cart.json", "apps/theme/sections/cart-drawer.liquid", "apps/theme/sections/main-cart.liquid", "apps/theme/snippets/cart-item.liquid", "apps/theme/snippets/cart-summary.liquid", "apps/theme/assets/cart.js", "apps/theme/assets/cart-drawer.js"],
+      "capability_requirements": ["cart", "product_cards", "responsive_media"],
+      "compatibility": {"requires_family_types": ["product_card", "responsive_behavior"], "incompatible_family_ids": []},
+      "eligibility": {"required_signals": [], "fallback_eligible": true}
+    },
+    {
+      "id": "family.responsive_behavior.current_calinium.v1",
+      "family": "responsive_behavior",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Current Calinium responsive behavior",
+      "description": "The existing mobile-first responsive primitives, 48rem desktop transition, progressive enhancement, and reduced-motion behavior shared by current presenters.",
+      "presenters": ["system.responsive_layout", "system.responsive_media", "system.reduced_motion"],
+      "runtime_files": ["apps/theme/assets/base.css", "apps/theme/assets/tokens.css", "apps/theme/snippets/responsive-image.liquid", "apps/theme/assets/component-image.css", "apps/theme/assets/header.js", "apps/theme/assets/product-gallery.js", "apps/theme/assets/cart-drawer.js"],
+      "capability_requirements": ["responsive_media", "motion_accessibility", "spacing_layout"],
+      "compatibility": {"requires_family_types": [], "incompatible_family_ids": []},
+      "eligibility": {"required_signals": [], "fallback_eligible": true}
+    },
+    {
+      "id": "family.header_navigation.editorial_discovery.v1",
+      "family": "header_navigation",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Editorial Discovery header and navigation",
+      "description": "A two-level editorial masthead with a restrained utility rail, high-emphasis brand identity, and responsive disclosure navigation.",
+      "presenters": ["section.header.editorial_discovery", "controller.header_navigation", "style.header.editorial_discovery"],
+      "runtime_files": ["ai/architecture/presenters/editorial-discovery/sections/header.liquid", "ai/architecture/presenters/editorial-discovery/assets/header.css", "apps/theme/assets/header.js"],
+      "runtime_overlays": [
+        {"source": "ai/architecture/presenters/editorial-discovery/sections/header.liquid", "target": "sections/header.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/assets/header.css", "target": "assets/editorial-discovery-header.css"}
+      ],
+      "capability_requirements": ["header_navigation", "responsive_media"],
+      "compatibility": {"requires_family_types": ["responsive_behavior"], "incompatible_family_ids": ["family.header_navigation.current_calinium.v1"]},
+      "eligibility": {"required_signals": [], "fallback_eligible": false}
+    },
+    {
+      "id": "family.product_card.editorial_discovery.v1",
+      "family": "product_card",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Editorial Discovery product card",
+      "description": "A media-led product presenter with an editorial information hierarchy and bounded shared commerce actions.",
+      "presenters": ["snippet.product_card.editorial_discovery", "section.product_recommendations.editorial_discovery", "section.recently_viewed_products.editorial_discovery", "snippet.price", "snippet.product_form", "style.product_card.editorial_discovery", "style.commerce.editorial_discovery"],
+      "runtime_files": ["ai/architecture/presenters/editorial-discovery/snippets/product-card.liquid", "ai/architecture/presenters/editorial-discovery/sections/product-recommendations.liquid", "ai/architecture/presenters/editorial-discovery/sections/recently-viewed-products.liquid", "ai/architecture/presenters/editorial-discovery/assets/product-card.css", "ai/architecture/presenters/editorial-discovery/assets/commerce.css", "apps/theme/snippets/price.liquid", "apps/theme/snippets/product-form.liquid", "apps/theme/assets/product-form.js"],
+      "runtime_overlays": [
+        {"source": "ai/architecture/presenters/editorial-discovery/snippets/product-card.liquid", "target": "snippets/editorial-discovery-product-card.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/sections/product-recommendations.liquid", "target": "sections/product-recommendations.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/sections/recently-viewed-products.liquid", "target": "sections/recently-viewed-products.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/assets/product-card.css", "target": "assets/editorial-discovery-product-card.css"},
+        {"source": "ai/architecture/presenters/editorial-discovery/assets/commerce.css", "target": "assets/editorial-discovery-commerce.css"}
+      ],
+      "capability_requirements": ["product_cards", "responsive_media"],
+      "compatibility": {"requires_family_types": ["responsive_behavior"], "incompatible_family_ids": ["family.product_card.current_calinium.v1"]},
+      "eligibility": {"required_signals": [], "fallback_eligible": false}
+    },
+    {
+      "id": "family.collection_merchandising.editorial_discovery.v1",
+      "family": "collection_merchandising",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Editorial Discovery collection merchandising",
+      "description": "An editorial collection introduction and asymmetric merchandise rhythm that preserve Shopify filtering, sorting, and pagination.",
+      "presenters": ["section.featured_collection.editorial_discovery", "section.collection_banner.editorial_discovery", "section.main_collection_product_grid.editorial_discovery", "snippet.facets", "style.collection.editorial_discovery"],
+      "runtime_files": ["ai/architecture/presenters/editorial-discovery/sections/featured-collection.liquid", "ai/architecture/presenters/editorial-discovery/sections/collection-banner.liquid", "ai/architecture/presenters/editorial-discovery/sections/main-collection-product-grid.liquid", "ai/architecture/presenters/editorial-discovery/assets/collection.css", "apps/theme/snippets/facets.liquid", "apps/theme/assets/facets.js"],
+      "runtime_overlays": [
+        {"source": "ai/architecture/presenters/editorial-discovery/sections/featured-collection.liquid", "target": "sections/featured-collection.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/sections/collection-banner.liquid", "target": "sections/collection-banner.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/sections/main-collection-product-grid.liquid", "target": "sections/main-collection-product-grid.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/assets/collection.css", "target": "assets/editorial-discovery-collection.css"}
+      ],
+      "capability_requirements": ["commerce_merchandising", "product_cards", "search_filters", "responsive_media"],
+      "compatibility": {"requires_family_types": ["product_card", "responsive_behavior"], "incompatible_family_ids": ["family.collection_merchandising.current_calinium.v1"]},
+      "eligibility": {"required_signals": [], "fallback_eligible": false}
+    },
+    {
+      "id": "family.product_detail.editorial_discovery.v1",
+      "family": "product_detail",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Editorial Discovery product detail page",
+      "description": "A gallery-first editorial product story with an asymmetric desktop composition and a focused mobile purchase sequence.",
+      "presenters": ["section.main_product.editorial_discovery", "snippet.product_media", "snippet.variant_picker", "snippet.product_form", "style.product_detail.editorial_discovery"],
+      "runtime_files": ["ai/architecture/presenters/editorial-discovery/sections/main-product.liquid", "ai/architecture/presenters/editorial-discovery/assets/product.css", "apps/theme/snippets/product-media.liquid", "apps/theme/snippets/variant-picker.liquid", "apps/theme/snippets/product-form.liquid", "apps/theme/assets/product-gallery.js", "apps/theme/assets/variant-picker.js", "apps/theme/assets/product-form.js"],
+      "runtime_overlays": [
+        {"source": "ai/architecture/presenters/editorial-discovery/sections/main-product.liquid", "target": "sections/main-product.liquid"},
+        {"source": "ai/architecture/presenters/editorial-discovery/assets/product.css", "target": "assets/editorial-discovery-product.css"}
+      ],
+      "capability_requirements": ["product_cards", "responsive_media", "spacing_layout"],
+      "compatibility": {"requires_family_types": ["product_card", "responsive_behavior"], "incompatible_family_ids": ["family.product_detail.current_calinium.v1"]},
+      "eligibility": {"required_signals": [], "fallback_eligible": false}
+    },
+    {
+      "id": "family.responsive_behavior.editorial_discovery.v1",
+      "family": "responsive_behavior",
+      "version": "1.0.0",
+      "status": "active",
+      "name": "Editorial Discovery responsive behavior",
+      "description": "Profile-scoped responsive composition rules for editorial hierarchy, media rhythm, mobile reflow, and reduced motion.",
+      "presenters": ["system.responsive_layout.editorial_discovery", "system.responsive_media", "system.reduced_motion"],
+      "runtime_files": ["ai/architecture/presenters/editorial-discovery/assets/responsive.css", "apps/theme/assets/base.css", "apps/theme/assets/tokens.css", "apps/theme/snippets/responsive-image.liquid"],
+      "runtime_overlays": [
+        {"source": "ai/architecture/presenters/editorial-discovery/assets/responsive.css", "target": "assets/editorial-discovery-responsive.css"}
+      ],
+      "capability_requirements": ["responsive_media", "motion_accessibility", "spacing_layout"],
+      "compatibility": {"requires_family_types": [], "incompatible_family_ids": ["family.responsive_behavior.current_calinium.v1"]},
+      "eligibility": {"required_signals": [], "fallback_eligible": false}
+    }
+  ]
+}

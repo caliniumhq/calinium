@@ -1,0 +1,16 @@
+extends:
+  - theme-check:recommended
+
+# Composition primitives are documented, public APIs intended for future sections.
+# They are deliberately not force-rendered by existing merchant sections.
+OrphanedSnippet:
+  ignore:
+    - snippets/rich-text.liquid
+    - snippets/icon-text.liquid
+    - snippets/feature-item.liquid
+    - snippets/statistic.liquid
+    - snippets/logo-item.liquid
+    - snippets/testimonial-item.liquid
+    - snippets/timeline-item.liquid
+    - snippets/media-item.liquid
+    - snippets/hotspot-item.liquid

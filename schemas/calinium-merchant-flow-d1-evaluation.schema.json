@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-merchant-flow-d1-evaluation.schema.json",
+  "title": "Calinium Merchant Flow D1 Evaluation",
+  "type": "object",
+  "required": ["schema_version", "contract_version", "evidence_id", "status", "render_request_id", "render_request_checksum", "policy_revision", "cells", "summary", "provenance", "safety"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "contract_version": {"type": "string", "const": "merchant-flow-d1-evaluation-v1"},
+    "evidence_id": {"type": "string", "pattern": "^merchant-flow-d1-evaluation-[a-f0-9]{20}$"},
+    "status": {"type": "string", "enum": ["passed", "review_required", "failed"]},
+    "render_request_id": {"type": "string", "pattern": "^merchant-render-request-[a-f0-9]{20}$"},
+    "render_request_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "policy_revision": {"type": "string", "const": "storefront-visual-evaluation-policy-v1"},
+    "cells": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["cell_id", "render_id", "render_result_checksum", "profile_id", "route_id", "viewport_id", "screenshot", "findings"],
+        "properties": {
+          "cell_id": {"type": "string", "pattern": "^merchant-cell-[a-f0-9]{20}$"},
+          "render_id": {"type": "string", "pattern": "^merchant-render-[a-f0-9]{20}$"},
+          "render_result_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "profile_id": {"type": "string"},
+          "route_id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]},
+          "viewport_id": {"type": "string"},
+          "screenshot": {"type": "object", "required": ["artifact_reference", "sha256", "width", "height"], "properties": {"artifact_reference": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "width": {"type": "integer", "minimum": 1}, "height": {"type": "integer", "minimum": 1}}, "additionalProperties": false},
+          "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "summary": {"type": "object", "required": ["total", "blocker", "high", "medium", "low", "info"], "properties": {"total": {"type": "integer", "minimum": 0}, "blocker": {"type": "integer", "minimum": 0}, "high": {"type": "integer", "minimum": 0}, "medium": {"type": "integer", "minimum": 0}, "low": {"type": "integer", "minimum": 0}, "info": {"type": "integer", "minimum": 0}}, "additionalProperties": false},
+    "provenance": {"type": "object", "required": ["flow_id", "flow_sequence", "flow_checksum", "generation_id", "artifact_id", "artifact_sha256", "architecture_selection_revision"], "properties": {"flow_id": {"type": "string"}, "flow_sequence": {"type": "integer", "minimum": 0}, "flow_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "generation_id": {"type": "string"}, "artifact_id": {"type": "string"}, "artifact_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "architecture_selection_revision": {"type": "string"}}, "additionalProperties": false},
+    "safety": {"type": "object", "required": ["objective_findings_authoritative", "human_review_required", "automatic_repair_allowed", "fixture_fallback_used"], "properties": {"objective_findings_authoritative": {"const": true}, "human_review_required": {"type": "boolean"}, "automatic_repair_allowed": {"const": false}, "fixture_fallback_used": {"const": false}}, "additionalProperties": false}
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": ["finding_id", "rule_id", "rule_version", "category", "severity", "route_id", "viewport_id", "architecture_profile_id", "evidence", "measured", "expected", "confidence", "reproducibility", "human_review_status"],
+      "properties": {
+        "finding_id": {"type": "string", "pattern": "^merchant-flow-d1-finding-[a-f0-9]{20}$"},
+        "rule_id": {"type": "string"},
+        "rule_version": {"type": "string"},
+        "category": {"type": "string"},
+        "severity": {"type": "string", "enum": ["blocker", "high", "medium", "low", "info"]},
+        "route_id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]},
+        "viewport_id": {"type": "string"},
+        "architecture_profile_id": {"type": "string"},
+        "evidence": {"type": "object"},
+        "measured": {"type": "object"},
+        "expected": {"type": "object"},
+        "confidence": {"type": "string", "enum": ["high", "medium"]},
+        "reproducibility": {"type": "object", "required": ["render_result_checksum", "policy_revision", "architecture_selection_revision"], "properties": {"render_result_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "policy_revision": {"type": "string"}, "architecture_selection_revision": {"type": "string"}}, "additionalProperties": false},
+        "human_review_status": {"type": "string", "const": "unreviewed"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

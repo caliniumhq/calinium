@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-live-concrete-observation-output.schema.json",
+  "title": "Calinium Live Concrete Observation Output",
+  "type": "object",
+  "required": ["schema_version", "cell_inspections", "observations", "objective_fact_acknowledgements"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "cell_inspections": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"type": "object", "required": ["cell_id", "status"], "properties": {"cell_id": {"type": "string"}, "status": {"type": "string", "enum": ["no_concrete_condition_observed", "concrete_observations_recorded"]}}, "additionalProperties": false}},
+    "observations": {"type": "array", "maxItems": 60, "items": {"type": "object", "required": ["local_key", "cell_id", "phenomenon", "component", "visible_region", "region_reference", "evidence_summary", "confidence", "objective_finding_ids"], "properties": {"local_key": {"type": "string", "pattern": "^[a-z0-9_\\-]{1,80}$"}, "cell_id": {"type": "string"}, "phenomenon": {"type": "string"}, "component": {"type": "string"}, "visible_region": {"type": "string", "minLength": 1, "maxLength": 500}, "region_reference": {"type": "object", "required": ["kind", "landmark_id", "bounds"], "properties": {"kind": {"type": "string", "enum": ["presenter_landmark", "described_region", "bounding_region"]}, "landmark_id": {"type": ["string", "null"]}, "bounds": {"type": ["object", "null"], "properties": {"x": {"type": "number"}, "y": {"type": "number"}, "width": {"type": "number"}, "height": {"type": "number"}}, "required": ["x", "y", "width", "height"], "additionalProperties": false}}, "additionalProperties": false}, "evidence_summary": {"type": "string", "minLength": 1, "maxLength": 800}, "confidence": {"type": "string", "enum": ["high", "medium"]}, "objective_finding_ids": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false}},
+    "objective_fact_acknowledgements": {"type": "array", "items": {"type": "object", "required": ["finding_id", "status"], "properties": {"finding_id": {"type": "string"}, "status": {"type": "string", "enum": ["acknowledged", "contradicted", "not_assessable"]}}, "additionalProperties": false}}
+  },
+  "additionalProperties": false
+}

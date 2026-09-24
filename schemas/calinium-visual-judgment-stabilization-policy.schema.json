@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-visual-judgment-stabilization-policy.schema.json",
+  "title": "Calinium Visual Judgment Stabilization Policy",
+  "type": "object",
+  "required": ["schema_version", "policy_version", "policy_id", "policy_revision", "source_design_policy_revision", "contracts", "observation_kinds", "responsibility_ontology", "dimension_rules", "recommendation_taxonomy", "relationships", "reliability", "limited_live_validation"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "policy_version": {"type": "string"},
+    "policy_id": {"type": "string", "const": "calinium_visual_judgment_stabilization"},
+    "policy_revision": {"type": "string", "const": "visual-judgment-stabilization-phase-d2-6-v1"},
+    "source_design_policy_revision": {"type": "string", "const": "storefront-design-evaluation-policy-v1"},
+    "contracts": {"type": "object"},
+    "observation_kinds": {"type": "array", "minItems": 10, "items": {"type": "object", "required": ["id", "definition"], "properties": {"id": {"type": "string"}, "definition": {"type": "string"}}, "additionalProperties": false}},
+    "responsibility_ontology": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"type": "object", "required": ["id", "use_when", "do_not_use_when"], "properties": {"id": {"type": "string"}, "use_when": {"type": "string"}, "do_not_use_when": {"type": "string"}}, "additionalProperties": false}},
+    "dimension_rules": {"type": "array", "minItems": 12, "maxItems": 12, "items": {"type": "object", "required": ["id", "primary_when", "not_primary_when"], "properties": {"id": {"type": "string"}, "primary_when": {"type": "string"}, "not_primary_when": {"type": "string"}}, "additionalProperties": false}},
+    "recommendation_taxonomy": {"type": "array", "minItems": 9, "items": {"type": "object", "required": ["id", "legacy_category", "definition"], "properties": {"id": {"type": "string"}, "legacy_category": {"type": "string"}, "definition": {"type": "string"}}, "additionalProperties": false}},
+    "relationships": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "string", "enum": ["root_finding", "symptom_of", "related_finding", "independent"]}},
+    "reliability": {"type": "object"},
+    "limited_live_validation": {"type": "object"}
+  },
+  "additionalProperties": false
+}

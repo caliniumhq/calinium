@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-storefront-render-presenter-evidence.schema.json",
+  "title": "Calinium Storefront Render Presenter Evidence Registry",
+  "type": "object",
+  "required": ["schema_version", "registry_version", "registry_id", "evidence_revision", "profiles"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "registry_version": {"type": "string", "const": "1.0.0"},
+    "registry_id": {"type": "string", "const": "calinium_storefront_render_presenter_evidence"},
+    "evidence_revision": {"type": "string", "const": "storefront-architecture-evidence-v1"},
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["profile_id", "routes"],
+        "properties": {
+          "profile_id": {"type": "string", "pattern": "^profile\\.[a-z0-9_]+\\.v[0-9]+$"},
+          "routes": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "required": ["route_id", "template_identity", "section_identities", "assertions"],
+              "properties": {
+                "route_id": {"type": "string", "enum": ["homepage", "collection", "product", "cart"]},
+                "template_identity": {"type": "string", "pattern": "^templates/[a-z0-9_-]+\\.json$"},
+                "section_identities": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z0-9-]+$"}},
+                "assertions": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": ["family", "presenter_id", "selector"],
+                    "properties": {
+                      "family": {"type": "string", "enum": ["header_navigation", "product_card", "collection_merchandising", "product_detail", "cart", "responsive_behavior"]},
+                      "presenter_id": {"type": "string", "minLength": 1},
+                      "selector": {"type": "string", "minLength": 1}
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

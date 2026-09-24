@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "businessName": "Relay Desk",
+  "businessDescription": "Relay Desk is a merchant-approved productivity software application that organizes project handoffs for independent studios.",
+  "productsOrServices": ["productivity software subscription"],
+  "targetAudience": "independent studios that need clear project handoffs",
+  "primaryGoal": "explain the approved product features and direct visitors to a real signup page",
+  "countries": ["United States", "Canada"],
+  "existingStoreUrl": "https://relaydesk.example/signup",
+  "existingBrand": {
+    "hasLogo": true,
+    "brandColors": ["#10233F", "#F7FAFC"],
+    "inspirations": ["Clear software explanation"],
+    "assets": ["logo", "approved interface screenshots", "approved feature content"]
+  },
+  "preferences": {
+    "desiredFeeling": ["technical", "clear", "confident"],
+    "creativeFreedom": "low",
+    "brandPersonality": ["technical", "modern"]
+  }
+}

@@ -1,0 +1,112 @@
+{% liquid
+  assign price_value = price
+  assign compare_at_value = compare_at_price
+  assign unit_price_value = unit_price
+  assign unit_price_measurement_value = unit_price_measurement
+  assign price_varies_value = price_varies
+  assign price_classes = 'co-price'
+  assign is_on_sale = false
+  assign should_show_unit_price = true
+  assign should_show_compare_at_price = true
+
+  if item != blank
+    if price_value == blank
+      assign price_value = item.price
+    endif
+
+    if compare_at_value == blank
+      assign compare_at_value = item.compare_at_price
+    endif
+
+    if unit_price_value == blank
+      assign unit_price_value = item.unit_price
+    endif
+
+    if unit_price_measurement_value == blank
+      assign unit_price_measurement_value = item.unit_price_measurement
+    endif
+  endif
+
+  if product != blank
+    if price_value == blank
+      assign price_value = product.price
+    endif
+
+    if compare_at_value == blank
+      assign compare_at_value = product.compare_at_price
+    endif
+
+    if price_varies_value == blank
+      assign price_varies_value = product.price_varies
+    endif
+  endif
+
+  if compare_at_value > price_value
+    assign is_on_sale = true
+    assign price_classes = price_classes | append: ' co-price--on-sale'
+  endif
+
+  if price_varies_value
+    assign price_classes = price_classes | append: ' co-price--varies'
+  endif
+
+  if show_unit_price == false
+    assign should_show_unit_price = false
+  endif
+
+  if show_compare_at_price == false
+    assign should_show_compare_at_price = false
+  endif
+
+  if class != blank
+    assign price_classes = price_classes | append: ' ' | append: class
+  endif
+%}
+
+{% if price_value != blank %}
+  <div class="{{ price_classes | escape }}">
+    <span class="co-price__current">
+      {% if current_price_label != blank %}
+        <span class="co-visually-hidden">{{ current_price_label | escape }}: </span>
+      {% endif %}
+      {% if price_varies_value and from_label != blank %}
+        {{ from_label | escape }}
+      {% endif %}
+      {% if show_currency %}
+        {{ price_value | money_with_currency }}
+      {% else %}
+        {{ price_value | money }}
+      {% endif %}
+    </span>
+
+    {% if is_on_sale and should_show_compare_at_price %}
+      <s class="co-price__compare">
+        {% if compare_at_price_label != blank %}
+          <span class="co-visually-hidden">{{ compare_at_price_label | escape }}: </span>
+        {% endif %}
+        {% if show_currency %}
+          {{ compare_at_value | money_with_currency }}
+        {% else %}
+          {{ compare_at_value | money }}
+        {% endif %}
+      </s>
+
+      {% if sale_label != blank %}
+        <span class="co-price__badge">{{ sale_label | escape }}</span>
+      {% endif %}
+    {% endif %}
+
+    {% if should_show_unit_price and unit_price_value != blank and unit_price_measurement_value != blank %}
+      <small class="co-price__unit">
+        {% if unit_price_label != blank %}
+          <span class="co-visually-hidden">{{ unit_price_label | escape }}: </span>
+        {% endif %}
+        {% if show_currency %}
+          {{ unit_price_value | money_with_currency | unit_price_with_measurement: unit_price_measurement_value }}
+        {% else %}
+          {{ unit_price_value | unit_price_with_measurement: unit_price_measurement_value }}
+        {% endif %}
+      </small>
+    {% endif %}
+  </div>
+{% endif %}

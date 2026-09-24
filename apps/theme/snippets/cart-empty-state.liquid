@@ -1,0 +1,10 @@
+{% liquid
+  assign cart_empty_context = context | default: 'page'
+  assign cart_empty_continue_url = continue_url | default: routes.root_url
+  assign cart_empty_continue_label = 'general.continue_shopping' | t
+%}
+
+<div class="co-cart-empty-state co-cart-empty-state--{{ cart_empty_context | escape }}">
+  <p class="co-cart-empty-state__message">{{ 'cart.empty' | t }}</p>
+  {% render 'button', label: cart_empty_continue_label, url: cart_empty_continue_url, variant: 'secondary' %}
+</div>

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "contract_version": "visual-human-review-v1",
+  "evaluation_id": "visual-evaluation-86afbb828bf278750895",
+  "evaluation_checksum": "64c8e615a03bcb6e6a8987dc21646f838166098a62d90b411eca802606b2591b",
+  "review_revision": "visual-review-revision-11a51510c61e484d93c3",
+  "reviewed_at": "2026-08-14T00:00:00.000Z",
+  "reviewer": {
+    "type": "human",
+    "reference": "phase-d1-approved-baseline"
+  },
+  "decision": "accepted_with_known_issue",
+  "notes": "The Current Calinium mobile homepage overflow is an approved Phase B/C baseline observation. Phase D1 records it without repair.",
+  "finding_decisions": [
+    {
+      "finding_id": "visual-finding-2093852270c8474f3079",
+      "decision": "accepted_with_known_issue",
+      "notes": "Known 390px viewport / 657px document-width baseline; preserve for Phase D2 correction."
+    }
+  ],
+  "review_decision_id": "visual-review-80afa2d8c5b778b32e9a"
+}

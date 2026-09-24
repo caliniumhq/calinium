@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "plan_fixture": "approved-block-plan-editorial-grid.json",
+  "resource_snapshot": {
+    "snapshot_id": "abps_oak-loom-editorial-r1",
+    "approval_id": "aba_oak-loom-editorial-r1",
+    "resources": {
+      "abprs_rug-care-collection": {
+        "resource_type": "shopify_collection",
+        "approved_revision": "1111111111111111111111111111111111111111111111111111111111111111",
+        "runtime_value": "shopify://fixture-resources/oak-loom-rug-care-collection"
+      },
+      "abprs_natural-fiber-article": {
+        "resource_type": "shopify_article",
+        "approved_revision": "4444444444444444444444444444444444444444444444444444444444444444",
+        "runtime_value": "shopify://fixture-resources/oak-loom-natural-fiber-journal"
+      },
+      "abprs_rug-care-image": {
+        "resource_type": "project_image",
+        "approved_revision": "2222222222222222222222222222222222222222222222222222222222222222",
+        "runtime_value": "shopify://fixture-assets/oak-loom-rug-care-image"
+      }
+    }
+  },
+  "expected": {
+    "runtime_section_id": "editorial-grid",
+    "runtime_block_type": "story",
+    "page_role": "homepage",
+    "semantic_section_role": "editorial_discovery_grid",
+    "block_count": 2,
+    "block_orders": [
+      "abpl_homepage-rug-care-guides",
+      "abpl_homepage-natural-fiber-journal"
+    ]
+  },
+  "external_destination_case": {
+    "plan_operations": [
+      {"op": "replace", "path": "/resource_references/abprs_natural-fiber-article/resource_type", "value": "external_url"},
+      {"op": "replace", "path": "/resource_references/abprs_natural-fiber-article/source_type", "value": "external"},
+      {"op": "replace", "path": "/resource_references/abprs_natural-fiber-article/source_reference", "value": "https://oakandloom.example/journal/natural-fiber"}
+    ],
+    "resource_operations": [
+      {"op": "replace", "path": "/resource_snapshot/resources/abprs_natural-fiber-article/resource_type", "value": "external_url"},
+      {"op": "replace", "path": "/resource_snapshot/resources/abprs_natural-fiber-article/runtime_value", "value": "https://oakandloom.example/journal/natural-fiber"}
+    ],
+    "expected_runtime_setting_id": "link"
+  }
+}

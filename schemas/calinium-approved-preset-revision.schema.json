@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-approved-preset-revision.schema.json",
+  "title": "Calinium Immutable Approved Preset Revision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "revision_id", "preset_id", "preset_version", "catalog_version", "preset_snapshot", "selection_source", "recommendation_reasons", "alternatives_shown", "compatibility", "fallback", "omitted_sections", "approval", "strategy_revision", "organization_id", "project_id", "merchant_scope_id", "target_theme", "preset_checksum", "created_at"],
+  "properties": {
+    "version": {"const": 1},
+    "revision_id": {"type": "string", "pattern": "^apr_[a-z0-9][a-z0-9_-]*$"},
+    "preset_id": {"enum": ["atelier", "maison", "gallery", "ritual", "essential", "signal"]},
+    "preset_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "catalog_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "preset_snapshot": {"$ref": "calinium-storefront-presets.schema.json#/$defs/preset"},
+    "selection_source": {"enum": ["creative_director_recommendation", "merchant_selection", "industry_recommendation", "safe_fallback"]},
+    "recommendation_reasons": {"type": "array", "items": {"type": "string"}},
+    "alternatives_shown": {"type": "array", "maxItems": 2, "items": {"type": "string"}},
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compatible", "industry", "business_model", "personality", "design_language", "recipe", "target_theme", "content_ready", "missing_required_content", "reasons"],
+      "properties": {
+        "compatible": {"type": "boolean"},
+        "industry": {"type": "boolean"},
+        "business_model": {"type": "boolean"},
+        "personality": {"type": "boolean"},
+        "design_language": {"type": "boolean"},
+        "recipe": {"type": "boolean"},
+        "target_theme": {"type": "boolean"},
+        "content_ready": {"type": "boolean"},
+        "missing_required_content": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "reasons": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "fallback": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["from_preset_id", "to_preset_id", "reason"],
+      "properties": {
+        "from_preset_id": {"enum": ["atelier", "maison", "gallery", "ritual", "essential", "signal"]},
+        "to_preset_id": {"enum": ["atelier", "maison", "gallery", "ritual", "essential", "signal"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "omitted_sections": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["section_id", "reason"], "properties": {"section_id": {"type": "string"}, "reason": {"type": "string"}}}},
+    "approval": {"type": "object", "additionalProperties": false, "required": ["approval_id", "approval_reference", "approved_by_user_id", "approved_at"], "properties": {"approval_id": {"type": "string", "minLength": 1}, "approval_reference": {"type": "string", "minLength": 1}, "approved_by_user_id": {"type": "string", "minLength": 1}, "approved_at": {"type": "string", "format": "date-time"}}},
+    "strategy_revision": {"type": "string", "minLength": 1},
+    "organization_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "merchant_scope_id": {"type": "string", "minLength": 1},
+    "target_theme": {"type": "object", "additionalProperties": false, "required": ["id", "version"], "properties": {"id": {"const": "calinium-one"}, "version": {"type": "string", "minLength": 1}}},
+    "preset_checksum": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

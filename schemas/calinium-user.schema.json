@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.example/schemas/calinium-user.schema.json",
+  "title": "Calinium dashboard user",
+  "description": "A non-secret account record. Password hashes and session credentials are intentionally excluded.",
+  "type": "object",
+  "required": ["version", "id", "email", "full_name", "status", "created_at", "updated_at"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^usr_[a-z0-9-]+$"},
+    "email": {"type": "string", "minLength": 3},
+    "full_name": {"type": ["string", "null"]},
+    "status": {"type": "string", "enum": ["active", "suspended"]},
+    "created_at": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "minLength": 1},
+    "last_signed_in_at": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

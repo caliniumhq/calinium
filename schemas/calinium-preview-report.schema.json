@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://calinium.local/schemas/calinium-preview-report.schema.json",
+  "title": "Calinium development-theme preview report",
+  "type": "object",
+  "required": ["version", "deployment_id", "development_theme_id", "preview_url", "deployment_timestamp", "uploaded_files", "validation", "warnings"],
+  "properties": {
+    "version": {"type": "integer", "const": 1},
+    "deployment_id": {"type": "string", "minLength": 1},
+    "development_theme_id": {"type": ["string", "integer"]},
+    "preview_url": {"type": "string", "minLength": 1},
+    "deployment_timestamp": {"type": "string", "minLength": 1},
+    "uploaded_files": {"type": "array", "items": {"$ref": "calinium-deployment-package.schema.json#/$defs/file"}},
+    "validation": {"$ref": "calinium-review-session.schema.json#/$defs/status"},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,501 @@
+{
+  "schema_version": "1.0",
+  "contract_version": "bounded-content-availability-repair-plan-v1",
+  "phase": "D3C-A",
+  "created_at": "2026-08-16T19:10:33Z",
+  "checkpoint": {
+    "commit": "1000000000000000000000000000000000000007",
+    "tag": "core-2-phase-d3b-first-repair-complete",
+    "branch": "main"
+  },
+  "target": {
+    "authoritative_finding_id": "design-finding-d12d4c4a803a64d1a6fc",
+    "human_decision": "needs_fix",
+    "label": "Empty PDP comparison/FAQ sections",
+    "profile_ids": [
+      "profile.current_calinium.v1",
+      "profile.editorial_discovery.v1"
+    ],
+    "route_id": "product",
+    "route_path": "/products/the-collection-snowboard-hydrogen",
+    "viewport_ids": [
+      "desktop-v1",
+      "mobile-v1"
+    ],
+    "importance": "high"
+  },
+  "evidence": {
+    "d2": {
+      "evaluation_reference": "output/storefront-design-evaluations/phase-d2-5-live-calibration/live-design-evaluation-result.json",
+      "evaluation_id": "design-evaluation-ed8fa37a5aa523c9ff86",
+      "evaluation_checksum": "6b52362e1a1018695ab3864a0866ed9a34406b0eeb48ea2d607abe5e0837b90e",
+      "human_review_reference": "output/storefront-design-evaluations/phase-d2-5-live-calibration/human-review.json",
+      "human_review_id": "design-review-bfc82d288460e1faa29c",
+      "human_review_checksum": "e4f420de93907ab473e9a1ff538cdc8dc3efac2e921ce6fc72f3888ba7eaceb9",
+      "decision_notes": "Human review confirms the empty PDP comparison and FAQ sections require correction."
+    },
+    "screenshots_and_d1": [
+      {
+        "profile_id": "profile.current_calinium.v1",
+        "viewport_id": "desktop-v1",
+        "cell_id": "design-cell-26ee88d4b2035cf0ca67",
+        "reference": "output/storefront-renders/render-request-75d31f88138d248861b4/screenshots/profile.current_calinium.v1/product/desktop-v1--render-85ceb55e657182635e93.png",
+        "sha256": "fdcd3e93a31ab6acdfa2d6c38b199ee355e07e11356140fa46359dc5f8bb5618",
+        "d1_reference": "output/storefront-visual-evaluations/phase-d1-approved-comparison/profile.current_calinium.v1/product--desktop-v1/evaluation-result.json",
+        "d1_evaluation_id": "visual-evaluation-c8316d9f46c23a49ec87",
+        "d1_checksum": "c4d9333bc5a460ee312ffde67f83529b5af642196268cb510e6d7f7e5043c61e",
+        "d1_finding_count": 0
+      },
+      {
+        "profile_id": "profile.current_calinium.v1",
+        "viewport_id": "mobile-v1",
+        "cell_id": "design-cell-b32e4f89c322837592fc",
+        "reference": "output/storefront-renders/render-request-75d31f88138d248861b4/screenshots/profile.current_calinium.v1/product/mobile-v1--render-794c7542aaa5a3921ec4.png",
+        "sha256": "3f9c57276b1c823236caa4a97f88e62cd3bba798042a7ee0a19a13b4f5049ac0",
+        "d1_reference": "output/storefront-visual-evaluations/phase-d1-approved-comparison/profile.current_calinium.v1/product--mobile-v1/evaluation-result.json",
+        "d1_evaluation_id": "visual-evaluation-92bc204eb6725ac2364d",
+        "d1_checksum": "8069a377f50e944ffd1ef99cb5a616ac5b556d765101b4c396edc9f90f93e911",
+        "d1_finding_count": 0
+      },
+      {
+        "profile_id": "profile.editorial_discovery.v1",
+        "viewport_id": "desktop-v1",
+        "cell_id": "design-cell-4006f2be0a11190a2547",
+        "reference": "output/storefront-renders/render-request-a018fa3a3f4432900adc/screenshots/profile.editorial_discovery.v1/product/desktop-v1--render-586edba6a622271bc000.png",
+        "sha256": "7610c4d6853ab26beb7e13d9f8179d85aeb2cdc387a609951ff0d72ef70c0942",
+        "d1_reference": "output/storefront-visual-evaluations/phase-d1-approved-comparison/profile.editorial_discovery.v1/product--desktop-v1/evaluation-result.json",
+        "d1_evaluation_id": "visual-evaluation-ee1b8a3a75053401f0f6",
+        "d1_checksum": "1d59a123b8915a71586c66604fbc789178ba1fa239903b8852c2bdff0564a89a",
+        "d1_finding_count": 0
+      },
+      {
+        "profile_id": "profile.editorial_discovery.v1",
+        "viewport_id": "mobile-v1",
+        "cell_id": "design-cell-71e00bb5e95403940f6c",
+        "reference": "output/storefront-renders/render-request-a018fa3a3f4432900adc/screenshots/profile.editorial_discovery.v1/product/mobile-v1--render-e102c966fb673c350971.png",
+        "sha256": "9647dade2c86e1ae16e863c7a9cc0b6efe97511c4745901daa59cb75b13fa3a5",
+        "d1_reference": "output/storefront-visual-evaluations/phase-d1-approved-comparison/profile.editorial_discovery.v1/product--mobile-v1/evaluation-result.json",
+        "d1_evaluation_id": "visual-evaluation-fc17ae08266e45cfa86a",
+        "d1_checksum": "a78be22a5bc9f66f853e67a136bf5232618aa231766a1694a88191f001b75d9e",
+        "d1_finding_count": 0
+      }
+    ],
+    "phase_c": {
+      "comparison_fixture_revision": "comparison-fixture-0c881e4699c1cd3e33b0",
+      "comparison_key": "d7413cc5957c06221d6426210f86ae7cfd081bc2e66d55dbdb98a13b12d417f6",
+      "presenter_evidence_revision": "storefront-architecture-evidence-v1",
+      "current_render_request_id": "render-request-75d31f88138d248861b4",
+      "editorial_render_request_id": "render-request-a018fa3a3f4432900adc",
+      "current_artifact_sha256": "b3712b207b87fd18a23b0baa37baa4ca3d12f727780f2f605e01f69c82d62cab",
+      "editorial_artifact_sha256": "64857d5967cdeecba32123ab669c1c4aeec25e9d85674fce01c76512a65bc188"
+    },
+    "architecture": {
+      "current_selection_revision": "architecture-selection-ccbcab2a5f566e2b1b6f",
+      "editorial_selection_revision": "architecture-selection-38682d97f82a04943a4f"
+    },
+    "d2_7": {
+      "reference": "output/storefront-design-evaluations/phase-d2-7-visual-observation-stabilization/limited-live-validation.json",
+      "evidence_checksum": "541ece86d34ecfe17910561ee9405d5999c7dc2dcdebd89c39d7fb85d45a14c1",
+      "report_id": "observation-stabilization-report-a4b2cf5ab6d0100f0ffa",
+      "report_checksum": "276d38c73181a394cf78af25228d3ea8e62d7b08e52850247a7bd1b64f074ca7",
+      "reliability_status": "repair_planning_eligible",
+      "repair_planning_consumption_allowed": true,
+      "automatic_repair_allowed": false,
+      "human_review_required": true,
+      "d1_contradiction_count": 0,
+      "target_support": "Both comparison_module and faq_module observations recur across two runs in all four Product cells and remain human-review-bound."
+    },
+    "runtime_diagnostic": {
+      "reference": "output/storefront-repair-plans/phase-d3c-a-content-availability/runtime-diagnostic.json",
+      "file_sha256": "10f7d55f8257d75cccf1d38c29a5ede491ea8aa6a2c1cea0ffcabf1e60517989",
+      "diagnostic_id": "content-availability-diagnostic-16cc98d254a3afa01988",
+      "diagnostic_checksum": "63c04c074630be932805e5497379d0c3338f0585de2dc03372c1f6a837f41f7a",
+      "runtime": "shopify_development_proxy",
+      "four_cells_reproduced": true,
+      "source_theme_unchanged": true,
+      "live_theme_modified": false,
+      "published": false,
+      "screenshots_created_or_modified": false,
+      "api_or_model_call": false
+    }
+  },
+  "controlled_input": {
+    "merchant_fixture_id": "minimal-catalog",
+    "merchant_fixture_reference": "fixtures/minimal-catalog.json",
+    "merchant_fixture_sha256": "840c1320e9e088b63ee37c221288ca4835591512c5667903ce1c7db23c9a4d82",
+    "product_resource": {
+      "resource_id": "shr_2d1478f2-ea93-423e-ae35-fb0333623775",
+      "remote_gid": "gid://shopify/Product/20000000000001",
+      "handle": "the-collection-snowboard-hydrogen",
+      "source_revision": "ecc2ca261e54697abc06ec02dcccb5eaa5dfec35cddbe61261c0881836a0c9a0"
+    },
+    "comparison_content_available": false,
+    "faq_content_available": false,
+    "approved_block_plan_revision": null,
+    "target_block_materialization_policies_present": false,
+    "merchant_content_invented": false
+  },
+  "generated_configuration": {
+    "current_generation_id": "generation-run-preset-demo-essential",
+    "editorial_generation_id": "generation-run-architecture-editorial-discovery-essential",
+    "target_instances_equal_across_profiles": true,
+    "comparison": {
+      "instance_id": "calinium_product_03_product_comparison",
+      "section_id": "product-comparison",
+      "position": 3,
+      "origin": "generated",
+      "block_ids": [],
+      "generated_block_count": 0
+    },
+    "faq": {
+      "instance_id": "calinium_product_06_faq",
+      "section_id": "faq",
+      "position": 6,
+      "origin": "generated",
+      "block_ids": [],
+      "generated_block_count": 0
+    },
+    "baseline_product_template_has_target_instances": false,
+    "theme_specification_has_product_section_eligibility_contract": false
+  },
+  "runtime_state": {
+    "comparison": {
+      "visible_all_four_cells": true,
+      "visible_text": "Compare products",
+      "product_card_count": 0,
+      "comparison_table_present": false,
+      "comparison_row_count": 0,
+      "hidden_descendant_count": 0,
+      "app_block_count": 0,
+      "design_mode_empty_state_present": false,
+      "content_below_capture_boundary": false
+    },
+    "faq": {
+      "visible_all_four_cells": true,
+      "visible_text": "Questions, answered",
+      "faq_item_count": 0,
+      "trigger_count": 0,
+      "panel_count": 0,
+      "structured_data_count": 0,
+      "hidden_descendant_count": 0,
+      "app_block_count": 0,
+      "design_mode_empty_state_present": false,
+      "content_below_capture_boundary": false
+    }
+  },
+  "root_causes": {
+    "comparison": {
+      "status": "established",
+      "summary": "The Product blueprint unconditionally includes the optional product-comparison section. Draft resolution marks it valid with a schema-default empty fallback, and template generation creates a new zero-block instance because no comparison content or materialization policy exists. The presenter suppresses its product grid below two configured products but still emits the section wrapper and heading.",
+      "independent_eligibility_rule": "At least two ordered product blocks must carry nonblank approved Shopify product references; D3C-B runtime acceptance must confirm that Shopify resolves both references.",
+      "merchant_content_absence": true,
+      "calinium_failure": "Generated composition selected and materialized an ineligible module instead of omitting it."
+    },
+    "faq": {
+      "status": "established",
+      "summary": "The Product blueprint unconditionally includes the optional FAQ section. Draft resolution marks it valid with a schema-default empty fallback, and template generation creates a new zero-block instance despite the controlled fixture having no approved FAQ pairs and no FAQ materialization policy. The presenter suppresses FAQ items and structured data when no complete pair exists but still emits the section wrapper and heading.",
+      "independent_eligibility_rule": "At least one question block must contain both a nonblank question and a nonblank answer.",
+      "merchant_content_absence": true,
+      "calinium_failure": "Generated composition selected and materialized an ineligible module instead of omitting it."
+    },
+    "shared_mechanism": "Missing content eligibility at the post-block-materialization template-composition boundary. The two modules have independent predicates but share this mechanism and may be repaired by one target-scoped eligibility helper."
+  },
+  "responsibility": {
+    "classification": "composition_level",
+    "contributing_condition": "merchant_content_level",
+    "rationale": "The merchant fixture does not supply comparison products or FAQ pairs, but Calinium knowingly generated the optional modules and exposed empty storefront shells. Content absence is an input fact; failure to omit ineligible generated composition is Calinium responsibility."
+  },
+  "ownership": {
+    "scope": "shared_core",
+    "current_and_editorial_share_target_presenters": true,
+    "current_and_editorial_receive_same_invalid_generated_configuration": true,
+    "architecture_specific_change_required": false,
+    "rationale": "Both profiles use apps/theme/sections/product-comparison.liquid and apps/theme/sections/faq.liquid and receive equal zero-block Product instances. Architecture overlays are not causal."
+  },
+  "eligibility": {
+    "evaluation_boundary": "After approved block materialization and before a newly generated section is serialized into template.sections, template.order, and generated_section_instances.",
+    "comparison": {
+      "predicate": "At generation time, count ordered blocks with type=product whose settings.product is a nonblank approved Shopify product reference; configurationally eligible when count >= 2. D3C-B positive-runtime acceptance additionally requires Shopify to resolve at least two references to nonblank product objects.",
+      "feature_requirement": "Feature blocks are optional under the current presenter. They control the table only and are not required for the two-product grid.",
+      "false_cases": [
+        "zero product blocks",
+        "one nonblank approved product reference",
+        "two configured references that fail to resolve to at least two nonblank Shopify product objects at runtime; this is a D3C-B verification failure, not permission for silent fallback"
+      ]
+    },
+    "faq": {
+      "predicate": "Eligible when at least one ordered block with type=question has both settings.question and settings.answer nonblank after approved configuration materialization.",
+      "false_cases": [
+        "zero question blocks",
+        "question without answer",
+        "answer without question"
+      ]
+    },
+    "unknown_sections": "Pass through unchanged.",
+    "preserved_merchant_sections": "Do not remove or rewrite baseline-preserved merchant sections in this bounded repair."
+  },
+  "owning_layer": {
+    "selected": "template_materialization_shared_content_eligibility",
+    "implementation_point": "ai/theme-generator/generate-section-instances.js immediately after materializeForInstance returns and before serialization of origin=generated target sections.",
+    "why_not_draft_planning": "Draft resolution has no final block/resource state, so it cannot apply the presenter-equivalent predicate reliably.",
+    "why_not_theme_specification": "Theme Specification is assembled after generation and does not currently enumerate Product section availability.",
+    "why_not_liquid": "Liquid-only suppression would hide the symptom after invalid composition was already selected and would make it easier to remove merchant editor affordances accidentally.",
+    "why_not_css": "CSS would only conceal invalid output and cannot establish resource eligibility."
+  },
+  "implicated_files": [
+    {
+      "path": "config/page-blueprints.json",
+      "sha256": "3d6ac8b2e2957815222b449649c277676345b3d0c86f09569121f4b20e5e99a0",
+      "role": "Product blueprint selects both optional sections without content eligibility.",
+      "modification_candidate": false
+    },
+    {
+      "path": "config/strategy-section-mapping.json",
+      "sha256": "ef670c7ab43ab39f3663ad47647f2ac1169cb4561673369bfc253fc29406628b",
+      "role": "Marks both target modules optional but defines no content requirement.",
+      "modification_candidate": false
+    },
+    {
+      "path": "ai/draft-builder/resolve-pages.js",
+      "sha256": "9379c8a787bbd24dbdbfbcbf3d5c01bce1c3238e46d0dc2dd6b2de8196ce16aa",
+      "role": "Maps every recommended Product blueprint section into the draft plan before content eligibility is known.",
+      "modification_candidate": false
+    },
+    {
+      "path": "ai/draft-builder/resolve-sections.js",
+      "sha256": "60211feda2497b52c77a29f43c6b5501d786168a67ab33ef0afb58ba52a214b5",
+      "role": "Marks mapped sections valid and assigns a schema-default empty fallback before final content is known.",
+      "modification_candidate": false
+    },
+    {
+      "path": "ai/theme-generator/create-theme-specification.js",
+      "sha256": "370fef9eee34d77b7df6baa548832217f6ff080972946c52dc4312465af1d10b",
+      "role": "Carries Product layout direction but does not provide Product section content-availability decisions.",
+      "modification_candidate": false
+    },
+    {
+      "path": "ai/theme-generator/generate-pages.js",
+      "sha256": "4ede7cffa19987faf7366d5085362a6d34f2c403280b9d552f2b0fbbffb51692",
+      "role": "Routes the valid Product plan into shared section-instance generation for both profiles.",
+      "modification_candidate": false
+    },
+    {
+      "path": "ai/theme-generator/generate-section-instances.js",
+      "sha256": "b5fb8a050ec400f18650902e91bc9ead37da0095cb9d51f0d35dc5479e624101",
+      "role": "Owns final template instance serialization and currently retains generated zero-block target shells.",
+      "modification_candidate": true
+    },
+    {
+      "path": "config/theme-block-materialization-policy.json",
+      "sha256": "9ad91b7c7469bacc42e217b116acf217a60623b4235cd25509b5d00cbaefd120",
+      "role": "Contains no FAQ or product-comparison policy, so the approved block plan cannot populate either target.",
+      "modification_candidate": false
+    },
+    {
+      "path": "ai/theme-generator/materialize-section-blocks.js",
+      "sha256": "7b88e52ac7fca025cf18762f132b9a4334c23d9254413018cce95b6b997d5d53",
+      "role": "Returns without target block materialization because no target policy exists; its generic empty-result path also preserves shells rather than applying section eligibility.",
+      "modification_candidate": false
+    },
+    {
+      "path": "apps/theme/templates/product.json",
+      "sha256": "55b537103dbe11e11266fc614a57b49972a15b0e02e9809a77cb513f5a2bde78",
+      "role": "Baseline Product template contains neither target, proving both empty instances are newly generated rather than merchant-preserved.",
+      "modification_candidate": false
+    },
+    {
+      "path": "apps/theme/sections/product-comparison.liquid",
+      "sha256": "1a840cc6eb3b07262f3486665d54155828ecfc87ad72ba444db7120a872407a1",
+      "role": "Defines the verified two-product runtime threshold but renders heading and wrapper below that threshold.",
+      "modification_candidate": false
+    },
+    {
+      "path": "apps/theme/sections/faq.liquid",
+      "sha256": "2ad61c496d085c9e6a1ece0fd8f17e4168d84fb8c9f65b4d9f1a1cbb21643758",
+      "role": "Defines the complete question/answer runtime predicate but renders heading and wrapper when false.",
+      "modification_candidate": false
+    }
+  ],
+  "modification_scope": {
+    "maximum_file_count": 7,
+    "production_files": [
+      {
+        "path": "ai/theme-generator/section-content-eligibility.js",
+        "state": "new",
+        "permitted_change": "Implement pure, deterministic, target-scoped eligibility results for product-comparison and FAQ section instances only."
+      },
+      {
+        "path": "ai/theme-generator/generate-section-instances.js",
+        "before_sha256": "b5fb8a050ec400f18650902e91bc9ead37da0095cb9d51f0d35dc5479e624101",
+        "permitted_change": "Invoke eligibility after materialization; omit only newly generated ineligible target instances from sections, order, and generated instance reporting; emit a deterministic warning."
+      }
+    ],
+    "verification_and_evidence_files": [
+      {
+        "path": "fixtures/theme-generator-content-eligibility.json",
+        "state": "new",
+        "permitted_change": "Define negative and positive synthetic configuration fixtures without merchant claims or generated copy."
+      },
+      {
+        "path": "scripts/test-theme-generator-content-eligibility.js",
+        "state": "new",
+        "permitted_change": "Test both predicates, generated-only omission, positive preservation, unknown-section pass-through, and source immutability."
+      },
+      {
+        "path": "scripts/validate-theme-generator.js",
+        "permitted_change": "Register the helper, fixture, and focused test in existing static validation."
+      },
+      {
+        "path": "package.json",
+        "permitted_change": "Expose only the focused non-paid test command."
+      },
+      {
+        "path": "docs/architecture/calinium-core-2-phase-d3c-b-content-availability-repair.md",
+        "state": "new",
+        "permitted_change": "Record approved execution evidence, verification, and human decision if D3C-B is later authorized and completed."
+      }
+    ],
+    "unrelated_refactoring_allowed": false,
+    "liquid_modification_allowed": false,
+    "template_json_source_modification_allowed": false
+  },
+  "intervention": {
+    "type": "generated_section_content_eligibility_gate",
+    "minimum_change": [
+      "Evaluate the final post-materialization section instance with the target's presenter-equivalent predicate.",
+      "For origin=generated Product target instances only, omit an ineligible instance before adding it to template.sections, template.order, or generated_section_instances.",
+      "Emit a stable warning identifying section ID, instance ID, and ineligible_content_availability.",
+      "Retain eligible target instances byte-for-byte aside from reporting required by the gate.",
+      "Pass all non-target and preserved instances through unchanged."
+    ],
+    "separate_subplans_required": false,
+    "rationale": "Compare and FAQ have different predicates but the same established composition-boundary failure, so one narrowly scoped helper avoids duplicate pipeline changes without coupling their rules."
+  },
+  "theme_editor": {
+    "section_schemas_and_presets_unchanged": true,
+    "merchant_can_add_omitted_section_later": true,
+    "eligible_configured_sections_remain_renderable_and_editable": true,
+    "preserved_merchant_sections_untouched": true,
+    "design_mode_placeholders_unchanged": true
+  },
+  "expected_behavior": {
+    "negative_fixture": {
+      "input": "No eligible comparison product blocks and no complete FAQ pair.",
+      "output": "Neither generated section instance, wrapper, nor heading is present on the storefront Product page."
+    },
+    "positive_fixture": {
+      "input": "At least two nonblank approved comparison product references that resolve in Shopify and at least one complete FAQ question/answer pair.",
+      "output": "Both modules remain in Product template order, render their meaningful content, remain editable, and preserve optional comparison feature rows and FAQ structured data behavior."
+    },
+    "partial_fixture": {
+      "input": "One comparison product or incomplete FAQ pair.",
+      "output": "Only the independently ineligible module is omitted; eligibility is not shared between modules."
+    }
+  },
+  "verification": {
+    "preconditions": [
+      "Human approval binds this exact plan ID and checksum.",
+      "Checkpoint remains core-2-phase-d3b-first-repair-complete unless a newer explicit pre-execution checkpoint is approved.",
+      "No model/API call is authorized by this plan."
+    ],
+    "focused_tests": [
+      "Comparison: 0 and 1 nonblank approved product references omit; 2 references preserve configurationally and must resolve in the positive real-runtime fixture.",
+      "FAQ: 0 or incomplete pairs omit; one complete pair preserves.",
+      "The two predicates operate independently.",
+      "Preserved merchant target sections are not removed or rewritten.",
+      "Unknown sections and page-level app blocks remain unchanged.",
+      "Source theme remains immutable during generation."
+    ],
+    "runtime_target_matrix": [
+      {
+        "profile_id": "profile.current_calinium.v1",
+        "route_id": "product",
+        "viewport_id": "desktop-v1"
+      },
+      {
+        "profile_id": "profile.current_calinium.v1",
+        "route_id": "product",
+        "viewport_id": "mobile-v1"
+      },
+      {
+        "profile_id": "profile.editorial_discovery.v1",
+        "route_id": "product",
+        "viewport_id": "desktop-v1"
+      },
+      {
+        "profile_id": "profile.editorial_discovery.v1",
+        "route_id": "product",
+        "viewport_id": "mobile-v1"
+      }
+    ],
+    "negative_runtime_requirements": [
+      "No target wrapper or heading is visible.",
+      "PDP media, variants, pricing, add-to-cart, dynamic checkout, complementary products, recommendations, recently viewed, and app blocks remain functional.",
+      "No new D1 finding."
+    ],
+    "positive_runtime_requirements": [
+      "At least two configured references resolve and render as products in the comparison product grid.",
+      "Configured comparison feature rows render when present.",
+      "At least one complete FAQ item renders and FAQ structured data remains valid when enabled.",
+      "Both modules remain merchant-editable."
+    ],
+    "broader_regression": {
+      "required": true,
+      "reason": "The intervention touches shared generation logic.",
+      "matrix": "approved 16-cell Current plus Editorial desktop/mobile homepage, collection, product, and cart matrix",
+      "requirements": [
+        "Current 8/8 captures pass",
+        "Editorial 8/8 captures pass",
+        "D1 16/16 produces no new objective finding",
+        "architecture provenance remains valid",
+        "Theme Check passes",
+        "stabilized D2.7 before/after review finds no material repair-caused regression",
+        "checksum-bound human review approves final output"
+      ]
+    },
+    "automatic_approval_allowed": false,
+    "human_final_review_required": true
+  },
+  "forbidden_scope": [
+    "apps/theme/**/*.liquid",
+    "apps/theme/**/*.css",
+    "apps/theme/**/*.js",
+    "apps/theme/templates/**/*.json",
+    "architecture_profiles",
+    "architecture_families",
+    "design_dna",
+    "presets",
+    "merchant_content",
+    "generated_faq_copy",
+    "collection_discovery_sections",
+    "newsletter_duplication",
+    "footer_wrapping",
+    "editorial_mobile_header",
+    "product_highlights",
+    "mobile_pdp_differentiation",
+    "billing",
+    "deployment",
+    "shopify_configuration",
+    "live_theme_publishing",
+    "screenshot_regeneration_in_d3c_a",
+    "automatic_repair"
+  ],
+  "rollback": {
+    "checkpoint_tag": "core-2-phase-d3b-first-repair-complete",
+    "checkpoint_commit": "1000000000000000000000000000000000000007",
+    "boundary": "A future approved D3C-B may change only the seven allowlisted implementation, validation, and completion-evidence files.",
+    "failure_action": "Stop, preserve evidence, and revert only the bounded D3C-B diff to the approved checkpoint; do not attempt another repair without new human approval."
+  },
+  "status": "proposed",
+  "safety": {
+    "human_approval_required": true,
+    "mutation_allowed_in_d3c_a": false,
+    "automatic_repair_allowed": false,
+    "repair_execution_available": false,
+    "d3c_b_started": false,
+    "openai_api_calls_required": false,
+    "storefront_source_changed_in_d3c_a": false
+  },
+  "repair_plan_id": "repair-plan-b1835a493b09b0bfb699",
+  "repair_plan_checksum": "61b13fb2be70ae89d92c7689876568772f8baee08ebee53672f1f6b81a7cd543"
+}
