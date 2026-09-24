@@ -18,6 +18,7 @@ const {
   assertSafeThemeDevArgs
 } = require('../ai/storefront-render/shopify-development-runtime');
 const { loadArchitectureRegistry } = require('../ai/architecture/architecture-registry');
+const { PUBLIC_SYNTHETIC_COMPARISON } = require('../ai/storefront-render/architecture-comparison');
 
 const root = path.resolve(__dirname, '..');
 
@@ -85,8 +86,8 @@ function validateRegistriesAndFixture() {
   assert.match(fixture.entities.collection.remote_gid, /^gid:\/\/shopify\/Collection\/[0-9]+$/);
   assert.match(fixture.entities.product.remote_gid, /^gid:\/\/shopify\/Product\/[0-9]+$/);
   const comparisonInputs = { routeRegistry: routes, viewportRegistry: viewports, targetRegistry: loadTargetRegistry(root) };
-  assert.equal(comparisonFixtureRevision({ fixture, ...comparisonInputs }), 'comparison-fixture-0c881e4699c1cd3e33b0');
-  assert.equal(comparisonFixtureRevision({ fixture: editorialFixture, ...comparisonInputs }), 'comparison-fixture-0c881e4699c1cd3e33b0');
+  assert.equal(comparisonFixtureRevision({ fixture, ...comparisonInputs }), PUBLIC_SYNTHETIC_COMPARISON.comparison_fixture_revision);
+  assert.equal(comparisonFixtureRevision({ fixture: editorialFixture, ...comparisonInputs }), PUBLIC_SYNTHETIC_COMPARISON.comparison_fixture_revision);
 }
 
 function validateApprovedBaselineEvidence() {

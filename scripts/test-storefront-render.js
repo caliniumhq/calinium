@@ -50,9 +50,8 @@ const {
 const { materializeControlledArtifact } = require('../ai/storefront-render/materialize-controlled-artifact');
 const { loadArchitectureRegistry } = require('../ai/architecture/architecture-registry');
 const {
-  APPROVED_FIXTURE_REVISION,
-  APPROVED_COMPARISON_KEY,
-  assertSameComparisonContract,
+  PUBLIC_SYNTHETIC_COMPARISON,
+  assertSamePublicSyntheticComparisonContract,
   assertStructuralDifferentiation
 } = require('../ai/storefront-render/architecture-comparison');
 
@@ -616,14 +615,14 @@ async function testPhaseCComparison(currentRun) {
     fixture,
     architectureSelection: selectArchitecture({ profileId: fixture.architecture_profile_id, root })
   });
-  assert.equal(currentRun.request.provenance.comparison_fixture_revision, APPROVED_FIXTURE_REVISION);
-  assert.equal(editorialRequest.provenance.comparison_fixture_revision, APPROVED_FIXTURE_REVISION);
-  assert.equal(comparisonKeyFor(currentRun.request), APPROVED_COMPARISON_KEY);
-  assert.equal(comparisonKeyFor(editorialRequest), APPROVED_COMPARISON_KEY);
-  assert.deepEqual(assertSameComparisonContract(currentRun.request, editorialRequest), {
-    comparison_fixture_revision: APPROVED_FIXTURE_REVISION,
-    comparison_key: APPROVED_COMPARISON_KEY
-  });
+  assert.equal(currentRun.request.provenance.comparison_fixture_revision, PUBLIC_SYNTHETIC_COMPARISON.comparison_fixture_revision);
+  assert.equal(editorialRequest.provenance.comparison_fixture_revision, PUBLIC_SYNTHETIC_COMPARISON.comparison_fixture_revision);
+  assert.equal(comparisonKeyFor(currentRun.request), PUBLIC_SYNTHETIC_COMPARISON.comparison_key);
+  assert.equal(comparisonKeyFor(editorialRequest), PUBLIC_SYNTHETIC_COMPARISON.comparison_key);
+  assert.deepEqual(
+    assertSamePublicSyntheticComparisonContract(currentRun.request, editorialRequest),
+    PUBLIC_SYNTHETIC_COMPARISON
+  );
   const editorialRun = await captureStorefrontRender({
     root,
     request: editorialRequest,
