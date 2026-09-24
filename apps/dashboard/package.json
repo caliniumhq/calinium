@@ -13,6 +13,7 @@
     "start": "node server/server.cjs",
     "preview": "node server/server.cjs",
     "test": "vitest run",
+    "test:public": "vitest run src/tests --maxWorkers=1",
     "test:watch": "vitest",
     "validate": "npm run test && npm run build"
   },
