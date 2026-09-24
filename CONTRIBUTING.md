@@ -36,7 +36,7 @@ The canonical credential-free contributor check uses Node.js 20 and synthetic pu
 npm run validate:public
 ```
 
-It validates tracked JSON and JavaScript syntax, Core 2 architecture, merchant-generation flow, the F1-A merchant experience, storefront rendering, dashboard tests, and the dashboard production build. Live Shopify and Fly operations, provider/model calls, production-database acceptance, private staging checks, screenshot capture, deployment, and other mutation-capable workflows are intentionally excluded.
+It validates tracked JSON and JavaScript syntax, Core 2 architecture, merchant-generation flow, the F1-A merchant experience, storefront rendering, deterministic dashboard frontend/component tests, and the dashboard production build. Dashboard server persistence suites use Node's built-in SQLite module, which is not available in the required Node 20 public-CI runtime, so those suites remain available through the full dashboard test command but are explicitly outside `validate:public`. Live Shopify and Fly operations, provider/model calls, production-database acceptance, private staging checks, screenshot capture, deployment, and other mutation-capable workflows are intentionally excluded.
 
 Run the smallest focused test and validator for the area you changed. Common repository-level checks include:
 
