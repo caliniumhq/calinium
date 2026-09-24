@@ -133,7 +133,9 @@
     "test:storefront-approved-bounded-repair-planning": "node scripts/test-storefront-approved-bounded-repair-planning.js",
     "validate:storefront-approved-bounded-repair-planning": "node scripts/validate-storefront-approved-bounded-repair-planning.js",
     "test:store-resources-embedded-responsive": "node scripts/test-store-resources-embedded-responsive.mjs",
-    "test:beta-dashboard": "npm --prefix apps/dashboard run test -- --maxWorkers=1"
+    "test:beta-dashboard": "npm --prefix apps/dashboard run test -- --maxWorkers=1",
+    "validate:public-source": "node scripts/validate-public-source.js",
+    "validate:public": "npm run validate:public-source && npm run test:core-2-architecture && npm run validate:core-2-architecture && npm run test:merchant-generation-flow && npm run validate:merchant-generation-flow && npm run test:f1-a && npm run test:storefront-render && npm run validate:storefront-render && npm run test:beta-dashboard && npm --prefix apps/dashboard run build"
   },
   "dependencies": {
     "@shopify/cli": "4.6.0"

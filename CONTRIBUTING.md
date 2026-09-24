@@ -30,6 +30,14 @@ Use development-only placeholder replacements in `.env`; never commit that file.
 
 ## Validation
 
+The canonical credential-free contributor check uses Node.js 20 and synthetic public data only:
+
+```sh
+npm run validate:public
+```
+
+It validates tracked JSON and JavaScript syntax, Core 2 architecture, merchant-generation flow, the F1-A merchant experience, storefront rendering, dashboard tests, and the dashboard production build. Live Shopify and Fly operations, provider/model calls, production-database acceptance, private staging checks, screenshot capture, deployment, and other mutation-capable workflows are intentionally excluded.
+
 Run the smallest focused test and validator for the area you changed. Common repository-level checks include:
 
 ```sh
