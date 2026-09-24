@@ -10,29 +10,44 @@ const CURRENT_PROFILE_ID = 'profile.current_calinium.v1';
 const EDITORIAL_PROFILE_ID = 'profile.editorial_discovery.v1';
 const APPROVED_FIXTURE_REVISION = 'comparison-fixture-0c881e4699c1cd3e33b0';
 const APPROVED_COMPARISON_KEY = 'd7413cc5957c06221d6426210f86ae7cfd081bc2e66d55dbdb98a13b12d417f6';
+const PUBLIC_SYNTHETIC_COMPARISON = Object.freeze({
+  comparison_fixture_revision: 'comparison-fixture-b92f95a2fc9fdeb3f5d0',
+  comparison_key: '0f2afd2181be102229fa4ab250bfb5dd368c3c7ebc61a8dfbf74f2663f24e36c'
+});
 const PRIMARY_DIFFERENTIATION_ROUTES = Object.freeze(['homepage', 'collection', 'product']);
 
 function captureKey(result) { return `${result.route.id}:${result.viewport.id}`; }
 function byCaptureKey(results) { return new Map(results.map((result) => [captureKey(result), result])); }
 
-function assertSameComparisonContract(currentRequest, editorialRequest) {
+function assertComparisonContract(currentRequest, editorialRequest, expected, label) {
   if (currentRequest.architecture.profile_id !== CURRENT_PROFILE_ID) throw new Error('Architecture comparison input A must use current Calinium.');
   if (editorialRequest.architecture.profile_id !== EDITORIAL_PROFILE_ID) throw new Error('Architecture comparison input B must use Editorial Discovery.');
-  if (currentRequest.provenance.comparison_fixture_revision !== APPROVED_FIXTURE_REVISION
-    || editorialRequest.provenance.comparison_fixture_revision !== APPROVED_FIXTURE_REVISION) {
-    throw new Error('Architecture comparison does not use the approved Phase B fixture revision.');
+  if (currentRequest.provenance.comparison_fixture_revision !== expected.comparison_fixture_revision
+    || editorialRequest.provenance.comparison_fixture_revision !== expected.comparison_fixture_revision) {
+    throw new Error(`Architecture comparison does not use the ${label} fixture revision.`);
   }
   const currentKey = comparisonKeyFor(currentRequest);
   const editorialKey = comparisonKeyFor(editorialRequest);
-  if (currentKey !== APPROVED_COMPARISON_KEY || editorialKey !== APPROVED_COMPARISON_KEY || currentKey !== editorialKey) {
-    throw new Error('Architecture comparison inputs do not share the approved Phase B comparison key.');
+  if (currentKey !== expected.comparison_key || editorialKey !== expected.comparison_key || currentKey !== editorialKey) {
+    throw new Error(`Architecture comparison inputs do not share the ${label} comparison key.`);
   }
   if (JSON.stringify(currentRequest.routes) !== JSON.stringify(editorialRequest.routes)
     || JSON.stringify(currentRequest.viewports) !== JSON.stringify(editorialRequest.viewports)
     || JSON.stringify(currentRequest.target) !== JSON.stringify(editorialRequest.target)) {
     throw new Error('Architecture comparison changed a controlled route, viewport, or target input.');
   }
-  return { comparison_fixture_revision: APPROVED_FIXTURE_REVISION, comparison_key: APPROVED_COMPARISON_KEY };
+  return { ...expected };
+}
+
+function assertSameComparisonContract(currentRequest, editorialRequest) {
+  return assertComparisonContract(currentRequest, editorialRequest, {
+    comparison_fixture_revision: APPROVED_FIXTURE_REVISION,
+    comparison_key: APPROVED_COMPARISON_KEY
+  }, 'approved Phase B');
+}
+
+function assertSamePublicSyntheticComparisonContract(currentRequest, editorialRequest) {
+  return assertComparisonContract(currentRequest, editorialRequest, PUBLIC_SYNTHETIC_COMPARISON, 'public synthetic');
 }
 
 function readThemeConfiguration(archivePath) {
@@ -227,9 +242,11 @@ module.exports = {
   EDITORIAL_PROFILE_ID,
   APPROVED_FIXTURE_REVISION,
   APPROVED_COMPARISON_KEY,
+  PUBLIC_SYNTHETIC_COMPARISON,
   PRIMARY_DIFFERENTIATION_ROUTES,
   captureKey,
   assertSameComparisonContract,
+  assertSamePublicSyntheticComparisonContract,
   readThemeConfiguration,
   nonArchitectureGenerationProvenance,
   assertSameGenerationInputs,
