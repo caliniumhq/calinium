@@ -1,12 +1,16 @@
 # Security Policy
 
+Calinium is a public open-source project distributed under AGPL-3.0.
+
 ## Reporting a vulnerability
 
-Do not disclose suspected vulnerabilities, credentials, tokens, private merchant data, or exploitable store details in a public issue or pull request.
+Do not disclose suspected vulnerabilities or security-sensitive findings in a public issue, pull request, discussion, or other public channel.
 
-Before the repository is made public, security reports should be sent through the private channel provided by the maintainers. After publication, the maintainers intend to enable GitHub private vulnerability reporting and document any additional public security contact here.
+Repository collaborators should use GitHub Security Advisories to coordinate privately. External private vulnerability reporting is not currently enabled, and this repository does not publish an alternate private security contact. Until an approved private reporting route is documented here or in the repository's Security tab, do not transmit vulnerability details through public repository features.
 
-Include only the information needed to reproduce and assess the issue. Use synthetic store, project, flow, job, artifact, and theme identifiers whenever possible. Never attach a production database, access token, private key, session cookie, webhook secret, or merchant export.
+When a private reporting route is available, include the affected component, reproduction steps, expected and observed behavior, potential impact, and a minimal proof of concept when it can be shared safely.
+
+Use synthetic data and identifiers whenever possible. Do not include real merchant or customer data, credentials, API keys, tokens, production secrets, database contents, session cookies, webhook secrets, or other sensitive information that is not necessary to assess the issue.
 
 ## Security-sensitive boundaries
 
@@ -26,4 +30,4 @@ Healthy process liveness must never substitute for protected operational readine
 
 ## Supported versions
 
-Calinium is under active development and has not published a stable public release line. Security fixes currently target the latest public repository state. This policy will be versioned when supported releases are published.
+Calinium is under active development. No stable public release, including v0.1.0, has been published. Security fixes currently target the latest public repository state. This policy will be versioned when supported releases are published.
