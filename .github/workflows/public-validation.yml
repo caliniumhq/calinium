@@ -33,4 +33,6 @@ jobs:
         run: npm --prefix apps/dashboard ci --ignore-scripts
 
       - name: Run credential-free public validation
+        env:
+          CALINIUM_SHOPIFY_CLI: ./scripts/run-shopify-cli-node20.mjs
         run: npm run validate:public

@@ -8,6 +8,7 @@ const { execFileSync, spawnSync } = require('child_process');
 
 const root = path.resolve(__dirname, '..');
 const workflowPath = path.join(root, '.github/workflows/public-validation.yml');
+const shopifyCliNode20RunnerPath = path.join(root, 'scripts/run-shopify-cli-node20.mjs');
 
 function trackedAndUntrackedFiles(patterns) {
   const output = execFileSync('git', [
@@ -50,6 +51,7 @@ function validateWorkflowBoundary() {
     'node-version: 20',
     'npm ci --ignore-scripts',
     'npm --prefix apps/dashboard ci --ignore-scripts',
+    'CALINIUM_SHOPIFY_CLI: ./scripts/run-shopify-cli-node20.mjs',
     'npm run validate:public'
   ]) assert.ok(workflow.includes(required), `Public workflow is missing ${required}.`);
   for (const forbidden of [
@@ -62,6 +64,20 @@ function validateWorkflowBoundary() {
     'flyctl',
     'OPENAI_API_KEY'
   ]) assert.equal(workflow.includes(forbidden), false, `Public workflow contains forbidden capability ${forbidden}.`);
+}
+
+function validateShopifyCliNode20Runner() {
+  const runner = fs.readFileSync(shopifyCliNode20RunnerPath, 'utf8');
+  const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  const packageLock = JSON.parse(fs.readFileSync(path.join(root, 'package-lock.json'), 'utf8'));
+  assert.equal(packageJson.dependencies?.['@shopify/cli'], '4.6.0', 'Public Theme Check must use the pinned Shopify CLI 4.6.0 dependency.');
+  assert.equal(packageLock.packages?.['node_modules/@shopify/cli']?.version, '4.6.0', 'Public Theme Check lockfile must bind Shopify CLI 4.6.0.');
+  assert.ok(runner.includes("import('../node_modules/@shopify/cli/dist/bootstrap.js')"), 'Node 20 runner must import the project-local Shopify CLI bootstrap.');
+  assert.ok(runner.includes('runCLI({ development: false })'), 'Node 20 runner must execute the production Shopify CLI bootstrap.');
+  for (const forbidden of ['npm install', 'npm exec', 'npx ', 'child_process', 'https://', 'http://']) {
+    assert.equal(runner.includes(forbidden), false, `Node 20 runner contains forbidden dependency or network behavior ${forbidden}.`);
+  }
+  assert.ok((fs.statSync(shopifyCliNode20RunnerPath).mode & 0o111) !== 0, 'Node 20 runner must be executable.');
 }
 
 function validatePackageBoundary() {
@@ -93,9 +109,10 @@ function run() {
   validateJavaScript(javascriptFiles);
   validateWorkflowBoundary();
   validatePackageBoundary();
+  validateShopifyCliNode20Runner();
   process.stdout.write(`Public source validation passed: JSON=${jsonFiles.length}; JavaScript syntax=${javascriptFiles.length}; workflow=credential-free; operational commands=0.\n`);
 }
 
 if (require.main === module) run();
 
-module.exports = { trackedAndUntrackedFiles, validateJson, validateJavaScript, validateWorkflowBoundary, validatePackageBoundary, run };
+module.exports = { trackedAndUntrackedFiles, validateJson, validateJavaScript, validateWorkflowBoundary, validatePackageBoundary, validateShopifyCliNode20Runner, run };
